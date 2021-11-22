@@ -1,5 +1,5 @@
 export const e1 = {
-  restTime: 10000,
+  restTime: 1000,
   path: [
     {
       id: 1,
