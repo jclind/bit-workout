@@ -4,3 +4,27 @@
   background: $primary-background;
   color: $primary-text;
 }
+
+html,
+body {
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+div {
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+}
+button {
+  height: 40px;
+  outline: none;
+  border: none;
+  background: gray;
+  margin-top: 2rem;
+  width: 100%;
+}
