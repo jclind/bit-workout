@@ -8,16 +8,22 @@ const Workout = ({
   isTimer,
   restTime,
   currSet,
+  currExerciseData,
 }) => {
+  const { animation, imageURL, name } = currExerciseData
+  console.log(animation, imageURL, name)
   return (
     <div className='App'>
       <div className='exercise'>
         {workoutFinished ? (
           <span>Workout Finished, Good Job!</span>
         ) : currEvent && !isTimer ? (
-          <span>
-            {currEvent.name}, Set {currSet}
-          </span>
+          <>
+            <img src={imageURL} alt={name} />
+            <div>
+              {name}, Set {currSet}
+            </div>
+          </>
         ) : (
           <span>REST</span>
         )}

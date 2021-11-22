@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import Workout from './Workout'
 import { getNextEvent } from '../../util/getNextEvent'
+import { exerciseList } from '../../assets/data/exerciseList'
 
 const WorkoutContainer = ({ exerciseData }) => {
   // Current workout event
   const [currEvent, setCurrEvent] = useState(null)
+  const [currExerciseData, setCurrExerciseData] = useState(null)
   // Current set number in the workout currently being shown
   const [currSet, setCurrSet] = useState(1)
   // Whether the timer is running
@@ -27,16 +29,30 @@ const WorkoutContainer = ({ exerciseData }) => {
       }
     }
   }, [isTimer])
+  useEffect(() => {
+    if (currEvent) {
+      setCurrExerciseData(
+        exerciseList.find(ex => ex.id === currEvent.exerciseID)
+      )
+    }
+  }, [currEvent])
 
   return (
-    <Workout
-      setIsTimer={setIsTimer}
-      workoutFinished={workoutFinished}
-      restTime={restTime}
-      isTimer={isTimer}
-      currEvent={currEvent}
-      currSet={currSet}
-    />
+    <>
+      {currExerciseData ? (
+        <Workout
+          setIsTimer={setIsTimer}
+          workoutFinished={workoutFinished}
+          restTime={restTime}
+          isTimer={isTimer}
+          currEvent={currEvent}
+          currSet={currSet}
+          currExerciseData={currExerciseData}
+        />
+      ) : (
+        <span>Loading</span>
+      )}
+    </>
   )
 }
 
