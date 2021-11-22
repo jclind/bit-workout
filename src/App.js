@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { e1 } from './assets/data/e1'
 import { formatTime } from './util/formatTime'
+import TimerContainer from './components/Timer/TimerContainer'
 
 function App() {
   const data = e1
@@ -9,31 +10,11 @@ function App() {
 
   const [currEvent, setCurrEvent] = useState(null)
   const [isTimer, setIsTimer] = useState(false)
-  const [timerVal, setTimerVal] = useState()
 
   useEffect(() => {
     if (!isTimer) {
       console.log('Timer is not running')
       getNextEvent(currEvent, data, setCurrEvent)
-    } else {
-      console.log('Timer is running')
-      // Get time of timer start
-      const start = new Date().getTime()
-
-      let timer = setInterval(() => {
-        // Get current time and subtrack start time to get total elapsed time
-        const elapsed = new Date().getTime() - start
-        // Format elapsed time to milliseconds
-        const elapsedMS = Math.round(elapsed / 1000) * 1000
-        // Get time left on timer
-        const timeLeft = restTime - elapsedMS
-
-        setTimerVal(formatTime(timeLeft))
-        if (timeLeft <= 0) {
-          clearInterval(timer)
-          setIsTimer(false)
-        }
-      }, 100)
     }
   }, [isTimer])
 
@@ -71,7 +52,10 @@ function App() {
           <span>REST</span>
         )}
       </div>
-      <div className='timer'>{isTimer ? <div>{timerVal}</div> : null}</div>
+      {/* <div className='timer'>{isTimer ? <div>{timerVal}</div> : null}</div> */}
+      {isTimer ? (
+        <TimerContainer restTime={restTime} setIsTimer={setIsTimer} />
+      ) : null}
       {!isTimer ? (
         <button onClick={() => setIsTimer(true)}>CLICK ME!!!!</button>
       ) : null}
