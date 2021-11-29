@@ -1,9 +1,12 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import SignupAccount from './SignupAccount'
 import { useAuth } from '../../../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import { SignupContext } from '../../../pages/Signup'
 
 const SignupContainer = () => {
+  const props = useContext(SignupContext)
+  console.log(props)
   const emailRef = useRef()
   const passwordRef = useRef()
   const { signup } = useAuth()
