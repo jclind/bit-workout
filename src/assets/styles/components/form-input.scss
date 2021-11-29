@@ -1,0 +1,50 @@
+@import '../helpers/functions.scss';
+@import '../helpers/vars.scss';
+
+.form-input-label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: toRem(55);
+  width: 100%;
+  border-radius: none;
+  border-bottom: 1px solid $primary;
+
+  &:focus-within {
+    border-bottom: 2px solid $secondary;
+  }
+
+  input {
+    height: toRem(45);
+    width: 100%;
+    border-radius: none;
+    padding-left: toRem(40);
+    margin-right: toRem(20);
+    background: $primary-background !important;
+    color: $primary !important;
+    caret-color: $secondary;
+  }
+
+  .icon,
+  .delete-icon {
+    position: absolute;
+    color: $primary;
+  }
+  .icon {
+    height: 18px;
+  }
+  .delete-icon {
+    display: flex;
+    align-items: center;
+    height: 22px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    cursor: pointer;
+    // top: 0;
+    img {
+      height: 15px;
+    }
+  }
+}

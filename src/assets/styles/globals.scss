@@ -1,20 +1,20 @@
 @import './helpers/vars.scss';
+@import './helpers/functions.scss';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
 * {
-  background: $primary-background;
-  color: $primary-text;
+  color: $primary;
+  font-family: $font-family;
 }
 
 html,
 body {
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  background: $primary-background;
+  position: relative;
   width: 100%;
 }
 div {
@@ -25,42 +25,79 @@ button {
   height: 40px;
   outline: none;
   border: none;
-  background: gray;
   margin-top: 2rem;
   width: 100%;
+  border-radius: toRem(5);
 }
 
-form {
-  display: flex;
-  flex-direction: column;
+input {
+  background: none;
+  outline: none;
+  border: none;
+  border-radius: none !important;
+  box-shadow: none;
+  font-size: toRem(16) !important;
+}
+input::placeholder {
+  text-transform: capitalize;
+  // font-size: toRem(16);
+  color: $placeholder-color;
+}
+input {
+  -webkit-appearance: none;
+}
 
-  label {
-    font-size: 1rem;
-    margin: 1rem 0;
-    display: flex;
-    flex-direction: column;
+h1,
+h2 {
+  padding: 0;
+  margin: 0;
+  background: none;
 
-    input {
-      outline: none;
-      border: 1px solid $primary-text;
-      background: none;
-      box-shadow: none;
-      height: 40px;
-      padding: 0rem 0.5rem;
-    }
-  }
+  font-weight: 700;
+}
+
+h1 {
+  font-size: toRem(36) !important;
+}
+
+.sub-text {
+  font-size: toRem(12);
+  font-weight: 700;
+  color: $secondary-text;
+}
+
+.text-link {
+  color: $white-text;
+  font-size: inherit;
+  text-decoration: underline;
 }
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+input:-internal-autofill-selected,
+input:-internal-autofill-previewed,
 textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
+textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  -webkit-text-fill-color: white;
+  border: none !important;
+  color: $primary;
+  -webkit-text-fill-color: $primary !important;
   -webkit-box-shadow: 0 0 0px 1000px $primary-background inset;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+input:-webkit-autofill::first-line {
+  font-size: 16px;
+}
+
+// input:not(:placeholder-shown) ~ label,
+// input:-webkit-autofill ~ label /* <<<< Add these */ {
+//   padding-top: 0.25rem;
+//   padding-bottom: 0.25rem;
+//   font-size: 12px;
+//   color: #777;
+// }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Login = ({ handleSubmit, loading, error, emailRef, passwordRef }) => {
+const ForgotPassword = ({ handleSubmit, emailRef, loading, error }) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -10,16 +10,13 @@ const Login = ({ handleSubmit, loading, error, emailRef, passwordRef }) => {
           Email
           <input type='email' ref={emailRef} />
         </label>
-        <label>
-          Password
-          <input type='password' ref={passwordRef} />
-        </label>
+
         <button type='submit' disabled={loading}>
-          Log In
+          Reset Password
         </button>
       </form>
       <div>
-        <Link to='/forgot-password'>Forgot Password?</Link>
+        <Link to='/login'>Login</Link>
       </div>
       <div>
         Need an account? <Link to='/signup'>Sign Up</Link>
@@ -28,4 +25,4 @@ const Login = ({ handleSubmit, loading, error, emailRef, passwordRef }) => {
   )
 }
 
-export default Login
+export default ForgotPassword

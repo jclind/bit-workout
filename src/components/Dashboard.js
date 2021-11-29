@@ -17,6 +17,7 @@ const Dashboard = () => {
       setError('Failed to log out')
     }
   }
+  console.log(currentUser.uid)
 
   return (
     <>
