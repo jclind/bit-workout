@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
-import SignupForm from './SignupForm'
-import { useAuth } from '../../contexts/AuthContext'
+import SignupAccount from './SignupAccount'
+import { useAuth } from '../../../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
 const SignupContainer = () => {
@@ -27,7 +27,7 @@ const SignupContainer = () => {
   }
 
   return (
-    <SignupForm
+    <SignupAccount
       handleSubmit={handleSubmit}
       loading={loading}
       error={error}

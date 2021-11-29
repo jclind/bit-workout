@@ -1,12 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import '../../assets/styles/components/signup.scss'
-import signupBackground from '../../assets/images/signup-background.png'
-import usernameIcon from '../../assets/images/icons/username.svg'
-import accountIcon from '../../assets/images/icons/account.svg'
-import emailIcon from '../../assets/images/icons/email.svg'
-import passwordIcon from '../../assets/images/icons/password.svg'
-import FormInput from '../FormInput'
+import '../../../assets/styles/components/signup.scss'
+import usernameIcon from '../../../assets/images/icons/username.svg'
+import accountIcon from '../../../assets/images/icons/account.svg'
+import emailIcon from '../../../assets/images/icons/email.svg'
+import passwordIcon from '../../../assets/images/icons/password.svg'
+import FormInput from '../../FormInput'
 
 const SignupForm = ({
   handleSubmit,
@@ -18,8 +17,6 @@ const SignupForm = ({
 }) => {
   return (
     <>
-      <img src={signupBackground} className='signup-background' />
-      <h1 className='title'>Sign Up</h1>
       <div className='content'>
         <form action='' autoComplete='none' onSubmit={handleSubmit}>
           <div className='inputs'>

@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom'
 
 import { e1 } from './assets/data/e1'
 import WorkoutContainer from './components/Workout/WorkoutContainer'
@@ -9,7 +14,7 @@ import LoginContainer from './components/Login/LoginContainer'
 import PrivateRoute from './components/PrivateRoute'
 import ForgotPasswordContainer from './components/ForgotPassword/ForgotPasswordContainer'
 import UpdateProfileContainer from './components/UpdateProfile/UpdateProfileContainer'
-
+import SignupAccountContainer from './components/Signup/Account/SignupAccountContainer'
 function App() {
   const currExerciseData = e1
 
@@ -27,7 +32,9 @@ function App() {
               element={<UpdateProfileContainer />}
             />
           </Route>
-          <Route path='/signup' element={<Signup />} />
+          <Route path='/signup' element={<Signup />}>
+            <Route path='account-info' element={<SignupAccountContainer />} />
+          </Route>
           <Route path='/login' element={<LoginContainer />} />
           <Route
             path='/forgot-password'
