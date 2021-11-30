@@ -40,6 +40,10 @@ function App() {
             path='/forgot-password'
             element={<ForgotPasswordContainer />}
           />
+          <Route
+            path='/workout'
+            element={<WorkoutContainer exerciseData={e1} />}
+          />
         </Routes>
       </AuthProvider>
     </Router>
