@@ -40,7 +40,6 @@ input {
 }
 input::placeholder {
   text-transform: capitalize;
-  // font-size: toRem(16);
   color: $placeholder-color;
 }
 input {
@@ -64,6 +63,7 @@ h1 {
   font-size: toRem(12);
   font-weight: 700;
   color: $secondary-text;
+  text-align: center;
 }
 
 .text-link {
@@ -94,10 +94,8 @@ input:-webkit-autofill::first-line {
   font-size: 16px;
 }
 
-// input:not(:placeholder-shown) ~ label,
-// input:-webkit-autofill ~ label /* <<<< Add these */ {
-//   padding-top: 0.25rem;
-//   padding-bottom: 0.25rem;
-//   font-size: 12px;
-//   color: #777;
-// }
+input[type='date']::-webkit-inner-spin-button,
+input[type='date']::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}

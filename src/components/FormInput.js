@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import '../assets/styles/components/form-input.scss'
 import deleteIcon from '../assets/images/icons/delete.svg'
-
 const FormInput = ({ icon, placeholder, inputType, val, setVal, required }) => {
   const [clear, setClear] = useState(false)
 

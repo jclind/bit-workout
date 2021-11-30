@@ -15,8 +15,11 @@
   }
 
   input {
-    height: toRem(45);
+    height: $form-input-height;
     width: 100%;
+    text-align: left !important;
+    display: flex;
+    justify-self: flex-start;
     border-radius: none;
     padding-left: toRem(40);
     margin-right: toRem(20);

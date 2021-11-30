@@ -1,11 +1,8 @@
 import React, { useState, useRef } from 'react'
 import SignupAccount from './SignupAccount'
-import { useAuth } from '../../../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
 const SignupContainer = () => {
-  const { signup } = useAuth()
-
   async function handleSubmit(e) {
     e.preventDefault()
 

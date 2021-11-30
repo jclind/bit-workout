@@ -1,13 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  useLocation,
-  useOutlet,
-  Navigate,
-} from 'react-router-dom'
+import React, { useState } from 'react'
+import { useLocation, useOutlet, Navigate } from 'react-router-dom'
 import signupBackground from '../assets/images/signup-background.png'
 import '../assets/styles/pages/signup.scss'
 
@@ -18,6 +10,12 @@ const Signup = () => {
   const [fullNameVal, setFullNameVal] = useState('')
   const [emailVal, setEmailVal] = useState('')
   const [passwordVal, setPasswordVal] = useState('')
+
+  const [birthdayVal, setBirthdayVal] = useState('')
+
+  const handleSubmit = e => {
+    e.preventDefault()
+  }
 
   const location = useLocation()
   const outlet = useOutlet()
@@ -35,6 +33,9 @@ const Signup = () => {
     setEmailVal,
     passwordVal,
     setPasswordVal,
+    handleSubmit,
+    birthdayVal,
+    setBirthdayVal,
   }
 
   return (

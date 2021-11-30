@@ -22,8 +22,8 @@ const SignupForm = ({ handleSubmit }) => {
 
   return (
     <>
-      <div className='content'>
-        <form action='' autoComplete='none' onSubmit={handleSubmit}>
+      <div className='content signup-account-info'>
+        <form action='' onSubmit={handleSubmit}>
           <div className='inputs'>
             <FormInput
               icon={usernameIcon}
@@ -58,9 +58,11 @@ const SignupForm = ({ handleSubmit }) => {
               required={true}
             />
           </div>
-          <button type='submit' className='submit-btn'>
-            Next Step
-          </button>
+          <Link to='/signup/personal-info'>
+            <button type='submit' className='submit-btn'>
+              Next Step
+            </button>
+          </Link>
           <div className='sign-in-prompt'>
             <p className='sub-text'>
               Already have an account?{' '}

@@ -15,6 +15,8 @@ import PrivateRoute from './components/PrivateRoute'
 import ForgotPasswordContainer from './components/ForgotPassword/ForgotPasswordContainer'
 import UpdateProfileContainer from './components/UpdateProfile/UpdateProfileContainer'
 import SignupAccountContainer from './components/Signup/Account/SignupAccountContainer'
+import SignupPersonalContainer from './components/Signup/Personal/SignupPersonalContainer'
+
 function App() {
   const currExerciseData = e1
 
@@ -34,6 +36,7 @@ function App() {
           </Route>
           <Route path='/signup' element={<Signup />}>
             <Route path='account-info' element={<SignupAccountContainer />} />
+            <Route path='personal-info' element={<SignupPersonalContainer />} />
           </Route>
           <Route path='/login' element={<LoginContainer />} />
           <Route
