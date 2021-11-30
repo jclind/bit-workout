@@ -16,7 +16,6 @@ const BirthdayInput = ({ icon, placeholder, val, setVal, required }) => {
         <FormInput
           icon={icon}
           inputType='date'
-          // placeholder={placeholder}
           val={val}
           setVal={setVal}
           required={required}

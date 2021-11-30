@@ -3,6 +3,7 @@ import { SignupContext } from '../../../pages/Signup'
 import FormInput from '../../FormInput'
 import birthdayIcon from '../../../assets/images/icons/birthday.svg'
 import BirthdayInput from '../../BirthdayInput'
+import HeightInput from '../../HeightInput'
 
 const SignupPersonal = () => {
   const { handleSubmit, birthdayVal, setBirthdayVal } =
@@ -26,6 +27,7 @@ const SignupPersonal = () => {
             setVal={setBirthdayVal}
             required={true}
           />
+          <HeightInput />
           {/* <input
             type='text'
             onFocus={e => {

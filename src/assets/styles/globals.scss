@@ -42,6 +42,10 @@ input::placeholder {
   text-transform: capitalize;
   color: $placeholder-color;
 }
+.placeholder {
+  text-transform: capitalize;
+  color: $placeholder-color;
+}
 input {
   -webkit-appearance: none;
 }

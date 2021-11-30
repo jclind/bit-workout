@@ -5,7 +5,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: toRem(55);
+  height: $form-label-height;
   width: 100%;
   border-radius: none;
   border-bottom: 1px solid $primary;

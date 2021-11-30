@@ -1,0 +1,14 @@
+@import '../helpers/functions.scss';
+@import '../helpers/vars.scss';
+
+.height-input {
+  width: 100%;
+  outline: none;
+  border-radius: none;
+  background: none;
+  border: none;
+  optgroup {
+    font-size: 10px;
+    color: red;
+  }
+}
