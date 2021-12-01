@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react'
 import '../assets/styles/components/height-input.scss'
 
 const HeightInput = ({ icon, placeholder }) => {
+  const [focus, setFocus] = useState(false)
+
   const [feet, setFeet] = useState('')
   const [inches, setInches] = useState('')
 
@@ -49,38 +51,47 @@ const HeightInput = ({ icon, placeholder }) => {
 
   return (
     <>
-      <label className='form-label height-input-label'>
-        <img src={icon} alt={placeholder} className='icon' />
-        <div className='height-inputs'>
-          <div className='feet-input'>
-            <input
-              type='number'
-              placeholder='4'
-              onChange={e => handleFeetChange(e)}
-              onFocus={e => handleFocus(e)}
-              value={feet}
-              ref={feetRef}
-            />
-            <span>ft</span>
+      <div
+        className='height-input-container'
+        onFocus={() => setFocus(true)}
+        onBlur={() => setFocus(false)}
+      >
+        {!focus && !feet && !inches ? (
+          <div className='height-placeholder'>{placeholder}</div>
+        ) : null}
+        <label className='form-label height-input-label'>
+          <img src={icon} alt={placeholder} className='icon' />
+          <div className='height-inputs'>
+            <div className='feet-input'>
+              <input
+                type='number'
+                placeholder='4'
+                onChange={e => handleFeetChange(e)}
+                onFocus={e => handleFocus(e)}
+                value={feet}
+                ref={feetRef}
+              />
+              <span>ft</span>
+            </div>
+            <div className='inches-input'>
+              <input
+                type='number'
+                placeholder='0'
+                onChange={e => handleInchesChange(e)}
+                onFocus={e => handleFocus(e)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    inchesRef.current.blur()
+                  }
+                }}
+                value={inches}
+                ref={inchesRef}
+              />
+              <span>in</span>
+            </div>
           </div>
-          <div className='inches-input'>
-            <input
-              type='number'
-              placeholder='0'
-              onChange={e => handleInchesChange(e)}
-              onFocus={e => handleFocus(e)}
-              onKeyDown={e => {
-                if (e.key === 'Enter') {
-                  inchesRef.current.blur()
-                }
-              }}
-              value={inches}
-              ref={inchesRef}
-            />
-            <span>in</span>
-          </div>
-        </div>
-      </label>
+        </label>
+      </div>
     </>
   )
 }
