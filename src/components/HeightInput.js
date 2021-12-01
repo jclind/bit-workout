@@ -1,21 +1,24 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import '../assets/styles/components/height-input.scss'
 
-const HeightInput = ({ icon, placeholder }) => {
+const HeightInput = ({ icon, placeholder, val, setVal }) => {
   const [focus, setFocus] = useState(false)
 
-  const [feet, setFeet] = useState('')
-  const [inches, setInches] = useState('')
+  const [feet, setFeet] = useState(val.feet)
+  const [inches, setInches] = useState(val.inches)
 
   const feetRef = useRef()
   const inchesRef = useRef()
+
+  useEffect(() => {
+    setVal({ feet, inches })
+  }, [feet, inches])
 
   const handleFeetChange = e => {
     let currVal = e.target.value
     if (currVal >= 10) {
       currVal = currVal % 10
     }
-    console.log(currVal)
 
     if (isNaN(currVal) && currVal) return
     if ((currVal < 4 || currVal > 8) && currVal) return
@@ -27,11 +30,9 @@ const HeightInput = ({ icon, placeholder }) => {
   }
   const handleInchesChange = e => {
     let currVal = e.target.value
-    console.log('1')
-    if (isNaN(currVal)) return
-    console.log('2')
+
+    if (isNaN(currVal) && currVal) return
     if ((currVal < 0 || currVal > 11) && currVal !== 1) return
-    console.log('3')
 
     setInches(currVal)
 
@@ -64,8 +65,10 @@ const HeightInput = ({ icon, placeholder }) => {
           <div className='height-inputs'>
             <div className='feet-input'>
               <input
-                type='number'
+                type='text'
                 placeholder='4'
+                step='1'
+                min='0'
                 onChange={e => handleFeetChange(e)}
                 onFocus={e => handleFocus(e)}
                 value={feet}
@@ -75,9 +78,11 @@ const HeightInput = ({ icon, placeholder }) => {
             </div>
             <div className='inches-input'>
               <input
-                type='number'
+                type='text'
                 placeholder='0'
-                onChange={e => handleInchesChange(e)}
+                step='1'
+                min='0'
+                onInput={e => handleInchesChange(e)}
                 onFocus={e => handleFocus(e)}
                 onKeyDown={e => {
                   if (e.key === 'Enter') {

@@ -76,6 +76,19 @@ h1 {
   &:focus-within {
     border-bottom: 2px solid $secondary;
   }
+  .delete-icon {
+    display: flex;
+    align-items: center;
+    height: 22px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    cursor: pointer;
+    img {
+      height: 15px;
+    }
+  }
 }
 
 .sub-text {

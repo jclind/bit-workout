@@ -3,14 +3,21 @@ import { SignupContext } from '../../../pages/Signup'
 import FormInput from '../../FormInput'
 import birthdayIcon from '../../../assets/images/icons/birthday.svg'
 import heightIcon from '../../../assets/images/icons/height.svg'
+import weightIcon from '../../../assets/images/icons/weight.svg'
 import BirthdayInput from '../../BirthdayInput'
 import HeightInput from '../../HeightInput'
+import WeightInput from '../../WeightInput'
 
 const SignupPersonal = () => {
-  const { handleSubmit, birthdayVal, setBirthdayVal } =
-    useContext(SignupContext)
-
-  const [startDate, setStartDate] = useState(new Date())
+  const {
+    handleSubmit,
+    birthdayVal,
+    setBirthdayVal,
+    heightVal,
+    setHeightVal,
+    weightVal,
+    setWeightVal,
+  } = useContext(SignupContext)
 
   return (
     <>
@@ -28,8 +35,21 @@ const SignupPersonal = () => {
             setVal={setBirthdayVal}
             required={true}
           />
-          <HeightInput icon={heightIcon} placeholder='height' />
-          {/* <input
+          <HeightInput
+            icon={heightIcon}
+            placeholder='height'
+            val={heightVal}
+            setVal={setHeightVal}
+          />
+          <WeightInput
+            icon={weightIcon}
+            placeholder='Weight'
+            inputType={'number'}
+            val={weightVal}
+            setVal={setWeightVal}
+            required={true}
+          />
+          {/* <input 
             type='text'
             onFocus={e => {
               e.target.type = 'date'

@@ -1,7 +1,12 @@
 @import '../helpers/functions.scss';
 @import '../helpers/vars.scss';
 
-.form-input-label {
+.form-weight-label {
+  .icon {
+    position: absolute;
+    color: $primary;
+    height: 18px;
+  }
   input {
     height: $form-input-height;
     width: 100%;
@@ -14,14 +19,5 @@
     background: $primary-background !important;
     color: $primary !important;
     caret-color: $secondary;
-  }
-
-  .icon,
-  .delete-icon {
-    position: absolute;
-    color: $primary;
-  }
-  .icon {
-    height: 18px;
   }
 }

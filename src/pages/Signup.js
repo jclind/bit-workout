@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation, useOutlet, Navigate } from 'react-router-dom'
 import signupBackground from '../assets/images/signup-background.png'
 import '../assets/styles/pages/signup.scss'
@@ -12,10 +12,17 @@ const Signup = () => {
   const [passwordVal, setPasswordVal] = useState('')
 
   const [birthdayVal, setBirthdayVal] = useState('')
+  const [heightVal, setHeightVal] = useState({ feet: '', inches: '' })
+  const [weightVal, setWeightVal] = useState('')
 
   const handleSubmit = e => {
     e.preventDefault()
   }
+
+  useEffect(() => {
+    console.log(birthdayVal)
+    console.log(new Date(birthdayVal))
+  }, [birthdayVal])
 
   const location = useLocation()
   const outlet = useOutlet()
@@ -36,6 +43,10 @@ const Signup = () => {
     handleSubmit,
     birthdayVal,
     setBirthdayVal,
+    heightVal,
+    setHeightVal,
+    weightVal,
+    setWeightVal,
   }
 
   return (
