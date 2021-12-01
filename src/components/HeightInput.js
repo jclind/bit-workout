@@ -1,10 +1,41 @@
 import React from 'react'
 import '../assets/styles/components/height-input.scss'
+import { Dropdown } from 'react-bootstrap'
 
 const HeightInput = () => {
-  return (
-    <>
-      <label className='form-input-label'>
+    return (
+        <>
+            <Dropdown className='height-input'>
+                <Dropdown.Toggle
+                    id='dropdown-basic'
+                    className='dropdown-toggle'
+                >
+                    Dropdown Button
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu className='options-container'>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+            {/* <label className='form-input-label'>
         <select name='height' className='height-input'>
           <optgroup label='ft, in'>
             <option value='' disabled selected className='placeholder'>
@@ -72,9 +103,9 @@ const HeightInput = () => {
             <option value={{ ft: 8, in: 11 }}>8' 11"</option>
           </optgroup>
         </select>
-      </label>
-    </>
-  )
+      </label> */}
+        </>
+    )
 }
 
 export default HeightInput

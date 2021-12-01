@@ -2,13 +2,30 @@
 @import '../helpers/vars.scss';
 
 .height-input {
-  width: 100%;
-  outline: none;
-  border-radius: none;
-  background: none;
-  border: none;
-  optgroup {
-    font-size: 10px;
-    color: red;
-  }
+    @import '~bootstrap/scss/bootstrap';
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    outline: none;
+    border-radius: none;
+    background: none;
+    border: none;
+    font-size: toRem(16);
+
+    .dropdown-toggle,
+    .options-container {
+        color: $primary;
+        text-align: left;
+        background: none;
+        outline: none;
+        border: none;
+        &:focus {
+            color: $primary;
+            background: none;
+        }
+    }
+    .options-container {
+        width: 100%;
+    }
 }
