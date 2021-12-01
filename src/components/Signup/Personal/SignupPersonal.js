@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { SignupContext } from '../../../pages/Signup'
 import FormInput from '../../FormInput'
 import birthdayIcon from '../../../assets/images/icons/birthday.svg'
+import heightIcon from '../../../assets/images/icons/height.svg'
 import BirthdayInput from '../../BirthdayInput'
 import HeightInput from '../../HeightInput'
 
@@ -27,7 +28,7 @@ const SignupPersonal = () => {
             setVal={setBirthdayVal}
             required={true}
           />
-          <HeightInput />
+          <HeightInput icon={heightIcon} placeholder='height' />
           {/* <input
             type='text'
             onFocus={e => {

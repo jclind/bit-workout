@@ -2,18 +2,6 @@
 @import '../helpers/vars.scss';
 
 .form-input-label {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: $form-label-height;
-  width: 100%;
-  border-radius: none;
-  border-bottom: 1px solid $primary;
-
-  &:focus-within {
-    border-bottom: 2px solid $secondary;
-  }
-
   input {
     height: $form-input-height;
     width: 100%;

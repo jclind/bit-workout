@@ -17,7 +17,7 @@ const FormInput = ({ icon, placeholder, inputType, val, setVal, required }) => {
   }
 
   return (
-    <label htmlFor='' className='form-input-label'>
+    <label htmlFor='' className='form-input-label form-label'>
       <img src={icon} alt={placeholder} className='icon' />
       <input
         type={`${inputType}`}

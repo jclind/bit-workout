@@ -63,6 +63,21 @@ h1 {
   font-size: toRem(36) !important;
 }
 
+// Form Styles
+.form-label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: $form-label-height;
+  width: 100%;
+  border-radius: none;
+  border-bottom: 1px solid $primary;
+
+  &:focus-within {
+    border-bottom: 2px solid $secondary;
+  }
+}
+
 .sub-text {
   font-size: toRem(12);
   font-weight: 700;

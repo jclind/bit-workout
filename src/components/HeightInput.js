@@ -1,93 +1,88 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import '../assets/styles/components/height-input.scss'
-import { Dropdown } from 'react-bootstrap'
 
-const HeightInput = () => {
-    return (
-        <>
-            <Dropdown className='height-input'>
-                <Dropdown.Toggle
-                    id='dropdown-basic'
-                    className='dropdown-toggle'
-                >
-                    Dropdown Button
-                </Dropdown.Toggle>
+const HeightInput = ({ icon, placeholder }) => {
+  const [feet, setFeet] = useState('')
+  const [inches, setInches] = useState('')
 
-                <Dropdown.Menu className='options-container'>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-            {/* <label className='form-input-label'>
-        <select name='height' className='height-input'>
-          <optgroup label='ft, in'>
-            <option value='' disabled selected className='placeholder'>
-              Height
-            </option>
-            <option value={{ ft: 4, in: 0 }}>4' 0"</option>
-            <option value={{ ft: 4, in: 1 }}>4' 1"</option>
-            <option value={{ ft: 4, in: 2 }}>4' 2"</option>
-            <option value={{ ft: 4, in: 3 }}>4' 3"</option>
-            <option value={{ ft: 4, in: 4 }}>4' 4"</option>
-            <option value={{ ft: 4, in: 5 }}>4' 5"</option>
-            <option value={{ ft: 4, in: 6 }}>4' 6"</option>
-            <option value={{ ft: 4, in: 7 }}>4' 7"</option>
-            <option value={{ ft: 4, in: 8 }}>4' 8"</option>
-            <option value={{ ft: 4, in: 9 }}>4' 9"</option>
-            <option value={{ ft: 4, in: 10 }}>4' 10"</option>
-            <option value={{ ft: 4, in: 11 }}>4' 11"</option>
-            <option value={{ ft: 5, in: 0 }}>5' 0"</option>
-            <option value={{ ft: 5, in: 1 }}>5' 1"</option>
-            <option value={{ ft: 5, in: 2 }}>5' 2"</option>
-            <option value={{ ft: 5, in: 3 }}>5' 3"</option>
-            <option value={{ ft: 5, in: 4 }}>5' 4"</option>
-            <option value={{ ft: 5, in: 5 }}>5' 5"</option>
-            <option value={{ ft: 5, in: 6 }}>5' 6"</option>
-            <option value={{ ft: 5, in: 7 }}>5' 7"</option>
-            <option value={{ ft: 5, in: 8 }}>5' 8"</option>
-            <option value={{ ft: 5, in: 9 }}>5' 9"</option>
-            <option value={{ ft: 5, in: 10 }}>5' 10"</option>
-            <option value={{ ft: 5, in: 11 }}>5' 11"</option>
-            <option value={{ ft: 6, in: 0 }}>6' 0"</option>
-            <option value={{ ft: 6, in: 1 }}>6' 1"</option>
-            <option value={{ ft: 6, in: 2 }}>6' 2"</option>
-            <option value={{ ft: 6, in: 3 }}>6' 3"</option>
-            <option value={{ ft: 6, in: 4 }}>6' 4"</option>
-            <option value={{ ft: 6, in: 5 }}>6' 5"</option>
-            <option value={{ ft: 6, in: 6 }}>6' 6"</option>
-            <option value={{ ft: 6, in: 7 }}>6' 7"</option>
-            <option value={{ ft: 6, in: 8 }}>6' 8"</option>
-            <option value={{ ft: 6, in: 9 }}>6' 9"</option>
-            <option value={{ ft: 6, in: 10 }}>6' 10"</option>
-            <option value={{ ft: 6, in: 11 }}>6' 11"</option>
-            <option value={{ ft: 7, in: 0 }}>7' 0"</option>
-            <option value={{ ft: 7, in: 1 }}>7' 1"</option>
-            <option value={{ ft: 7, in: 2 }}>7' 2"</option>
-            <option value={{ ft: 7, in: 3 }}>7' 3"</option>
-            <option value={{ ft: 7, in: 4 }}>7' 4"</option>
-            <option value={{ ft: 7, in: 5 }}>7' 5"</option>
-            <option value={{ ft: 7, in: 6 }}>7' 6"</option>
-            <option value={{ ft: 7, in: 7 }}>7' 7"</option>
-            <option value={{ ft: 7, in: 8 }}>7' 8"</option>
-            <option value={{ ft: 7, in: 9 }}>7' 9"</option>
-            <option value={{ ft: 7, in: 10 }}>7' 10"</option>
-            <option value={{ ft: 7, in: 11 }}>7' 11"</option>
-            <option value={{ ft: 8, in: 0 }}>8' 0"</option>
-            <option value={{ ft: 8, in: 1 }}>8' 1"</option>
-            <option value={{ ft: 8, in: 2 }}>8' 2"</option>
-            <option value={{ ft: 8, in: 3 }}>8' 3"</option>
-            <option value={{ ft: 8, in: 4 }}>8' 4"</option>
-            <option value={{ ft: 8, in: 5 }}>8' 5"</option>
-            <option value={{ ft: 8, in: 6 }}>8' 6"</option>
-            <option value={{ ft: 8, in: 7 }}>8' 7"</option>
-            <option value={{ ft: 8, in: 8 }}>8' 8"</option>
-            <option value={{ ft: 8, in: 9 }}>8' 9"</option>
-            <option value={{ ft: 8, in: 10 }}>8' 10"</option>
-            <option value={{ ft: 8, in: 11 }}>8' 11"</option>
-          </optgroup>
-        </select>
-      </label> */}
-        </>
-    )
+  const feetRef = useRef()
+  const inchesRef = useRef()
+
+  const handleFeetChange = e => {
+    let currVal = e.target.value
+    if (currVal >= 10) {
+      currVal = currVal % 10
+    }
+    console.log(currVal)
+
+    if (isNaN(currVal) && currVal) return
+    if ((currVal < 4 || currVal > 8) && currVal) return
+
+    setFeet(currVal)
+    if (currVal !== '') {
+      inchesRef.current.focus()
+    }
+  }
+  const handleInchesChange = e => {
+    let currVal = e.target.value
+    console.log('1')
+    if (isNaN(currVal)) return
+    console.log('2')
+    if ((currVal < 0 || currVal > 11) && currVal !== 1) return
+    console.log('3')
+
+    setInches(currVal)
+
+    if (
+      ((currVal > 1 && currVal <= 11) || Number(currVal) === 0) &&
+      currVal !== ''
+    ) {
+      inchesRef.current.blur()
+    }
+  }
+  const handleFocus = e => {
+    const currVal = e.target.value
+    if (currVal) {
+      e.target.select()
+    }
+  }
+
+  return (
+    <>
+      <label className='form-label height-input-label'>
+        <img src={icon} alt={placeholder} className='icon' />
+        <div className='height-inputs'>
+          <div className='feet-input'>
+            <input
+              type='number'
+              placeholder='4'
+              onChange={e => handleFeetChange(e)}
+              onFocus={e => handleFocus(e)}
+              value={feet}
+              ref={feetRef}
+            />
+            <span>ft</span>
+          </div>
+          <div className='inches-input'>
+            <input
+              type='number'
+              placeholder='0'
+              onChange={e => handleInchesChange(e)}
+              onFocus={e => handleFocus(e)}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  inchesRef.current.blur()
+                }
+              }}
+              value={inches}
+              ref={inchesRef}
+            />
+            <span>in</span>
+          </div>
+        </div>
+      </label>
+    </>
+  )
 }
 
 export default HeightInput
