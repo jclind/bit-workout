@@ -15,24 +15,6 @@ const HeightInput = () => {
 
                 <Dropdown.Menu className='options-container'>
                     <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
             {/* <label className='form-input-label'>
