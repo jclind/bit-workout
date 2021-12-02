@@ -26,7 +26,6 @@ export function AuthProvider({ children }) {
       const uid = cred.user.uid
       addNewUsername(usernameVal, uid)
       return setDoc(doc(db, 'users', uid), {
-        email: email,
         username: usernameVal,
         name: fullNameVal,
         gender: genderVal,
@@ -63,16 +62,22 @@ export function AuthProvider({ children }) {
     return currentUser.updatePassword(password)
   }
 
+  function setUserData(uid, setData) {
+    if (uid) {
+      const userRef = doc(db, 'users', uid)
+      return getDoc(userRef).then(doc => {
+        setData(doc.data())
+        setLoading(false)
+      })
+    }
+    return setData(null)
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user) {
-        const userRef = doc(db, 'users', user.uid)
-        const userSnap = getDoc(userRef).then(doc => {
-          setCurrUserData(doc.data())
-          setCurrentUser(user)
-          setLoading(false)
-        })
-      }
+      setUserData(user.uid, setCurrUserData)
+      setLoading(false)
+      setCurrentUser(user)
     })
 
     return unsubscribe

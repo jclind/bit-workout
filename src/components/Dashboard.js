@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 const Dashboard = () => {
   const [error, setError] = useState('')
-  const { currentUser, currUserData, logout } = useAuth()
+  const { currUserData, currentUser, logout } = useAuth()
   const navigate = useNavigate()
 
   async function handleLogout() {
@@ -17,8 +17,8 @@ const Dashboard = () => {
     }
   }
 
-  const { email, username, name, gender, birthday, height, weight } =
-    currUserData
+  const { email } = currentUser
+  const { username, name, gender, birthday, height, weight } = currUserData
   console.log(currUserData, email)
   return (
     <>
