@@ -1,0 +1,10 @@
+@import '../helpers/functions.scss';
+@import '../helpers/vars.scss';
+
+nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: toRem(60);
+    background: red;
+}

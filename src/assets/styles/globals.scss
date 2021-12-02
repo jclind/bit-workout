@@ -3,107 +3,108 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
 * {
-  color: $primary;
-  font-family: $font-family;
+    color: $primary;
+    font-family: $font-family;
 }
 
 html,
 body {
-  height: 100%;
-  overflow-x: hidden;
+    height: 100%;
+    overflow-x: hidden;
 }
 body {
-  background: $primary-background;
-  position: relative;
-  width: 100%;
+    background: $primary-background;
+    position: relative;
+    width: 100%;
+    letter-spacing: 0.025em;
 }
 div {
-  margin-bottom: 2rem;
-  font-size: 1.5rem;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
 }
 button {
-  height: 40px;
-  outline: none;
-  border: none;
-  margin-top: 2rem;
-  width: 100%;
-  border-radius: toRem(5);
+    height: 40px;
+    outline: none;
+    border: none;
+    margin-top: 2rem;
+    width: 100%;
+    border-radius: toRem(5);
 }
 
 input {
-  background: none;
-  outline: none;
-  border: none;
-  border-radius: none !important;
-  box-shadow: none;
-  font-size: toRem(16) !important;
+    background: none;
+    outline: none;
+    border: none;
+    border-radius: none !important;
+    box-shadow: none;
+    font-size: toRem(16) !important;
 }
 input::placeholder {
-  text-transform: capitalize;
-  color: $placeholder-color;
+    text-transform: capitalize;
+    color: $placeholder-color;
 }
 .placeholder {
-  text-transform: capitalize;
-  color: $placeholder-color;
+    text-transform: capitalize;
+    color: $placeholder-color;
 }
 input {
-  -webkit-appearance: none;
+    -webkit-appearance: none;
 }
 
 h1,
 h2 {
-  padding: 0;
-  margin: 0;
-  background: none;
+    padding: 0;
+    margin: 0;
+    background: none;
 
-  font-weight: 700;
+    font-weight: 700;
 }
 
 h1 {
-  font-size: toRem(36) !important;
+    font-size: toRem(36) !important;
 }
 
 // Form Styles
 .form-label {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: $form-label-height;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  border-radius: none;
-  border-bottom: 1px solid $primary;
-
-  &:focus-within {
-    border-bottom: 2px solid $secondary;
-  }
-  .delete-icon {
+    position: relative;
     display: flex;
     align-items: center;
-    height: 22px;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto 0;
-    cursor: pointer;
-    img {
-      height: 15px;
+    height: $form-label-height;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    border-radius: none;
+    border-bottom: 1px solid $primary;
+
+    &:focus-within {
+        border-bottom: 2px solid $secondary;
     }
-  }
+    .delete-icon {
+        display: flex;
+        align-items: center;
+        height: 22px;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+        cursor: pointer;
+        img {
+            height: 15px;
+        }
+    }
 }
 
 .sub-text {
-  font-size: toRem(12);
-  font-weight: 700;
-  color: $secondary-text;
-  text-align: center;
+    font-size: toRem(12);
+    font-weight: 700;
+    color: $secondary-text;
+    text-align: center;
 }
 
 .text-link {
-  color: $white-text;
-  font-size: inherit;
-  text-decoration: underline;
+    color: $white-text;
+    font-size: inherit;
+    text-decoration: underline;
 }
 
 input:-webkit-autofill,
@@ -117,19 +118,19 @@ textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  border: none !important;
-  color: $primary;
-  -webkit-text-fill-color: $primary !important;
-  -webkit-box-shadow: 0 0 0px 1000px $primary-background inset;
-  transition: background-color 5000s ease-in-out 0s;
+    border: none !important;
+    color: $primary;
+    -webkit-text-fill-color: $primary !important;
+    -webkit-box-shadow: 0 0 0px 1000px $primary-background inset;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 input:-webkit-autofill::first-line {
-  font-size: 16px;
+    font-size: 16px;
 }
 
 input[type='date']::-webkit-inner-spin-button,
 input[type='date']::-webkit-calendar-picker-indicator {
-  display: none;
-  -webkit-appearance: none;
+    display: none;
+    -webkit-appearance: none;
 }
