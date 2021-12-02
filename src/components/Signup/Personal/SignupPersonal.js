@@ -5,7 +5,7 @@ import birthdayIcon from '../../../assets/images/icons/birthday.svg'
 import heightIcon from '../../../assets/images/icons/height.svg'
 import weightIcon from '../../../assets/images/icons/weight.svg'
 import BirthdayInput from '../../BirthdayInput'
-import HeightInput from '../../HeightInput'
+import HeightInputContainer from '../../HeightInput/HeightInputContainer'
 import WeightInput from '../../WeightInput'
 
 const SignupPersonal = () => {
@@ -35,7 +35,7 @@ const SignupPersonal = () => {
             setVal={setBirthdayVal}
             required={true}
           />
-          <HeightInput
+          <HeightInputContainer
             icon={heightIcon}
             placeholder='height'
             val={heightVal}
