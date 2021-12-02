@@ -3,20 +3,20 @@ import SignupAccount from './SignupAccount'
 import { useNavigate } from 'react-router-dom'
 
 const SignupContainer = () => {
-  async function handleSubmit(e) {
-    e.preventDefault()
+  const accountForm = useRef()
+  const navigate = useNavigate()
 
-    // try {
-    //   setError('')
-    //   await signup(emailRef.current.value, passwordRef.current.value)
-    //   navigate('/')
-    // } catch (error) {
-    //   console.log(error)
-    //   setError('Failed to create an account')
-    // }
+  function handleAccountSubmit(e) {
+    e.preventDefault()
+    navigate('/signup/personal-info')
   }
 
-  return <SignupAccount handleSubmit={handleSubmit} />
+  return (
+    <SignupAccount
+      handleAccountSubmit={handleAccountSubmit}
+      accountForm={accountForm}
+    />
+  )
 }
 
 export default SignupContainer

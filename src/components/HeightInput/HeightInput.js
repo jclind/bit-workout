@@ -38,6 +38,7 @@ const HeightInput = ({
               onChange={e => handleFeetChange(e)}
               onFocus={e => handleFocus(e)}
               value={feet}
+              pattern='\d*'
               ref={feetRef}
             />
             <span>ft</span>
@@ -49,7 +50,10 @@ const HeightInput = ({
               step='1'
               min='0'
               onInput={e => handleInchesChange(e)}
-              onFocus={e => handleFocus(e)}
+              onFocus={e => {
+                handleFocus(e)
+                if (!feet) feetRef.current.focus()
+              }}
               onKeyDown={e => {
                 if (e.key === 'Enter') {
                   inchesRef.current.blur()
@@ -57,6 +61,7 @@ const HeightInput = ({
               }}
               value={inches}
               ref={inchesRef}
+              pattern='\d*'
             />
             <span>in</span>
           </div>

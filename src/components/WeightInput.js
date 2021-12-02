@@ -16,8 +16,12 @@ const WeightInput = ({ icon, placeholder, val, setVal, required }) => {
     const currVal = e.target.value
 
     if (isNaN(currVal) && currVal) return
+    if (currVal > 999) return
 
     setVal(currVal)
+    if (currVal >= 100) {
+      e.target.blur()
+    }
   }
   return (
     <label htmlFor='' className='form-weight-label form-label'>
@@ -29,6 +33,7 @@ const WeightInput = ({ icon, placeholder, val, setVal, required }) => {
         value={val}
         required={required}
         data-lpignore='true'
+        pattern='\d*'
       />
       {clear && (
         <div onClick={() => setVal('')} className='delete-icon'>

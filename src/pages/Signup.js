@@ -11,6 +11,7 @@ const Signup = () => {
   const [emailVal, setEmailVal] = useState('')
   const [passwordVal, setPasswordVal] = useState('')
 
+  const [genderVal, setGenderVal] = useState('female')
   const [birthdayVal, setBirthdayVal] = useState('')
   const [heightVal, setHeightVal] = useState({ feet: '', inches: '' })
   const [weightVal, setWeightVal] = useState('')
@@ -30,6 +31,14 @@ const Signup = () => {
   if (location.pathname === '/signup') {
     return <Navigate to='/signup/account-info' />
   }
+  // If the fields from /signup/account-info aren't all filled out
+  // then redirect back to that page
+  if (
+    location.pathname === '/signup/personal-info' &&
+    !(usernameVal && fullNameVal && emailVal && passwordVal)
+  ) {
+    // return <Navigate to='/signup/account-info' />
+  }
 
   const value = {
     usernameVal,
@@ -41,6 +50,8 @@ const Signup = () => {
     passwordVal,
     setPasswordVal,
     handleSubmit,
+    genderVal,
+    setGenderVal,
     birthdayVal,
     setBirthdayVal,
     heightVal,

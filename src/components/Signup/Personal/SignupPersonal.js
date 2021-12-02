@@ -10,6 +10,8 @@ import WeightInput from '../../WeightInput'
 
 const SignupPersonal = () => {
   const {
+    genderVal,
+    setGenderVal,
     handleSubmit,
     birthdayVal,
     setBirthdayVal,
@@ -25,39 +27,45 @@ const SignupPersonal = () => {
         <form action='' onSubmit={handleSubmit}>
           <h3 className='sub-text'>Please enter the following information:</h3>
           <div className='gender-inputs'>
-            <div className='female'>Female</div>
-            <div className='male'>Male</div>
+            <div
+              className={genderVal === 'female' ? 'female selected' : 'female'}
+              onClick={() => setGenderVal('female')}
+            >
+              Female
+            </div>
+            <div
+              className={genderVal === 'male' ? 'male selected' : 'male'}
+              onClick={() => setGenderVal('male')}
+            >
+              Male
+            </div>
           </div>
-          <BirthdayInput
-            icon={birthdayIcon}
-            placeholder='birthday'
-            val={birthdayVal}
-            setVal={setBirthdayVal}
-            required={true}
-          />
-          <HeightInputContainer
-            icon={heightIcon}
-            placeholder='height'
-            val={heightVal}
-            setVal={setHeightVal}
-          />
-          <WeightInput
-            icon={weightIcon}
-            placeholder='Weight'
-            inputType={'number'}
-            val={weightVal}
-            setVal={setWeightVal}
-            required={true}
-          />
-          {/* <input 
-            type='text'
-            onFocus={e => {
-              e.target.type = 'date'
-            }}
-            min='1900-01-01'
-            max={`${new Date().getFullYear()}-12-31`}
-            placeholder='birthday'
-          /> */}
+          <div className='inputs'>
+            <BirthdayInput
+              icon={birthdayIcon}
+              placeholder='birthday'
+              val={birthdayVal}
+              setVal={setBirthdayVal}
+              required={true}
+            />
+            <HeightInputContainer
+              icon={heightIcon}
+              placeholder='height'
+              val={heightVal}
+              setVal={setHeightVal}
+            />
+            <WeightInput
+              icon={weightIcon}
+              placeholder='Weight, lbs'
+              inputType={'number'}
+              val={weightVal}
+              setVal={setWeightVal}
+              required={true}
+            />
+          </div>
+          <button type='submit' className='submit-btn'>
+            Complete Sign Up
+          </button>
         </form>
       </div>
     </>

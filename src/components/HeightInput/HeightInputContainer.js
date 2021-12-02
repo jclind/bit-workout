@@ -5,7 +5,7 @@ import '../../assets/styles/components/height-input.scss'
 const HeightInputContainer = ({ icon, placeholder, val, setVal }) => {
   const [focus, setFocus] = useState(false)
   const [clear, setClear] = useState(false)
-  console.log(val.feet)
+
   const [feet, setFeet] = useState(val.feet)
   const [inches, setInches] = useState(val.inches)
 

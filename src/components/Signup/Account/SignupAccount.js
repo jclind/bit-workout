@@ -8,7 +8,7 @@ import passwordIcon from '../../../assets/images/icons/password.svg'
 import FormInput from '../../FormInput'
 import { SignupContext } from '../../../pages/Signup'
 
-const SignupForm = ({ handleSubmit }) => {
+const SignupAccount = ({ handleAccountSubmit, accountForm }) => {
   const {
     usernameVal,
     setUsernameVal,
@@ -23,7 +23,7 @@ const SignupForm = ({ handleSubmit }) => {
   return (
     <>
       <div className='content signup-account-info'>
-        <form action='' onSubmit={handleSubmit}>
+        <form action='' onSubmit={handleAccountSubmit} ref={accountForm}>
           <div className='inputs'>
             <FormInput
               icon={usernameIcon}
@@ -58,11 +58,9 @@ const SignupForm = ({ handleSubmit }) => {
               required={true}
             />
           </div>
-          <Link to='/signup/personal-info'>
-            <button type='submit' className='submit-btn'>
-              Next Step
-            </button>
-          </Link>
+          <button type='submit' className='submit-btn'>
+            Next Step
+          </button>
           <div className='sign-in-prompt'>
             <p className='sub-text'>
               Already have an account?{' '}
@@ -73,25 +71,8 @@ const SignupForm = ({ handleSubmit }) => {
           </div>
         </form>
       </div>
-      {/* <form onSubmit={handleSubmit} className='signup-form'>
-        {error && <div>ERROR!</div>}
-        <label>
-          Email
-          <input type='email' ref={emailRef} />
-        </label>
-        <label>
-          Password
-          <input type='password' ref={passwordRef} />
-        </label>
-        <button type='submit' disabled={loading}>
-          Sign Up
-        </button>
-      </form>
-      <div>
-        Already have an account? <Link to='/login'>Log In</Link>
-      </div> */}
     </>
   )
 }
 
-export default SignupForm
+export default SignupAccount

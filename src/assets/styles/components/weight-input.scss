@@ -2,6 +2,8 @@
 @import '../helpers/vars.scss';
 
 .form-weight-label {
+  padding: 0;
+  margin: 0;
   .icon {
     position: absolute;
     color: $primary;
@@ -19,5 +21,8 @@
     background: $primary-background !important;
     color: $primary !important;
     caret-color: $secondary;
+    &::placeholder {
+      text-transform: none;
+    }
   }
 }
