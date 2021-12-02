@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { auth, db } from '../firebase'
+import { getDoc, doc, setDoc } from 'firebase/firestore'
 
 const AuthContext = React.createContext()
 
@@ -9,10 +10,37 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
+  const [currUserData, setCurrUserData] = useState()
   const [loading, setLoading] = useState(true)
 
-  function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password)
+  function signup(email, password, payload) {
+    const {
+      usernameVal,
+      fullNameVal,
+      genderVal,
+      birthdayVal,
+      heightVal,
+      weightVal,
+    } = payload
+    return auth.createUserWithEmailAndPassword(email, password).then(cred => {
+      const uid = cred.user.uid
+      addNewUsername(usernameVal, uid)
+      return setDoc(doc(db, 'users', uid), {
+        email: email,
+        username: usernameVal,
+        name: fullNameVal,
+        gender: genderVal,
+        birthday: birthdayVal,
+        height: heightVal,
+        weight: weightVal,
+      })
+    })
+  }
+
+  function addNewUsername(username, uid) {
+    setDoc(doc(db, 'usernames', username), {
+      uid,
+    })
   }
 
   function login(email, password) {
@@ -37,8 +65,14 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
-      setCurrentUser(user)
-      setLoading(false)
+      if (user) {
+        const userRef = doc(db, 'users', user.uid)
+        const userSnap = getDoc(userRef).then(doc => {
+          setCurrUserData(doc.data())
+          setCurrentUser(user)
+          setLoading(false)
+        })
+      }
     })
 
     return unsubscribe
@@ -46,6 +80,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
+    currUserData,
     signup,
     login,
     logout,

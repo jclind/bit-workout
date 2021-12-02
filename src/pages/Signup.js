@@ -22,11 +22,18 @@ const Signup = () => {
 
   async function handleSignup(e) {
     e.preventDefault()
-
+    const payload = {
+      usernameVal,
+      fullNameVal,
+      genderVal,
+      birthdayVal,
+      heightVal,
+      weightVal,
+    }
     try {
       // setError('')
       // setLoading(true)
-      await signup(emailVal, passwordVal)
+      await signup(emailVal, passwordVal, payload)
       navigate('/')
     } catch (error) {
       console.log(error)
