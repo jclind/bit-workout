@@ -12,7 +12,7 @@ const SignupPersonal = () => {
   const {
     genderVal,
     setGenderVal,
-    handleSubmit,
+    handleSignup,
     birthdayVal,
     setBirthdayVal,
     heightVal,
@@ -24,7 +24,7 @@ const SignupPersonal = () => {
   return (
     <>
       <div className='content signup-personal-info'>
-        <form action='' onSubmit={handleSubmit}>
+        <form action='' onSubmit={handleSignup}>
           <h3 className='sub-text'>Please enter the following information:</h3>
           <div className='gender-inputs'>
             <div

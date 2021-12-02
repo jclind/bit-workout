@@ -52,7 +52,7 @@ const HeightInput = ({
               onInput={e => handleInchesChange(e)}
               onFocus={e => {
                 handleFocus(e)
-                if (!feet) feetRef.current.focus()
+                if (!feet && !focus) feetRef.current.focus()
               }}
               onKeyDown={e => {
                 if (e.key === 'Enter') {

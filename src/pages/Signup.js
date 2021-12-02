@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation, useOutlet, Navigate } from 'react-router-dom'
+import { useLocation, useOutlet, useNavigate, Navigate } from 'react-router-dom'
 import signupBackground from '../assets/images/signup-background.png'
 import '../assets/styles/pages/signup.scss'
+import { useAuth } from '../contexts/AuthContext'
 
 export const SignupContext = React.createContext({})
 
@@ -16,8 +17,22 @@ const Signup = () => {
   const [heightVal, setHeightVal] = useState({ feet: '', inches: '' })
   const [weightVal, setWeightVal] = useState('')
 
-  const handleSubmit = e => {
+  const navigate = useNavigate()
+  const { signup } = useAuth()
+
+  async function handleSignup(e) {
     e.preventDefault()
+
+    try {
+      // setError('')
+      // setLoading(true)
+      await signup(emailVal, passwordVal)
+      navigate('/')
+    } catch (error) {
+      console.log(error)
+      // setError('Failed to sign in')
+    }
+    // setLoading(false)
   }
 
   useEffect(() => {
@@ -37,7 +52,7 @@ const Signup = () => {
     location.pathname === '/signup/personal-info' &&
     !(usernameVal && fullNameVal && emailVal && passwordVal)
   ) {
-    // return <Navigate to='/signup/account-info' />
+    return <Navigate to='/signup/account-info' />
   }
 
   const value = {
@@ -49,7 +64,7 @@ const Signup = () => {
     setEmailVal,
     passwordVal,
     setPasswordVal,
-    handleSubmit,
+    handleSignup,
     genderVal,
     setGenderVal,
     birthdayVal,
