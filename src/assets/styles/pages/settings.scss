@@ -1,0 +1,11 @@
+@import '../helpers/functions.scss';
+@import '../helpers/vars.scss';
+
+.settings-page {
+  width: 90%;
+  margin: 0 auto;
+
+  .account-section {
+    margin-top: toRem(50);
+  }
+}

@@ -27,7 +27,10 @@ const Dashboard = () => {
       return setLoading(false)
     }
     if (!userData) {
+      console.log('fetched!!!')
       fetchData()
+    } else {
+      console.log('not fetched!!!')
     }
   }, [])
 

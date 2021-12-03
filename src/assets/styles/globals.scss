@@ -5,6 +5,7 @@
 * {
   color: $primary;
   font-family: $font-family;
+  letter-spacing: 0.025em;
 }
 
 html,
@@ -16,7 +17,6 @@ body {
   background: $primary-background;
   position: relative;
   width: 100%;
-  letter-spacing: 0.025em;
 }
 div {
   margin-bottom: 2rem;
@@ -92,6 +92,15 @@ h1 {
       height: 15px;
     }
   }
+}
+
+// Settings Styles
+.settings-title {
+  font-size: toRem(18);
+  font-weight: 700;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: toRem(30);
 }
 
 .sub-text {
