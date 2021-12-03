@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Workout from './Workout'
 import { getNextEvent } from '../../util/getNextEvent'
 import { exerciseList } from '../../assets/data/exerciseList'
+import NavbarContainer from '../Navbar/NavbarContainer'
 
 const WorkoutContainer = ({ exerciseData }) => {
   // Current workout event
@@ -52,6 +53,7 @@ const WorkoutContainer = ({ exerciseData }) => {
       ) : (
         <span>Loading</span>
       )}
+      <NavbarContainer />
     </>
   )
 }

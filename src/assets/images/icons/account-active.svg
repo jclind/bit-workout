@@ -1,0 +1,16 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+	<title>streamline-icon-interface-user-single@48x48 (5)-svg</title>
+	<defs>
+		<image  width="48" height="49" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAxCAMAAACrgNoQAAAAAXNSR0IB2cksfwAAAS9QTFRFAAAA7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u6urq7e3t7e3t7u7u7Ozs7u7u7u7u39/f6+vr7Ozs7e3t7u7u7e3t7e3t7u7u7u7ug9LroQAAAGV0Uk5TABU4RSkZGgsEVNX1+Pfz4MJ0DnX//cANXvCGCFf03xQ28vnQ0q5bWub+6WFq/BfxJScoIPobHdcKu5RlMJySFrW/E+M7bgI90+qEA1yWwc3Rzsu5cjBvn89Pr+8QQFBp9oKA5LDY3blyAAABjElEQVR4nOWT11LCQBhG14ZIDFgWEJWgYGFRRFARO7Eg9kqAJGDj/Z/BhJqYbbn2u8hMJuf8ZXYDACZDwyOjY55x3CdcvBM+YVL0B6amZ/j4WRF2EgyFeYS5COwlOL/A5hejcBApxuSXli08jCdWVte8NH49CW1BEKU2KMZmGjqCfFtkwefE0zCzTeS9cWeDIPJniUIs6BQgjOaIggfHQ4HcYcdth5xbIbuLEzJ7RCGfwgn75AtVOOgyyMKjQyIPwJHYwa2CcEwRCifWtZH5gk6pl++saOHbT/mcxhvGhX3jZJ7OA3ApWvn4VYklgOtyf2V0c3vH5AEI3z8UH5+eX17f3vPs+v81FaUqy7WaLFeVCpuuq5r14DS1TqN1RXL+DpKik/gGBm8rDXx5FY+bUTFNKoTy3SaO9RsajTe2/zNWk46badrmibIFzTKVLrB5w+hvXiqzafOnknvCB099M9019E9eQeoM9cXLQ/jdFn74BYnzCAYxt2i5EVqGEHIjJMyRImyul4DtfvDlF91CdIugT6inAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: none;stroke: #eeeeee;stroke-linecap:round;stroke-linejoin:round;stroke-width: 3.429 } 
+	</style>
+	<g id="Layer">
+		<g id="Layer">
+			<path id="Layer" class="shp0" d="M24 24C17.84 24 12.86 19.02 12.86 12.86C12.86 6.7 17.84 1.71 24 1.71C30.16 1.71 35.14 6.7 35.14 12.86C35.14 19.02 30.16 24 24 24Z" />
+			<use id="Layer" href="#img1" x="0" y="0" />
+		</g>
+	</g>
+</svg>

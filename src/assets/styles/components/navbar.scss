@@ -2,9 +2,47 @@
 @import '../helpers/vars.scss';
 
 nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: toRem(60);
-    background: red;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: toRem(65);
+  border-top: 1px solid $primary;
+  background: $primary-background;
+
+  .nav-links {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+
+    .nav-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+      width: 100%;
+      .icon {
+        height: toRem(25);
+        color: $teriary-text;
+      }
+      .link-text {
+        font-size: toRem(10);
+        font-weight: 500;
+        margin: 0;
+        padding: 0;
+        padding-top: toRem(8);
+        color: $teriary-text;
+      }
+    }
+    .nav-link.active {
+      .icon {
+        color: $primary;
+      }
+      .link-text {
+        color: $primary;
+      }
+    }
+  }
 }

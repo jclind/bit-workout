@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
+import NavbarContainer from './Navbar/NavbarContainer'
 
 const Dashboard = () => {
   const [error, setError] = useState('')
@@ -51,6 +52,7 @@ const Dashboard = () => {
       <div>
         <button onClick={handleLogout}>Log Out</button>
       </div>
+      <NavbarContainer />
     </>
   )
 }
