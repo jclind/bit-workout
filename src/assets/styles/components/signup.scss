@@ -22,8 +22,14 @@
     }
 
     .sign-in-prompt {
+      display: flex;
+      justify-content: center;
       text-align: center;
       margin-top: toRem(25);
+      p {
+        padding: 0;
+        margin: 0;
+      }
     }
   }
 }

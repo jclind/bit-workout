@@ -19,16 +19,25 @@ const NavbarContainer = () => {
     <>
       <nav>
         <div className='nav-links'>
-          <NavLink to='/' className='nav-link' activeClassName='active'>
+          <NavLink
+            to='/'
+            className={({ isActive }) =>
+              isActive ? 'nav-link active' : 'nav-link'
+            }
+          >
             {currLocation === '/' ? (
               <AiFillHome className='icon' />
             ) : (
               <AiOutlineHome className='icon' />
             )}
-
             <div className='link-text'>Home</div>
           </NavLink>
-          <NavLink to='/workout' className='nav-link' activeClassName='active'>
+          <NavLink
+            to='/workout'
+            className={({ isActive }) =>
+              isActive ? 'nav-link active' : 'nav-link'
+            }
+          >
             {currLocation === '/workout' ? (
               <MdRunCircle className='icon' />
             ) : (
@@ -36,7 +45,12 @@ const NavbarContainer = () => {
             )}
             <div className='link-text'>Workout</div>
           </NavLink>
-          <NavLink to='/account' className='nav-link' activeClassName='active'>
+          <NavLink
+            to='/account'
+            className={({ isActive }) =>
+              isActive ? 'nav-link active' : 'nav-link'
+            }
+          >
             {/* <img
               src={
               }
