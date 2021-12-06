@@ -3,7 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import deleteIcon from '../../assets/images/icons/delete.svg'
 import '../../assets/styles/components/settings/update-user-input.scss'
 
-const UpdateUserInput = ({ placeholder, val, setVal, maxCharacters }) => {
+const UpdateUserInput = ({
+  placeholder,
+  input,
+  val,
+  setVal,
+  maxCharacters,
+}) => {
   const [unsavedVal, setUnsavedVal] = useState(val)
   const [numCharacters, setNumCharacters] = useState('')
   const [activeSave, setActiveSave] = useState(false)
@@ -15,16 +21,31 @@ const UpdateUserInput = ({ placeholder, val, setVal, maxCharacters }) => {
     setUnsavedVal(currVal)
   }
   const handleSave = () => {
-    if (unsavedVal === val || unsavedVal === '') return
+    if (unsavedVal === val || unsavedVal === '')
+      return console.log('New value cannot be empty / equal oringial value')
 
-    const capitalizedText = unsavedVal
-      .toLowerCase()
-      .split(' ')
-      .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-      .join(' ')
+    if (input !== 'email') {
+      const capitalizedText = unsavedVal
+        .toLowerCase()
+        .split(' ')
+        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(' ')
 
-    setVal(capitalizedText)
-    // navigate(-1)
+      setVal(capitalizedText)
+    } else {
+      if (
+        !String(unsavedVal)
+          .toLowerCase()
+          .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          )
+      ) {
+        return console.log('invalid email')
+      }
+
+      setVal(unsavedVal)
+    }
+    return navigate(-1)
   }
 
   useEffect(() => {
@@ -41,7 +62,7 @@ const UpdateUserInput = ({ placeholder, val, setVal, maxCharacters }) => {
     <div className='update-user-input'>
       <div className='input-container'>
         <input
-          type='text'
+          type={input ? input : 'text'}
           placeholder={placeholder}
           value={unsavedVal}
           onInput={e => handleInput(e)}

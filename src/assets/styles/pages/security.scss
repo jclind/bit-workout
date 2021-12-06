@@ -1,0 +1,14 @@
+@import '../helpers/functions.scss';
+@import '../helpers/vars.scss';
+
+.security-page {
+  .change-password-form {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(25);
+  }
+  .show-passwords-btn {
+    font-size: toRem(12);
+    color: $secondary-text;
+  }
+}

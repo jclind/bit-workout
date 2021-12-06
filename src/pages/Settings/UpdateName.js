@@ -12,7 +12,6 @@ const UpdateName = () => {
         setVal={setName}
         maxCharacters={30}
       />
-      {name}
     </div>
   )
 }

@@ -13,9 +13,16 @@ const ManageAccount = () => {
           input='Jesse Lind'
           link={'update-name'}
         />
-        <SettingsButton title={'username'} input='test' link={'/'} />
-        <SettingsButton title={'email'} input='test@gmail.com' link={'/'} />
-        <SettingsButton title={'phone'} input='NA' link={'/'} />
+        <SettingsButton
+          title={'username'}
+          input='test'
+          link={'update-username'}
+        />
+        <SettingsButton
+          title={'email'}
+          input='test@gmail.com'
+          link={'update-email'}
+        />
       </section>
       <section className='personal-info settings-section'>
         <SettingsSectionTitle text={'membership'} />

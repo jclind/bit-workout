@@ -20,6 +20,9 @@ import SignupPersonalContainer from './components/Signup/Personal/SignupPersonal
 import Settings from './pages/Settings/Settings'
 import ManageAccount from './pages/Settings/ManageAccount'
 import UpdateName from './pages/Settings/UpdateName'
+import UpdateUsername from './pages/Settings/UpdateUsername'
+import UpdateEmail from './pages/Settings/UpdateEmail'
+import Security from './pages/Settings/Security'
 
 function App() {
   const currExerciseData = e1
@@ -43,6 +46,26 @@ function App() {
               exact
               path='/account/settings/manage-account/update-name'
               element={<UpdateName />}
+            />
+            <Route
+              exact
+              path='/account/settings/manage-account/update-name'
+              element={<UpdateName />}
+            />
+            <Route
+              exact
+              path='/account/settings/manage-account/update-username'
+              element={<UpdateUsername />}
+            />
+            <Route
+              exact
+              path='/account/settings/manage-account/update-email'
+              element={<UpdateEmail />}
+            />
+            <Route
+              exact
+              path='/account/settings/security'
+              element={<Security />}
             />
           </Route>
 

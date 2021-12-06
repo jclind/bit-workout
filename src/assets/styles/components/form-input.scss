@@ -9,18 +9,20 @@
     display: flex;
     justify-self: flex-start;
     border-radius: none;
-    padding-left: toRem(40);
     margin-right: toRem(20);
     background: $primary-background !important;
     color: $primary !important;
     caret-color: $secondary;
   }
-
+  input.active-icon {
+    padding-left: toRem(40);
+  }
   .icon,
   .delete-icon {
     position: absolute;
     color: $primary;
   }
+
   .icon {
     height: 18px;
   }

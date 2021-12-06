@@ -24,7 +24,7 @@ const Settings = () => {
   }
 
   return (
-    <div className='settings-page'>
+    <div className='settings-page page'>
       <div className='settings-title'>Settings</div>
       <section className='account-section settings-section'>
         <SettingsSectionTitle text={'Account'} />
@@ -33,7 +33,7 @@ const Settings = () => {
           icon={accountIcon}
           link={'manage-account'}
         />
-        <SettingsButton title={'Security'} icon={lockIcon} link={'/'} />
+        <SettingsButton title={'Security'} icon={lockIcon} link={'security'} />
       </section>
       <section className='login-section settings-section'>
         <SettingsSectionTitle text={'login'} />
