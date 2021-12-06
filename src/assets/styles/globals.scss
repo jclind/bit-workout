@@ -5,7 +5,7 @@
 * {
   color: $primary;
   font-family: $font-family;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.05em;
 }
 
 html,
@@ -65,8 +65,10 @@ h1 {
 }
 
 .page {
+  position: relative;
   width: 90%;
   margin: 0 auto;
+  margin-top: toRem(30);
 }
 
 // Form Styles
@@ -105,7 +107,6 @@ h1 {
   font-weight: 700;
   margin: 0 auto;
   text-align: center;
-  margin-top: toRem(30);
   margin-bottom: toRem(50);
 }
 .settings-section {

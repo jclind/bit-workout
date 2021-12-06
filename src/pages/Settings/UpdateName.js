@@ -5,13 +5,14 @@ const UpdateName = () => {
   const [name, setName] = useState('Jesse Lind')
   return (
     <div className='update-name-page page'>
-      <div className='settings-title'>Update Name</div>
+      <div className='settings-title'>Name</div>
       <UpdateUserInput
         placeholder={'Enter Updated Name'}
         val={name}
         setVal={setName}
         maxCharacters={30}
       />
+      {name}
     </div>
   )
 }

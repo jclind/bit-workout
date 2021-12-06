@@ -42,4 +42,31 @@
     color: $secondary-text;
     margin-top: toRem(20);
   }
+  .action-buttons {
+    position: absolute;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    button {
+      background: none;
+      font-size: toRem(16);
+      font-weight: 500;
+      width: fit-content;
+      text-transform: capitalize;
+      padding: 0;
+      margin: 0;
+      height: auto;
+      color: $secondary-text;
+    }
+    .save {
+      color: $secondary-background;
+    }
+    .save.active {
+      color: $secondary;
+    }
+  }
 }
