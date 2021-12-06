@@ -8,7 +8,11 @@ const ManageAccount = () => {
       <div className='settings-title'>Manage Account</div>
       <section className='personal-info settings-section'>
         <SettingsSectionTitle text={'personal information'} />
-        <SettingsButton title={'name'} input='Jesse Lind' link={'/'} />
+        <SettingsButton
+          title={'name'}
+          input='Jesse Lind'
+          link={'update-name'}
+        />
         <SettingsButton title={'username'} input='test' link={'/'} />
         <SettingsButton title={'email'} input='test@gmail.com' link={'/'} />
         <SettingsButton title={'phone'} input='NA' link={'/'} />

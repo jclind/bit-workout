@@ -31,7 +31,7 @@ const Settings = () => {
         <SettingsButton
           title={'Manage Account'}
           icon={accountIcon}
-          link={'/account/settings/manage-account'}
+          link={'manage-account'}
         />
         <SettingsButton title={'Security'} icon={lockIcon} link={'/'} />
       </section>

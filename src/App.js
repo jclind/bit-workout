@@ -19,6 +19,7 @@ import SignupAccountContainer from './components/Signup/Account/SignupAccountCon
 import SignupPersonalContainer from './components/Signup/Personal/SignupPersonalContainer'
 import Settings from './pages/Settings/Settings'
 import ManageAccount from './pages/Settings/ManageAccount'
+import UpdateName from './pages/Settings/UpdateName'
 
 function App() {
   const currExerciseData = e1
@@ -30,15 +31,20 @@ function App() {
           <Route exact path='/' element={<PrivateRoute />}>
             <Route exact path='/' element={<Dashboard />} />
           </Route>
-          <Route exact path='/account' element={<PrivateRoute />}>
+          <Route path='/account' element={<PrivateRoute />}>
             <Route exact path='/account' element={<Account />} />
+            <Route exact path='/account/settings' element={<Settings />} />
+            <Route
+              exact
+              path='/account/settings/manage-account'
+              element={<ManageAccount />}
+            />
+            <Route
+              exact
+              path='/account/settings/manage-account/update-name'
+              element={<UpdateName />}
+            />
           </Route>
-          <Route exact path='/account/settings' element={<Settings />} />
-          <Route
-            exact
-            path='/account/settings/manage-account'
-            element={<ManageAccount />}
-          />
 
           <Route exact path='/update-profile' element={<PrivateRoute />}>
             <Route
