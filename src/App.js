@@ -17,7 +17,8 @@ import ForgotPasswordContainer from './components/ForgotPassword/ForgotPasswordC
 import UpdateProfileContainer from './components/UpdateProfile/UpdateProfileContainer'
 import SignupAccountContainer from './components/Signup/Account/SignupAccountContainer'
 import SignupPersonalContainer from './components/Signup/Personal/SignupPersonalContainer'
-import Settings from './pages/Settings'
+import Settings from './pages/Settings/Settings'
+import ManageAccount from './pages/Settings/ManageAccount'
 
 function App() {
   const currExerciseData = e1
@@ -33,6 +34,11 @@ function App() {
             <Route exact path='/account' element={<Account />} />
           </Route>
           <Route exact path='/account/settings' element={<Settings />} />
+          <Route
+            exact
+            path='/account/settings/manage-account'
+            element={<ManageAccount />}
+          />
 
           <Route exact path='/update-profile' element={<PrivateRoute />}>
             <Route

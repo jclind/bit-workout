@@ -1,0 +1,40 @@
+@import '../../helpers/functions.scss';
+@import '../../helpers/vars.scss';
+
+.settings-button {
+  position: relative;
+  height: toRem(50);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-decoration: none;
+  margin: 0;
+
+  .icon {
+    position: absolute;
+    height: 18px;
+  }
+  .right-icon {
+    right: 0;
+  }
+
+  .setting-title,
+  .input-text {
+    font-size: toRem(16);
+    padding: 0;
+    margin: 0;
+  }
+  .setting-title {
+    font-weight: 600;
+    flex: 1;
+    text-transform: capitalize;
+  }
+  .setting-title.active-icon {
+    margin-left: toRem(35);
+  }
+  .input-text {
+    font-weight: 400;
+    color: $secondary-text;
+    margin-right: toRem(35);
+  }
+}

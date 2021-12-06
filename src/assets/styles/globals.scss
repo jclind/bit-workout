@@ -64,6 +64,11 @@ h1 {
   font-size: toRem(36) !important;
 }
 
+.page {
+  width: 90%;
+  margin: 0 auto;
+}
+
 // Form Styles
 .form-label {
   position: relative;
@@ -101,6 +106,15 @@ h1 {
   margin: 0 auto;
   text-align: center;
   margin-top: toRem(30);
+  margin-bottom: toRem(50);
+}
+.settings-section {
+  padding-bottom: toRem(25);
+  margin-bottom: toRem(25);
+  border-bottom: 1px solid $primary;
+  &:last-of-type {
+    border: none;
+  }
 }
 
 .sub-text {
