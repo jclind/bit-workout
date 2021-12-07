@@ -24,14 +24,7 @@ const UpdateUserInput = ({
     if (unsavedVal === val || unsavedVal === '')
       return console.log('New value cannot be empty / equal oringial value')
 
-    if (input !== 'email') {
-      const capitalizedText = unsavedVal
-        .toLowerCase()
-        .split(' ')
-        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(' ')
-      setVal(capitalizedText)
-    } else {
+    if (input === 'email') {
       if (
         !String(unsavedVal)
           .toLowerCase()
@@ -41,8 +34,8 @@ const UpdateUserInput = ({
       ) {
         return console.log('invalid email')
       }
-      setVal(unsavedVal)
     }
+    setVal(unsavedVal)
   }
 
   useEffect(() => {

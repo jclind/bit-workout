@@ -21,7 +21,6 @@ const UpdateName = () => {
         .catch(err => {
           console.log(err)
         })
-      console.log('it worked perhaps!')
     }
   }, [userName])
 

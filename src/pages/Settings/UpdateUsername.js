@@ -5,16 +5,14 @@ import { useAuth } from '../../contexts/AuthContext'
 
 const UpdateUsername = () => {
   const { updateUserData, currUserData } = useAuth()
-  const {
-    username: { currUsername },
-  } = currUserData
+  const { username } = currUserData
   const navigate = useNavigate()
 
-  const [username, setUsername] = useState('test')
+  const [newUsername, setNewUsername] = useState(username)
 
   useEffect(() => {
-    if (username !== '' && username !== currUsername) {
-      const payload = { prop: 'name', val: username }
+    if (newUsername !== '' && newUsername !== username) {
+      const payload = { prop: 'username', val: newUsername }
       updateUserData(payload)
         .then(() => {
           console.log('hello there')
@@ -23,17 +21,16 @@ const UpdateUsername = () => {
         .catch(err => {
           console.log(err)
         })
-      console.log('it worked perhaps!')
     }
-  }, [username])
+  }, [newUsername])
 
   return (
     <div className='update-name-page page'>
       <div className='settings-title'>Username</div>
       <UpdateUserInput
         placeholder={'Enter Updated Username'}
-        val={username}
-        setVal={setUsername}
+        val={newUsername}
+        setVal={setNewUsername}
         maxCharacters={30}
       />
     </div>

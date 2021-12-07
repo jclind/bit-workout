@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { auth, db } from '../firebase'
-import { getDoc, doc, setDoc, updateDoc } from 'firebase/firestore'
+import { getDoc, doc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import firebase from 'firebase/compat/app'
 
 const AuthContext = React.createContext()
@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
   }
 
   function addNewUsername(username, uid) {
-    setDoc(doc(db, 'usernames', username), {
+    return setDoc(doc(db, 'usernames', username), {
       uid,
     })
   }
@@ -74,17 +74,26 @@ export function AuthProvider({ children }) {
   }
 
   async function updateUserData(data) {
-    console.log('1')
+    const { prop, val } = data
     const user = firebase.auth().currentUser
-    console.log('2')
 
     const userRef = doc(db, 'users', user.uid)
-    console.log('3', data.prop, data.val)
     await updateDoc(userRef, {
-      [data.prop]: data.val,
+      [prop]: val,
     })
-    currUserData[data.prop] = data.val
-    console.log('4')
+    if (prop === 'username') {
+      const currUsername = currUserData.username
+      const usernameRef = doc(db, 'usernames', currUsername)
+
+      await getDoc(usernameRef).then(document => {
+        addNewUsername(val, user.uid).then(() => {
+          if (document && document.exists()) {
+            deleteDoc(doc(db, 'usernames', currUsername))
+          }
+        })
+      })
+    }
+    currUserData[prop] = val
   }
 
   async function getUserData(user) {
