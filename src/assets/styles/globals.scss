@@ -100,6 +100,10 @@ h1 {
     }
   }
 }
+label.input-error,
+.input-error label {
+  border-bottom: 2px solid $error-red !important;
+}
 
 // Settings Styles
 .settings-title {

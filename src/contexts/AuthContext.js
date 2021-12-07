@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { auth, db } from '../firebase'
 import { getDoc, doc, setDoc } from 'firebase/firestore'
+import firebase from 'firebase/compat/app'
 
 const AuthContext = React.createContext()
 
@@ -58,8 +59,25 @@ export function AuthProvider({ children }) {
     return currentUser.updateEmail(email)
   }
 
-  function updatePassword(password) {
-    return currentUser.updatePassword(password)
+  function reauthenticate(currPassword) {
+    const user = firebase.auth().currentUser
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      user.email,
+      currPassword
+    )
+    return user.reauthenticateWithCredential(credential)
+  }
+
+  function updatePassword(oldPassword, password) {
+    console.log('1')
+    reauthenticate(oldPassword)
+      .then(() => {
+        return currentUser.updatePassword(password)
+      })
+      .catch(err => {
+        console.log(err.message)
+      })
+    console.log('2')
   }
 
   // useEffect(() => {

@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import '../assets/styles/components/form-input.scss'
 import deleteIcon from '../assets/images/icons/delete.svg'
-const FormInput = ({ icon, placeholder, inputType, val, setVal, required }) => {
+const FormInput = ({
+  icon,
+  placeholder,
+  inputType,
+  val,
+  setVal,
+  required,
+  error,
+}) => {
   const [clear, setClear] = useState(false)
 
   useEffect(() => {
@@ -17,7 +25,14 @@ const FormInput = ({ icon, placeholder, inputType, val, setVal, required }) => {
   }
 
   return (
-    <label htmlFor='' className='form-input-label form-label'>
+    <label
+      htmlFor=''
+      className={
+        error
+          ? 'form-input-label form-label input-error'
+          : 'form-input-label form-label'
+      }
+    >
       {icon && <img src={icon} alt={placeholder} className='icon' />}
       <input
         type={`${inputType}`}
