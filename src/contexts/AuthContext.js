@@ -68,16 +68,9 @@ export function AuthProvider({ children }) {
     return user.reauthenticateWithCredential(credential)
   }
 
-  function updatePassword(oldPassword, password) {
-    console.log('1')
-    reauthenticate(oldPassword)
-      .then(() => {
-        return currentUser.updatePassword(password)
-      })
-      .catch(err => {
-        console.log(err.message)
-      })
-    console.log('2')
+  async function updatePassword(oldPassword, password) {
+    await reauthenticate(oldPassword)
+    return currentUser.updatePassword(password)
   }
 
   // useEffect(() => {

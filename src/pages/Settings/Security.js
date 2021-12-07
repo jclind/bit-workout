@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 import SettingsSectionTitle from '../../components/SettingsComponents/SettingsSectionTitle'
 import FormInput from '../../components/FormInput'
@@ -18,9 +18,18 @@ const Security = () => {
 
   const [showPassword, setShowPassword] = useState()
 
+  const changePasswordForm = useRef()
+
+  const resetPasswordForm = () => {
+    setOldPass('')
+    setNewPass('')
+    setRepNewPass('')
+  }
+
   const handlePasswordSubmit = e => {
     e.preventDefault()
     setError('')
+    setSuccess('')
 
     if (newPass !== repNewPass) {
       return setError('New Passwords Must Match')
@@ -28,22 +37,25 @@ const Security = () => {
       return setError('New Password Must Be Different Than Old.')
     }
 
-    const promises = []
-    promises.push(updatePassword(oldPass, newPass))
+    updatePassword(oldPass, newPass)
+      .then(err => {
+        setError('')
 
-    Promise.all(promises)
-      .then(() => {
         setSuccess('Password Changed')
         setTimeout(() => {
           setSuccess('')
         }, 4000)
       })
       .catch(err => {
-        setError('Failed to update password')
-        const currErrCode = err.code
+        const errCode = err.code
+        setSuccess('')
 
+        if (errCode === 'auth/wrong-password') {
+          setError('Incorrect Password, Try Again.')
+        } else {
+          setError('Something went wrong, try re-logging in')
+        }
         console.log(err)
-        console.log(currErrCode)
       })
   }
 
@@ -65,6 +77,8 @@ const Security = () => {
           action=''
           className='change-password-form'
           onSubmit={e => handlePasswordSubmit(e)}
+          ref={changePasswordForm}
+          id='currForm'
         >
           <FormInput
             placeholder='Old Password'
