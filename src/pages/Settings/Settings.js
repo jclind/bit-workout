@@ -6,6 +6,10 @@ import SettingsButton from '../../components/SettingsComponents/SettingsButton'
 import accountIcon from '../../assets/images/icons/account.svg'
 import lockIcon from '../../assets/images/icons/lock.svg'
 import logoutIcon from '../../assets/images/icons/logout.svg'
+import helpIcon from '../../assets/images/icons/help.svg'
+import bugIcon from '../../assets/images/icons/bug.svg'
+import feedbackIcon from '../../assets/images/icons/feedback.svg'
+
 import '../../assets/styles/pages/settings.scss'
 
 const Settings = () => {
@@ -34,6 +38,12 @@ const Settings = () => {
           link={'manage-account'}
         />
         <SettingsButton title={'Security'} icon={lockIcon} link={'security'} />
+      </section>
+      <section className='support-section settings-section'>
+        <SettingsSectionTitle text={'support'} />
+        <SettingsButton title={'Report A Problem'} icon={bugIcon} link={'/'} />
+        <SettingsButton title={'Feedback'} icon={feedbackIcon} link={'/'} />
+        <SettingsButton title={'Help'} icon={helpIcon} link={'/'} />
       </section>
       <section className='login-section settings-section'>
         <SettingsSectionTitle text={'login'} />

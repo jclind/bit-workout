@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 import SettingsSectionTitle from '../../components/SettingsComponents/SettingsSectionTitle'
 import FormInput from '../../components/FormInput'
 import '../../assets/styles/pages/security.scss'
-import { auth } from '../../firebase'
+import { useNavigate } from 'react-router'
 
 const Security = () => {
   const [oldPass, setOldPass] = useState('')
   const [newPass, setNewPass] = useState('')
   const [repNewPass, setRepNewPass] = useState('')
 
-  const { updatePassword, currentUser } = useAuth()
+  const { updatePassword } = useAuth()
 
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
@@ -18,7 +18,7 @@ const Security = () => {
 
   const [showPassword, setShowPassword] = useState()
 
-  const changePasswordForm = useRef()
+  const navigate = useNavigate()
 
   const resetPasswordForm = () => {
     setOldPass('')
@@ -45,6 +45,8 @@ const Security = () => {
         setTimeout(() => {
           setSuccess('')
         }, 4000)
+        resetPasswordForm()
+        navigate(-1)
       })
       .catch(err => {
         const errCode = err.code
@@ -77,7 +79,6 @@ const Security = () => {
           action=''
           className='change-password-form'
           onSubmit={e => handlePasswordSubmit(e)}
-          ref={changePasswordForm}
           id='currForm'
         >
           <FormInput

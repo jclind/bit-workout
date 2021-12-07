@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { auth, db } from '../firebase'
-import { getDoc, doc, setDoc } from 'firebase/firestore'
+import { getDoc, doc, setDoc, updateDoc } from 'firebase/firestore'
 import firebase from 'firebase/compat/app'
 
 const AuthContext = React.createContext()
@@ -73,20 +73,19 @@ export function AuthProvider({ children }) {
     return currentUser.updatePassword(password)
   }
 
-  // useEffect(() => {
-  //   async function stateChange() {
-  //     auth.onAuthStateChanged(user => {
-  //     setCurrentUser(user)
-  //     console.log('effect canged', user)
-  //     console.log(loading)
-  //     const uid = user && user.uid
-  //     console.log(uid)
-  //        if (uid) {
-  //       const userRef = doc(db, 'users', uid)
-  //       async function stateChange()
-  //     }
-  //   })
-  // }, [])
+  async function updateUserData(data) {
+    console.log('1')
+    const user = firebase.auth().currentUser
+    console.log('2')
+
+    const userRef = doc(db, 'users', user.uid)
+    console.log('3', data.prop, data.val)
+    await updateDoc(userRef, {
+      [data.prop]: data.val,
+    })
+    currUserData[data.prop] = data.val
+    console.log('4')
+  }
 
   async function getUserData(user) {
     let userData
@@ -95,51 +94,27 @@ export function AuthProvider({ children }) {
     await getDoc(userRef).then(doc => {
       userData = doc.data()
     })
-    return userData
+    setCurrUserData(userData)
   }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         console.log('logged in')
+        getUserData(user)
       } else {
         console.log('logged out')
       }
       setCurrentUser(user)
-      setLoading(false)
     })
 
     return () => unsubscribe()
-
-    // const unsubscribe = auth.onAuthStateChanged(user => {
-    //   console.log('am I here?')
-    //   setUser(user)
-    // })
-    // return unsubscribe
-    // async function stateChange() {
-    //   auth.onAuthStateChanged(user => {
-    //     setCurrentUser(user)
-    //     console.log('effect canged', user)
-    //     console.log(loading)
-    //     const uid = user && user.uid
-    //     console.log(uid)
-    //     if (uid) {
-    //       const userRef = doc(db, 'users', uid)
-    //       return getDoc(userRef).then(doc => {
-    //         setCurrUserData(doc.data())
-    //         setLoading(false)
-    //         console.log('currUserData', currUserData)
-    //         setLoading(false)
-    //       })
-    //     } else {
-    //       setCurrUserData(null)
-    //       setLoading(false)
-    //     }
-    //   })
-    // }
-
-    // stateChange()
   }, [])
+  useEffect(() => {
+    if (currentUser && currUserData) {
+      setLoading(false)
+    }
+  }, [currentUser, currUserData])
 
   const value = {
     currentUser,
@@ -151,6 +126,7 @@ export function AuthProvider({ children }) {
     resetPassword,
     updateEmail,
     updatePassword,
+    updateUserData,
   }
   return (
     <AuthContext.Provider value={value}>

@@ -30,7 +30,6 @@ const UpdateUserInput = ({
         .split(' ')
         .map(s => s.charAt(0).toUpperCase() + s.substring(1))
         .join(' ')
-
       setVal(capitalizedText)
     } else {
       if (
@@ -42,10 +41,8 @@ const UpdateUserInput = ({
       ) {
         return console.log('invalid email')
       }
-
       setVal(unsavedVal)
     }
-    return navigate(-1)
   }
 
   useEffect(() => {
@@ -54,7 +51,6 @@ const UpdateUserInput = ({
     } else {
       setActiveSave(true)
     }
-
     setNumCharacters(unsavedVal.length)
   }, [unsavedVal])
 
@@ -66,7 +62,7 @@ const UpdateUserInput = ({
           placeholder={placeholder}
           value={unsavedVal}
           onInput={e => handleInput(e)}
-          maxlength={maxCharacters}
+          maxLength={maxCharacters}
         />
         {val && (
           <div className='clear-icon-container'>
