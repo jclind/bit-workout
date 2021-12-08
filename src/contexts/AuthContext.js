@@ -137,6 +137,7 @@ export function AuthProvider({ children }) {
     updatePassword,
     updateUserData,
   }
+
   return (
     <AuthContext.Provider value={value}>
       {loading ? <div>Loading....</div> : children}
