@@ -3,15 +3,13 @@ export const exerciseList = [
     id: 0,
     name: 'Squats',
     animation: null,
-    imageURL:
-      'https://image.shutterstock.com/image-vector/woman-lifting-weights-continuous-one-260nw-1391381555.jpg',
+    imageURL: '/workouts/squat.svg',
   },
   {
     id: 1,
     name: 'Deadlift',
     animation: null,
-    imageURL:
-      'https://us.123rf.com/450wm/elkinaekaterina/elkinaekaterina2003/elkinaekaterina200300606/141893368-sequence-of-a-weightlifter-doing-a-deadlift-exercise-hand-drawn-illustration-.jpg?ver=6',
+    imageURL: '/workouts/deadlift.svg',
   },
   {
     id: 2,
@@ -24,7 +22,6 @@ export const exerciseList = [
     id: 3,
     name: 'Bench Press',
     animation: null,
-    imageURL:
-      'https://www.pinclipart.com/picdir/middle/564-5647451_bench-press-bench-press-drawing-clipart.png',
+    imageURL: '/workouts/bench-press.svg',
   },
 ]

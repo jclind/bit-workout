@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import { e1 } from './assets/data/e1'
 import Workout from './pages/Workout/Workout'
 import Signup from './pages/Signup'
 import Account from './pages/Account'
@@ -20,8 +19,6 @@ import UpdateEmail from './pages/Settings/UpdateEmail'
 import Security from './pages/Settings/Security'
 
 function App() {
-  const currExerciseData = e1
-
   return (
     <Router>
       <AuthProvider>
@@ -76,7 +73,7 @@ function App() {
               path='/forgot-password'
               element={<ForgotPasswordContainer />}
             />
-            <Route path='/workout' element={<Workout exerciseData={e1} />} />
+            <Route path='/workout' element={<Workout />} />
           </Routes>
         </WorkoutProvider>
       </AuthProvider>
