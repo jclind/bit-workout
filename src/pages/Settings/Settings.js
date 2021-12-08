@@ -9,6 +9,7 @@ import logoutIcon from '../../assets/images/icons/logout.svg'
 import helpIcon from '../../assets/images/icons/help.svg'
 import bugIcon from '../../assets/images/icons/bug.svg'
 import feedbackIcon from '../../assets/images/icons/feedback.svg'
+import BackButton from '../../components/SettingsComponents/BackButton'
 
 import '../../assets/styles/pages/settings.scss'
 
@@ -53,6 +54,7 @@ const Settings = () => {
           action={handleLogout}
         />
       </section>
+      <BackButton />
     </div>
   )
 }

@@ -4,6 +4,7 @@ import SettingsSectionTitle from '../../components/SettingsComponents/SettingsSe
 import FormInput from '../../components/FormInput'
 import '../../assets/styles/pages/security.scss'
 import { useNavigate } from 'react-router'
+import BackButton from '../../components/SettingsComponents/BackButton'
 
 const Security = () => {
   const [oldPass, setOldPass] = useState('')
@@ -113,6 +114,7 @@ const Security = () => {
           <button className='submit-btn'>Reset</button>
         </form>
       </section>
+      <BackButton />
     </div>
   )
 }

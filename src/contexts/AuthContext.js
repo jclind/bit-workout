@@ -55,7 +55,7 @@ export function AuthProvider({ children }) {
     return auth.sendPasswordResetEmail(email)
   }
 
-  function updateEmail(email) {
+  async function updateEmail(email) {
     return currentUser.updateEmail(email)
   }
 
