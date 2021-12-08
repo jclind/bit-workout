@@ -3,6 +3,8 @@ import { auth, db } from '../firebase'
 import { getDoc, doc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import firebase from 'firebase/compat/app'
 
+import { setWorkout } from './WorkoutContext'
+
 const AuthContext = React.createContext()
 
 export function useAuth() {
@@ -26,7 +28,7 @@ export function AuthProvider({ children }) {
     return auth.createUserWithEmailAndPassword(email, password).then(cred => {
       const uid = cred.user.uid
       addNewUsername(usernameVal, uid)
-      return setDoc(doc(db, 'users', uid), {
+      setDoc(doc(db, 'users', uid), {
         username: usernameVal,
         name: fullNameVal,
         gender: genderVal,
@@ -34,6 +36,7 @@ export function AuthProvider({ children }) {
         height: heightVal,
         weight: weightVal,
       })
+      setWorkout(weightVal, genderVal, uid)
     })
   }
 
@@ -100,8 +103,8 @@ export function AuthProvider({ children }) {
     let userData
 
     const userRef = doc(db, 'users', user.uid)
-    await getDoc(userRef).then(doc => {
-      userData = doc.data()
+    await getDoc(userRef).then(document => {
+      userData = document.data()
     })
     setCurrUserData(userData)
   }

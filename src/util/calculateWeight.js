@@ -1,7 +1,8 @@
 import { roundNumber } from './roundNumber'
+import { exerciseList } from '../assets/data/exerciseList'
 
-export const calculateWeight = (exercise, bodyWeight, gender) => {
-  const ex = exercise.toLowerCase()
+export const calculateWeight = (exerciseID, bodyWeight, gender) => {
+  let returnWeight = null
 
   const calcSquat = (bodyWeight, gender) => {
     if (gender === 'male') {
@@ -10,7 +11,7 @@ export const calculateWeight = (exercise, bodyWeight, gender) => {
       } else if (bodyWeight > 320) {
         return 150
       }
-      return roundNumber(1.045 * bodyWeight - 43.9, 5)
+      return roundNumber(1.15 * bodyWeight - 56.5, 5)
     }
     if (bodyWeight < 90) {
       return 45
@@ -84,20 +85,31 @@ export const calculateWeight = (exercise, bodyWeight, gender) => {
     return roundNumber(0.21 * bodyWeight - 3.5, 5)
   }
 
-  switch (exercise) {
-    case ex === 'squat':
-      return calcSquat(bodyWeight, gender)
+  const getID = exName => {
+    const ex = exerciseList.find(ex => ex.name === exName)
+    return ex.id
+  }
 
-    case ex === 'bench press':
-      return calcBenchPress(bodyWeight, gender)
-    case ex === 'deadlift':
-      return calcDeadlift(bodyWeight, gender)
-    case ex === 'barbell row':
-      return calcBarbellRow(bodyWeight, gender)
-    case ex === 'overhead press':
-      return calcOverheadPress(bodyWeight, gender)
+  switch (exerciseID) {
+    case getID('squat'):
+      returnWeight = calcSquat(bodyWeight, gender)
+      break
+    case getID('bench press'):
+      returnWeight = calcBenchPress(bodyWeight, gender)
+      break
+    case getID('deadlift'):
+      returnWeight = calcDeadlift(bodyWeight, gender)
+      break
+    case getID('barbell row'):
+      returnWeight = calcBarbellRow(bodyWeight, gender)
+      break
+    case getID('overhead press'):
+      returnWeight = calcOverheadPress(bodyWeight, gender)
+      break
 
     default:
       console.log('help me! there is no case in that switch statement for me!')
   }
+
+  return returnWeight
 }
