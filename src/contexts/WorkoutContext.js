@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { db } from '../firebase'
-import { doc, setDoc, getDoc } from 'firebase/firestore'
+import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
 import { exerciseList } from '../assets/data/exerciseList'
 import { calculateWeight } from '../util/calculateWeight'
 import { useAuth } from './AuthContext'
+import firebase from 'firebase/compat/app'
 
 const WorkoutContext = React.createContext()
 
@@ -21,12 +22,14 @@ export function setWorkout(weight, gender, uid) {
   console.log(weights)
   return setDoc(doc(db, 'workoutData', uid), {
     weights,
+    isWorkoutRunning: false,
+    runningWorkout: {},
   })
 }
 
 export const WorkoutProvider = ({ children }) => {
   const [workoutData, setWorkoutData] = useState()
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const { currentUser } = useAuth()
 
   async function getWorkoutData(uid) {
@@ -38,6 +41,21 @@ export const WorkoutProvider = ({ children }) => {
     })
     return setWorkoutData(data)
   }
+  async function updateWorkout(data) {
+    console.log('updating workout data')
+    const { prop, val } = data
+    const user = firebase.auth().currentUser
+
+    const workoutRef = doc(db, 'workoutData', user.uid)
+    await updateDoc(workoutRef, {
+      [prop]: val,
+    })
+    console.log(workoutData, workoutData[prop])
+    setWorkoutData(prevState => ({
+      ...prevState,
+      [prop]: val,
+    }))
+  }
   useEffect(() => {
     setLoading(true)
     getWorkoutData(currentUser.uid)
@@ -47,11 +65,11 @@ export const WorkoutProvider = ({ children }) => {
     console.log('run')
     if (workoutData) {
       setLoading(false)
-      console.log(workoutData)
+      console.log('workout done loading')
     }
   }, [workoutData])
 
-  const value = { workoutData }
+  const value = { workoutData, updateWorkout }
   return (
     <WorkoutContext.Provider value={value}>
       {loading ? <div>Loading Workout....</div> : children}
