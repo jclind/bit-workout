@@ -1,7 +1,7 @@
 import React from 'react'
 import TimerContainer from '../Timer/TimerContainer'
 
-const Workout = ({
+const ActiveWorkout = ({
   setIsTimer,
   workoutFinished,
   currEvent,
@@ -38,4 +38,4 @@ const Workout = ({
   )
 }
 
-export default Workout
+export default ActiveWorkout
