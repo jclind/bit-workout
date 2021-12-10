@@ -1,0 +1,18 @@
+@import '../../helpers/functions.scss';
+@import '../../helpers/vars.scss';
+
+.active-workout {
+  margin: 0;
+
+  .current-workout-text {
+    font-size: toRem(12);
+    color: $secondary-text;
+    font-weight: 500;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .exercise-name {
+    font-size: toRem(36);
+    font-weight: 500;
+  }
+}

@@ -9,6 +9,7 @@ const TimerContainer = ({ timerStart, restTime, setIsTimer }) => {
     let timer = setInterval(() => {
       // Get current time and subtrack start time to get total elapsed time
       const elapsed = new Date().getTime() - timerStart
+
       // Format elapsed time to milliseconds
       const elapsedMS = Math.round(elapsed / 1000) * 1000
       // Get time left on timer

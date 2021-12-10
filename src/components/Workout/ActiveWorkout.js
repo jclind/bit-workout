@@ -2,38 +2,21 @@ import React from 'react'
 import TimerContainer from '../Timer/TimerContainer'
 
 const ActiveWorkout = ({
-  setIsTimer,
-  workoutFinished,
-  currEvent,
-  isTimer,
-  restTime,
   currSet,
-  currExerciseData,
+  currSetTotal,
+  completeSet,
+  currExercise,
 }) => {
-  const { animation, imageURL, name } = currExerciseData
-  console.log(animation, imageURL, name)
+  console.log(currExercise)
+  const { name } = currExercise
   return (
-    <div className='App'>
-      <div className='exercise'>
-        {workoutFinished ? (
-          <span>Workout Finished, Good Job!</span>
-        ) : currEvent && !isTimer ? (
-          <>
-            <img src={imageURL} alt={name} />
-            <div>
-              {name}, Set {currSet}
-            </div>
-          </>
-        ) : (
-          <span>REST</span>
-        )}
-      </div>
-      {isTimer ? (
-        <TimerContainer restTime={restTime} setIsTimer={setIsTimer} />
-      ) : null}
-      {!isTimer && !workoutFinished ? (
-        <button onClick={() => setIsTimer(true)}>CLICK ME!!!!</button>
-      ) : null}
+    <div className='active-workout'>
+      <div className='current-workout-text'>Current Workout</div>
+      <div className='exercise-title'>{name}</div>
+      {/* <div>{`Current Set ${currSet} / ${currSetTotal}`}</div>
+      <button className='submit-btn' onClick={completeSet}>
+        Complete Set
+      </button> */}
     </div>
   )
 }

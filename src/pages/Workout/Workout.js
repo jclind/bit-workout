@@ -46,7 +46,6 @@ const Workout = () => {
   return (
     <>
       <div className='page'>
-        WORKOUT PAGE
         {loading ? (
           'Loading thangs!!!'
         ) : (
