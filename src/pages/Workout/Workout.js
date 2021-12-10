@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useWorkout } from '../../contexts/WorkoutContext'
 import WorkoutSelection from '../../components/Workout/WorkoutSelection'
 // import ActiveWorkoutContainer from '../../components/Workout/ActiveWorkoutContainer'
@@ -10,14 +10,15 @@ const Workout = () => {
   const { isWorkoutRunning } = workoutData
 
   const startWorkout = exercise => {
-    const data = { prop: 'isWorkoutRunning', val: true }
+    const data = { isWorkoutRunning: true }
     setLoading(true)
     updateWorkout(data).then(() => {
+      console.log(workoutData)
       setLoading(false)
     })
   }
   const stopWorkout = () => {
-    const data = [{ prop: 'isWorkoutRunning', val: false }]
+    const data = { isWorkoutRunning: false }
     updateWorkout(data)
   }
   return (

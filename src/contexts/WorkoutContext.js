@@ -43,21 +43,19 @@ export const WorkoutProvider = ({ children }) => {
   }
   async function updateWorkout(data) {
     console.log('updating workout data')
-    const obj = data.map(el => {
-      return { [el.prop]: el.val }
-    })
-    console.log(obj)
-    const user = firebase.auth().currentUser
-
-    const workoutRef = doc(db, 'workoutData', user.uid)
-    // await updateDoc(workoutRef, {
-    //   [prop]: val,
+    // const obj = data.map(el => {
+    // return { [el.prop]: el.val }
     // })
-    // console.log(workoutData, workoutData[prop])
-    // setWorkoutData(prevState => ({
-    //   ...prevState,
-    //   [prop]: val,
-    // }))
+    // console.log(obj)
+    const user = firebase.auth().currentUser
+    const workoutRef = doc(db, 'workoutData', user.uid)
+    await updateDoc(workoutRef, {
+      ...data,
+    })
+    await setWorkoutData(prevState => ({
+      ...prevState,
+      ...data,
+    }))
   }
   useEffect(() => {
     setLoading(true)
