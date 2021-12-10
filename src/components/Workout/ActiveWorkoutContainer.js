@@ -38,13 +38,10 @@ const WorkoutContainer = ({ workoutData, stopWorkout }) => {
         setCurrSet(nextSet)
 
         updateWorkout({
-          runningWorkout: {
-            remainingWorkout: { currIdx: nextIdx, currSet: nextSet },
-            timer: {
-              isTimer: true,
-              timerStart: startTime,
-            },
-          },
+          'runningWorkout.remainingWorkout.currIdx': nextIdx,
+          'runningWorkout.remainingWorkout.currSet': nextSet,
+          'runningWorkout.timer.isTimer': true,
+          'runningWorkout.timer.timerStart': startTime,
         })
       }
     } else {
@@ -57,13 +54,9 @@ const WorkoutContainer = ({ workoutData, stopWorkout }) => {
       setCurrSet(nextSet)
 
       updateWorkout({
-        runningWorkout: {
-          remainingWorkout: { currSet: nextSet },
-          timer: {
-            isTimer: true,
-            timerStart: startTime,
-          },
-        },
+        'runningWorkout.remainingWorkout.currSet': nextSet,
+        'runningWorkout.timer.isTimer': true,
+        'runningWorkout.timer.timerStart': startTime,
       })
     }
   }
