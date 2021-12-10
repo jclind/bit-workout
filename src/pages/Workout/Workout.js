@@ -16,7 +16,10 @@ const Workout = () => {
       runningWorkout: {
         remainingWorkout: { currIdx: 0, currSet: 1 },
         currWorkout: e1,
-        isTimer: false,
+        timer: {
+          isTimer: false,
+          timerStart: null,
+        },
       },
     }
     setLoading(true)
@@ -31,7 +34,10 @@ const Workout = () => {
       runningWorkout: {
         remainingWorkout: null,
         currWorkout: null,
-        isTimer: false,
+        timer: {
+          isTimer: false,
+          timerStart: null,
+        },
       },
     }
     updateWorkout(data)

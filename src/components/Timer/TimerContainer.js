@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { formatTime } from '../../util/formatTime'
 import Timer from './Timer'
 
-const TimerContainer = ({ restTime, setIsTimer }) => {
+const TimerContainer = ({ timerStart, restTime, setIsTimer }) => {
   const [timerVal, setTimerVal] = useState()
 
   useEffect(() => {
-    const start = new Date().getTime()
-
     let timer = setInterval(() => {
       // Get current time and subtrack start time to get total elapsed time
-      const elapsed = new Date().getTime() - start
+      const elapsed = new Date().getTime() - timerStart
       // Format elapsed time to milliseconds
       const elapsedMS = Math.round(elapsed / 1000) * 1000
       // Get time left on timer
