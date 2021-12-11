@@ -1,7 +1,21 @@
 @import '../../helpers/functions.scss';
 @import '../../helpers/vars.scss';
 
+.stop-workout {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2rem;
+  padding: 0;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
 .active-workout {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   text-align: center;
 
@@ -10,18 +24,27 @@
     color: $secondary-text;
     font-weight: 500;
     margin: 0 auto;
-    margin-bottom: toRem(10);
+    margin-bottom: toRem(15);
   }
   .exercise-title {
     font-size: toRem(36);
     font-weight: 500;
     text-transform: capitalize;
+    margin-bottom: toRem(10);
   }
   .rep-set-text {
     font-size: toRem(18);
-    font-weight: 500;
+    font-weight: 400;
   }
   .exercise-img {
     height: toRem(150);
+    margin-top: toRem(50);
+  }
+  .submit-btn {
+    height: 50px;
+    width: fit-content;
+    padding: 0 2.5rem;
+    margin: 0 auto;
+    margin-top: toRem(150);
   }
 }

@@ -139,8 +139,8 @@ const WorkoutContainer = ({ workoutData, stopWorkout }) => {
               currRepsTotal={currRepsTotal}
             />
           )}
-          <button className='submit-btn' onClick={stopWorkout}>
-            Stop Workout
+          <button className='stop-workout' onClick={stopWorkout}>
+            x
           </button>
         </>
       )}

@@ -17,7 +17,7 @@ const ActiveWorkout = ({
       <div className='rep-set-text'>{`${currRepsTotal} Reps, Set ${currSet} of ${currSetTotal}`}</div>
       <img src={imageURL} alt={name} className='exercise-img' />
       <button className='submit-btn' onClick={completeSet}>
-        Complete Set
+        Completed
       </button>
     </div>
   )
