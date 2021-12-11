@@ -3,16 +3,25 @@
 
 .active-workout {
   margin: 0;
+  text-align: center;
 
   .current-workout-text {
     font-size: toRem(12);
     color: $secondary-text;
     font-weight: 500;
     margin: 0 auto;
-    text-align: center;
+    margin-bottom: toRem(10);
   }
-  .exercise-name {
+  .exercise-title {
     font-size: toRem(36);
     font-weight: 500;
+    text-transform: capitalize;
+  }
+  .rep-set-text {
+    font-size: toRem(18);
+    font-weight: 500;
+  }
+  .exercise-img {
+    height: toRem(150);
   }
 }

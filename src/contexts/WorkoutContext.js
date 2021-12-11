@@ -41,6 +41,17 @@ export const WorkoutProvider = ({ children }) => {
     })
     return setWorkoutData(data)
   }
+  async function getSingleWorkout(id, weightsList) {
+    const currExercise = exerciseList.find(ex => ex.id === id)
+    const exerciseWeight = weightsList.find(ex => ex.exerciseID === id)
+    console.log(id)
+    return { ...currExercise, exerciseWeight: exerciseWeight.weight }
+    // await getDoc(doc(db, 'exerciseList', id)).then(document => {
+    //   console.log('and now here', document)
+    //   data = document.data()
+    // })
+    // await
+  }
   async function updateWorkout(data) {
     console.log('updating workout data')
     // const obj = data.map(el => {
@@ -70,7 +81,7 @@ export const WorkoutProvider = ({ children }) => {
     }
   }, [workoutData])
 
-  const value = { workoutData, updateWorkout }
+  const value = { workoutData, updateWorkout, getSingleWorkout }
   return (
     <WorkoutContext.Provider value={value}>
       {loading ? <div>Loading Workout....</div> : children}

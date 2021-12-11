@@ -9,20 +9,29 @@ import '../../assets/styles/components/workout/active-workout.scss'
 const WorkoutContainer = ({ workoutData, stopWorkout }) => {
   const [currIdx, setCurrIdx] = useState()
   const [currSet, setCurrSet] = useState()
+  const [currRepsTotal, setCurrRepsTotal] = useState()
   const [currSetTotal, setCurrSetTotal] = useState()
   const [restTime, setRestTime] = useState()
   const [isTimer, setIsTimer] = useState()
 
+  const [loading, setLoading] = useState(true)
+
   const [currExercise, setCurrExercise] = useState()
+  const [currExerciseID, setCurrExerciseID] = useState()
 
   const [timerStart, setTimerStart] = useState(null)
 
-  const { updateWorkout } = useWorkout()
+  const { updateWorkout, getSingleWorkout } = useWorkout()
 
   const { isWorkoutRunning } = workoutData
 
   const finishWorkout = () => {
     console.log('workout finished')
+  }
+
+  const getCurrentExerciseID = idx => {
+    const currExercise = workoutData.runningWorkout.currWorkout.path[idx]
+    return currExercise.exerciseID
   }
 
   const completeSet = async () => {
@@ -40,6 +49,15 @@ const WorkoutContainer = ({ workoutData, stopWorkout }) => {
         const nextSet = 1
         setCurrIdx(nextIdx)
         setCurrSet(nextSet)
+        console.log('I MADE IT HERE, WHAT GIVES?')
+
+        const nextExerciseID = getCurrentExerciseID(nextIdx)
+        setCurrExerciseID(nextExerciseID)
+        const currExerciseData = await getSingleWorkout(
+          nextExerciseID,
+          workoutData.weights
+        )
+        await setCurrExercise(currExerciseData)
 
         updateWorkout({
           'runningWorkout.remainingWorkout.currIdx': nextIdx,
@@ -66,43 +84,66 @@ const WorkoutContainer = ({ workoutData, stopWorkout }) => {
   }
 
   useEffect(() => {
-    if (isWorkoutRunning) {
+    const setStates = async () => {
+      setLoading(true)
       const currWorkoutData = workoutData.runningWorkout
       const currIdx = currWorkoutData.remainingWorkout.currIdx
       const currSet = currWorkoutData.remainingWorkout.currSet
 
-      setIsTimer(currWorkoutData.timer.isTimer)
-      setTimerStart(currWorkoutData.timer.timerStart)
+      await setIsTimer(currWorkoutData.timer.isTimer)
+      await setTimerStart(currWorkoutData.timer.timerStart)
 
-      setCurrExercise(currWorkoutData.currWorkout.path[currIdx])
-      console.log(currWorkoutData.currWorkout.path[currIdx])
-      setCurrIdx(currIdx)
-      setCurrSet(currSet)
+      const currExercise = currWorkoutData.currWorkout.path[currIdx]
+
+      const tempExerciseID = currExercise.exerciseID
+      await setCurrExerciseID(tempExerciseID)
+      const currExerciseData = await getSingleWorkout(
+        tempExerciseID,
+        workoutData.weights
+      )
+      await setCurrExercise(currExerciseData)
+      console.log(currExercise)
+
+      console.log(currExercise)
+      await setCurrIdx(currIdx)
+      await setCurrSet(currSet)
+      await setCurrRepsTotal(currExercise.reps)
       console.log(currWorkoutData)
-      setCurrSetTotal(currWorkoutData.currWorkout.path[currIdx].sets)
-      setRestTime(currWorkoutData.currWorkout.restTime)
+      await setCurrSetTotal(currExercise.sets)
+      await setRestTime(currWorkoutData.currWorkout.restTime)
+      setLoading(false)
+    }
+    if (isWorkoutRunning) {
+      setStates()
     }
   }, [])
 
   return (
     <>
-      {isTimer && timerStart ? (
-        <TimerContainer
-          timerStart={timerStart}
-          restTime={restTime}
-          setIsTimer={setIsTimer}
-        />
+      {loading ? (
+        'loading this page now, will it be weird?'
       ) : (
-        <ActiveWorkout
-          currSet={currSet}
-          currSetTotal={currSetTotal}
-          completeSet={completeSet}
-          currExercise={currExercise}
-        />
+        <>
+          {isTimer && timerStart ? (
+            <TimerContainer
+              timerStart={timerStart}
+              restTime={restTime}
+              setIsTimer={setIsTimer}
+            />
+          ) : (
+            <ActiveWorkout
+              currSet={currSet}
+              currSetTotal={currSetTotal}
+              completeSet={completeSet}
+              currExercise={currExercise}
+              currRepsTotal={currRepsTotal}
+            />
+          )}
+          <button className='submit-btn' onClick={stopWorkout}>
+            Stop Workout
+          </button>
+        </>
       )}
-      <button className='submit-btn' onClick={stopWorkout}>
-        Stop Workout
-      </button>
     </>
   )
 }

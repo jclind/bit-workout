@@ -6,17 +6,19 @@ const ActiveWorkout = ({
   currSetTotal,
   completeSet,
   currExercise,
+  currRepsTotal,
 }) => {
   console.log(currExercise)
-  const { name } = currExercise
+  const { name, imageURL, exerciseWeight, reps } = currExercise
   return (
     <div className='active-workout'>
       <div className='current-workout-text'>Current Workout</div>
       <div className='exercise-title'>{name}</div>
-      {/* <div>{`Current Set ${currSet} / ${currSetTotal}`}</div>
+      <div className='rep-set-text'>{`${currRepsTotal} Reps, Set ${currSet} of ${currSetTotal}`}</div>
+      <img src={imageURL} alt={name} className='exercise-img' />
       <button className='submit-btn' onClick={completeSet}>
         Complete Set
-      </button> */}
+      </button>
     </div>
   )
 }
