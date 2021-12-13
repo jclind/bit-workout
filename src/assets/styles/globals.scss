@@ -133,6 +133,29 @@ label.input-error,
   z-index: 1000;
   margin: 0;
 }
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  text-align: center;
+  width: 90%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem 2rem;
+  font-size: toRem(16);
+  font-weight: 600;
+  background: $secondary-background;
+  border-radius: $border-radius;
+  .title {
+    font-size: toRem(18);
+    color: $secondary-text;
+    margin: 0;
+    text-transform: capitalize;
+  }
+}
 
 .sub-text {
   font-size: toRem(12);

@@ -5,7 +5,7 @@ import useClickOutside from '../../util/useClickOutside'
 import ChangeWeightModal from './ChangeWeightModal'
 import { BiEdit } from 'react-icons/bi'
 
-const PlatesModal = ({ weights, onClose, totalWeight }) => {
+const PlatesModal = ({ weights, onClose, currExercise }) => {
   const [isChangeWeightModalOpen, setIsChangeWeightModalOpen] = useState(false)
   const modalContent = useClickOutside(() => {
     if (!isChangeWeightModalOpen) {
@@ -23,7 +23,7 @@ const PlatesModal = ({ weights, onClose, totalWeight }) => {
             className='total-weight'
             onClick={() => setIsChangeWeightModalOpen(true)}
           >
-            {totalWeight} lbs <BiEdit className='edit-icon' />
+            {currExercise.exerciseWeight} lbs <BiEdit className='edit-icon' />
           </div>
           {/* <div className='change-weight'>Change Weight</div> */}
 
@@ -47,6 +47,7 @@ const PlatesModal = ({ weights, onClose, totalWeight }) => {
       </div>
       {isChangeWeightModalOpen ? (
         <ChangeWeightModal
+          currExercise={currExercise}
           onClose={() => {
             setIsChangeWeightModalOpen(false)
           }}

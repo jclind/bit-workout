@@ -32,7 +32,7 @@ const ActiveWorkout = ({
       {isModalOpen ? (
         <PlatesModal
           weights={weights}
-          totalWeight={exerciseWeight}
+          currExercise={currExercise}
           onClose={() => {
             setIsModalOpen(false)
           }}
