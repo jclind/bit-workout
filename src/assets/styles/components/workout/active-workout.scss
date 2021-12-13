@@ -38,13 +38,34 @@
   }
   .exercise-img {
     height: toRem(150);
+    margin-top: toRem(10);
+  }
+  .exercise-weight {
+    position: relative;
+    background: $secondary-background;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 5px;
+    font-size: toRem(20);
+    font-weight: 600;
+    margin: 0 auto;
     margin-top: toRem(50);
+    padding: 0.5rem 1.25rem;
+    border-radius: $border-radius;
+    .icon {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      height: 20px;
+      // color: $tertiary-background;
+    }
   }
   .submit-btn {
     height: 50px;
     width: fit-content;
     padding: 0 2.5rem;
     margin: 0 auto;
-    margin-top: toRem(150);
+    margin-top: toRem(100);
   }
 }
