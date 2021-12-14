@@ -1,18 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactDom from 'react-dom'
 import '../../assets/styles/components/workout/plates-modal.scss'
 import useClickOutside from '../../util/useClickOutside'
 import ChangeWeightModal from './ChangeWeightModal'
 import { BiEdit } from 'react-icons/bi'
 
-const PlatesModal = ({ weights, onClose, currExercise }) => {
+const PlatesModal = ({ weights, onClose, currExercise, setCurrExercise }) => {
   const [isChangeWeightModalOpen, setIsChangeWeightModalOpen] = useState(false)
   const modalContent = useClickOutside(() => {
     if (!isChangeWeightModalOpen) {
       onClose()
     }
   })
-  console.log(weights)
 
   return ReactDom.createPortal(
     <>
@@ -31,10 +30,10 @@ const PlatesModal = ({ weights, onClose, currExercise }) => {
           <div className='sub-text'>(On each side)</div>
 
           <div className='weights'>
-            {weights.map(weight => {
+            {weights.map((weight, idx) => {
               if (weight.amount > 0) {
                 return (
-                  <div className='weight'>
+                  <div className='weight' key={idx}>
                     <div className='name'>{weight.name} lbs :</div>
                     <div className='amount'>x{weight.amount}</div>
                   </div>
@@ -48,6 +47,7 @@ const PlatesModal = ({ weights, onClose, currExercise }) => {
       {isChangeWeightModalOpen ? (
         <ChangeWeightModal
           currExercise={currExercise}
+          setCurrExercise={setCurrExercise}
           onClose={() => {
             setIsChangeWeightModalOpen(false)
           }}

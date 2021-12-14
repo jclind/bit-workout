@@ -17,7 +17,6 @@ const WorkoutContainer = ({ workoutData, stopWorkout }) => {
   const [loading, setLoading] = useState(true)
 
   const [currExercise, setCurrExercise] = useState()
-  const [currExerciseID, setCurrExerciseID] = useState()
 
   const [timerStart, setTimerStart] = useState(null)
 
@@ -42,24 +41,21 @@ const WorkoutContainer = ({ workoutData, stopWorkout }) => {
       } else {
         setIsTimer(true)
         const startTime = new Date().getTime()
-        console.log(startTime)
         setTimerStart(startTime)
 
         const nextIdx = currIdx + 1
         const nextSet = 1
         setCurrIdx(nextIdx)
         setCurrSet(nextSet)
-        console.log('I MADE IT HERE, WHAT GIVES?')
 
         const nextExerciseID = getCurrentExerciseID(nextIdx)
-        setCurrExerciseID(nextExerciseID)
         const currExerciseData = await getSingleWorkout(
           nextExerciseID,
           workoutData.weights
         )
         await setCurrExercise(currExerciseData)
 
-        updateWorkout({
+        await updateWorkout({
           'runningWorkout.remainingWorkout.currIdx': nextIdx,
           'runningWorkout.remainingWorkout.currSet': nextSet,
           'runningWorkout.timer.isTimer': true,
@@ -68,14 +64,13 @@ const WorkoutContainer = ({ workoutData, stopWorkout }) => {
       }
     } else {
       const startTime = new Date().getTime()
-      console.log(startTime)
       setTimerStart(startTime)
       setIsTimer(true)
 
       const nextSet = currSet + 1
       setCurrSet(nextSet)
 
-      updateWorkout({
+      await updateWorkout({
         'runningWorkout.remainingWorkout.currSet': nextSet,
         'runningWorkout.timer.isTimer': true,
         'runningWorkout.timer.timerStart': startTime,
@@ -96,19 +91,15 @@ const WorkoutContainer = ({ workoutData, stopWorkout }) => {
       const currExercise = currWorkoutData.currWorkout.path[currIdx]
 
       const tempExerciseID = currExercise.exerciseID
-      await setCurrExerciseID(tempExerciseID)
       const currExerciseData = await getSingleWorkout(
         tempExerciseID,
         workoutData.weights
       )
       await setCurrExercise(currExerciseData)
-      console.log(currExercise)
 
-      console.log(currExercise)
       await setCurrIdx(currIdx)
       await setCurrSet(currSet)
       await setCurrRepsTotal(currExercise.reps)
-      console.log(currWorkoutData)
       await setCurrSetTotal(currExercise.sets)
       await setRestTime(currWorkoutData.currWorkout.restTime)
       setLoading(false)
@@ -117,6 +108,24 @@ const WorkoutContainer = ({ workoutData, stopWorkout }) => {
       setStates()
     }
   }, [])
+
+  // On workoutdata update refresh current exercise so it matches the true current exercise data
+  useEffect(() => {
+    const setCurrExerciseData = async () => {
+      const currWorkoutData = workoutData.runningWorkout
+      const currExercise = currWorkoutData.currWorkout.path[currIdx]
+
+      const tempExerciseID = currExercise.exerciseID
+      const currExerciseData = await getSingleWorkout(
+        tempExerciseID,
+        workoutData.weights
+      )
+      await setCurrExercise(currExerciseData)
+    }
+    if (currExercise) {
+      setCurrExerciseData()
+    }
+  }, [workoutData])
 
   return (
     <>
@@ -136,6 +145,7 @@ const WorkoutContainer = ({ workoutData, stopWorkout }) => {
               currSetTotal={currSetTotal}
               completeSet={completeSet}
               currExercise={currExercise}
+              setCurrExercise={setCurrExercise}
               currRepsTotal={currRepsTotal}
             />
           )}

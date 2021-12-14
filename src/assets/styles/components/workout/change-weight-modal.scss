@@ -4,13 +4,19 @@
 .change-weight-modal {
   .modal-content {
     .title {
-      margin-bottom: toRem(20);
+    }
+    .sub-text {
+      margin: 0;
+      margin-top: toRem(10);
+      margin-bottom: toRem(30);
+      font-size: toRem(12);
+      font-weight: 500;
     }
     .buttons {
       display: flex;
       justify-content: space-between;
       margin: 0;
-      margin-top: toRem(30);
+      margin-top: toRem(50);
       .cancel-btn,
       .save-btn {
         font-size: toRem(18);

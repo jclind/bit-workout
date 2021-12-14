@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { AiFillInfoCircle } from 'react-icons/ai'
 import { calculatePlates } from '../../util/calculatePlates'
 import PlatesModal from './PlatesModal'
@@ -8,14 +8,14 @@ const ActiveWorkout = ({
   currSetTotal,
   completeSet,
   currExercise,
+  setCurrExercise,
   currRepsTotal,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  console.log(currExercise)
   const { name, imageURL, exerciseWeight } = currExercise
-  const weights = calculatePlates(45, 155)
-  console.log(weights)
+  const weights = calculatePlates(45, exerciseWeight)
+
   return (
     <div className='active-workout'>
       <div className='current-workout-text'>Current Workout</div>
@@ -33,6 +33,7 @@ const ActiveWorkout = ({
         <PlatesModal
           weights={weights}
           currExercise={currExercise}
+          setCurrExercise={setCurrExercise}
           onClose={() => {
             setIsModalOpen(false)
           }}
