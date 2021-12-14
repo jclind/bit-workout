@@ -1,0 +1,11 @@
+.workout-complete {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  #confetti-anim {
+    position: absolute;
+    width: 200%;
+    top: 50%;
+  }
+}
