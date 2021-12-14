@@ -8,12 +8,7 @@
   align-items: center;
   // justify-content: center;
   text-align: center;
-  // height: 80vh;
-  // height: calc(100vh - (#{$navbar-height} * 2) - #{$page-margin-top});
-  // max-height: calc(
-  //   -webkit-fill-available - #{$navbar-height} + #{$page-margin-top}
-  // );
-  // height: calc(100vh - (#{$navbar-height} * 1.5) - #{$page-margin-top});
+
   height: calc(100vh - #{$navbar-height});
   max-height: -webkit-fill-available;
   margin: 0;

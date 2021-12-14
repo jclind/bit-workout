@@ -1,21 +1,16 @@
-import React, { useEffect } from 'react'
-import lottie from 'lottie-web'
-import confettiAnim from '../../assets/animations/confetti-anim.json'
+import React from 'react'
 import '../../assets/styles/components/workout/workout-complete.scss'
+import ConfettiAnim from '../ConfettiAnim'
 
 const WorkoutComplete = () => {
-  useEffect(() => {
-    lottie.loadAnimation({
-      container: document.querySelector('#confetti-anim'),
-      animationData: confettiAnim,
-      // loop: false,
-    })
-  }, [])
-
   return (
     <div className='workout-complete page'>
-      hello there
-      <div id='confetti-anim'></div>
+      <ConfettiAnim className='anim' />
+      <div className='content'>
+        <div className='title'>Workout Complete!</div>
+        <div className='text'>Well done on completing your workout!</div>
+        <button className='back-home-btn'>Back Home</button>
+      </div>
     </div>
   )
 }
