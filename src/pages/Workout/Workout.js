@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useWorkout } from '../../contexts/WorkoutContext'
 import WorkoutSelection from '../../components/Workout/WorkoutSelection'
 import ActiveWorkoutContainer from '../../components/Workout/ActiveWorkoutContainer'
+import WorkoutComplete from '../../components/Workout/WorkoutComplete'
 import { e1 } from '../../assets/data/e1'
 
 const Workout = () => {
@@ -9,6 +10,7 @@ const Workout = () => {
   const [loading, setLoading] = useState(false)
 
   const { isWorkoutRunning } = workoutData
+  const [isWorkoutFinished, setIsWorkoutFinished] = useState()
 
   const startWorkout = exercise => {
     const data = {
@@ -28,19 +30,23 @@ const Workout = () => {
     })
   }
 
-  const stopWorkout = () => {
-    const data = {
+  const finishWorkout = async () => {
+    console.log('workout finished')
+    const weightsArray = workoutData.weights
+    workoutData.runningWorkout.currWorkout.path.forEach(ex => {
+      const exerciseID = ex.exerciseID
+      weightsArray.forEach(w => {
+        if (w.exerciseID === exerciseID) {
+          w.weight = w.weight + 5
+        }
+      })
+    })
+    await updateWorkout({
       isWorkoutRunning: false,
-      runningWorkout: {
-        remainingWorkout: null,
-        currWorkout: null,
-        timer: {
-          isTimer: false,
-          timerStart: null,
-        },
-      },
-    }
-    updateWorkout(data)
+      weights: weightsArray,
+    })
+    await setIsWorkoutFinished(true)
+    console.log(workoutData.runningWorkout.currWorkout.path)
   }
 
   return (
@@ -50,11 +56,13 @@ const Workout = () => {
           'Loading thangs!!!'
         ) : (
           <>
-            {isWorkoutRunning ? (
+            {isWorkoutFinished ? (
+              <WorkoutComplete setIsWorkoutFinished={setIsWorkoutFinished} />
+            ) : isWorkoutRunning ? (
               <>
                 <ActiveWorkoutContainer
                   workoutData={workoutData}
-                  stopWorkout={stopWorkout}
+                  finishWorkout={finishWorkout}
                 />
               </>
             ) : (

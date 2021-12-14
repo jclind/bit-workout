@@ -4,10 +4,9 @@ import { exerciseList } from '../../assets/data/exerciseList'
 import { useWorkout } from '../../contexts/WorkoutContext'
 import ActiveWorkout from './ActiveWorkout'
 import TimerContainer from '../Timer/TimerContainer'
-import WorkoutComplete from './WorkoutComplete'
 import '../../assets/styles/components/workout/active-workout.scss'
 
-const WorkoutContainer = ({ workoutData, stopWorkout }) => {
+const WorkoutContainer = ({ workoutData, finishWorkout }) => {
   const [currIdx, setCurrIdx] = useState()
   const [currSet, setCurrSet] = useState()
   const [currRepsTotal, setCurrRepsTotal] = useState()
@@ -24,28 +23,6 @@ const WorkoutContainer = ({ workoutData, stopWorkout }) => {
   const { updateWorkout, getSingleWorkout } = useWorkout()
 
   const { isWorkoutRunning } = workoutData
-
-  const [isWorkoutFinished, setIsWorkoutFinished] = useState(false)
-
-  const finishWorkout = async () => {
-    console.log('workout finished')
-    const weightsArray = workoutData.weights
-    workoutData.runningWorkout.currWorkout.path.forEach(ex => {
-      const exerciseID = ex.exerciseID
-      weightsArray.forEach(w => {
-        if (w.exerciseID === exerciseID) {
-          w.weight = w.weight + 5
-        }
-      })
-    })
-    setIsWorkoutFinished(true)
-    console.log(workoutData.runningWorkout.currWorkout.path)
-    // const currWeight = weightsArray.findIndex(w => w.exerciseID === id)
-    // weightsArray[currWeight].weight = Math.round(newWeight)
-    // await updateWorkout({
-    // weights: weightsArray,
-    // })
-  }
 
   const getCurrentExerciseID = idx => {
     const currExercise = workoutData.runningWorkout.currWorkout.path[idx]
@@ -158,8 +135,6 @@ const WorkoutContainer = ({ workoutData, stopWorkout }) => {
               restTime={restTime}
               setIsTimer={setIsTimer}
             />
-          ) : isWorkoutFinished ? (
-            <WorkoutComplete />
           ) : (
             <ActiveWorkout
               currSet={currSet}
@@ -170,9 +145,6 @@ const WorkoutContainer = ({ workoutData, stopWorkout }) => {
               currRepsTotal={currRepsTotal}
             />
           )}
-          <button className='stop-workout' onClick={stopWorkout}>
-            x
-          </button>
         </>
       )}
     </>
