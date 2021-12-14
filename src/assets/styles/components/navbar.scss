@@ -5,7 +5,7 @@ nav {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: toRem(65);
+  height: $navbar-height;
   border-top: 1px solid $primary;
   background: $primary-background;
 

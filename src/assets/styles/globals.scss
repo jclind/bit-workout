@@ -68,7 +68,7 @@ h1 {
   position: relative;
   width: 90%;
   margin: 0 auto;
-  margin-top: toRem(30);
+  margin-top: $page-margin-top;
 }
 
 // Form Styles
