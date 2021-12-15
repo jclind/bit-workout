@@ -29,105 +29,17 @@ export const WorkoutProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const { currentUser } = useAuth()
 
+  const [isWorkoutRunning, setIsWorkoutRunning] = useState(false)
+
   // Current Workout States
-  // const [currIdx, setCurrIdx] = useState()
-  // const [currSet, setCurrSet] = useState()
-  // const [currRepsTotal, setCurrRepsTotal] = useState()
-  // const [currSetTotal, setCurrSetTotal] = useState()
-  // const [restTime, setRestTime] = useState()
-  // const [isTimer, setIsTimer] = useState()
+  const [currIdx, setCurrIdx] = useState()
+  const [currSet, setCurrSet] = useState()
+  const [isTimer, setIsTimer] = useState()
   const [currExercise, setCurrExercise] = useState()
-  // const [timerStart, setTimerStart] = useState(null)
+  const [timerStart, setTimerStart] = useState(null)
   const getCurrentExerciseID = idx => {
     const currExercise = workoutData.runningWorkout.currWorkout.path[idx]
     return currExercise.exerciseID
-  }
-  // Set current workout states initially
-  useEffect(() => {
-    const setStates = async () => {
-      //     const currWorkoutData = workoutData.runningWorkout
-      //     const currIdx = currWorkoutData.remainingWorkout.currIdx
-      //     const currSet = currWorkoutData.remainingWorkout.currSet
-      //     await setIsTimer(currWorkoutData.timer.isTimer)
-      //     await setTimerStart(currWorkoutData.timer.timerStart)
-      //     const currExercise = currWorkoutData.currWorkout.path[currIdx]
-      //     const tempExerciseID = currExercise.exerciseID
-      //     const currExerciseData = await getSingleWorkout(
-      //         tempExerciseID,
-      //         workoutData.weights
-      //     )
-      //     await setCurrExercise(currExerciseData)
-      //     await setCurrIdx(currIdx)
-      //     await setCurrSet(currSet)
-      //     await setCurrRepsTotal(currExercise.reps)
-      //     await setCurrSetTotal(currExercise.sets)
-      //     await setRestTime(currWorkoutData.currWorkout.restTime)
-    }
-
-    // Set states if workout is running
-    setLoading(true)
-    getWorkoutData(currentUser.uid)
-
-    // if (workoutData.isWorkoutRunning) {
-    // setStates()
-    // }
-  }, [])
-
-  const completeSet = async () => {
-    const {
-      runningWorkout: {
-        remainingWorkout: { currIdx, currSet },
-      },
-    } = workoutData
-
-    const currSetTotal = currExercise.currWorkoutData.sets
-
-    if (currSet === currSetTotal) {
-      // If the last set of the last exercise is finished
-      if (currIdx >= workoutData.runningWorkout.currWorkout.path.length - 1) {
-        return finishWorkout()
-      } else {
-        const tempIsTimer = true
-        const tempStartTime = new Date().getTime()
-
-        // setIsTimer(true)
-        // const startTime = new Date().getTime()
-        // setTimerStart(startTime)
-
-        const nextIdx = currIdx + 1
-        const nextSet = 1
-        // setCurrIdx(nextIdx)
-        // setCurrSet(nextSet)
-
-        const nextExerciseID = getCurrentExerciseID(nextIdx)
-        const currExerciseData = await getSingleWorkout(
-          nextExerciseID,
-          workoutData.weights
-        )
-        await setCurrExercise(currExerciseData)
-
-        await updateWorkout({
-          'runningWorkout.remainingWorkout.currIdx': nextIdx,
-          'runningWorkout.remainingWorkout.currSet': nextSet,
-          'runningWorkout.timer.isTimer': tempIsTimer,
-          'runningWorkout.timer.timerStart': tempStartTime,
-        })
-      }
-    } else {
-      const tempIsTimer = true
-      const tempStartTime = new Date().getTime()
-      // setTimerStart(startTime)
-      // setIsTimer(true)
-
-      const nextSet = currSet + 1
-      // setCurrSet(nextSet)
-
-      await updateWorkout({
-        'runningWorkout.remainingWorkout.currSet': nextSet,
-        'runningWorkout.timer.isTimer': tempIsTimer,
-        'runningWorkout.timer.timerStart': tempStartTime,
-      })
-    }
   }
 
   const startWorkout = exercise => {
@@ -147,6 +59,84 @@ export const WorkoutProvider = ({ children }) => {
       setLoading(false)
     })
   }
+
+  // Set current workout states initially
+  useEffect(() => {
+    const setStates = async () => {
+      const currWorkoutData = workoutData.runningWorkout
+
+      const currIdx = currWorkoutData.remainingWorkout.currIdx
+      const currSet = currWorkoutData.remainingWorkout.currSet
+
+      await setIsTimer(currWorkoutData.timer.isTimer)
+
+      const currExercise = currWorkoutData.currWorkout.path[currIdx]
+      const tempExerciseID = currExercise.exerciseID
+      await setTimerStart(currWorkoutData.timer.timerStart)
+      await setCurrIdx(currIdx)
+      await setCurrSet(currSet)
+
+      const currExerciseData = await getSingleWorkout(
+        tempExerciseID,
+        workoutData.weights
+      )
+      return await setCurrExercise(currExerciseData)
+    }
+
+    getWorkoutData(currentUser.uid)
+    if (isWorkoutRunning) {
+      setLoading(true)
+      setStates()
+    }
+  }, [isWorkoutRunning])
+
+  const completeSet = async () => {
+    const currSetTotal = currExercise.currWorkoutData.sets
+
+    if (currSet === currSetTotal) {
+      // If the last set of the last exercise is finished
+      if (currIdx >= workoutData.runningWorkout.currWorkout.path.length - 1) {
+        return finishWorkout()
+      } else {
+        setIsTimer(true)
+        const startTime = new Date().getTime()
+        setTimerStart(startTime)
+
+        const nextIdx = currIdx + 1
+        const nextSet = 1
+        setCurrIdx(nextIdx)
+        setCurrSet(nextSet)
+
+        const nextExerciseID = getCurrentExerciseID(nextIdx)
+        const currExerciseData = await getSingleWorkout(
+          nextExerciseID,
+          workoutData.weights
+        )
+        await setCurrExercise(currExerciseData)
+
+        await updateWorkout({
+          'runningWorkout.remainingWorkout.currIdx': nextIdx,
+          'runningWorkout.remainingWorkout.currSet': nextSet,
+          'runningWorkout.timer.isTimer': true,
+          'runningWorkout.timer.timerStart': startTime,
+        })
+      }
+    } else {
+      const startTime = new Date().getTime()
+      setTimerStart(startTime)
+      setIsTimer(true)
+
+      const nextSet = currSet + 1
+      setCurrSet(nextSet)
+
+      await updateWorkout({
+        'runningWorkout.remainingWorkout.currSet': nextSet,
+        'runningWorkout.timer.isTimer': true,
+        'runningWorkout.timer.timerStart': startTime,
+      })
+    }
+  }
+
   const [isWorkoutFinished, setIsWorkoutFinished] = useState()
   const finishWorkout = async () => {
     console.log('workout finished')
@@ -164,17 +154,15 @@ export const WorkoutProvider = ({ children }) => {
       weights: weightsArray,
     })
     await setIsWorkoutFinished(true)
-    console.log(workoutData.runningWorkout.currWorkout.path)
   }
 
   async function getSingleWorkout(id, weightsList) {
     const currExercise = exerciseList.find(ex => ex.id === id)
     const exerciseWeight = weightsList.find(ex => ex.exerciseID === id)
-    const currWorkoutData = workoutData.runningWorkout.currWorkout.find(
+    const currWorkoutData = workoutData.runningWorkout.currWorkout.path.find(
       ex => ex.exerciseID === id
     )
 
-    console.log(id)
     return {
       ...currExercise,
       exerciseWeight: exerciseWeight.weight,
@@ -183,10 +171,6 @@ export const WorkoutProvider = ({ children }) => {
   }
   async function updateWorkout(data) {
     console.log('updating workout data')
-    // const obj = data.map(el => {
-    // return { [el.prop]: el.val }
-    // })
-    // console.log(obj)
     const user = firebase.auth().currentUser
     const workoutRef = doc(db, 'workoutData', user.uid)
     await updateDoc(workoutRef, {
@@ -200,12 +184,11 @@ export const WorkoutProvider = ({ children }) => {
 
   async function getWorkoutData(uid) {
     let data
-    console.log('Im here')
     await getDoc(doc(db, 'workoutData', uid)).then(document => {
-      console.log('and now here', document)
       data = document.data()
     })
-    return setWorkoutData(data)
+    await setWorkoutData(data)
+    return data
   }
 
   useEffect(() => {
@@ -221,13 +204,20 @@ export const WorkoutProvider = ({ children }) => {
       )
       await setCurrExercise(currExerciseData)
     }
-    if (currExercise) {
-      setCurrExerciseData()
-    }
+
     if (workoutData) {
-      setLoading(false)
+      setCurrExerciseData()
+      setIsWorkoutRunning(workoutData.isWorkoutRunning)
     }
   }, [workoutData])
+
+  useEffect(() => {
+    if (workoutData && currExercise) {
+      console.log(workoutData, currExercise)
+      setLoading(false)
+      console.log('hopefully 2')
+    }
+  }, [workoutData, currExercise])
 
   const value = {
     workoutData,
@@ -235,9 +225,15 @@ export const WorkoutProvider = ({ children }) => {
     currExercise,
     startWorkout,
     isWorkoutFinished,
+    setIsWorkoutFinished,
     updateWorkout,
     getSingleWorkout,
     completeSet,
+    currIdx,
+    currSet,
+    isTimer,
+    setIsTimer,
+    timerStart,
   }
   return (
     <WorkoutContext.Provider value={value}>

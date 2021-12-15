@@ -9,9 +9,7 @@ import { useWorkout } from '../../contexts/WorkoutContext'
 const PlatesModal = ({ weights, onClose }) => {
   const [isChangeWeightModalOpen, setIsChangeWeightModalOpen] = useState(false)
 
-  const { workoutData } = useWorkout()
-
-  const { currExercise } = workoutData
+  const { currExercise } = useWorkout()
 
   const modalContent = useClickOutside(() => {
     if (!isChangeWeightModalOpen) {

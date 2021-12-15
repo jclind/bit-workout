@@ -5,20 +5,13 @@ import TimerContainer from '../Timer/TimerContainer'
 import '../../assets/styles/components/workout/active-workout.scss'
 
 const WorkoutContainer = () => {
-  const { workoutData, currExercise, updateWorkout } = useWorkout()
+  const { workoutData, isTimer, timerStart, setIsTimer } = useWorkout()
 
   const {
     runningWorkout: {
-      timer: { isTimer, timerStart },
       currWorkout: { restTime },
     },
   } = workoutData
-
-  const setIsTimer = val => {
-    updateWorkout({
-      'runningWorkout.timer.isTimer': val,
-    })
-  }
 
   return (
     <>

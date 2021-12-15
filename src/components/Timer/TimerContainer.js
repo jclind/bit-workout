@@ -15,6 +15,7 @@ const TimerContainer = ({ timerStart, restTime, setIsTimer }) => {
 
   const skipTimer = (ref, timer) => {
     const handler = e => {
+      console.log('IM HERE POELE')
       if (timer) {
         clearTimer(timer)
       }

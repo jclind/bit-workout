@@ -1,8 +1,11 @@
 import React from 'react'
 import '../../assets/styles/components/workout/workout-complete.scss'
 import ConfettiAnim from '../ConfettiAnim'
+import { useWorkout } from '../../contexts/WorkoutContext'
 
-const WorkoutComplete = ({ setIsWorkoutFinished }) => {
+const WorkoutComplete = () => {
+  const { setIsWorkoutFinished } = useWorkout()
+
   const returnFromWorkout = async () => {
     await setIsWorkoutFinished(false)
   }

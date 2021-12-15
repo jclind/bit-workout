@@ -4,22 +4,16 @@ import { calculatePlates } from '../../util/calculatePlates'
 import PlatesModal from './PlatesModal'
 import { useWorkout } from '../../contexts/WorkoutContext'
 
-const ActiveWorkout = ({ currRepsTotal }) => {
+const ActiveWorkout = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const { workoutData, currExercise, completeSet } = useWorkout()
-
-  const {
-    runningWorkout: {
-      remainingWorkout: { currSet },
-    },
-  } = workoutData
+  const { currExercise, completeSet, currSet } = useWorkout()
 
   const {
     name,
     imageURL,
     exerciseWeight,
-    currWorkoutData: { sets: currSetTotal },
+    currWorkoutData: { sets: currSetTotal, reps: currRepsTotal },
   } = currExercise
   const weights = calculatePlates(45, exerciseWeight)
 
