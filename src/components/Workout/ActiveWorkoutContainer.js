@@ -1,154 +1,125 @@
 import React, { useState, useEffect } from 'react'
-import { getNextEvent } from '../../util/getNextEvent'
-import { exerciseList } from '../../assets/data/exerciseList'
 import { useWorkout } from '../../contexts/WorkoutContext'
 import ActiveWorkout from './ActiveWorkout'
 import TimerContainer from '../Timer/TimerContainer'
 import '../../assets/styles/components/workout/active-workout.scss'
 
-const WorkoutContainer = ({ workoutData, finishWorkout }) => {
-  const [currIdx, setCurrIdx] = useState()
-  const [currSet, setCurrSet] = useState()
-  const [currRepsTotal, setCurrRepsTotal] = useState()
-  const [currSetTotal, setCurrSetTotal] = useState()
-  const [restTime, setRestTime] = useState()
-  const [isTimer, setIsTimer] = useState()
+const WorkoutContainer = ({ workoutData }) => {
+    // const [currIdx, setCurrIdx] = useState()
+    // const [currSet, setCurrSet] = useState()
+    // const [currRepsTotal, setCurrRepsTotal] = useState()
+    // const [currSetTotal, setCurrSetTotal] = useState()
+    // const [restTime, setRestTime] = useState()
+    // const [isTimer, setIsTimer] = useState()
+    // const [currExercise, setCurrExercise] = useState()
+    // const [timerStart, setTimerStart] = useState(null)
 
-  const [loading, setLoading] = useState(true)
+    const { updateWorkout, getSingleWorkout, finishWorkout } = useWorkout()
 
-  const [currExercise, setCurrExercise] = useState()
+    // const { isWorkoutRunning } = workoutData
 
-  const [timerStart, setTimerStart] = useState(null)
+    // const getCurrentExerciseID = idx => {
+    //     const currExercise = workoutData.runningWorkout.currWorkout.path[idx]
+    //     return currExercise.exerciseID
+    // }
 
-  const { updateWorkout, getSingleWorkout } = useWorkout()
+    // const completeSet = async () => {
+    //     if (currSet === currSetTotal) {
+    //         // If the last set of the last exercise is finished
+    //         if (
+    //             currIdx >=
+    //             workoutData.runningWorkout.currWorkout.path.length - 1
+    //         ) {
+    //             return finishWorkout()
+    //         } else {
+    //             setIsTimer(true)
+    //             const startTime = new Date().getTime()
+    //             setTimerStart(startTime)
 
-  const { isWorkoutRunning } = workoutData
+    //             const nextIdx = currIdx + 1
+    //             const nextSet = 1
+    //             setCurrIdx(nextIdx)
+    //             setCurrSet(nextSet)
 
-  const getCurrentExerciseID = idx => {
-    const currExercise = workoutData.runningWorkout.currWorkout.path[idx]
-    return currExercise.exerciseID
-  }
+    //             const nextExerciseID = getCurrentExerciseID(nextIdx)
+    //             const currExerciseData = await getSingleWorkout(
+    //                 nextExerciseID,
+    //                 workoutData.weights
+    //             )
+    //             await setCurrExercise(currExerciseData)
 
-  const completeSet = async () => {
-    if (currSet === currSetTotal) {
-      // If the last set of the last exercise is finished
-      if (currIdx >= workoutData.runningWorkout.currWorkout.path.length - 1) {
-        return finishWorkout()
-      } else {
-        setIsTimer(true)
-        const startTime = new Date().getTime()
-        setTimerStart(startTime)
+    //             await updateWorkout({
+    //                 'runningWorkout.remainingWorkout.currIdx': nextIdx,
+    //                 'runningWorkout.remainingWorkout.currSet': nextSet,
+    //                 'runningWorkout.timer.isTimer': true,
+    //                 'runningWorkout.timer.timerStart': startTime,
+    //             })
+    //         }
+    //     } else {
+    //         const startTime = new Date().getTime()
+    //         setTimerStart(startTime)
+    //         setIsTimer(true)
 
-        const nextIdx = currIdx + 1
-        const nextSet = 1
-        setCurrIdx(nextIdx)
-        setCurrSet(nextSet)
+    //         const nextSet = currSet + 1
+    //         setCurrSet(nextSet)
 
-        const nextExerciseID = getCurrentExerciseID(nextIdx)
-        const currExerciseData = await getSingleWorkout(
-          nextExerciseID,
-          workoutData.weights
-        )
-        await setCurrExercise(currExerciseData)
+    //         await updateWorkout({
+    //             'runningWorkout.remainingWorkout.currSet': nextSet,
+    //             'runningWorkout.timer.isTimer': true,
+    //             'runningWorkout.timer.timerStart': startTime,
+    //         })
+    //     }
+    // }
 
-        await updateWorkout({
-          'runningWorkout.remainingWorkout.currIdx': nextIdx,
-          'runningWorkout.remainingWorkout.currSet': nextSet,
-          'runningWorkout.timer.isTimer': true,
-          'runningWorkout.timer.timerStart': startTime,
-        })
-      }
-    } else {
-      const startTime = new Date().getTime()
-      setTimerStart(startTime)
-      setIsTimer(true)
+    // useEffect(() => {
+    //     const setStates = async () => {
+    //         const currWorkoutData = workoutData.runningWorkout
+    //         const currIdx = currWorkoutData.remainingWorkout.currIdx
+    //         const currSet = currWorkoutData.remainingWorkout.currSet
 
-      const nextSet = currSet + 1
-      setCurrSet(nextSet)
+    //         await setIsTimer(currWorkoutData.timer.isTimer)
+    //         await setTimerStart(currWorkoutData.timer.timerStart)
 
-      await updateWorkout({
-        'runningWorkout.remainingWorkout.currSet': nextSet,
-        'runningWorkout.timer.isTimer': true,
-        'runningWorkout.timer.timerStart': startTime,
-      })
-    }
-  }
+    //         const currExercise = currWorkoutData.currWorkout.path[currIdx]
 
-  useEffect(() => {
-    const setStates = async () => {
-      setLoading(true)
-      const currWorkoutData = workoutData.runningWorkout
-      const currIdx = currWorkoutData.remainingWorkout.currIdx
-      const currSet = currWorkoutData.remainingWorkout.currSet
+    //         const tempExerciseID = currExercise.exerciseID
+    //         const currExerciseData = await getSingleWorkout(
+    //             tempExerciseID,
+    //             workoutData.weights
+    //         )
+    //         await setCurrExercise(currExerciseData)
 
-      await setIsTimer(currWorkoutData.timer.isTimer)
-      await setTimerStart(currWorkoutData.timer.timerStart)
+    //         await setCurrIdx(currIdx)
+    //         await setCurrSet(currSet)
+    //         await setCurrRepsTotal(currExercise.reps)
+    //         await setCurrSetTotal(currExercise.sets)
+    //         await setRestTime(currWorkoutData.currWorkout.restTime)
+    //     }
+    //     if (isWorkoutRunning) {
+    //         setStates()
+    //     }
+    // }, [])
 
-      const currExercise = currWorkoutData.currWorkout.path[currIdx]
-
-      const tempExerciseID = currExercise.exerciseID
-      const currExerciseData = await getSingleWorkout(
-        tempExerciseID,
-        workoutData.weights
-      )
-      await setCurrExercise(currExerciseData)
-
-      await setCurrIdx(currIdx)
-      await setCurrSet(currSet)
-      await setCurrRepsTotal(currExercise.reps)
-      await setCurrSetTotal(currExercise.sets)
-      await setRestTime(currWorkoutData.currWorkout.restTime)
-      setLoading(false)
-    }
-    if (isWorkoutRunning) {
-      setStates()
-    }
-  }, [])
-
-  // On workoutdata update refresh current exercise so it matches the true current exercise data
-  useEffect(() => {
-    const setCurrExerciseData = async () => {
-      const currWorkoutData = workoutData.runningWorkout
-      const currExercise = currWorkoutData.currWorkout.path[currIdx]
-
-      const tempExerciseID = currExercise.exerciseID
-      const currExerciseData = await getSingleWorkout(
-        tempExerciseID,
-        workoutData.weights
-      )
-      await setCurrExercise(currExerciseData)
-    }
-    if (currExercise) {
-      setCurrExerciseData()
-    }
-  }, [workoutData])
-
-  return (
-    <>
-      {loading ? (
-        'loading this page now, will it be weird?'
-      ) : (
+    return (
         <>
-          {isTimer && timerStart ? (
-            <TimerContainer
-              timerStart={timerStart}
-              restTime={restTime}
-              setIsTimer={setIsTimer}
-            />
-          ) : (
-            <ActiveWorkout
-              currSet={currSet}
-              currSetTotal={currSetTotal}
-              completeSet={completeSet}
-              currExercise={currExercise}
-              setCurrExercise={setCurrExercise}
-              currRepsTotal={currRepsTotal}
-            />
-          )}
+            {isTimer && timerStart ? (
+                <TimerContainer
+                    timerStart={timerStart}
+                    restTime={restTime}
+                    setIsTimer={setIsTimer}
+                />
+            ) : (
+                <ActiveWorkout
+                    currSet={currSet}
+                    currSetTotal={currSetTotal}
+                    completeSet={completeSet}
+                    currExercise={currExercise}
+                    setCurrExercise={setCurrExercise}
+                    currRepsTotal={currRepsTotal}
+                />
+            )}
         </>
-      )}
-    </>
-  )
+    )
 }
 
 export default WorkoutContainer
