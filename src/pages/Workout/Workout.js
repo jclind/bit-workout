@@ -8,6 +8,7 @@ const Workout = () => {
   const { workoutData, isWorkoutFinished } = useWorkout()
 
   const { isWorkoutRunning } = workoutData
+  console.log(isWorkoutRunning)
 
   return (
     <>
