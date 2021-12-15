@@ -2,18 +2,25 @@ import React, { useState, useEffect } from 'react'
 import { AiFillInfoCircle } from 'react-icons/ai'
 import { calculatePlates } from '../../util/calculatePlates'
 import PlatesModal from './PlatesModal'
+import { useWorkout } from '../../contexts/WorkoutContext'
 
-const ActiveWorkout = ({
-  currSet,
-  currSetTotal,
-  completeSet,
-  currExercise,
-  setCurrExercise,
-  currRepsTotal,
-}) => {
+const ActiveWorkout = ({ currRepsTotal }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const { name, imageURL, exerciseWeight } = currExercise
+  const { workoutData, currExercise, completeSet } = useWorkout()
+
+  const {
+    runningWorkout: {
+      remainingWorkout: { currSet },
+    },
+  } = workoutData
+
+  const {
+    name,
+    imageURL,
+    exerciseWeight,
+    currWorkoutData: { sets: currSetTotal },
+  } = currExercise
   const weights = calculatePlates(45, exerciseWeight)
 
   return (
@@ -32,8 +39,6 @@ const ActiveWorkout = ({
       {isModalOpen ? (
         <PlatesModal
           weights={weights}
-          currExercise={currExercise}
-          setCurrExercise={setCurrExercise}
           onClose={() => {
             setIsModalOpen(false)
           }}
