@@ -2,15 +2,21 @@ import React, { useState, useEffect, useRef } from 'react'
 import { formatTime } from '../../util/formatTime'
 import Timer from './Timer'
 import '../../assets/styles/components/workout/workout-timer.scss'
+import { useWorkout } from '../../contexts/WorkoutContext'
 
 const TimerContainer = ({ timerStart, restTime, setIsTimer }) => {
   const [timerVal, setTimerVal] = useState()
+
+  const { updateWorkout } = useWorkout()
 
   const skipRestBtn = useRef()
 
   const clearTimer = timer => {
     clearInterval(timer)
     setIsTimer(false)
+    updateWorkout({
+      'runningWorkout.timer.isTimer': false,
+    })
   }
 
   const skipTimer = (ref, timer) => {
