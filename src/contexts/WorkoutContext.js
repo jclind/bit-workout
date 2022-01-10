@@ -55,9 +55,7 @@ export const WorkoutProvider = ({ children }) => {
       },
     }
     setLoading(true)
-    updateWorkout(data).then(() => {
-      setLoading(false)
-    })
+    updateWorkout(data)
   }
 
   // Set current workout states initially
@@ -231,7 +229,6 @@ export const WorkoutProvider = ({ children }) => {
     } else if (workoutData && currExercise) {
       console.log(workoutData, currExercise)
       setLoading(false)
-      console.log('hopefully 2')
     }
   }, [workoutData, currExercise])
 
@@ -251,9 +248,10 @@ export const WorkoutProvider = ({ children }) => {
     setIsTimer,
     timerStart,
   }
+  console.log('WHY IS THIS HAPPENING?')
   return (
     <WorkoutContext.Provider value={value}>
-      {loading ? <div>Loading Workout....</div> : children}
+      {loading ? <div>Loading Workout...</div> : children}
     </WorkoutContext.Provider>
   )
 }
