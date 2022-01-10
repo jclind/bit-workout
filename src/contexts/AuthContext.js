@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from 'react'
 import { auth, db } from '../firebase'
 import { getDoc, doc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import firebase from 'firebase/compat/app'
-
+import LogoutConfirm from '../components/LogoutConfirm'
+import { useNavigate } from 'react-router-dom'
 import { setWorkout } from './WorkoutContext'
 
 const AuthContext = React.createContext()
@@ -14,7 +15,18 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
   const [currentUser, setCurrentUser] = useState()
+  useEffect(() => {
+    if (currentUser) {
+      console.log('IM HERE AT THE USEEFFECT')
+      setLoading(true)
+    }
+  }, [currentUser])
   const [currUserData, setCurrUserData] = useState()
+
+  const [workoutData, setWorkoutData] = useState()
+  const [isWorkoutRunning, setIsWorkoutRunning] = useState(false)
+
+  const navigate = useNavigate()
 
   function signup(email, password, payload) {
     const {
@@ -50,8 +62,20 @@ export function AuthProvider({ children }) {
     return auth.signInWithEmailAndPassword(email, password)
   }
 
+  const [workoutRunningModal, setWorkoutRunningModal] = useState(false)
+  const finalLogout = () => {
+    setWorkoutData(null)
+    setIsWorkoutRunning(false)
+    auth.signOut()
+    navigate('/login')
+    return window.location.reload()
+  }
   function logout() {
-    return auth.signOut()
+    if (isWorkoutRunning) {
+      setWorkoutRunningModal(true)
+    } else {
+      return finalLogout()
+    }
   }
 
   function resetPassword(email) {
@@ -116,6 +140,8 @@ export function AuthProvider({ children }) {
         getUserData(user)
       } else {
         console.log('logged out')
+        console.log('LOADING 1')
+        setLoading(false)
       }
       setCurrentUser(user)
     })
@@ -124,6 +150,7 @@ export function AuthProvider({ children }) {
   }, [])
   useEffect(() => {
     if (currentUser && currUserData) {
+      console.log('LOADING 2')
       setLoading(false)
     }
   }, [currentUser, currUserData])
@@ -139,11 +166,27 @@ export function AuthProvider({ children }) {
     updateEmail,
     updatePassword,
     updateUserData,
+    isWorkoutRunning,
+    setIsWorkoutRunning,
+    workoutData,
+    setWorkoutData,
   }
 
   return (
     <AuthContext.Provider value={value}>
-      {loading ? <div>Loading....</div> : children}
+      {loading ? (
+        <div>Loading auth....</div>
+      ) : (
+        <>
+          {workoutRunningModal && (
+            <LogoutConfirm
+              onClose={() => setWorkoutRunningModal(false)}
+              logout={finalLogout}
+            />
+          )}
+          <>{children}</>
+        </>
+      )}
     </AuthContext.Provider>
   )
 }

@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ReactDom from 'react-dom'
 import '../../assets/styles/components/workout/plates-modal.scss'
 import useClickOutside from '../../util/useClickOutside'
 import ChangeWeightModal from './ChangeWeightModal'
 import { BiEdit } from 'react-icons/bi'
+import { useWorkout } from '../../contexts/WorkoutContext'
 
-const PlatesModal = ({ weights, onClose, currExercise, setCurrExercise }) => {
+const PlatesModal = ({ weights, onClose }) => {
   const [isChangeWeightModalOpen, setIsChangeWeightModalOpen] = useState(false)
+
+  const { currExercise } = useWorkout()
+
   const modalContent = useClickOutside(() => {
     if (!isChangeWeightModalOpen) {
       onClose()
@@ -24,7 +28,6 @@ const PlatesModal = ({ weights, onClose, currExercise, setCurrExercise }) => {
           >
             {currExercise.exerciseWeight} lbs <BiEdit className='edit-icon' />
           </div>
-          {/* <div className='change-weight'>Change Weight</div> */}
 
           <div className='title'>Plates:</div>
           <div className='sub-text'>(On each side)</div>
@@ -46,8 +49,7 @@ const PlatesModal = ({ weights, onClose, currExercise, setCurrExercise }) => {
       </div>
       {isChangeWeightModalOpen ? (
         <ChangeWeightModal
-          currExercise={currExercise}
-          setCurrExercise={setCurrExercise}
+          exerciseID={currExercise.id}
           onClose={() => {
             setIsChangeWeightModalOpen(false)
           }}

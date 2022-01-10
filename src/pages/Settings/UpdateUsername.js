@@ -22,7 +22,7 @@ const UpdateUsername = () => {
           console.log(err)
         })
     }
-  }, [newUsername])
+  }, [newUsername, username, updateUserData, navigate])
 
   return (
     <div className='update-name-page page'>

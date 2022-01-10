@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import UserAvatarAndTitle from '../components/AccountComponents/UserAvatarAndTitle'
 import '../assets/styles/pages/account.scss'

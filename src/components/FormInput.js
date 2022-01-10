@@ -44,7 +44,7 @@ const FormInput = ({
       />
       {clear && (
         <div onClick={() => setVal('')} className='delete-icon'>
-          <img src={deleteIcon} />
+          <img src={deleteIcon} alt='clear' />
         </div>
       )}
     </label>

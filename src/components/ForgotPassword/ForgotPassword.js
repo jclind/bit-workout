@@ -1,10 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const ForgotPassword = ({ handleSubmit, emailRef, loading, error }) => {
+const ForgotPassword = ({
+  handleSubmit,
+  emailRef,
+  loading,
+  error,
+  message,
+}) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
+        {message && <div>{message}</div>}
         {error && <div>ERROR!</div>}
         <label>
           Email
