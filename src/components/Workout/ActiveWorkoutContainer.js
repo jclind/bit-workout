@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react'
 import { useWorkout } from '../../contexts/WorkoutContext'
 import ActiveWorkout from './ActiveWorkout'
 import TimerContainer from '../Timer/TimerContainer'

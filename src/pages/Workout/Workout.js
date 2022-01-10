@@ -8,7 +8,6 @@ const Workout = () => {
   const { workoutData, isWorkoutFinished } = useWorkout()
 
   const { isWorkoutRunning } = workoutData
-  console.log(isWorkoutRunning)
 
   return (
     <>
@@ -17,7 +16,7 @@ const Workout = () => {
           <WorkoutComplete />
         ) : isWorkoutRunning ? (
           <>
-            <ActiveWorkoutContainer workoutData={workoutData} />
+            <ActiveWorkoutContainer />
           </>
         ) : (
           <WorkoutSelection />

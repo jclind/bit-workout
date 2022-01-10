@@ -13,10 +13,12 @@ export function useWorkout() {
 }
 
 export function setWorkout(weight, gender, uid) {
+  // Map over list of exercises for current user and return the id and weight for each
   const weights = exerciseList.map(ex => {
     const id = ex.id
     return { exerciseID: id, weight: calculateWeight(id, weight, gender) }
   })
+  // Set current user workout data with prop name of current user id
   return setDoc(doc(db, 'workoutData', uid), {
     weights,
     isWorkoutRunning: false,
@@ -25,10 +27,10 @@ export function setWorkout(weight, gender, uid) {
 }
 
 export const WorkoutProvider = ({ children }) => {
-  const [workoutData, setWorkoutData] = useState()
-  const [loading, setLoading] = useState(true)
   const { currentUser } = useAuth()
+  const [loading, setLoading] = useState(true)
 
+  const [workoutData, setWorkoutData] = useState()
   const [isWorkoutRunning, setIsWorkoutRunning] = useState(false)
 
   // Current Workout States
@@ -37,11 +39,8 @@ export const WorkoutProvider = ({ children }) => {
   const [isTimer, setIsTimer] = useState()
   const [currExercise, setCurrExercise] = useState()
   const [timerStart, setTimerStart] = useState(null)
-  const getCurrentExerciseID = idx => {
-    const currExercise = workoutData.runningWorkout.currWorkout.path[idx]
-    return currExercise.exerciseID
-  }
 
+  // Update workout data with starting data
   const startWorkout = exercise => {
     const data = {
       isWorkoutRunning: true,
@@ -60,9 +59,7 @@ export const WorkoutProvider = ({ children }) => {
 
   // Set current workout states initially
   useEffect(() => {
-    console.log('in isWorkoutRunning useEffect', isWorkoutRunning)
     const setStates = async () => {
-      console.log('Im in setState')
       const currWorkoutData = workoutData.runningWorkout
 
       const currIdx = currWorkoutData.remainingWorkout.currIdx
@@ -83,6 +80,7 @@ export const WorkoutProvider = ({ children }) => {
       return await setCurrExercise(currExerciseData)
     }
 
+    // If workout is already running, set loading and states, else retrieve user workout data
     if (isWorkoutRunning) {
       setLoading(true)
       setStates()
@@ -92,10 +90,14 @@ export const WorkoutProvider = ({ children }) => {
   }, [isWorkoutRunning])
 
   const completeSet = async () => {
+    // Set current set to the number of sets in the current workout
     const currSetTotal = currExercise.currWorkoutData.sets
 
+    // If the current set is the last set
+    // Else start rest timer, increment set, and updateWorkout
     if (currSet === currSetTotal) {
-      // If the last set of the last exercise is finished
+      // If the last set of the last exercise is finished then call finishWorkout
+      // Else begin next rest timer, increment currSet and currIdx, and updateWorkout
       if (currIdx >= workoutData.runningWorkout.currWorkout.path.length - 1) {
         return finishWorkout()
       } else {
@@ -107,13 +109,6 @@ export const WorkoutProvider = ({ children }) => {
         const nextSet = 1
         setCurrIdx(nextIdx)
         setCurrSet(nextSet)
-
-        // const nextExerciseID = getCurrentExerciseID(nextIdx)
-        // const currExerciseData = await getSingleWorkout(
-        //   nextExerciseID,
-        //   workoutData.weights
-        // )
-        // await setCurrExercise(currExerciseData)
 
         await updateWorkout({
           'runningWorkout.remainingWorkout.currIdx': nextIdx,
@@ -139,17 +134,21 @@ export const WorkoutProvider = ({ children }) => {
   }
 
   const [isWorkoutFinished, setIsWorkoutFinished] = useState()
+  // On workout finish, get list of weights and increment each by 5
   const finishWorkout = async () => {
     console.log('workout finished')
     const weightsArray = workoutData.weights
+    // Map through the just finished current workout
     workoutData.runningWorkout.currWorkout.path.forEach(ex => {
       const exerciseID = ex.exerciseID
+      // For each workout, increment every completed exercise weight
       weightsArray.forEach(w => {
         if (w.exerciseID === exerciseID) {
           w.weight = w.weight + 5
         }
       })
     })
+    // Update user workout data with new weights
     await updateWorkout({
       isWorkoutRunning: false,
       weights: weightsArray,
@@ -157,6 +156,7 @@ export const WorkoutProvider = ({ children }) => {
     await setIsWorkoutFinished(true)
   }
 
+  // Get data from single exercise with id and user weightsList
   async function getSingleWorkout(id, weightsList) {
     const currExercise = exerciseList.find(ex => ex.id === id)
     const exerciseWeight = weightsList.find(ex => ex.exerciseID === id)
@@ -170,8 +170,10 @@ export const WorkoutProvider = ({ children }) => {
       currWorkoutData,
     }
   }
+
+  // Takes data and passes it as update to the firestore
   async function updateWorkout(data) {
-    console.log('updating workout data')
+    // Get current user and update workout data with user's uid
     const user = firebase.auth().currentUser
     const workoutRef = doc(db, 'workoutData', user.uid)
     await updateDoc(workoutRef, {
@@ -183,19 +185,21 @@ export const WorkoutProvider = ({ children }) => {
     }))
   }
 
+  // Retrieve workout data from firestore with uid prop
   async function getWorkoutData(uid) {
     console.log('Getting data!!!')
     let data
     await getDoc(doc(db, 'workoutData', uid)).then(document => {
       data = document.data()
-      console.log('in getDoc (getWorkoutData)', data)
       setWorkoutData(data)
     })
     return data
   }
 
+  // On workoutData change, if currExercise exists, update currExercise.
+  // If workoutData exists, setIsWorkoutRunning to curr bool val
   useEffect(() => {
-    console.log('Now in workoutData useEffect')
+    // Get curr exercise data using getSingleWorkout and setCurrExercise
     const setCurrExerciseData = async () => {
       const currWorkoutData = workoutData.runningWorkout
       const currExercise = currWorkoutData.currWorkout.path[currIdx]
@@ -205,20 +209,16 @@ export const WorkoutProvider = ({ children }) => {
         tempExerciseID,
         workoutData.weights
       )
-      console.log(currExerciseData)
       await setCurrExercise(currExerciseData)
-      console.log(currExercise)
     }
 
+    // If currExercise exists then setCurrExercise
     if (currExercise) {
-      console.log('if currExercise Exists (workoutData useEffect)')
       setCurrExerciseData()
     }
+
+    // If workoutData Exists, setIsWorkoutRunning to current bool value of workoutData.isWorkoutRunning
     if (workoutData) {
-      console.log(
-        'if workoutData Exists (workoutData useEffect)',
-        workoutData.isWorkoutRunning
-      )
       setIsWorkoutRunning(workoutData.isWorkoutRunning)
     }
   }, [workoutData])
@@ -227,11 +227,11 @@ export const WorkoutProvider = ({ children }) => {
     if (workoutData && !workoutData.isWorkoutRunning) {
       setLoading(false)
     } else if (workoutData && currExercise) {
-      console.log(workoutData, currExercise)
       setLoading(false)
     }
   }, [workoutData, currExercise])
 
+  // Hold all values to be used from WorkoutContext
   const value = {
     workoutData,
     finishWorkout,
@@ -248,7 +248,7 @@ export const WorkoutProvider = ({ children }) => {
     setIsTimer,
     timerStart,
   }
-  console.log('WHY IS THIS HAPPENING?')
+
   return (
     <WorkoutContext.Provider value={value}>
       {loading ? <div>Loading Workout...</div> : children}
