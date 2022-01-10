@@ -9,6 +9,7 @@ import { exerciseList } from '../../assets/data/exerciseList'
 
 const ChangeWeightModal = ({ onClose, exerciseID }) => {
   const [newWeight, setNewWeight] = useState('')
+  const [error, setError] = useState('')
 
   const { updateWorkout, workoutData } = useWorkout()
 
@@ -19,20 +20,32 @@ const ChangeWeightModal = ({ onClose, exerciseID }) => {
   // const { name, id } = currExercise
 
   const handleSave = async () => {
-    if (newWeight > 0 && newWeight < 1000) {
-      const weightsArray = workoutData.weights
-      const currWeight = weightsArray.findIndex(
-        w => w.exerciseID === exerciseID
-      )
-      weightsArray[currWeight].weight = Math.round(newWeight)
-      await updateWorkout({
-        weights: weightsArray,
-      })
+    setError('')
+    if (!isNaN(newWeight)) {
+      if (newWeight > 0 && newWeight < 1000) {
+        if (newWeight % 5 === 0) {
+          const weightsArray = workoutData.weights
+          const currWeight = weightsArray.findIndex(
+            w => w.exerciseID === exerciseID
+          )
+          weightsArray[currWeight].weight = Math.round(newWeight)
+          await updateWorkout({
+            weights: weightsArray,
+          })
 
-      onClose()
+          onClose()
+        } else {
+          setError('Weight must be a multiple of 5')
+        }
+      } else {
+        setError('Weight must be between 0 and 1000')
+      }
+    } else {
+      setError('Value must be a number and between 0 and 1000')
     }
   }
   const modalContent = useClickOutside(() => {
+    setError('')
     onClose()
   })
 
@@ -44,6 +57,7 @@ const ChangeWeightModal = ({ onClose, exerciseID }) => {
           <div className='sub-text'>
             This weight will be recorded for following {name} workouts.
           </div>
+          {error && <div className='error-text'>{error}</div>}
           <FormInput
             icon={weightIcon}
             placeholder={'Enter Weight'}
