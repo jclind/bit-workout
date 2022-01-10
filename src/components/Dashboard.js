@@ -4,7 +4,7 @@ import NavbarContainer from './Navbar/NavbarContainer'
 
 const Dashboard = () => {
   const { currentUser, currUserData } = useAuth()
-
+  console.log(currUserData)
   const { email } = currentUser
   const { username, name, gender, birthday, height, weight } = currUserData
 

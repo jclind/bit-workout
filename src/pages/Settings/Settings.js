@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import SettingsSectionTitle from '../../components/SettingsComponents/SettingsSectionTitle'
 import SettingsButton from '../../components/SettingsComponents/SettingsButton'
@@ -16,13 +15,11 @@ import '../../assets/styles/pages/settings.scss'
 const Settings = () => {
   const [error, setError] = useState(false)
   const { logout } = useAuth()
-  const navigate = useNavigate()
 
   async function handleLogout() {
     setError('')
     try {
       await logout()
-      navigate('/login')
     } catch {
       setError('Failed to log out')
     }

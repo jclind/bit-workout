@@ -27,11 +27,20 @@ export function setWorkout(weight, gender, uid) {
 }
 
 export const WorkoutProvider = ({ children }) => {
-  const { currentUser } = useAuth()
-  const [loading, setLoading] = useState(true)
+  const {
+    currentUser,
+    isWorkoutRunning,
+    setIsWorkoutRunning,
+    workoutData,
+    setWorkoutData,
+  } = useAuth()
+  useEffect(() => {
+    if (!currentUser) {
+      setLoading(false)
+    }
+  }, [currentUser])
 
-  const [workoutData, setWorkoutData] = useState()
-  const [isWorkoutRunning, setIsWorkoutRunning] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   // Current Workout States
   const [currIdx, setCurrIdx] = useState()
@@ -81,11 +90,13 @@ export const WorkoutProvider = ({ children }) => {
     }
 
     // If workout is already running, set loading and states, else retrieve user workout data
-    if (isWorkoutRunning) {
-      setLoading(true)
-      setStates()
-    } else {
-      getWorkoutData(currentUser.uid)
+    if (currentUser) {
+      if (isWorkoutRunning) {
+        setLoading(true)
+        setStates()
+      } else {
+        getWorkoutData(currentUser.uid)
+      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
