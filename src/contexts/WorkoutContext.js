@@ -112,7 +112,11 @@ export const WorkoutProvider = ({ children }) => {
       // If the last set of the last exercise is finished then call finishWorkout
       // Else begin next rest timer, increment currSet and currIdx, and updateWorkout
       if (currIdx >= workoutData.runningWorkout.currWorkout.path.length - 1) {
-        return finishWorkout()
+        console.log('Im here about to call finishWorkout!')
+        setIsWorkoutFinished(true)
+        if (!isWorkoutFinished) {
+          return finishWorkout()
+        }
       } else {
         setIsTimer(true)
         const startTime = new Date().getTime()
@@ -166,7 +170,6 @@ export const WorkoutProvider = ({ children }) => {
       isWorkoutRunning: false,
       weights: weightsArray,
     })
-    await setIsWorkoutFinished(true)
   }
 
   // Get data from single exercise with id and user weightsList

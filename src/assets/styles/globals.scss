@@ -104,6 +104,10 @@ label.input-error,
 .input-error label {
   border-bottom: 2px solid $error-red !important;
 }
+.error-text {
+  color: $error-red;
+  font-size: toRem(16);
+}
 
 // Settings Styles
 .settings-title {
