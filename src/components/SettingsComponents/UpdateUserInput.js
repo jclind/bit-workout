@@ -45,7 +45,7 @@ const UpdateUserInput = ({
       setActiveSave(true)
     }
     setNumCharacters(unsavedVal.length)
-  }, [unsavedVal])
+  }, [unsavedVal, val])
 
   return (
     <div className='update-user-input'>

@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react'
 import ForgotPassword from './ForgotPassword'
-import { useNavigate } from 'react-router'
 import { useAuth } from '../../contexts/AuthContext'
 
 const ForgotPasswordContainer = () => {
@@ -9,7 +8,6 @@ const ForgotPasswordContainer = () => {
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -34,6 +32,7 @@ const ForgotPasswordContainer = () => {
       loading={loading}
       error={error}
       emailRef={emailRef}
+      message={message}
     />
   )
 }

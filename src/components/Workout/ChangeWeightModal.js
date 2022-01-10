@@ -1,22 +1,29 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ReactDom from 'react-dom'
 import useClickOutside from '../../util/useClickOutside'
 import '../../assets/styles/components/workout/change-weight-modal.scss'
 import FormInput from '../FormInput'
 import weightIcon from '../../assets/images/icons/weight.svg'
 import { useWorkout } from '../../contexts/WorkoutContext'
+import { exerciseList } from '../../assets/data/exerciseList'
 
-const ChangeWeightModal = ({ onClose, currExercise, setCurrExercise }) => {
+const ChangeWeightModal = ({ onClose, exerciseID }) => {
   const [newWeight, setNewWeight] = useState('')
 
   const { updateWorkout, workoutData } = useWorkout()
 
-  const { name, id } = currExercise
+  const currExerciseData = exerciseList.find(ex => ex.id === exerciseID)
+
+  const { name } = currExerciseData
+
+  // const { name, id } = currExercise
 
   const handleSave = async () => {
     if (newWeight > 0 && newWeight < 1000) {
       const weightsArray = workoutData.weights
-      const currWeight = weightsArray.findIndex(w => w.exerciseID === id)
+      const currWeight = weightsArray.findIndex(
+        w => w.exerciseID === exerciseID
+      )
       weightsArray[currWeight].weight = Math.round(newWeight)
       await updateWorkout({
         weights: weightsArray,

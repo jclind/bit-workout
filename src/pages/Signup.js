@@ -84,7 +84,11 @@ const Signup = () => {
 
   return (
     <SignupContext.Provider value={value} className='signup-container'>
-      <img src={signupBackground} className='signup-background' />
+      <img
+        src={signupBackground}
+        alt='signup background'
+        className='signup-background'
+      />
       <h1 className='signup-title'>Sign Up</h1>
       {outlet}
     </SignupContext.Provider>

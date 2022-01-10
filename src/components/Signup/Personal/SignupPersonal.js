@@ -1,6 +1,5 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { SignupContext } from '../../../pages/Signup'
-import FormInput from '../../FormInput'
 import birthdayIcon from '../../../assets/images/icons/birthday.svg'
 import heightIcon from '../../../assets/images/icons/height.svg'
 import weightIcon from '../../../assets/images/icons/weight.svg'
