@@ -87,6 +87,8 @@ export const WorkoutProvider = ({ children }) => {
     } else {
       getWorkoutData(currentUser.uid)
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isWorkoutRunning])
 
   const completeSet = async () => {
@@ -221,6 +223,7 @@ export const WorkoutProvider = ({ children }) => {
     if (workoutData) {
       setIsWorkoutRunning(workoutData.isWorkoutRunning)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workoutData])
 
   useEffect(() => {

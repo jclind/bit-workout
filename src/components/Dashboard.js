@@ -1,24 +1,9 @@
-import React, { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import NavbarContainer from './Navbar/NavbarContainer'
 
 const Dashboard = () => {
-  const [userData, setUserData] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-  const { currentUser, logout, currUserData } = useAuth()
-  const navigate = useNavigate()
-
-  async function handleLogout() {
-    setError('')
-    try {
-      await logout()
-      navigate('/login')
-    } catch {
-      setError('Failed to log out')
-    }
-  }
+  const { currentUser, currUserData } = useAuth()
 
   const { email } = currentUser
   const { username, name, gender, birthday, height, weight } = currUserData
@@ -28,7 +13,6 @@ const Dashboard = () => {
       <div className='page'>
         <section style={{ display: 'flex', flexDirection: 'column' }}>
           <h2>Profile</h2>
-          {error && <div>{error}</div>}
           <div>
             <strong>Email:</strong> {email}
           </div>

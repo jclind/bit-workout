@@ -20,7 +20,7 @@ const UpdateEmail = () => {
           console.log(err)
         })
     }
-  }, [newEmail])
+  }, [newEmail, email, navigate, updateEmail])
 
   return (
     <div className='update-name-page page'>

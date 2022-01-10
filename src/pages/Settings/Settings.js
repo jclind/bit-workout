@@ -30,6 +30,7 @@ const Settings = () => {
 
   return (
     <div className='settings-page page'>
+      {error && <div>{error}</div>}
       <div className='settings-title'>Settings</div>
       <section className='account-section settings-section'>
         <SettingsSectionTitle text={'Account'} />
