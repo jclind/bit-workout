@@ -215,7 +215,7 @@ export const WorkoutProvider = ({ children }) => {
     }
 
     // If currExercise exists then setCurrExercise
-    if (currExercise) {
+    if (workoutData && currExercise) {
       setCurrExerciseData()
     }
 
