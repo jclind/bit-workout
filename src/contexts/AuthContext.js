@@ -67,7 +67,8 @@ export function AuthProvider({ children }) {
     setWorkoutData(null)
     setIsWorkoutRunning(false)
     auth.signOut()
-    return navigate('/login')
+    navigate('/login')
+    return window.location.reload()
   }
   function logout() {
     if (isWorkoutRunning) {
