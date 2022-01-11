@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { db } from '../firebase'
-import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
+import { doc, setDoc, getDoc, arrayUnion, updateDoc } from 'firebase/firestore'
+import { v4 as uuidv4 } from 'uuid'
 import { exerciseList } from '../assets/data/exerciseList'
 import { calculateWeight } from '../util/calculateWeight'
 import { useAuth } from './AuthContext'
@@ -55,6 +56,7 @@ export const WorkoutProvider = ({ children }) => {
       isWorkoutRunning: true,
       runningWorkout: {
         remainingWorkout: { currIdx: 0, currSet: 1 },
+        startTime: new Date().getTime(),
         currWorkout: exercise,
         timer: {
           isTimer: false,
@@ -165,10 +167,57 @@ export const WorkoutProvider = ({ children }) => {
         }
       })
     })
+
+    const getData = () => {
+      const workoutStartTime = workoutData.runningWorkout.startTime
+      const workoutEndTime = new Date().getTime()
+      const workoutTotalTime = workoutEndTime - workoutStartTime
+
+      const currWorkout = workoutData.runningWorkout.currWorkout.path
+
+      const weights = workoutData.weights
+
+      const currWorkoutData = []
+
+      const counts = { reps: 0, sets: 0 }
+
+      currWorkout.forEach(ex => {
+        const { exerciseID, reps, sets } = ex
+
+        const exWeightObj = weights.find(
+          weight => weight.exerciseID === exerciseID
+        )
+        const exWeight = exWeightObj.weight
+
+        counts.reps += reps
+        counts.sets += sets
+
+        currWorkoutData.push({ exerciseID, reps, sets, exWeight })
+      })
+
+      // const workoutData()
+      console.log(workoutData)
+
+      return {
+        id: uuidv4(),
+        workoutStartTime,
+        workoutEndTime,
+        workoutTotalTime,
+        workoutData: {
+          workout: currWorkoutData,
+          totalReps: counts.reps,
+          totalSets: counts.sets,
+        },
+      }
+    }
+
+    console.log(getData())
+
     // Update user workout data with new weights
     await updateWorkout({
       isWorkoutRunning: false,
       weights: weightsArray,
+      finishedWorkouts: arrayUnion(getData()),
     })
   }
 
