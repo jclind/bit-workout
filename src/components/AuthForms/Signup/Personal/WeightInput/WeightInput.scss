@@ -1,0 +1,27 @@
+@import '../../../../../helpers.scss';
+
+.form-weight-label {
+  padding: 0;
+  margin: 0;
+  .icon {
+    position: absolute;
+    color: $primary;
+    height: 18px;
+  }
+  input {
+    height: $form-input-height;
+    width: 100%;
+    text-align: left !important;
+    display: flex;
+    justify-self: flex-start;
+    border-radius: none;
+    padding-left: toRem(40);
+    margin-right: toRem(20);
+    background: $primary-background !important;
+    color: $primary !important;
+    caret-color: $secondary;
+    &::placeholder {
+      text-transform: none;
+    }
+  }
+}

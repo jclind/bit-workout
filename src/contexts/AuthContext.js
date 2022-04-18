@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { auth, db } from '../firebase'
 import { getDoc, doc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import firebase from 'firebase/compat/app'
-import LogoutConfirm from '../components/LogoutConfirm'
+import LogoutConfirm from '../components/AuthForms/LogoutConfirm/LogoutConfirm'
 import { useNavigate } from 'react-router-dom'
 import { setWorkout } from './WorkoutContext'
 
@@ -136,11 +136,8 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        console.log('logged in')
         getUserData(user)
       } else {
-        console.log('logged out')
-        console.log('LOADING 1')
         setLoading(false)
       }
       setCurrentUser(user)

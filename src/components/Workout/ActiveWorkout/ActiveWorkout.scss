@@ -1,0 +1,69 @@
+@import '../../../helpers.scss';
+
+.stop-workout {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2rem;
+  padding: 0;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+.active-workout {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  text-align: center;
+
+  .current-workout-text {
+    font-size: toRem(12);
+    color: $secondary-text;
+    font-weight: 500;
+    margin: 0 auto;
+    margin-bottom: toRem(15);
+  }
+  .exercise-title {
+    font-size: toRem(36);
+    font-weight: 500;
+    text-transform: capitalize;
+    margin-bottom: toRem(10);
+  }
+  .rep-set-text {
+    font-size: toRem(18);
+    font-weight: 400;
+  }
+  .exercise-img {
+    height: toRem(150);
+    margin-top: toRem(10);
+  }
+  .exercise-weight {
+    position: relative;
+    background: $secondary-background;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 5px;
+    font-size: toRem(20);
+    font-weight: 600;
+    margin: 0 auto;
+    margin-top: toRem(50);
+    padding: 0.5rem 1.25rem;
+    border-radius: $border-radius;
+    .icon {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      height: 20px;
+    }
+  }
+  .submit-btn {
+    height: 50px;
+    width: fit-content;
+    padding: 0 2.5rem;
+    margin: 0 auto;
+    margin-top: toRem(100);
+  }
+}

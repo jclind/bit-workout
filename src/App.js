@@ -1,23 +1,23 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
-import Workout from './pages/Workout/Workout'
-import Signup from './pages/Signup'
-import Account from './pages/Account'
 import { AuthProvider } from './contexts/AuthContext'
 import { WorkoutProvider } from './contexts/WorkoutContext'
+import Account from './pages/Account/Account'
+import Workout from './pages/Workout/Workout'
+import Signup from './pages/Auth/Signup/Signup'
 import Dashboard from './components/Dashboard'
-import LoginPage from './pages/LoginPage'
+import Login from './pages/Auth/Login/Login'
 import PrivateRoute from './components/PrivateRoute'
-import ForgotPasswordContainer from './components/ForgotPassword/ForgotPasswordContainer'
-import SignupAccountContainer from './components/Signup/Account/SignupAccountContainer'
-import SignupPersonalContainer from './components/Signup/Personal/SignupPersonalContainer'
+import ForgotPasswordContainer from './components/AuthForms/ForgotPassword/ForgotPasswordContainer'
+import SignupAccountContainer from './components/AuthForms/Signup/Account/SignupAccountContainer'
+import SignupPersonalContainer from './components/AuthForms/Signup/Personal/SignupPersonalContainer'
 import Settings from './pages/Settings/Settings'
 import ManageAccount from './pages/Settings/ManageAccount'
 import UpdateName from './pages/Settings/UpdateName'
 import UpdateUsername from './pages/Settings/UpdateUsername'
 import UpdateEmail from './pages/Settings/UpdateEmail'
-import Security from './pages/Settings/Security'
-import NavbarContainer from './components/Navbar/NavbarContainer'
+import Security from './pages/Settings/Security/Security'
+import NavbarContainer from './components/Navbar/Navbar'
 
 function App() {
   return (
@@ -79,7 +79,7 @@ function App() {
                   element={<SignupPersonalContainer />}
                 />
               </Route>
-              <Route path='/login' element={<LoginPage />} />
+              <Route path='/login' element={<Login />} />
               <Route
                 path='/forgot-password'
                 element={<ForgotPasswordContainer />}

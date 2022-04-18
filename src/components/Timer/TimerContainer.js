@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { formatTime } from '../../util/formatTime'
 import Timer from './Timer'
-import '../../assets/styles/components/workout/workout-timer.scss'
+import './Timer.scss'
 import { useWorkout } from '../../contexts/WorkoutContext'
 
 const TimerContainer = ({ timerStart, restTime, setIsTimer }) => {

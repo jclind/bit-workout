@@ -1,0 +1,70 @@
+@import '../../../helpers.scss';
+
+.update-user-input {
+  .input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid $primary;
+    padding: 0;
+    margin: 0;
+
+    input {
+      height: toRem(60);
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      font-size: toRem(16);
+      font-weight: 500;
+    }
+    .clear-icon-container {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      right: 0;
+      padding: 0;
+      margin: 0;
+      height: 25px;
+      width: 22px;
+
+      .clear {
+        height: 15px;
+      }
+    }
+  }
+  .characters {
+    font-size: toRem(12);
+    font-weight: 500;
+    color: $secondary-text;
+    margin-top: toRem(20);
+  }
+  .action-buttons {
+    position: absolute;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    button {
+      background: none;
+      font-size: toRem(16);
+      font-weight: 500;
+      width: fit-content;
+      text-transform: capitalize;
+      padding: 0;
+      margin: 0;
+      height: auto;
+      color: $secondary-text;
+    }
+    .save {
+      color: $secondary-background;
+    }
+    .save.active {
+      color: $secondary;
+    }
+  }
+}

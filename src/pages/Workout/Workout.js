@@ -1,8 +1,8 @@
 import React from 'react'
 import { useWorkout } from '../../contexts/WorkoutContext'
-import WorkoutSelection from '../../components/Workout/WorkoutSelection'
-import ActiveWorkoutContainer from '../../components/Workout/ActiveWorkoutContainer'
-import WorkoutComplete from '../../components/Workout/WorkoutComplete'
+import WorkoutSelection from '../../components/Workout/WorkoutSelection/WorkoutSelection'
+import ActiveWorkoutContainer from '../../components/Workout/ActiveWorkout/ActiveWorkoutContainer'
+import WorkoutComplete from '../../components/Workout/WorkoutComplete/WorkoutComplete'
 
 const Workout = () => {
   const { workoutData, isWorkoutFinished } = useWorkout()

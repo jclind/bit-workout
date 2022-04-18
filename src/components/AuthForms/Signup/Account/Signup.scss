@@ -1,0 +1,83 @@
+@import '../../../../helpers.scss';
+
+.signup-personal-info,
+.signup-account-info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 5;
+  padding: 0 toRem(20);
+  padding-top: toRem(25);
+  margin: 0;
+
+  form {
+    width: 100%;
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      gap: toRem(10);
+      width: 100%;
+    }
+
+    .sign-in-prompt {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      margin-top: toRem(25);
+      p {
+        padding: 0;
+        margin: 0;
+      }
+    }
+  }
+}
+.submit-btn {
+  margin-top: toRem(25);
+  width: 100%;
+  background: $secondary;
+  font-size: toRem(18);
+  font-weight: 700;
+  height: fit-content;
+  padding: 1rem 0;
+}
+
+.signup-personal-info {
+  padding-top: toRem(5);
+  .sub-text {
+    padding: 0;
+    margin: 0;
+  }
+  .gender-inputs {
+    padding-top: toRem(25);
+    padding-bottom: 0;
+    display: flex;
+    gap: 0 toRem(30);
+    margin: 0;
+    height: fit-content;
+    justify-content: center;
+    align-items: center;
+    div {
+      box-sizing: border-box;
+      font-size: toRem(16);
+      font-weight: 500;
+      width: 100%;
+      text-align: center;
+      background: $secondary-background;
+      padding: 0.75rem 2rem;
+      margin: 0;
+      border-radius: $border-radius;
+      border: 3px solid $secondary-background;
+    }
+    div.selected {
+      border: 3px solid $secondary;
+    }
+  }
+  .inputs {
+    padding-top: toRem(25);
+    gap: toRem(25) !important;
+  }
+  .submit-btn {
+    margin-top: toRem(25);
+  }
+}
