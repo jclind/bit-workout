@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
-import SettingsSectionTitle from '../../components/SettingsComponents/SettingsSectionTitle'
-import SettingsButton from '../../components/SettingsComponents/SettingsButton'
+import SettingsSectionTitle from '../../components/SettingsComponents/SettingsSectionTitle/SettingsSectionTitle'
+import SettingsButton from '../../components/SettingsComponents/SettingsButton/SettingsButton'
 import accountIcon from '../../assets/images/icons/account.svg'
 import lockIcon from '../../assets/images/icons/lock.svg'
 import logoutIcon from '../../assets/images/icons/logout.svg'
 import helpIcon from '../../assets/images/icons/help.svg'
 import bugIcon from '../../assets/images/icons/bug.svg'
 import feedbackIcon from '../../assets/images/icons/feedback.svg'
-import BackButton from '../../components/SettingsComponents/BackButton'
+import BackButton from '../../components/SettingsComponents/BackButton/BackButton'
 
-import '../../assets/styles/pages/settings.scss'
+import './Settings.scss'
 
 const Settings = () => {
   const [error, setError] = useState(false)

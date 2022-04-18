@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import UpdateUserInput from '../../components/SettingsComponents/UpdateUserInput'
+import UpdateUserInput from '../../components/SettingsComponents/UpdateUserInput/UpdateUserInput'
 import { useNavigate } from 'react-router'
 import { useAuth } from '../../contexts/AuthContext'
 

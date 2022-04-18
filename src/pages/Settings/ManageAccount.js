@@ -1,8 +1,8 @@
 import React from 'react'
-import SettingsSectionTitle from '../../components/SettingsComponents/SettingsSectionTitle'
-import SettingsButton from '../../components/SettingsComponents/SettingsButton'
+import SettingsSectionTitle from '../../components/SettingsComponents/SettingsSectionTitle/SettingsSectionTitle'
+import SettingsButton from '../../components/SettingsComponents/SettingsButton/SettingsButton'
 import { useAuth } from '../../contexts/AuthContext'
-import BackButton from '../../components/SettingsComponents/BackButton'
+import BackButton from '../../components/SettingsComponents/BackButton/BackButton'
 
 const ManageAccount = () => {
   const { currUserData, currentUser } = useAuth()

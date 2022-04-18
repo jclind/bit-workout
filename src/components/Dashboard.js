@@ -1,6 +1,6 @@
 import { useAuth } from '../contexts/AuthContext'
 import { Link } from 'react-router-dom'
-import NavbarContainer from './Navbar/NavbarContainer'
+import NavbarContainer from './Navbar/Navbar'
 
 const Dashboard = () => {
   const { currentUser, currUserData } = useAuth()

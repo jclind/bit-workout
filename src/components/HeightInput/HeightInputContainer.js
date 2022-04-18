@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import HeightInput from './HeightInput'
-import '../../assets/styles/components/height-input.scss'
+import './HeightInput.scss'
 
 const HeightInputContainer = ({ icon, placeholder, val, setVal }) => {
   const [focus, setFocus] = useState(false)
