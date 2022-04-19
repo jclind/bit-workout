@@ -1,12 +1,11 @@
-import { useAuth } from '../contexts/AuthContext'
 import { Link } from 'react-router-dom'
 import NavbarContainer from './Navbar/Navbar'
+import { connect } from 'react-redux'
 
-const Dashboard = () => {
-  const { currentUser, currUserData } = useAuth()
-  console.log(currUserData)
-  const { email } = currentUser
-  const { username, name, gender, birthday, height, weight } = currUserData
+const Dashboard = ({ userAuth, userAccountData }) => {
+  if (!userAuth || !userAccountData) {
+    return 'loading'
+  }
 
   return (
     <>
@@ -14,25 +13,28 @@ const Dashboard = () => {
         <section style={{ display: 'flex', flexDirection: 'column' }}>
           <h2>Profile</h2>
           <div>
-            <strong>Email:</strong> {email}
+            <strong>Email:</strong> {userAuth.email || 'loading'}
           </div>
           <div>
-            <strong>Username:</strong> {username}
+            <strong>Username:</strong> {userAccountData.username || 'loading'}
           </div>
           <div>
-            <strong>Name:</strong> {name}
+            <strong>Name:</strong> {userAccountData.name || 'loading'}
           </div>
           <div>
-            <strong>Gender:</strong> {gender}
+            <strong>Gender:</strong> {userAccountData.gender || 'loading'}
           </div>
           <div>
-            <strong>Birthday:</strong> {birthday}
+            <strong>Birthday:</strong> {userAccountData.birthday || 'loading'}
           </div>
           <div>
-            <strong>Height:</strong> {`${height.feet}ft, ${height.inches}in`}
+            <strong>Height:</strong>{' '}
+            {userAccountData.height.feet && userAccountData.height.inches
+              ? `${userAccountData.height.feet}ft, ${userAccountData.height.inches}in`
+              : 'loading'}
           </div>
           <div>
-            <strong>Weight:</strong> {weight}
+            <strong>Weight:</strong> {userAccountData.weight || 'loading'}
           </div>
           <Link to='/update-profile'>Update Profile</Link>
         </section>
@@ -43,4 +45,11 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+const mapStateToProps = state => {
+  return {
+    userAuth: state.auth.userAuth,
+    userAccountData: state.auth.userAccountData,
+  }
+}
+
+export default connect(mapStateToProps)(Dashboard)

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import UpdateUserInput from '../../components/SettingsComponents/UpdateUserInput/UpdateUserInput'
-import { useAuth } from '../../contexts/AuthContext'
 import { useNavigate } from 'react-router'
+import { connect } from 'react-redux'
+import { updateEmail } from '../../redux/actions/auth/authStatus'
 
-const UpdateEmail = () => {
+const UpdateEmail = ({ updateEmail, userAuth }) => {
   const [newEmail, setNewEmail] = useState('test@gmail.com')
-  const { updateEmail, currentUser } = useAuth()
-  const { email } = currentUser
+  const { email } = userAuth
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -36,4 +36,16 @@ const UpdateEmail = () => {
   )
 }
 
-export default UpdateEmail
+const mapStateToProps = state => {
+  return {
+    userAuth: state.auth.userAuth,
+  }
+}
+
+const mapPropsToDispatch = dispatch => {
+  return {
+    updateEmail: email => dispatch(updateEmail(email)),
+  }
+}
+
+export default connect(mapStateToProps, mapPropsToDispatch)(UpdateEmail)

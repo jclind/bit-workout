@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
-import { useAuth } from '../../../contexts/AuthContext'
 import { useNavigate, useLocation, Navigate } from 'react-router'
 import Login from '../../../components/AuthForms/Login/Login'
 import './Login.scss'
+import { connect } from 'react-redux'
+import { login } from '../../../redux/actions/auth/authStatus'
 
-const LoginPage = () => {
+const LoginPage = ({ login, userAuth }) => {
   const [emailVal, setEmailVal] = useState('')
   const [passwordVal, setPasswordVal] = useState('')
-  const { login, currentUser } = useAuth()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
+
   async function handleSubmit(e) {
     e.preventDefault()
 
@@ -27,7 +28,7 @@ const LoginPage = () => {
     setLoading(false)
   }
 
-  if (location.pathname === '/login' && currentUser) {
+  if (location.pathname === '/login' && userAuth) {
     return <Navigate to='/' />
   }
 
@@ -43,5 +44,15 @@ const LoginPage = () => {
     />
   )
 }
+const mapStateToProps = state => {
+  return {
+    userAuth: state.auth.userAuth,
+  }
+}
+const mapPropsToDispatch = dispatch => {
+  return {
+    login: (email, password) => dispatch(login(email, password)),
+  }
+}
 
-export default LoginPage
+export default connect(mapStateToProps, mapPropsToDispatch)(LoginPage)

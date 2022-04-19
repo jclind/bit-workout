@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import UpdateUserInput from '../../components/SettingsComponents/UpdateUserInput/UpdateUserInput'
 import { useNavigate } from 'react-router'
-import { useAuth } from '../../contexts/AuthContext'
+import { connect } from 'react-redux'
+import { updateUserAccountData } from '../../redux/actions/auth/authStatus'
 
-const UpdateName = () => {
-  const { updateUserData, currUserData } = useAuth()
-  const { name } = currUserData
+const UpdateName = ({ updateUserAccountData, userAccountData }) => {
+  const { name } = userAccountData
   const navigate = useNavigate()
 
   const [userName, setUserName] = useState(name)
@@ -13,16 +13,15 @@ const UpdateName = () => {
   useEffect(() => {
     if (userName !== '' && userName !== name) {
       const payload = { prop: 'name', val: userName }
-      updateUserData(payload)
+      updateUserAccountData(payload)
         .then(() => {
-          console.log('hello there')
           navigate(-1)
         })
         .catch(err => {
           console.log(err)
         })
     }
-  }, [userName, name, updateUserData, navigate])
+  }, [userName, name, updateUserAccountData, navigate])
 
   return (
     <div className='update-name-page page'>
@@ -37,4 +36,15 @@ const UpdateName = () => {
   )
 }
 
-export default UpdateName
+const mapStateToProps = state => {
+  return {
+    userAccountData: state.auth.userAccountData,
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    updateUserAccountData: data => dispatch(updateUserAccountData(data)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateName)

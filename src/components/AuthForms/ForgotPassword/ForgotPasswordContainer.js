@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react'
 import ForgotPassword from './ForgotPassword'
-import { useAuth } from '../../../contexts/AuthContext'
+import { connect } from 'react-redux'
+import { resetPassword } from '../../../redux/actions/auth/authStatus'
 
-const ForgotPasswordContainer = () => {
+const ForgotPasswordContainer = ({ resetPassword }) => {
   const emailRef = useRef()
-  const { resetPassword } = useAuth()
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -37,4 +37,10 @@ const ForgotPasswordContainer = () => {
   )
 }
 
-export default ForgotPasswordContainer
+const mapDispatchToProps = dispatch => {
+  return {
+    resetPassword: email => dispatch(resetPassword(email)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(ForgotPasswordContainer)

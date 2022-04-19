@@ -3,11 +3,21 @@ import './SingleWorkout.scss'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import { estimateTime } from '../../../util/estimateTime'
 import { msToTime } from '../../../util/msToTime'
-import { useWorkout } from '../../../contexts/WorkoutContext'
+import { connect } from 'react-redux'
+import {
+  getSingleWorkout,
+  startWorkout,
+} from '../../../redux/actions/workout/workout'
 
-const SingleWorkout = ({ text, exercise }) => {
+const SingleWorkout = ({
+  text,
+  exercise,
+  getSingleWorkout,
+  workoutData,
+  uid,
+  startWorkout,
+}) => {
   const estTime = msToTime(estimateTime(exercise))
-  const { workoutData, startWorkout } = useWorkout()
 
   return (
     <div className='single-workout'>
@@ -34,11 +44,27 @@ const SingleWorkout = ({ text, exercise }) => {
           )
         })}
       </div>
-      <button className='start-button' onClick={() => startWorkout(exercise)}>
+      <button
+        className='start-button'
+        onClick={() => startWorkout(exercise, uid)}
+      >
         Start Workout
       </button>
     </div>
   )
 }
 
-export default SingleWorkout
+const mapStateToProps = state => {
+  return {
+    workoutData: state.workout.workoutData,
+    uid: state.auth.userAuth ? state.auth.userAuth.uid : null,
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    getSingleWorkout: id => dispatch(getSingleWorkout(id)),
+    startWorkout: (exercise, uid) => dispatch(startWorkout(exercise, uid)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleWorkout)

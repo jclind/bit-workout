@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { auth } from './firebase'
 import { connect } from 'react-redux'
-import { signIn, signOut } from './redux/actions/auth/authStatus'
+import { setDoc, doc } from 'firebase/firestore'
+import { db } from './firebase'
+import {
+  signInAndFetchUserAccountData,
+  setUserStatusSignedOut,
+} from './redux/actions/auth/authStatus'
 
-const Auth = ({ signIn }) => {
+const Auth = ({ signInAndFetchUserAccountData, signOut }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         console.log('logged in')
-        signIn(user)
+        signInAndFetchUserAccountData(user)
       } else {
         console.log('logged out')
         signOut()
@@ -21,8 +26,9 @@ const Auth = ({ signIn }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signIn: user => dispatch(signIn(user)),
-    signOut: () => dispatch(signOut()),
+    signInAndFetchUserAccountData: user =>
+      dispatch(signInAndFetchUserAccountData(user)),
+    signOut: () => dispatch(setUserStatusSignedOut()),
   }
 }
 
