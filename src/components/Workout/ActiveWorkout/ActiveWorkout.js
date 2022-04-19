@@ -4,9 +4,19 @@ import { calculatePlates } from '../../../util/calculatePlates'
 import PlatesModal from '../PlatesModal/PlatesModal'
 import { useWorkout } from '../../../contexts/WorkoutContext'
 import { connect } from 'react-redux'
-import { getSingleWorkout } from '../../../redux/actions/workout/workout'
+import {
+  completeSet,
+  getSingleWorkout,
+} from '../../../redux/actions/workout/workout'
 
-const ActiveWorkout = ({ getSingleWorkout, currSet, currIdx, currWorkout }) => {
+const ActiveWorkout = ({
+  uid,
+  getSingleWorkout,
+  currSet,
+  currIdx,
+  currWorkout,
+  completeSet,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const currExerciseID = currWorkout.path[currIdx].exerciseID
@@ -29,9 +39,12 @@ const ActiveWorkout = ({ getSingleWorkout, currSet, currIdx, currWorkout }) => {
         <span>{exerciseWeight} lbs</span> <AiFillInfoCircle className='icon' />
       </div>
       <img src={imageURL} alt={name} className='exercise-img' />
-      {/* <button className='submit-btn' onClick={completeSet}>
+      <button
+        className='submit-btn'
+        onClick={() => completeSet(currSetTotal, uid)}
+      >
         Completed
-      </button> */}
+      </button>
 
       {isModalOpen ? (
         <PlatesModal
@@ -47,8 +60,10 @@ const ActiveWorkout = ({ getSingleWorkout, currSet, currIdx, currWorkout }) => {
 
 const mapStateTopProps = state => {
   const runningWorkout = state.workout.workoutData.runningWorkout
+  console.log(state)
 
   return {
+    uid: state.auth.userAuth ? state.auth.userAuth.uid : null,
     currSet: runningWorkout.remainingWorkout.currSet,
     currIdx: runningWorkout.remainingWorkout.currIdx,
     currWorkout: runningWorkout.currWorkout,
@@ -57,6 +72,8 @@ const mapStateTopProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSingleWorkout: id => dispatch(getSingleWorkout(id)),
+    completeSet: (currSetTotal, uid) =>
+      dispatch(completeSet(currSetTotal, uid)),
   }
 }
 
