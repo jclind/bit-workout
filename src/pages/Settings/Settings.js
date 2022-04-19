@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useAuth } from '../../contexts/AuthContext'
 import SettingsSectionTitle from '../../components/SettingsComponents/SettingsSectionTitle/SettingsSectionTitle'
 import SettingsButton from '../../components/SettingsComponents/SettingsButton/SettingsButton'
 import accountIcon from '../../assets/images/icons/account.svg'
@@ -9,12 +8,13 @@ import helpIcon from '../../assets/images/icons/help.svg'
 import bugIcon from '../../assets/images/icons/bug.svg'
 import feedbackIcon from '../../assets/images/icons/feedback.svg'
 import BackButton from '../../components/SettingsComponents/BackButton/BackButton'
+import { connect } from 'react-redux'
 
 import './Settings.scss'
+import { logout } from '../../redux/actions/auth/authStatus'
 
-const Settings = () => {
+const Settings = ({ logout }) => {
   const [error, setError] = useState(false)
-  const { logout } = useAuth()
 
   async function handleLogout() {
     setError('')
@@ -57,4 +57,10 @@ const Settings = () => {
   )
 }
 
-export default Settings
+const mapStateToDispatch = dispatch => {
+  return {
+    logout: () => dispatch(logout()),
+  }
+}
+
+export default connect(null, mapStateToDispatch)(Settings)

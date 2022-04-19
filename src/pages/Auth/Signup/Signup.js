@@ -3,10 +3,13 @@ import { useLocation, useOutlet, useNavigate, Navigate } from 'react-router-dom'
 import signupBackground from '../../../assets/images/signup-background.png'
 import './Signup.scss'
 import { useAuth } from '../../../contexts/AuthContext'
+import { connect } from 'react-redux'
+import { signup } from '../../../redux/actions/auth/authStatus'
+import { auth } from '../../../firebase'
 
 export const SignupContext = React.createContext({})
 
-const Signup = () => {
+const Signup = ({ signup }) => {
   const [usernameVal, setUsernameVal] = useState('')
   const [fullNameVal, setFullNameVal] = useState('')
   const [emailVal, setEmailVal] = useState('')
@@ -18,7 +21,14 @@ const Signup = () => {
   const [weightVal, setWeightVal] = useState('')
 
   const navigate = useNavigate()
-  const { signup } = useAuth()
+  // const { signup } = useAuth()
+
+  // const signup = (email, password, payload) => {
+  //   return auth.createUserWithEmailAndPassword(email, password).then(cred => {
+  //     const uid = cred.user.uid
+  //     saveUserAccountData(uid, payload)
+  //   })
+  // }
 
   async function handleSignup(e) {
     e.preventDefault()
@@ -95,4 +105,11 @@ const Signup = () => {
   )
 }
 
-export default Signup
+const mapDispatchToProps = dispatch => {
+  return {
+    signup: (email, password, userData) =>
+      dispatch(signup(email, password, userData)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Signup)

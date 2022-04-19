@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { useAuth } from '../../../contexts/AuthContext'
 import SettingsSectionTitle from '../../../components/SettingsComponents/SettingsSectionTitle/SettingsSectionTitle'
 import FormInput from '../../../components/FormInput/FormInput'
 import './Security.scss'
 import { useNavigate } from 'react-router'
 import BackButton from '../../../components/SettingsComponents/BackButton/BackButton'
+import { connect } from 'react-redux'
+import { updatePassword } from '../../../redux/actions/auth/authStatus'
 
-const Security = () => {
+const Security = ({ updatePassword }) => {
   const [oldPass, setOldPass] = useState('')
   const [newPass, setNewPass] = useState('')
   const [repNewPass, setRepNewPass] = useState('')
-
-  const { updatePassword } = useAuth()
 
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
@@ -39,7 +38,7 @@ const Security = () => {
     }
 
     updatePassword(oldPass, newPass)
-      .then(err => {
+      .then(() => {
         setError('')
 
         setSuccess('Password Changed')
@@ -119,4 +118,11 @@ const Security = () => {
   )
 }
 
-export default Security
+const mapDispatchToProps = dispatch => {
+  return {
+    updatePassword: (oldPassword, newPassword) =>
+      dispatch(updatePassword(oldPassword, newPassword)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Security)

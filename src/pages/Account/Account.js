@@ -1,15 +1,12 @@
 import { Link } from 'react-router-dom'
 import UserAvatarAndTitle from '../../components/AccountComponents/UserAvatarAndTitle/UserAvatarAndTitle'
 import './Account.scss'
-import { useAuth } from '../../contexts/AuthContext'
 import NavbarContainer from '../../components/Navbar/Navbar'
 import InfoTile from '../../components/AccountComponents/InfoTile/InfoTile'
 import rightIcon from '../../assets/images/icons/right.svg'
+import { connect } from 'react-redux'
 
-const Account = () => {
-  const { currUserData } = useAuth()
-  const { name, height, weight } = currUserData
-
+const Account = ({ name, height, weight }) => {
   return (
     <>
       <div className='account-page'>
@@ -32,4 +29,13 @@ const Account = () => {
   )
 }
 
-export default Account
+const mapStateToProps = state => {
+  const userAccountData = state.auth.userAccountData
+  return {
+    name: userAccountData.name,
+    height: userAccountData.height,
+    weight: userAccountData.weight,
+  }
+}
+
+export default connect(mapStateToProps)(Account)

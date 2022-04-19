@@ -2,12 +2,17 @@ import React, { useState, useEffect, useRef } from 'react'
 import { formatTime } from '../../util/formatTime'
 import Timer from './Timer'
 import './Timer.scss'
-import { useWorkout } from '../../contexts/WorkoutContext'
+import { connect } from 'react-redux'
+import { updateWorkout } from '../../redux/actions/workout/workout'
 
-const TimerContainer = ({ timerStart, restTime, setIsTimer }) => {
+const TimerContainer = ({
+  timerStart,
+  restTime,
+  setIsTimer,
+  updateWorkout,
+  uid,
+}) => {
   const [timerVal, setTimerVal] = useState()
-
-  const { updateWorkout } = useWorkout()
 
   const skipRestBtn = useRef()
 
@@ -15,9 +20,12 @@ const TimerContainer = ({ timerStart, restTime, setIsTimer }) => {
     const clearTimer = timer => {
       clearInterval(timer)
       setIsTimer(false)
-      updateWorkout({
-        'runningWorkout.timer.isTimer': false,
-      })
+      updateWorkout(
+        {
+          'runningWorkout.timer.isTimer': false,
+        },
+        uid
+      )
     }
 
     const skipTimer = (ref, timer) => {
@@ -49,9 +57,21 @@ const TimerContainer = ({ timerStart, restTime, setIsTimer }) => {
       }
     }, 100)
     skipTimer(skipRestBtn, timer)
-  }, [timerStart, restTime, setIsTimer, updateWorkout])
+  }, [timerStart, restTime, setIsTimer, updateWorkout, uid])
 
   return <Timer timerVal={timerVal} skipRestBtn={skipRestBtn} />
 }
 
-export default TimerContainer
+const mapStateToProps = state => {
+  return {
+    uid: state.auth.userAuth ? state.auth.userAuth.uid : null,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateWorkout: (data, uid) => dispatch(updateWorkout(data, uid)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TimerContainer)
