@@ -16,6 +16,7 @@ const ActiveWorkout = ({
   currIdx,
   currWorkout,
   completeSet,
+  weights,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -23,13 +24,16 @@ const ActiveWorkout = ({
   const currExercise = getSingleWorkout(currExerciseID)
 
   const {
+    id,
     name,
     imageURL,
-    exerciseWeight,
     currWorkoutData: { sets: currSetTotal, reps: currRepsTotal },
   } = currExercise
+  console.log(currExercise)
 
-  const weights = calculatePlates(45, exerciseWeight)
+  const exerciseWeight = weights.find(w => w.exerciseID === id).weight
+
+  const plateWeights = calculatePlates(45, exerciseWeight)
   return (
     <div className='active-workout'>
       <div className='current-workout-text'>Current Workout</div>
@@ -48,10 +52,12 @@ const ActiveWorkout = ({
 
       {isModalOpen ? (
         <PlatesModal
-          weights={weights}
+          weights={plateWeights}
           onClose={() => {
             setIsModalOpen(false)
           }}
+          currExercise={currExercise}
+          exerciseWeight={exerciseWeight}
         />
       ) : null}
     </div>
@@ -60,13 +66,13 @@ const ActiveWorkout = ({
 
 const mapStateTopProps = state => {
   const runningWorkout = state.workout.workoutData.runningWorkout
-  console.log(state)
 
   return {
     uid: state.auth.userAuth ? state.auth.userAuth.uid : null,
     currSet: runningWorkout.remainingWorkout.currSet,
     currIdx: runningWorkout.remainingWorkout.currIdx,
     currWorkout: runningWorkout.currWorkout,
+    weights: state.workout.workoutData.weights,
   }
 }
 const mapDispatchToProps = dispatch => {

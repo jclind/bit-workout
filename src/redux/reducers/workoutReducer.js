@@ -1,5 +1,8 @@
-import { FETCH_WORKOUT_DATA, SET_WORKOUT_DATA } from '../types'
-import _ from 'lodash'
+import {
+  FETCH_WORKOUT_DATA,
+  SET_WORKOUT_DATA,
+  SET_WORKOUT_FINISHED,
+} from '../types'
 
 const INITIAL_STATE = {
   workoutData: null,
@@ -21,18 +24,18 @@ const workoutReducer = (state = INITIAL_STATE, action) => {
       console.log(action.payload)
       return { ...state, workoutData: action.payload }
     case SET_WORKOUT_DATA:
-      const dataObj = { ...state.workoutData }
-      console.log(dataObj)
+      const newState = JSON.parse(JSON.stringify(state.workoutData))
       Object.keys(action.payload).map(key => {
         console.log(key)
         const currVal = action.payload[key]
-        setToValue(dataObj, key, currVal)
+        setToValue(newState, key, currVal)
       })
-      console.log(dataObj)
       return {
         ...state,
-        workoutData: { ...state.workoutData, ...action.payload },
+        workoutData: { ...newState },
       }
+    case SET_WORKOUT_FINISHED:
+      return { ...state, isWorkoutFinished: action.payload }
     default:
       return state
   }
