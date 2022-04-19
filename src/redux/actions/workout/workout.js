@@ -1,4 +1,8 @@
-import { FETCH_WORKOUT_DATA, SET_WORKOUT_DATA } from '../../types'
+import {
+  FETCH_WORKOUT_DATA,
+  SET_WORKOUT_DATA,
+  SET_WORKOUT_FINISHED,
+} from '../../types'
 import { db } from '../../../firebase'
 import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
 import { exerciseList } from '../../../assets/data/exerciseList'
@@ -28,6 +32,12 @@ export const updateWorkout = (data, uid) => async dispatch => {
     .catch(err => {
       console.log(err)
     })
+}
+export const setWorkoutFinished = isFinished => {
+  return {
+    type: SET_WORKOUT_FINISHED,
+    payload: isFinished,
+  }
 }
 
 export const getSingleWorkout = id => (dispatch, getState) => {
@@ -59,6 +69,7 @@ export const startWorkout = (exercise, uid) => async dispatch => {
     },
   }
   dispatch(updateWorkout(data, uid))
+  dispatch(setWorkoutFinished(false))
 }
 
 export const completeSet =
@@ -131,4 +142,5 @@ export const finishWorkout = uid => async (dispatch, getState) => {
   }
 
   dispatch(updateWorkout(updatedData, uid))
+  dispatch(setWorkoutFinished(true))
 }

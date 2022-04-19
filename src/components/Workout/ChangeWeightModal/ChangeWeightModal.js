@@ -6,32 +6,39 @@ import FormInput from '../../FormInput/FormInput'
 import weightIcon from '../../../assets/images/icons/weight.svg'
 import { useWorkout } from '../../../contexts/WorkoutContext'
 import { exerciseList } from '../../../assets/data/exerciseList'
+import { connect } from 'react-redux'
+import { updateWorkout } from '../../../redux/actions/workout/workout'
 
-const ChangeWeightModal = ({ onClose, exerciseID }) => {
+const ChangeWeightModal = ({
+  onClose,
+  currExercise,
+  uid,
+  workoutData,
+  updateWorkout,
+}) => {
   const [newWeight, setNewWeight] = useState('')
   const [error, setError] = useState('')
 
-  const { updateWorkout, workoutData } = useWorkout()
+  const { name } = currExercise
 
-  const currExerciseData = exerciseList.find(ex => ex.id === exerciseID)
-
-  const { name } = currExerciseData
-
-  // const { name, id } = currExercise
-
-  const handleSave = async () => {
+  const handleSave = workoutData => {
     setError('')
     if (!isNaN(newWeight)) {
       if (newWeight > 0 && newWeight < 1000) {
         if (newWeight % 5 === 0) {
           const weightsArray = workoutData.weights
-          const currWeight = weightsArray.findIndex(
-            w => w.exerciseID === exerciseID
+          const currWeightIdx = weightsArray.findIndex(
+            w => w.exerciseID === currExercise.id
           )
-          weightsArray[currWeight].weight = Math.round(newWeight)
-          await updateWorkout({
-            weights: weightsArray,
-          })
+          console.log(weightsArray, currWeightIdx)
+          weightsArray[currWeightIdx].weight = Math.round(newWeight)
+
+          updateWorkout(
+            {
+              weights: weightsArray,
+            },
+            uid
+          )
 
           onClose()
         } else {
@@ -70,7 +77,7 @@ const ChangeWeightModal = ({ onClose, exerciseID }) => {
             <div className='cancel-btn' onClick={onClose}>
               Cancel
             </div>
-            <div className='save-btn' onClick={handleSave}>
+            <div className='save-btn' onClick={() => handleSave(workoutData)}>
               Save Weight
             </div>
           </div>
@@ -81,4 +88,16 @@ const ChangeWeightModal = ({ onClose, exerciseID }) => {
   )
 }
 
-export default ChangeWeightModal
+const mapStateToProps = state => {
+  return {
+    uid: state.auth.userAuth ? state.auth.userAuth.uid : null,
+    workoutData: state.workout.workoutData,
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    updateWorkout: (data, uid) => dispatch(updateWorkout(data, uid)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChangeWeightModal)

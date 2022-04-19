@@ -1,13 +1,11 @@
-import React from 'react'
 import './WorkoutComplete.scss'
 import ConfettiAnim from '../../ConfettiAnim'
-import { useWorkout } from '../../../contexts/WorkoutContext'
+import { connect } from 'react-redux'
+import { setWorkoutFinished } from '../../../redux/actions/workout/workout'
 
-const WorkoutComplete = () => {
-  const { setIsWorkoutFinished } = useWorkout()
-
-  const returnFromWorkout = async () => {
-    await setIsWorkoutFinished(false)
+const WorkoutComplete = ({ setWorkoutFinished }) => {
+  const returnFromWorkout = () => {
+    setWorkoutFinished(false)
   }
 
   return (
@@ -24,4 +22,10 @@ const WorkoutComplete = () => {
   )
 }
 
-export default WorkoutComplete
+const mapDispatchToProps = dispatch => {
+  return {
+    setWorkoutFinished: isFinished => dispatch(setWorkoutFinished(isFinished)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(WorkoutComplete)
