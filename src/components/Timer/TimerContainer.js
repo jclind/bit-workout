@@ -5,13 +5,7 @@ import './Timer.scss'
 import { connect } from 'react-redux'
 import { updateWorkout } from '../../redux/actions/workout/workout'
 
-const TimerContainer = ({
-  timerStart,
-  restTime,
-  setIsTimer,
-  updateWorkout,
-  uid,
-}) => {
+const TimerContainer = ({ timerStart, restTime, updateWorkout, uid }) => {
   const [timerVal, setTimerVal] = useState()
 
   const skipRestBtn = useRef()
@@ -19,7 +13,6 @@ const TimerContainer = ({
   useEffect(() => {
     const clearTimer = timer => {
       clearInterval(timer)
-      setIsTimer(false)
       updateWorkout(
         {
           'runningWorkout.timer.isTimer': false,
@@ -57,7 +50,7 @@ const TimerContainer = ({
       }
     }, 100)
     skipTimer(skipRestBtn, timer)
-  }, [timerStart, restTime, setIsTimer, updateWorkout, uid])
+  }, [timerStart, restTime, updateWorkout, uid])
 
   return <Timer timerVal={timerVal} skipRestBtn={skipRestBtn} />
 }

@@ -3,17 +3,12 @@ import ActiveWorkout from './ActiveWorkout'
 import TimerContainer from '../../Timer/TimerContainer'
 import './ActiveWorkout.scss'
 import { connect } from 'react-redux'
-import { setIsTimer } from '../../../redux/actions/workout/workout'
 
 const WorkoutContainer = ({ isTimer, timerStart, restTime }) => {
   return (
     <>
       {isTimer && timerStart ? (
-        <TimerContainer
-          timerStart={timerStart}
-          restTime={restTime}
-          setIsTimer={setIsTimer}
-        />
+        <TimerContainer timerStart={timerStart} restTime={restTime} />
       ) : (
         <ActiveWorkout />
       )}
@@ -30,10 +25,5 @@ const mapStateToProps = state => {
     restTime: runningWorkout.currWorkout.restTime,
   }
 }
-const mapDispatchToProps = dispatch => {
-  return {
-    setIsTimer: isTimer => dispatch(setIsTimer(isTimer)),
-  }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(WorkoutContainer)
+export default connect(mapStateToProps, null)(WorkoutContainer)

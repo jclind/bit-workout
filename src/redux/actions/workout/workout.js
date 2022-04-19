@@ -1,4 +1,4 @@
-import { FETCH_WORKOUT_DATA, SET_WORKOUT_DATA, SET_IS_TIMER } from '../../types'
+import { FETCH_WORKOUT_DATA, SET_WORKOUT_DATA, COMPLETE_SET } from '../../types'
 import { db } from '../../../firebase'
 import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
 import { exerciseList } from '../../../assets/data/exerciseList'
@@ -63,9 +63,45 @@ export const startWorkout = (exercise, uid) => async dispatch => {
   dispatch(updateWorkout(data, uid))
 }
 
-export const setIsTimer = isTimer => {
-  return {
-    type: SET_IS_TIMER,
-    payload: isTimer,
+export const completeSet = currSetTotal => async (dispatch, getState) => {
+  const runningWorkout = getState().workoutData.runningWorkout
+  const currSet = runningWorkout.remainingWorkout.currSet
+  const currIdx = runningWorkout.remainingWorkout.currIdx
+
+  const currWorkoutPathLength = runningWorkout.currWorkout.path.length
+
+  // If the current set is the last set
+  // Else start rest timer, increment set, and updateWorkout
+  if (currSet === currSetTotal) {
+    // If the last set of the last exercise is finished then call finishWorkout
+    // Else begin next rest timer, increment currSet and currIdx, and updateWorkout
+    if (currIdx >= currWorkoutPathLength - 1) {
+      console.log(
+        'FIX ME IN COMPLETE_SET WORKOUTREDUCER: Calling workoutFinished()'
+      )
+    } else {
+      const startTime = new Date().getTime()
+      const nextIdx = currIdx + 1
+      const nextSet = 1
+
+      const updatedData = {
+        'runningWorkout.remainingWorkout.currIdx': nextIdx,
+        'runningWorkout.remainingWorkout.currSet': nextSet,
+        'runningWorkout.timer.isTimer': true,
+        'runningWorkout.timer.timerStart': startTime,
+      }
+
+      dispatch(updateWorkout(updatedData))
+    }
+  } else {
+    const startTime = new Date().getTime()
+    const nextSet = currSet + 1
+
+    const updatedData = {
+      'runningWorkout.remainingWorkout.currSet': nextSet,
+      'runningWorkout.timer.isTimer': true,
+      'runningWorkout.timer.timerStart': startTime,
+    }
+    dispatch(updateWorkout(updatedData))
   }
 }
