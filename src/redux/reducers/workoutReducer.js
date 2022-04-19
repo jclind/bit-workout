@@ -1,4 +1,4 @@
-import { FETCH_WORKOUT_DATA, SET_WORKOUT_DATA, SET_IS_TIMER } from '../types'
+import { FETCH_WORKOUT_DATA, SET_WORKOUT_DATA, COMPLETE_SET } from '../types'
 
 const INITIAL_STATE = {
   workoutData: null,
@@ -15,10 +15,10 @@ const workoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         workoutData: { ...state.workoutData, ...action.payload },
       }
-    case SET_IS_TIMER:
+
+    case COMPLETE_SET:
       return {
         ...state,
-        'workoutData.runningWorkout.timer.isTimer': action.payload,
       }
     default:
       return state
