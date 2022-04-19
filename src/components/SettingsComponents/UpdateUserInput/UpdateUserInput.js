@@ -9,6 +9,7 @@ const UpdateUserInput = ({
   val,
   setVal,
   maxCharacters,
+  setError,
 }) => {
   const [unsavedVal, setUnsavedVal] = useState(val)
   const [numCharacters, setNumCharacters] = useState('')
@@ -21,8 +22,9 @@ const UpdateUserInput = ({
     setUnsavedVal(currVal)
   }
   const handleSave = () => {
+    setError('')
     if (unsavedVal === val || unsavedVal === '')
-      return console.log('New value cannot be empty / equal oringial value')
+      return setError('New value cannot be empty / equal original value')
 
     if (input === 'email') {
       if (
@@ -32,7 +34,7 @@ const UpdateUserInput = ({
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           )
       ) {
-        return console.log('invalid email')
+        return setError('invalid email')
       }
     }
     setVal(unsavedVal)
@@ -56,6 +58,7 @@ const UpdateUserInput = ({
           value={unsavedVal}
           onInput={e => handleInput(e)}
           maxLength={maxCharacters}
+          required={true}
         />
         {val && (
           <div className='clear-icon-container'>
@@ -72,12 +75,13 @@ const UpdateUserInput = ({
       </div>
       <div className='characters'>{`${numCharacters} / ${maxCharacters}`}</div>
       <div className='action-buttons'>
-        <button className='cancel' onClick={() => navigate(-1)}>
+        <button className='cancel' type='button' onClick={() => navigate(-1)}>
           cancel
         </button>
         <button
           className={activeSave ? 'save active' : 'save'}
           onClick={handleSave}
+          type='submit'
         >
           save
         </button>

@@ -13,7 +13,7 @@ const Dashboard = ({ userAuth, userAccountData }) => {
         <section style={{ display: 'flex', flexDirection: 'column' }}>
           <h2>Profile</h2>
           <div>
-            <strong>Email:</strong> {userAuth.email || 'loading'}
+            <strong>Email:</strong> {userAccountData.email || 'loading'}
           </div>
           <div>
             <strong>Username:</strong> {userAccountData.username || 'loading'}
