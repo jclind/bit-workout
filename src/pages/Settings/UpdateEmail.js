@@ -2,16 +2,20 @@ import React, { useState, useEffect } from 'react'
 import UpdateUserInput from '../../components/SettingsComponents/UpdateUserInput/UpdateUserInput'
 import { useNavigate } from 'react-router'
 import { connect } from 'react-redux'
-import { updateEmail } from '../../redux/actions/auth/authStatus'
+import { handleUpdateEmail } from '../../redux/actions/auth/authStatus'
+import FormInput from '../../components/FormInput/FormInput'
 
 const UpdateEmail = ({ updateEmail, userAuth }) => {
-  const [newEmail, setNewEmail] = useState('test@gmail.com')
+  const [newEmail, setNewEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
   const { email } = userAuth
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (newEmail !== '' && newEmail !== email) {
-      updateEmail(newEmail)
+    if (newEmail && !password) return setError('Please Enter Password')
+    if (newEmail !== '' && newEmail !== email && password) {
+      updateEmail(newEmail, password)
         .then(() => {
           console.log('hello there')
           navigate(-1)
@@ -25,12 +29,20 @@ const UpdateEmail = ({ updateEmail, userAuth }) => {
   return (
     <div className='update-name-page page'>
       <div className='settings-title'>Email</div>
+      {error}
       <UpdateUserInput
-        placeholder={'Enter Updated Email'}
+        placeholder={'Enter New Email'}
         val={newEmail}
         setVal={setNewEmail}
         maxCharacters={30}
         input={'email'}
+        setError={setError}
+      />
+      <FormInput
+        inputType={'password'}
+        val={password}
+        setVal={setPassword}
+        placeholder='Enter Password'
       />
     </div>
   )
@@ -44,7 +56,8 @@ const mapStateToProps = state => {
 
 const mapPropsToDispatch = dispatch => {
   return {
-    updateEmail: email => dispatch(updateEmail(email)),
+    updateEmail: (email, password) =>
+      dispatch(handleUpdateEmail(email, password)),
   }
 }
 

@@ -2,20 +2,38 @@ import {
   FETCH_USER_ACCOUNT_DATA,
   SET_USER_STATUS_SIGNED_IN,
   SET_USER_STATUS_SIGNED_OUT,
+  SET_USER_ACCOUNT_DATA,
 } from '../../types'
 import { doc, getDoc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import { db } from '../../../firebase'
 import { auth } from '../../../firebase'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import { calculateWeight } from '../../../util/calculateWeight'
+import {
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updateEmail,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from 'firebase/auth'
 
-export const signInAndFetchUserAccountData = user => async dispatch => {
-  const uid = user.uid
+export const signInAndFetchUserAccountData =
+  user => async (dispatch, getState) => {
+    const uid = user.uid
 
-  dispatch(setUserStatusSignedIn(user))
+    await dispatch(setUserStatusSignedIn(user))
 
-  dispatch(fetchUserData(uid))
-}
+    await dispatch(fetchUserData(uid))
+
+    // Migrating email to be used from userAccountData instead of user auth.
+    // If email doesn't exists in userAccountData, add the current user's email
+    const userAccountData = getState().auth.userAccountData
+    if (userAccountData && !userAccountData.email) {
+      const email = getState().auth.userAuth.email
+
+      dispatch(updateUserAccountData({ prop: 'email', val: email }))
+    }
+  }
 
 export const setUserStatusSignedIn = user => {
   return {
@@ -58,7 +76,7 @@ export const setWorkout = (weight, gender, uid) => async dispatch => {
   })
 }
 export const signup = (email, password, userData) => async dispatch => {
-  await auth.createUserWithEmailAndPassword(email, password).then(cred => {
+  await createUserWithEmailAndPassword(email, password).then(cred => {
     const uid = cred.user.uid
     const username = userData.usernameVal
 
@@ -67,12 +85,12 @@ export const signup = (email, password, userData) => async dispatch => {
     const gender = userData.genderVal
 
     dispatch(addNewUsername(username, uid))
-    dispatch(saveUserAccountData(uid, userData))
+    dispatch(setUserAccountData(uid, userData))
     dispatch(setWorkout(weight, gender, uid)) // Set workout data on initial signup
   })
 }
 
-export const saveUserAccountData = (uid, userData) => async () => {
+export const setUserAccountData = (uid, userData) => async () => {
   const {
     usernameVal,
     fullNameVal,
@@ -80,6 +98,7 @@ export const saveUserAccountData = (uid, userData) => async () => {
     birthdayVal,
     heightVal,
     weightVal,
+    emailVal,
   } = userData
 
   setDoc(doc(db, 'users', uid), {
@@ -89,6 +108,7 @@ export const saveUserAccountData = (uid, userData) => async () => {
     birthday: birthdayVal,
     height: heightVal,
     weight: weightVal,
+    email: emailVal,
   })
 }
 export const updateUserAccountData = data => async (dispatch, getState) => {
@@ -105,7 +125,8 @@ export const updateUserAccountData = data => async (dispatch, getState) => {
   await updateDoc(userRef, {
     [prop]: val,
   }).then(() => {
-    dispatch(saveUserAccountData(uid, currUserAccountData))
+    // dispatch(setUserAccountData(uid, currUserAccountData))
+    dispatch({ type: SET_USER_ACCOUNT_DATA, payload: currUserAccountData })
   })
   if (prop === 'username') {
     const usernameRef = doc(db, 'usernames', currUsername)
@@ -120,14 +141,14 @@ export const updateUserAccountData = data => async (dispatch, getState) => {
   }
 }
 
-export const addNewUsername = (username, uid) => async () => {
+export const addNewUsername = async (username, uid) => {
   await setDoc(doc(db, 'usernames', username), {
     uid,
   })
 }
 
 export const login = (email, password) => async () => {
-  auth.signInWithEmailAndPassword(email, password)
+  signInWithEmailAndPassword(auth, email, password)
 }
 export const logout = () => async () => {
   await auth.signOut()
@@ -137,14 +158,26 @@ export const resetPassword = email => async () => {
   auth.sendPasswordResetEmail(email)
 }
 
-export const updateEmail = email => async () => {
-  auth.currentUser.updateEmail(email)
+export const handleUpdateEmail = (newEmail, password) => async dispatch => {
+  await reauthenticate(password).catch(err => {
+    console.log(err)
+  })
+  await updateEmail(auth.currentUser, newEmail)
+  dispatch(updateUserAccountData({ prop: 'email', val: newEmail }))
 }
 
-function reauthenticate(currPassword) {
-  const user = auth.currentUser
-  const credential = auth.EmailAuthProvider.credential(user.email, currPassword)
-  return user.reauthenticateWithCredential(credential)
+async function reauthenticate(currPassword) {
+  console.log(auth.currentUser.email, currPassword)
+  const credential = EmailAuthProvider.credential(
+    auth.currentUser.email,
+    currPassword
+  )
+  await reauthenticateWithCredential(auth.currentUser, credential)
+  // const user = auth.currentUser
+  // console.log(auth)
+  // const credential = auth.EmailAuthProvider.credential(user.email, currPassword)
+  // console.log(credential, auth)
+  // await user.reauthenticateWithCredential(credential)
 }
 export const updatePassword = (oldPassword, newPassword) => async () => {
   await reauthenticate(oldPassword)

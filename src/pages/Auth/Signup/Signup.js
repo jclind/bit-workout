@@ -39,6 +39,7 @@ const Signup = ({ signup }) => {
       birthdayVal,
       heightVal,
       weightVal,
+      emailVal,
     }
     try {
       // setError('')
