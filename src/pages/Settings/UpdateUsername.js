@@ -9,6 +9,7 @@ const UpdateUsername = ({ updateUserAccountData, userAccountData }) => {
   const navigate = useNavigate()
 
   const [newUsername, setNewUsername] = useState(username)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     if (newUsername !== '' && newUsername !== username) {
@@ -27,11 +28,13 @@ const UpdateUsername = ({ updateUserAccountData, userAccountData }) => {
   return (
     <div className='update-name-page page'>
       <div className='settings-title'>Username</div>
+      <div className='error'>{error}</div>
       <UpdateUserInput
         placeholder={'Enter Updated Username'}
         val={newUsername}
         setVal={setNewUsername}
         maxCharacters={30}
+        setError={setError}
       />
     </div>
   )

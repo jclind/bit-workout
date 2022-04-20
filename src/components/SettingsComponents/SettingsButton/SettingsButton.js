@@ -6,8 +6,6 @@ import rightIcon from '../../../assets/images/icons/right.svg'
 const SettingsButton = ({ title, input, icon, link, action }) => {
   const navigate = useNavigate()
 
-  console.log(title, icon, link, action)
-
   const handleClick = () => {
     if (link) {
       navigate(link)

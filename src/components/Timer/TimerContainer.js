@@ -22,8 +22,7 @@ const TimerContainer = ({ timerStart, restTime, updateWorkout, uid }) => {
     }
 
     const skipTimer = (ref, timer) => {
-      const handler = e => {
-        console.log('IM HERE POELE')
+      const handler = () => {
         if (timer) {
           clearTimer(timer)
         }

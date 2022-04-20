@@ -85,9 +85,6 @@ export const completeSet =
       // If the last set of the last exercise is finished then call finishWorkout
       // Else begin next rest timer, increment currSet and currIdx, and updateWorkout
       if (currIdx >= currWorkoutPathLength - 1) {
-        console.log(
-          'FIX ME IN COMPLETE_SET WORKOUTREDUCER: Calling workoutFinished()'
-        )
         dispatch(finishWorkout(uid))
       } else {
         const startTime = new Date().getTime()

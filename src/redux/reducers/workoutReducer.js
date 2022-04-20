@@ -14,19 +14,16 @@ const setToValue = (obj, path, value) => {
   path = path.split('.')
   for (i = 0; i < path.length - 1; i++) obj = obj[path[i]]
 
-  console.log(value)
   obj[path[i]] = value
 }
 
 const workoutReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_WORKOUT_DATA:
-      console.log(action.payload)
       return { ...state, workoutData: action.payload }
     case SET_WORKOUT_DATA:
       const newState = JSON.parse(JSON.stringify(state.workoutData))
       Object.keys(action.payload).map(key => {
-        console.log(key)
         const currVal = action.payload[key]
         setToValue(newState, key, currVal)
       })
