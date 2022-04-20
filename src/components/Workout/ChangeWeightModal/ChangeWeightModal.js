@@ -4,8 +4,6 @@ import useClickOutside from '../../../util/useClickOutside'
 import './ChangeWeightModal.scss'
 import FormInput from '../../FormInput/FormInput'
 import weightIcon from '../../../assets/images/icons/weight.svg'
-import { useWorkout } from '../../../contexts/WorkoutContext'
-import { exerciseList } from '../../../assets/data/exerciseList'
 import { connect } from 'react-redux'
 import { updateWorkout } from '../../../redux/actions/workout/workout'
 

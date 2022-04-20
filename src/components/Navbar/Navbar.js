@@ -12,7 +12,6 @@ const NavbarContainer = () => {
 
   useEffect(() => {
     setCurrLocation(location.pathname)
-    console.log(currLocation)
   }, [location.pathname, currLocation])
 
   return (

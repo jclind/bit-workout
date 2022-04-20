@@ -9,14 +9,7 @@ import {
   startWorkout,
 } from '../../../redux/actions/workout/workout'
 
-const SingleWorkout = ({
-  text,
-  exercise,
-  getSingleWorkout,
-  workoutData,
-  uid,
-  startWorkout,
-}) => {
+const SingleWorkout = ({ text, exercise, workoutData, uid, startWorkout }) => {
   const estTime = msToTime(estimateTime(exercise))
 
   return (

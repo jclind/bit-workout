@@ -29,7 +29,7 @@ const UpdateEmail = ({ updateEmail, userAuth }) => {
   return (
     <div className='update-name-page page'>
       <div className='settings-title'>Email</div>
-      {error}
+      <div className='error'>{error}</div>
       <UpdateUserInput
         placeholder={'Enter New Email'}
         val={newEmail}

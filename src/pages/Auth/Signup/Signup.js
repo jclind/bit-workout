@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useLocation, useOutlet, useNavigate, Navigate } from 'react-router-dom'
 import signupBackground from '../../../assets/images/signup-background.png'
 import './Signup.scss'
-import { useAuth } from '../../../contexts/AuthContext'
 import { connect } from 'react-redux'
 import { signup } from '../../../redux/actions/auth/authStatus'
-import { auth } from '../../../firebase'
 
 export const SignupContext = React.createContext({})
 

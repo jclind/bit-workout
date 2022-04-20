@@ -68,6 +68,13 @@ h1 {
   width: 90%;
   margin: 0 auto;
   margin-top: $page-margin-top;
+
+  .error {
+    margin: 0 auto;
+    text-align: center;
+    font-size: toRem(16);
+    color: $error-red;
+  }
 }
 
 // Form Styles

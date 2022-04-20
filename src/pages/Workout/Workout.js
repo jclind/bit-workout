@@ -8,7 +8,6 @@ import { fetchWorkoutData } from '../../redux/actions/workout/workout'
 const Workout = ({ uid, fetchWorkoutData, isWorkoutFinished, workoutData }) => {
   useEffect(() => {
     if (uid) {
-      console.log('HERE')
       fetchWorkoutData(uid)
     }
   }, [uid])

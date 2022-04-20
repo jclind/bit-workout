@@ -1,4 +1,3 @@
-// import { useWorkout } from '../../../contexts/WorkoutContext'
 import ActiveWorkout from './ActiveWorkout'
 import TimerContainer from '../../Timer/TimerContainer'
 import './ActiveWorkout.scss'

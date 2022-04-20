@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { AiFillInfoCircle } from 'react-icons/ai'
 import { calculatePlates } from '../../../util/calculatePlates'
 import PlatesModal from '../PlatesModal/PlatesModal'
-import { useWorkout } from '../../../contexts/WorkoutContext'
 import { connect } from 'react-redux'
 import {
   completeSet,
@@ -29,7 +28,6 @@ const ActiveWorkout = ({
     imageURL,
     currWorkoutData: { sets: currSetTotal, reps: currRepsTotal },
   } = currExercise
-  console.log(currExercise)
 
   const exerciseWeight = weights.find(w => w.exerciseID === id).weight
 

@@ -76,7 +76,7 @@ export const setWorkout = (weight, gender, uid) => async dispatch => {
   })
 }
 export const signup = (email, password, userData) => async dispatch => {
-  await createUserWithEmailAndPassword(email, password).then(cred => {
+  await createUserWithEmailAndPassword(auth, email, password).then(cred => {
     const uid = cred.user.uid
     const username = userData.usernameVal
 
@@ -84,7 +84,7 @@ export const signup = (email, password, userData) => async dispatch => {
     const weight = userData.weightVal
     const gender = userData.genderVal
 
-    dispatch(addNewUsername(username, uid))
+    addNewUsername(username, uid)
     dispatch(setUserAccountData(uid, userData))
     dispatch(setWorkout(weight, gender, uid)) // Set workout data on initial signup
   })
