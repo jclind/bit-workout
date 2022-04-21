@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
 * {
-  color: $primary;
   font-family: $font-family;
   letter-spacing: 0.05em;
 }
@@ -16,11 +15,9 @@ body {
   background: $primary-background;
   position: relative;
   width: 100%;
+  color: $primary;
 }
-div {
-  margin-bottom: 2rem;
-  font-size: 1.5rem;
-}
+
 button {
   height: 40px;
   outline: none;
@@ -28,6 +25,7 @@ button {
   margin-top: 2rem;
   width: 100%;
   border-radius: toRem(5);
+  color: $primary;
 }
 
 input {

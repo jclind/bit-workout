@@ -45,7 +45,7 @@ const Login = ({
                 class='login-input'
               />
             </div>
-            <Link to='/' className='forgot-password'>
+            <Link to='/forgot-password' className='forgot-password'>
               Forgot password?
             </Link>
             <button className='submit-btn'>Log In</button>
