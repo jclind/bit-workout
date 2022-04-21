@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import './FormInput.scss'
 import deleteIcon from '../../assets/images/icons/delete.svg'
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
+
 const FormInput = ({
   icon,
   placeholder,
@@ -9,8 +11,21 @@ const FormInput = ({
   setVal,
   required,
   error,
+  showPasswordBtn,
 }) => {
+  const [type, setType] = useState(inputType)
   const [clear, setClear] = useState(false)
+  const [passwordShow, setPasswordShow] = useState(false)
+
+  useEffect(() => {
+    if (showPasswordBtn) {
+      if (passwordShow) {
+        setType('text')
+      } else {
+        setType('password')
+      }
+    }
+  }, [passwordShow])
 
   useEffect(() => {
     if (val) {
@@ -35,18 +50,33 @@ const FormInput = ({
     >
       {icon && <img src={icon} alt={placeholder} className='icon' />}
       <input
-        type={`${inputType}`}
+        type={`${type}`}
         placeholder={placeholder}
         onChange={e => handleInput(e)}
         value={val}
         required={required}
         className={icon ? 'active-icon' : null}
       />
-      {clear && (
-        <div onClick={() => setVal('')} className='delete-icon'>
-          <img src={deleteIcon} alt='clear' />
-        </div>
-      )}
+
+      <div className='icons'>
+        {showPasswordBtn && (
+          <div
+            className='show-password-btn'
+            onClick={() => setPasswordShow(!passwordShow)}
+          >
+            {passwordShow ? (
+              <AiOutlineEye className='eye-icon icon' />
+            ) : (
+              <AiOutlineEyeInvisible className='eye-icon icon' />
+            )}
+          </div>
+        )}
+        {clear && (
+          <div onClick={() => setVal('')} className='delete-icon'>
+            <img src={deleteIcon} alt='clear' />
+          </div>
+        )}
+      </div>
     </label>
   )
 }

@@ -1,11 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { SignupContext } from '../../../../pages/Auth/Signup/Signup'
 import birthdayIcon from '../../../../assets/images/icons/birthday.svg'
 import heightIcon from '../../../../assets/images/icons/height.svg'
 import weightIcon from '../../../../assets/images/icons/weight.svg'
 import BirthdayInput from './BirthdayInput/BirthdayInput'
-import HeightInputContainer from '../../../HeightInput/HeightInputContainer'
+import HeightInputContainer from './HeightInput/HeightInputContainer'
 import WeightInput from './WeightInput/WeightInput'
+import { AiOutlineWarning } from 'react-icons/ai'
 
 const SignupPersonal = () => {
   const {
@@ -20,10 +21,45 @@ const SignupPersonal = () => {
     setWeightVal,
   } = useContext(SignupContext)
 
+  const [error, setError] = useState('')
+
+  const handleSubmit = e => {
+    e.preventDefault()
+
+    if (!genderVal) {
+      return setError('Please select gender')
+    }
+    if (!birthdayVal) {
+      return setError('Please enter birthday')
+    }
+    if (!heightVal) {
+      return setError('Please enter height')
+    } else if (!heightVal.feet) {
+      return setError('Please enter height feet')
+    } else if (!heightVal.inches) {
+      return setError('Please enter height inches')
+    }
+    if (!weightVal) {
+      return setError('Please enter weight')
+    } else if (weightVal <= 40) {
+      return setError('Please enter a weight greater than 40lbs')
+    } else if (weightVal >= 1000) {
+      return setError('Please enter a weight less than 100lbs')
+    }
+
+    handleSignup()
+  }
+
   return (
     <>
       <div className='content signup-personal-info'>
-        <form action='' onSubmit={handleSignup}>
+        {error && (
+          <div className='form-error'>
+            <AiOutlineWarning className='icon' />
+            {error}
+          </div>
+        )}
+        <form action='' onSubmit={handleSubmit}>
           <h3 className='sub-text'>Please enter the following information:</h3>
           <div className='gender-inputs'>
             <div

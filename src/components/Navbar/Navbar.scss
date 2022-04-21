@@ -24,7 +24,8 @@ nav {
       text-decoration: none;
       width: 100%;
       .icon {
-        height: toRem(25);
+        height: 25px;
+        width: 25px;
         color: $tertiary-text;
       }
       .link-text {

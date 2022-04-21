@@ -1,5 +1,5 @@
 import React from 'react'
-import deleteIcon from '../../assets/images/icons/delete.svg'
+import deleteIcon from '../../../../../assets/images/icons/delete.svg'
 
 const HeightInput = ({
   focus,
