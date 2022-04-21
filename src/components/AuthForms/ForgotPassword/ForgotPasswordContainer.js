@@ -2,38 +2,42 @@ import React, { useRef, useState } from 'react'
 import ForgotPassword from './ForgotPassword'
 import { connect } from 'react-redux'
 import { resetPassword } from '../../../redux/actions/auth/authStatus'
+import './ForgotPassword.scss'
 
 const ForgotPasswordContainer = ({ resetPassword }) => {
-  const emailRef = useRef()
+  const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e) {
+  const handleSubmit = async e => {
     e.preventDefault()
 
-    try {
-      setMessage('')
-      setError('')
-      setLoading(true)
-      await resetPassword(emailRef.current.value)
-      // await login(emailRef.current.value, passwordRef.current.value)
+    setMessage('')
+    setError('')
+    setLoading(true)
+    const err = await resetPassword(email)
+
+    if (err) {
+      setError(`Failed to reset password, ERROR: ${err.code}`)
+      setLoading(false)
+    } else {
       setMessage('Check your inbox for further instructions')
-    } catch (error) {
-      console.log(error)
-      setError('Failed to sign in')
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   return (
-    <ForgotPassword
-      handleSubmit={handleSubmit}
-      loading={loading}
-      error={error}
-      emailRef={emailRef}
-      message={message}
-    />
+    <div className='forgot-password-container'>
+      <ForgotPassword
+        handleSubmit={handleSubmit}
+        loading={loading}
+        error={error}
+        email={email}
+        setEmail={setEmail}
+        message={message}
+      />
+    </div>
   )
 }
 

@@ -5,7 +5,7 @@ import './Security.scss'
 import { useNavigate } from 'react-router'
 import BackButton from '../../../components/SettingsComponents/BackButton/BackButton'
 import { connect } from 'react-redux'
-import { updatePassword } from '../../../redux/actions/auth/authStatus'
+import { handleUpdatePassword } from '../../../redux/actions/auth/authStatus'
 
 const Security = ({ updatePassword }) => {
   const [oldPass, setOldPass] = useState('')
@@ -121,7 +121,7 @@ const Security = ({ updatePassword }) => {
 const mapDispatchToProps = dispatch => {
   return {
     updatePassword: (oldPassword, newPassword) =>
-      dispatch(updatePassword(oldPassword, newPassword)),
+      dispatch(handleUpdatePassword(oldPassword, newPassword)),
   }
 }
 

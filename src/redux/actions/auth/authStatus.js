@@ -15,6 +15,8 @@ import {
   updateEmail,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  updatePassword,
+  sendPasswordResetEmail,
 } from 'firebase/auth'
 
 export const signInAndFetchUserAccountData =
@@ -155,7 +157,12 @@ export const logout = () => async () => {
 }
 
 export const resetPassword = email => async () => {
-  auth.sendPasswordResetEmail(email)
+  let error = null
+  await sendPasswordResetEmail(auth, email).catch(err => {
+    console.log(err.code)
+    error = err
+  })
+  return error
 }
 
 export const handleUpdateEmail = (newEmail, password) => async dispatch => {
@@ -179,7 +186,7 @@ async function reauthenticate(currPassword) {
   // console.log(credential, auth)
   // await user.reauthenticateWithCredential(credential)
 }
-export const updatePassword = (oldPassword, newPassword) => async () => {
+export const handleUpdatePassword = (oldPassword, newPassword) => async () => {
   await reauthenticate(oldPassword)
-  await auth.currentUser.updatePassword(newPassword)
+  await updatePassword(auth.currentUser, newPassword)
 }
