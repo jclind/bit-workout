@@ -18,6 +18,21 @@
       flex-direction: column;
       gap: toRem(10);
       width: 100%;
+      .username-input {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        .is-username-available {
+          padding-top: 0.35rem;
+          font-size: toRem(14);
+        }
+        .available {
+          color: $success-green;
+        }
+        .not-available {
+          color: $error-red;
+        }
+      }
     }
 
     .sign-in-prompt {

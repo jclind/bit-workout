@@ -21,13 +21,13 @@ const ForgotPassword = ({
         instructions will be emailed you.
       </p>
       {error && (
-        <div className='error'>
+        <div className='form-error'>
           <AiOutlineWarning className='icon' />
           {error}
         </div>
       )}
       {message && (
-        <div className='success'>
+        <div className='form-success'>
           <AiOutlineCheck className='icon' />
           {message}
         </div>

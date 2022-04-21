@@ -20,7 +20,6 @@ body {
 
 button {
   height: 40px;
-  outline: none;
   border: none;
   margin-top: 2rem;
   width: 100%;
@@ -73,6 +72,28 @@ h1 {
     font-size: toRem(16);
     color: $error-red;
   }
+}
+
+.form-error,
+.form-success {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 5px;
+  font-size: toRem(14);
+  font-weight: 600;
+  padding: 0.5rem;
+  width: 90%;
+  margin: 0 auto;
+  .icon {
+    flex-shrink: 0;
+  }
+}
+.form-success {
+  background: $success-green;
+}
+.form-error {
+  background: $error-red;
 }
 
 // Form Styles

@@ -1,4 +1,4 @@
-@import '../../helpers.scss';
+@import '../../../../../helpers.scss';
 .height-input-container {
   position: relative;
   padding: 0;
@@ -60,6 +60,7 @@
         justify-self: flex-start;
         border-radius: none !important;
         caret-color: $secondary;
+        color: $primary;
       }
     }
   }

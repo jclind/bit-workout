@@ -4,7 +4,17 @@ import {
   SET_USER_STATUS_SIGNED_OUT,
   SET_USER_ACCOUNT_DATA,
 } from '../../types'
-import { doc, getDoc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore'
+import {
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  where,
+  query,
+  getDocs,
+} from 'firebase/firestore'
 import { db } from '../../../firebase'
 import { auth } from '../../../firebase'
 import { exerciseList } from '../../../assets/data/exerciseList'
@@ -148,9 +158,28 @@ export const addNewUsername = async (username, uid) => {
     uid,
   })
 }
+export const checkUsernameAvailability = async (username, setLoading) => {
+  if (setLoading) {
+    setLoading(true)
+  }
+
+  console.log('here', username)
+  const usernameRef = doc(db, 'usernames', username)
+  const usernameSnap = await getDoc(usernameRef)
+
+  if (usernameSnap.exists()) {
+    return false
+  }
+  return true
+}
 
 export const login = (email, password) => async () => {
-  signInWithEmailAndPassword(auth, email, password)
+  let error = null
+  await signInWithEmailAndPassword(auth, email, password).catch(err => {
+    console.log(err.code)
+    error = err
+  })
+  return error
 }
 export const logout = () => async () => {
   await auth.signOut()

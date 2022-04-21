@@ -4,11 +4,13 @@ import signupBackground from '../../../assets/images/signup-background.png'
 import './Signup.scss'
 import { connect } from 'react-redux'
 import { signup } from '../../../redux/actions/auth/authStatus'
+import { checkUsernameAvailability } from '../../../redux/actions/auth/authStatus'
 
 export const SignupContext = React.createContext({})
 
 const Signup = ({ signup }) => {
   const [usernameVal, setUsernameVal] = useState('')
+  const [usernameAvailable, setUsernameAvailable] = useState(null)
   const [fullNameVal, setFullNameVal] = useState('')
   const [emailVal, setEmailVal] = useState('')
   const [passwordVal, setPasswordVal] = useState('')
@@ -18,18 +20,20 @@ const Signup = ({ signup }) => {
   const [heightVal, setHeightVal] = useState({ feet: '', inches: '' })
   const [weightVal, setWeightVal] = useState('')
 
+  useEffect(() => {
+    if (usernameVal.trim().length >= 3) {
+      checkUsernameAvailability(usernameVal).then(isAvailable => {
+        console.log('is available:', isAvailable)
+        setUsernameAvailable(isAvailable)
+      })
+    } else {
+      setUsernameAvailable(null)
+    }
+  }, [usernameVal])
+
   const navigate = useNavigate()
-  // const { signup } = useAuth()
 
-  // const signup = (email, password, payload) => {
-  //   return auth.createUserWithEmailAndPassword(email, password).then(cred => {
-  //     const uid = cred.user.uid
-  //     saveUserAccountData(uid, payload)
-  //   })
-  // }
-
-  async function handleSignup(e) {
-    e.preventDefault()
+  async function handleSignup() {
     const payload = {
       usernameVal,
       fullNameVal,
@@ -40,8 +44,6 @@ const Signup = ({ signup }) => {
       emailVal,
     }
     try {
-      // setError('')
-      // setLoading(true)
       await signup(emailVal, passwordVal, payload)
       navigate('/')
     } catch (error) {
@@ -89,6 +91,7 @@ const Signup = ({ signup }) => {
     setHeightVal,
     weightVal,
     setWeightVal,
+    usernameAvailable,
   }
 
   return (

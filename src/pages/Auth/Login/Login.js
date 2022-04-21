@@ -13,19 +13,20 @@ const LoginPage = ({ login, userAuth }) => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  async function handleSubmit(e) {
+  const handleSubmit = async e => {
     e.preventDefault()
 
-    try {
-      setError('')
-      setLoading(true)
-      await login(emailVal, passwordVal)
+    setError('')
+    setLoading(true)
+    const err = await login(emailVal, passwordVal)
+
+    if (err) {
+      setError(`ERROR: ${err.code}`)
+      setLoading(false)
+    } else {
+      setLoading(false)
       navigate('/')
-    } catch (error) {
-      console.log(error)
-      setError('Failed to sign in')
     }
-    setLoading(false)
   }
 
   if (location.pathname === '/login' && userAuth) {

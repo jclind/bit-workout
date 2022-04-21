@@ -4,6 +4,8 @@ import loginIMG from '../../../assets/images/login-background.png'
 import FormInput from '../../FormInput/FormInput'
 import emailIcon from '../../../assets/images/icons/email.svg'
 import passwordIcon from '../../../assets/images/icons/password.svg'
+import { TailSpin } from 'react-loader-spinner'
+import { AiOutlineWarning } from 'react-icons/ai'
 
 const Login = ({
   handleSubmit,
@@ -24,7 +26,13 @@ const Login = ({
         />
         <h1 className='title'>Log In</h1>
         <div className='form-container'>
-          <form action='' className='login-form' onSubmit={handleSubmit}>
+          {error && (
+            <div className='error'>
+              <AiOutlineWarning className='icon' />
+              {error}
+            </div>
+          )}
+          <form className='login-form' onSubmit={handleSubmit}>
             <div className='inputs'>
               <FormInput
                 placeholder='email'
@@ -43,12 +51,25 @@ const Login = ({
                 setVal={setPasswordVal}
                 required={true}
                 class='login-input'
+                showPasswordBtn={true}
               />
             </div>
             <Link to='/forgot-password' className='forgot-password'>
               Forgot password?
             </Link>
-            <button className='submit-btn'>Log In</button>
+            <button className='submit-btn'>
+              {loading ? (
+                <TailSpin
+                  height='30'
+                  width='30'
+                  color='white'
+                  arialLabel='loading'
+                  className='spinner'
+                />
+              ) : (
+                'Log In'
+              )}
+            </button>
             <div className='dont-have-account'>
               Don't have an account?
               <Link to='/signup' className='dont-have-account-btn'>
