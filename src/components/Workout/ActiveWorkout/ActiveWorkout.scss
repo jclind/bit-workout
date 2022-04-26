@@ -66,4 +66,13 @@
     margin: 0 auto;
     margin-top: toRem(100);
   }
+  .set-failed-btn {
+    background: none;
+    width: fit-content;
+    height: fit-content;
+    margin: 0.5rem auto;
+    padding: 0.25rem 0.5rem;
+    color: $error-red;
+    font-weight: 500;
+  }
 }
