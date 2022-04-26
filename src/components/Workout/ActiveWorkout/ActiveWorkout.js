@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { AiFillInfoCircle } from 'react-icons/ai'
 import { calculatePlates } from '../../../util/calculatePlates'
 import PlatesModal from '../PlatesModal/PlatesModal'
+import ConfirmSetFailedModal from '../ConfirmSetFailedModal/ConfirmSetFailedModal'
 import { connect } from 'react-redux'
 import {
   completeSet,
+  failSet,
   getSingleWorkout,
 } from '../../../redux/actions/workout/workout'
 
@@ -15,9 +17,11 @@ const ActiveWorkout = ({
   currIdx,
   currWorkout,
   completeSet,
+  failSet,
   weights,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isSetFailedModalOpen, setIsSetFailedModalOpen] = useState(false)
 
   const currExerciseID = currWorkout.path[currIdx].exerciseID
   const currExercise = getSingleWorkout(currExerciseID)
@@ -30,6 +34,7 @@ const ActiveWorkout = ({
   } = currExercise
 
   const exerciseWeight = weights.find(w => w.exerciseID === id).weight
+  console.log(weights)
 
   const plateWeights = calculatePlates(45, exerciseWeight)
   return (
@@ -47,6 +52,12 @@ const ActiveWorkout = ({
       >
         Completed
       </button>
+      <button
+        className='set-failed-btn'
+        onClick={() => setIsSetFailedModalOpen(true)}
+      >
+        Failed
+      </button>
 
       {isModalOpen ? (
         <PlatesModal
@@ -56,6 +67,18 @@ const ActiveWorkout = ({
           }}
           currExercise={currExercise}
           exerciseWeight={exerciseWeight}
+        />
+      ) : null}
+      {isSetFailedModalOpen ? (
+        <ConfirmSetFailedModal
+          onClose={() => {
+            setIsSetFailedModalOpen(false)
+          }}
+          failSet={failSet}
+          currWeight={exerciseWeight}
+          weightExerciseId={id}
+          uid={uid}
+          weights={weights}
         />
       ) : null}
     </div>
@@ -78,6 +101,8 @@ const mapDispatchToProps = dispatch => {
     getSingleWorkout: id => dispatch(getSingleWorkout(id)),
     completeSet: (currSetTotal, uid) =>
       dispatch(completeSet(currSetTotal, uid)),
+    failSet: (weights, newWeight, exerciseId, uid) =>
+      dispatch(failSet(weights, newWeight, exerciseId, uid)),
   }
 }
 

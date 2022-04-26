@@ -113,6 +113,26 @@ export const completeSet =
     }
   }
 
+export const failSet =
+  (weights, newWeight, exerciseID, uid) => async dispatch => {
+    const modWeights = weights.map(weight => {
+      console.log(weight.exerciseID, exerciseID)
+      if (weight.exerciseID === exerciseID) {
+        return { ...weight, weight: newWeight }
+      }
+      return weight
+    })
+    console.log(newWeight, modWeights)
+    await dispatch(
+      updateWorkout(
+        {
+          weights: modWeights,
+        },
+        uid
+      )
+    )
+  }
+
 const updateWeights = (weights, currWorkoutPath) => {
   const modWeights = [...weights]
   currWorkoutPath.forEach(ex => {
