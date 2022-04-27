@@ -1,10 +1,16 @@
 import React from 'react'
 import SingleWorkout from '../SingleWorkout/SingleWorkout'
-import { e1 } from '../../../assets/data/e1'
+import { workouts } from '../../../assets/data/workouts'
 const WorkoutSelection = () => {
   return (
     <div>
-      <SingleWorkout text={'Your Next Workout'} exercise={e1} />
+      {workouts.map(workout => {
+        return (
+          <React.Fragment key={workout.id}>
+            <SingleWorkout exercise={workout} />
+          </React.Fragment>
+        )
+      })}
     </div>
   )
 }

@@ -30,4 +30,16 @@ export const exerciseList = [
     animation: null,
     imageURL: '/workouts/bench-press.svg',
   },
+  {
+    id: 5,
+    name: 'dumbbell row',
+    animation: null,
+    imageURL: '/workouts/dumbbell-row.png',
+  },
+  {
+    id: 6,
+    name: 'barbell curl',
+    animation: null,
+    imageURL: '/workouts/barbell-curl.png',
+  },
 ]

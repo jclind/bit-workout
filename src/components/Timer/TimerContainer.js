@@ -11,7 +11,6 @@ const TimerContainer = ({
   failSetRestTime,
   lastSetFailed,
   updateWorkout,
-  uid,
 }) => {
   const [timerVal, setTimerVal] = useState()
 
@@ -20,12 +19,9 @@ const TimerContainer = ({
   useEffect(() => {
     const clearTimer = timer => {
       clearInterval(timer)
-      updateWorkout(
-        {
-          'runningWorkout.timer.isTimer': false,
-        },
-        uid
-      )
+      updateWorkout({
+        'runningWorkout.timer.isTimer': false,
+      })
     }
 
     const skipTimer = (ref, timer) => {
@@ -58,7 +54,7 @@ const TimerContainer = ({
       }
     }, 100)
     skipTimer(skipRestBtn, timer)
-  }, [timerStart, restTime, updateWorkout, uid])
+  }, [timerStart, restTime, updateWorkout])
 
   return (
     <Timer
@@ -70,14 +66,17 @@ const TimerContainer = ({
 }
 
 const mapStateToProps = state => {
+  const runningWorkout = state.workout.workoutData.runningWorkout
   return {
-    uid: state.auth.userAuth ? state.auth.userAuth.uid : null,
+    restTime: runningWorkout.currWorkout.restTime,
+    failSetRestTime: runningWorkout.currWorkout.failSetRestTime,
+    lastSetFailed: runningWorkout.currWorkout.lastSetFailed,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateWorkout: (data, uid) => dispatch(updateWorkout(data, uid)),
+    updateWorkout: data => dispatch(updateWorkout(data)),
   }
 }
 
