@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import ReactDom from 'react-dom'
 import useClickOutside from '../../../util/useClickOutside'
 import './ConfirmSetFailedModal.scss'
+import { failSet } from '../../../redux/actions/workout/workout'
+import { connect } from 'react-redux'
 
 const ConfirmSetFailedModal = ({
   onClose,
   failSet,
   currWeight,
   weightExerciseId,
-  uid,
-  weights,
   currSetTotal,
 }) => {
   const [weightCount, setWeightCount] = useState(10)
@@ -27,13 +27,7 @@ const ConfirmSetFailedModal = ({
   }
 
   const handleFailSet = () => {
-    failSet(
-      weights,
-      currWeight - weightCount,
-      weightExerciseId,
-      currSetTotal,
-      uid
-    )
+    failSet(currWeight - weightCount, weightExerciseId, currSetTotal)
       .then(() => {
         onClose()
       })
@@ -78,4 +72,11 @@ const ConfirmSetFailedModal = ({
   )
 }
 
-export default ConfirmSetFailedModal
+const mapDispatchToProps = dispatch => {
+  return {
+    failSet: (newWeight, exerciseID, currSetTotal) =>
+      dispatch(failSet(newWeight, exerciseID, currSetTotal)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(ConfirmSetFailedModal)

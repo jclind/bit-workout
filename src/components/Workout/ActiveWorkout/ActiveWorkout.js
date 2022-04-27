@@ -6,18 +6,15 @@ import ConfirmSetFailedModal from '../ConfirmSetFailedModal/ConfirmSetFailedModa
 import { connect } from 'react-redux'
 import {
   completeSet,
-  failSet,
   getSingleWorkout,
 } from '../../../redux/actions/workout/workout'
 
 const ActiveWorkout = ({
-  uid,
   getSingleWorkout,
   currSet,
   currIdx,
   currWorkout,
   completeSet,
-  failSet,
   weights,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -33,7 +30,14 @@ const ActiveWorkout = ({
     currWorkoutData: { sets: currSetTotal, reps: currRepsTotal },
   } = currExercise
 
-  const exerciseWeight = weights.find(w => w.exerciseID === id).weight
+  const exerciseWeightData = weights.find(w => w.exerciseID === id)
+  let exerciseWeight
+  if (!exerciseWeightData) {
+    exerciseWeight = 45
+  } else {
+    exerciseWeight = exerciseWeightData.weight
+  }
+
   console.log(weights)
 
   const plateWeights = calculatePlates(45, exerciseWeight)
@@ -46,10 +50,7 @@ const ActiveWorkout = ({
         <span>{exerciseWeight} lbs</span> <AiFillInfoCircle className='icon' />
       </div>
       <img src={imageURL} alt={name} className='exercise-img' />
-      <button
-        className='submit-btn'
-        onClick={() => completeSet(currSetTotal, uid)}
-      >
+      <button className='submit-btn' onClick={() => completeSet(currSetTotal)}>
         Completed
       </button>
       <button
@@ -74,11 +75,8 @@ const ActiveWorkout = ({
           onClose={() => {
             setIsSetFailedModalOpen(false)
           }}
-          failSet={failSet}
           currWeight={exerciseWeight}
           weightExerciseId={id}
-          uid={uid}
-          weights={weights}
           currSetTotal={currSetTotal}
         />
       ) : null}
@@ -90,7 +88,6 @@ const mapStateTopProps = state => {
   const runningWorkout = state.workout.workoutData.runningWorkout
 
   return {
-    uid: state.auth.userAuth ? state.auth.userAuth.uid : null,
     currSet: runningWorkout.remainingWorkout.currSet,
     currIdx: runningWorkout.remainingWorkout.currIdx,
     currWorkout: runningWorkout.currWorkout,
@@ -100,10 +97,8 @@ const mapStateTopProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSingleWorkout: id => dispatch(getSingleWorkout(id)),
-    completeSet: (currSetTotal, uid) =>
-      dispatch(completeSet(currSetTotal, uid)),
-    failSet: (weights, newWeight, exerciseID, currSetTotal, uid) =>
-      dispatch(failSet(weights, newWeight, exerciseID, currSetTotal, uid)),
+    completeSet: (currSetTotal, lastSetFailed) =>
+      dispatch(completeSet(currSetTotal, lastSetFailed)),
   }
 }
 

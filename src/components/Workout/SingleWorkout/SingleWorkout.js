@@ -5,26 +5,39 @@ import { estimateTime } from '../../../util/estimateTime'
 import { msToTime } from '../../../util/msToTime'
 import { connect } from 'react-redux'
 import {
-  getSingleWorkout,
+  addNewExerciseWeight,
   startWorkout,
 } from '../../../redux/actions/workout/workout'
 
-const SingleWorkout = ({ text, exercise, workoutData, uid, startWorkout }) => {
+const SingleWorkout = ({
+  exercise,
+  workoutData,
+  startWorkout,
+  addNewExerciseWeight,
+}) => {
   const estTime = msToTime(estimateTime(exercise))
 
   return (
     <div className='single-workout'>
       <div className='title-container'>
-        <div className='title'>{text}</div>
+        <div className='title'>{exercise.name}</div>
         <div className='est-time'>Time: ≈{estTime}</div>
       </div>
       <div className='exercises-container'>
         {exercise.path.map((e, idx) => {
           const currExercise = exerciseList.find(obj => obj.id === e.exerciseID)
-          const exID = currExercise.id
-          const currWeight = workoutData.weights.find(
-            ex => ex.exerciseID === exID
-          ).weight
+          const exerciseID = currExercise.id
+          const currWeightData = workoutData.weights.find(
+            ex => ex.exerciseID === exerciseID
+          )
+          console.log(currWeightData)
+          let currWeight
+          if (!currWeightData) {
+            currWeight = 45
+            addNewExerciseWeight(45, exerciseID)
+          } else {
+            currWeight = currWeightData.weight
+          }
           const image = currExercise.imageURL
           const name = currExercise.name
 
@@ -37,10 +50,7 @@ const SingleWorkout = ({ text, exercise, workoutData, uid, startWorkout }) => {
           )
         })}
       </div>
-      <button
-        className='start-button'
-        onClick={() => startWorkout(exercise, uid)}
-      >
+      <button className='start-button' onClick={() => startWorkout(exercise)}>
         Start Workout
       </button>
     </div>
@@ -50,13 +60,13 @@ const SingleWorkout = ({ text, exercise, workoutData, uid, startWorkout }) => {
 const mapStateToProps = state => {
   return {
     workoutData: state.workout.workoutData,
-    uid: state.auth.userAuth ? state.auth.userAuth.uid : null,
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    getSingleWorkout: id => dispatch(getSingleWorkout(id)),
-    startWorkout: (exercise, uid) => dispatch(startWorkout(exercise, uid)),
+    startWorkout: exercise => dispatch(startWorkout(exercise)),
+    addNewExerciseWeight: (newWeight, exerciseID) =>
+      dispatch(addNewExerciseWeight(newWeight, exerciseID)),
   }
 }
 
