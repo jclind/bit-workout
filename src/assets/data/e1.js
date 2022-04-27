@@ -1,5 +1,7 @@
 export const e1 = {
   restTime: 90000,
+  failSetRestTime: 300000,
+  lastSetFailed: false,
   path: [
     {
       id: 1,
