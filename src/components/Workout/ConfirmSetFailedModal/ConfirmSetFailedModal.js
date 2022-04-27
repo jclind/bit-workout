@@ -10,6 +10,7 @@ const ConfirmSetFailedModal = ({
   weightExerciseId,
   uid,
   weights,
+  currSetTotal,
 }) => {
   const [weightCount, setWeightCount] = useState(10)
   const modalContent = useClickOutside(() => {
@@ -26,7 +27,13 @@ const ConfirmSetFailedModal = ({
   }
 
   const handleFailSet = () => {
-    failSet(weights, currWeight - weightCount, weightExerciseId, uid)
+    failSet(
+      weights,
+      currWeight - weightCount,
+      weightExerciseId,
+      currSetTotal,
+      uid
+    )
       .then(() => {
         onClose()
       })

@@ -5,7 +5,14 @@ import './Timer.scss'
 import { connect } from 'react-redux'
 import { updateWorkout } from '../../redux/actions/workout/workout'
 
-const TimerContainer = ({ timerStart, restTime, updateWorkout, uid }) => {
+const TimerContainer = ({
+  timerStart,
+  restTime,
+  failSetRestTime,
+  lastSetFailed,
+  updateWorkout,
+  uid,
+}) => {
   const [timerVal, setTimerVal] = useState()
 
   const skipRestBtn = useRef()
@@ -41,7 +48,9 @@ const TimerContainer = ({ timerStart, restTime, updateWorkout, uid }) => {
       // Format elapsed time to milliseconds
       const elapsedMS = Math.round(elapsed / 1000) * 1000
       // Get time left on timer
-      const timeLeft = restTime - elapsedMS
+      const timeLeft = lastSetFailed
+        ? failSetRestTime - elapsedMS
+        : restTime - elapsedMS
 
       setTimerVal(formatTime(timeLeft))
       if (timeLeft <= 0) {
@@ -51,7 +60,13 @@ const TimerContainer = ({ timerStart, restTime, updateWorkout, uid }) => {
     skipTimer(skipRestBtn, timer)
   }, [timerStart, restTime, updateWorkout, uid])
 
-  return <Timer timerVal={timerVal} skipRestBtn={skipRestBtn} />
+  return (
+    <Timer
+      timerVal={timerVal}
+      skipRestBtn={skipRestBtn}
+      lastSetFailed={lastSetFailed}
+    />
+  )
 }
 
 const mapStateToProps = state => {

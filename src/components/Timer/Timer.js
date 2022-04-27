@@ -1,9 +1,13 @@
 import React from 'react'
 
-const Timer = ({ timerVal, skipRestBtn }) => {
+const Timer = ({ timerVal, skipRestBtn, lastSetFailed }) => {
   return (
     <div className='workout-timer'>
-      <div className='timer-title'>Take a rest, you deserve it.</div>
+      <div className='timer-title'>
+        {lastSetFailed
+          ? 'Without failure there is no success.'
+          : 'Take a rest, you deserve it.'}
+      </div>
       <div className='timer'>{timerVal}</div>
       <img
         src='/workouts/workout-rest.png'

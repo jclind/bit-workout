@@ -79,6 +79,7 @@ const ActiveWorkout = ({
           weightExerciseId={id}
           uid={uid}
           weights={weights}
+          currSetTotal={currSetTotal}
         />
       ) : null}
     </div>
@@ -101,8 +102,8 @@ const mapDispatchToProps = dispatch => {
     getSingleWorkout: id => dispatch(getSingleWorkout(id)),
     completeSet: (currSetTotal, uid) =>
       dispatch(completeSet(currSetTotal, uid)),
-    failSet: (weights, newWeight, exerciseId, uid) =>
-      dispatch(failSet(weights, newWeight, exerciseId, uid)),
+    failSet: (weights, newWeight, exerciseID, currSetTotal, uid) =>
+      dispatch(failSet(weights, newWeight, exerciseID, currSetTotal, uid)),
   }
 }
 

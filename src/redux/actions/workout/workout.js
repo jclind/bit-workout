@@ -73,7 +73,7 @@ export const startWorkout = (exercise, uid) => async dispatch => {
 }
 
 export const completeSet =
-  (currSetTotal, uid) => async (dispatch, getState) => {
+  (currSetTotal, uid, lastSetFailed) => async (dispatch, getState) => {
     const runningWorkout = getState().workout.workoutData.runningWorkout
     const currSet = runningWorkout.remainingWorkout.currSet
     const currIdx = runningWorkout.remainingWorkout.currIdx
@@ -96,6 +96,7 @@ export const completeSet =
           'runningWorkout.remainingWorkout.currSet': nextSet,
           'runningWorkout.timer.isTimer': true,
           'runningWorkout.timer.timerStart': startTime,
+          'runningWorkout.currWorkout.lastSetFailed': false,
         }
 
         dispatch(updateWorkout(updatedData, uid))
@@ -108,13 +109,14 @@ export const completeSet =
         'runningWorkout.remainingWorkout.currSet': nextSet,
         'runningWorkout.timer.isTimer': true,
         'runningWorkout.timer.timerStart': startTime,
+        'runningWorkout.currWorkout.lastSetFailed': lastSetFailed || false,
       }
       dispatch(updateWorkout(updatedData, uid))
     }
   }
 
 export const failSet =
-  (weights, newWeight, exerciseID, uid) => async dispatch => {
+  (weights, newWeight, exerciseID, currSetTotal, uid) => async dispatch => {
     const modWeights = weights.map(weight => {
       console.log(weight.exerciseID, exerciseID)
       if (weight.exerciseID === exerciseID) {
@@ -123,6 +125,7 @@ export const failSet =
       return weight
     })
     console.log(newWeight, modWeights)
+    await dispatch(completeSet(currSetTotal, uid, true))
     await dispatch(
       updateWorkout(
         {
