@@ -24,13 +24,13 @@ const ActiveWorkout = ({
   const currExercise = getSingleWorkout(currExerciseID)
 
   const {
-    id,
+    id: exerciseID,
     name,
     imageURL,
-    currWorkoutData: { sets: currSetTotal, reps: currRepsTotal },
+    currWorkoutData: { sets: currSetTotal, reps: currRepTotal },
   } = currExercise
 
-  const exerciseWeightData = weights.find(w => w.exerciseID === id)
+  const exerciseWeightData = weights.find(w => w.exerciseID === exerciseID)
   let exerciseWeight
   if (!exerciseWeightData) {
     exerciseWeight = 45
@@ -45,12 +45,15 @@ const ActiveWorkout = ({
     <div className='active-workout'>
       <div className='current-workout-text'>Current Workout</div>
       <div className='exercise-title'>{name}</div>
-      <div className='rep-set-text'>{`${currRepsTotal} Reps, Set ${currSet} of ${currSetTotal}`}</div>
+      <div className='rep-set-text'>{`${currRepTotal} Reps, Set ${currSet} of ${currSetTotal}`}</div>
       <div className='exercise-weight' onClick={() => setIsModalOpen(true)}>
         <span>{exerciseWeight} lbs</span> <AiFillInfoCircle className='icon' />
       </div>
       <img src={imageURL} alt={name} className='exercise-img' />
-      <button className='submit-btn' onClick={() => completeSet(currSetTotal)}>
+      <button
+        className='submit-btn'
+        onClick={() => completeSet(currSetTotal, currRepTotal, exerciseID)}
+      >
         Completed
       </button>
       <button
@@ -76,8 +79,9 @@ const ActiveWorkout = ({
             setIsSetFailedModalOpen(false)
           }}
           currWeight={exerciseWeight}
-          weightExerciseId={id}
+          weightExerciseId={exerciseID}
           currSetTotal={currSetTotal}
+          currRepTotal={currRepTotal}
         />
       ) : null}
     </div>
@@ -97,8 +101,8 @@ const mapStateTopProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSingleWorkout: id => dispatch(getSingleWorkout(id)),
-    completeSet: (currSetTotal, lastSetFailed) =>
-      dispatch(completeSet(currSetTotal, lastSetFailed)),
+    completeSet: (currSetTotal, numReps, exerciseID, lastSetFailed) =>
+      dispatch(completeSet(currSetTotal, numReps, exerciseID, lastSetFailed)),
   }
 }
 

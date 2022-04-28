@@ -1,0 +1,15 @@
+getState().workout.workoutData.currWorkoutStats = {
+  totalStats: {
+    totalReps: (num),
+    totalSets: (num),
+    workoutTime: (num),
+    workoutDate: (date)
+  },
+  exerciseStats: [
+    {
+      exerciseID: 0,
+      totalReps: (num),
+      totalSets: (num) 
+    }
+  ]
+}
