@@ -4,7 +4,14 @@ import {
   SET_WORKOUT_FINISHED,
 } from '../../types'
 import { db } from '../../../firebase'
-import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
+import {
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  collection,
+  addDoc,
+} from 'firebase/firestore'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -86,7 +93,8 @@ const incCurrWorkoutStats = (
   currWorkoutStats,
   incSets,
   incReps,
-  exerciseID
+  exerciseID,
+  incTotalTime
 ) => {
   const workoutStats = currWorkoutStats
     ? currWorkoutStats
@@ -94,37 +102,46 @@ const incCurrWorkoutStats = (
         totalStats: {
           totalReps: 0,
           totalSets: 0,
+          totalWorkoutTime: 0,
         },
         exerciseStats: [],
       }
-
-  if (
-    workoutStats.exerciseStats.findIndex(
-      exercise => exercise.exerciseID === exerciseID
-    ) === -1
-  ) {
-    workoutStats.exerciseStats.push({ exerciseID, totalReps: 0, totalSets: 0 })
+  if (incTotalTime) {
+    workoutStats.totalStats.totalWorkoutTime += incTotalTime
   }
-  console.log(
-    workoutStats,
-    workoutStats.totalStats,
-    workoutStats.totalStats.totalSets
-  )
-  console.log(workoutStats.exerciseStats)
-  if (incSets) {
-    workoutStats.totalStats.totalSets += 1
-    const exerciseStatsIdx = workoutStats.exerciseStats.findIndex(
-      exercise => exercise.exerciseID === exerciseID
+  if (exerciseID) {
+    if (
+      workoutStats.exerciseStats.findIndex(
+        exercise => exercise.exerciseID === exerciseID
+      ) === -1
+    ) {
+      workoutStats.exerciseStats.push({
+        exerciseID,
+        totalReps: 0,
+        totalSets: 0,
+      })
+    }
+    console.log(
+      workoutStats,
+      workoutStats.totalStats,
+      workoutStats.totalStats.totalSets
     )
-    console.log(exerciseStatsIdx)
-    workoutStats.exerciseStats[exerciseStatsIdx].totalSets += 1
-  }
-  if (incReps) {
-    workoutStats.totalStats.totalReps += incReps
-    const exerciseStatsIdx = workoutStats.exerciseStats.findIndex(
-      exercise => exercise.exerciseID === exerciseID
-    )
-    workoutStats.exerciseStats[exerciseStatsIdx].totalReps += incReps
+    console.log(workoutStats.exerciseStats)
+    if (incSets) {
+      workoutStats.totalStats.totalSets += 1
+      const exerciseStatsIdx = workoutStats.exerciseStats.findIndex(
+        exercise => exercise.exerciseID === exerciseID
+      )
+      console.log(exerciseStatsIdx)
+      workoutStats.exerciseStats[exerciseStatsIdx].totalSets += 1
+    }
+    if (incReps) {
+      workoutStats.totalStats.totalReps += incReps
+      const exerciseStatsIdx = workoutStats.exerciseStats.findIndex(
+        exercise => exercise.exerciseID === exerciseID
+      )
+      workoutStats.exerciseStats[exerciseStatsIdx].totalReps += incReps
+    }
   }
   return workoutStats
 }
@@ -133,10 +150,12 @@ export const completeSet =
   (currSetTotal, completedReps, exerciseID, lastSetFailed) =>
   async (dispatch, getState) => {
     const runningWorkout = getState().workout.workoutData.runningWorkout
+    const timeLastUpdated = runningWorkout.timeLastUpdated
     const currSet = runningWorkout.remainingWorkout.currSet
     const currIdx = runningWorkout.remainingWorkout.currIdx
-
     const currWorkoutPathLength = runningWorkout.currWorkout.path.length
+    const elapsedTime = new Date().getTime() - timeLastUpdated
+
     // If the current set is the last set
     // Else start rest timer, increment set, and updateWorkout
     if (currSet === currSetTotal) {
@@ -153,7 +172,8 @@ export const completeSet =
           getState().workout.workoutData.workoutStats,
           true,
           completedReps,
-          exerciseID
+          exerciseID,
+          elapsedTime
         )
         const updatedData = {
           'runningWorkout.remainingWorkout.currIdx': nextIdx,
@@ -161,6 +181,7 @@ export const completeSet =
           'runningWorkout.timer.isTimer': true,
           'runningWorkout.timer.timerStart': startTime,
           'runningWorkout.currWorkout.lastSetFailed': false,
+          'runningWorkout.timeLastUpdated': new Date().getTime(),
           workoutStats,
         }
 
@@ -176,13 +197,15 @@ export const completeSet =
         getState().workout.workoutData.workoutStats,
         true,
         completedReps,
-        exerciseID
+        exerciseID,
+        elapsedTime
       )
       const updatedData = {
         'runningWorkout.remainingWorkout.currSet': nextSet,
         'runningWorkout.timer.isTimer': true,
         'runningWorkout.timer.timerStart': startTime,
         'runningWorkout.currWorkout.lastSetFailed': lastSetFailed || false,
+        'runningWorkout.timeLastUpdated': new Date().getTime(),
         workoutStats,
       }
       dispatch(updateWorkout(updatedData))
@@ -233,19 +256,71 @@ export const addNewExerciseWeight =
       })
     )
   }
+
+export const addWorkoutToPastWorkouts = data => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
+  const userWorkoutDataRef = doc(db, 'workoutData', uid)
+  const userPastWorkoutsRef = collection(userWorkoutDataRef, 'pastWorkouts')
+
+  addDoc(userPastWorkoutsRef, data)
+    .then(() => {
+      console.log('workout added to data')
+    })
+    .catch(err => {
+      console.log('workout not added to data:', err)
+    })
+}
 export const finishWorkout = () => async (dispatch, getState) => {
   const workoutData = getState().workout.workoutData
-  const weights = getState().workout.workoutData.weights
+  const runningWorkout = workoutData.runningWorkout
+  const currWorkout = runningWorkout.currWorkout
+  const weights = workoutData.weights
+
+  const path = currWorkout.path
+  // Get path data with weights included for pastWorkoutData stats
+  const pathData = path.map(ex => {
+    const exerciseID = ex.exerciseID
+    let currWeight = null
+    weights.forEach(w => {
+      if (w.exerciseID === exerciseID) {
+        currWeight = w.weight
+      }
+    })
+    return { ...ex, weight: currWeight }
+  })
+
+  const timeLastUpdated =
+    getState().workout.workoutData.runningWorkout.timeLastUpdated
   const updatedWeights = await updateWeights(
     weights,
     workoutData.runningWorkout.currWorkout.path
   )
 
+  const elapsedTime = new Date().getTime() - timeLastUpdated
+  const workoutStats = incCurrWorkoutStats(
+    getState().workout.workoutData.workoutStats,
+    true,
+    null,
+    null,
+    elapsedTime
+  )
+
   const updatedData = {
     isWorkoutRunning: false,
     weights: updatedWeights,
+    workoutStats,
   }
 
+  const workoutStartTime = runningWorkout.workoutStartTime
+  const totalWorkoutTime = new Date() - workoutStartTime
+  const finishedWorkoutData = {
+    workoutName: currWorkout.name,
+    workoutRestTime: currWorkout.restTime,
+    workoutStartTime,
+    totalWorkoutTime,
+    path: pathData,
+  }
   dispatch(updateWorkout(updatedData))
   dispatch(setWorkoutFinished(true))
+  dispatch(addWorkoutToPastWorkouts(finishedWorkoutData))
 }
