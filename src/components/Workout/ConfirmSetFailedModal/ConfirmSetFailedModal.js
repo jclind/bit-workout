@@ -38,7 +38,6 @@ const ConfirmSetFailedModal = ({
       setRepCount(repCount - 1)
     }
   }
-
   const handleFailSet = () => {
     failSet(currWeight - weightCount, weightExerciseId, currSetTotal, repCount)
       .then(() => {
