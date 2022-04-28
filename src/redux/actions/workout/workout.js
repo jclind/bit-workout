@@ -11,6 +11,11 @@ import {
   updateDoc,
   collection,
   addDoc,
+  query,
+  where,
+  orderBy,
+  limit,
+  getDocs,
 } from 'firebase/firestore'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import { v4 as uuidv4 } from 'uuid'
@@ -324,3 +329,32 @@ export const finishWorkout = () => async (dispatch, getState) => {
   dispatch(setWorkoutFinished(true))
   dispatch(addWorkoutToPastWorkouts(finishedWorkoutData))
 }
+
+// PAST WORKOUT DATA
+export const queryPastWorkoutData =
+  (order, numResults, descending) => async (dispatch, getState) => {
+    const uid = getState().auth.userAuth.uid
+    const userWorkoutDataRef = doc(db, 'workoutData', uid)
+    const userPastWorkoutsRef = collection(userWorkoutDataRef, 'pastWorkouts')
+
+    const queriedData = []
+
+    const q = query(
+      userPastWorkoutsRef,
+      orderBy(order, `${descending ? 'desc' : ''}`),
+      limit(numResults)
+    )
+    const querySnapshot = await getDocs(q)
+    console.log(querySnapshot)
+    // If dataExists is false, will return no data response
+    let dataExists
+    querySnapshot.forEach(doc => {
+      dataExists = true
+      queriedData.push(doc.data())
+    })
+    console.log(dataExists)
+    if (dataExists) {
+      return queriedData
+    }
+    return { isResponse: false }
+  }
