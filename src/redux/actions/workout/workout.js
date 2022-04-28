@@ -12,15 +12,13 @@ export const fetchWorkoutData = uid => async dispatch => {
   await getDoc(doc(db, 'workoutData', uid)).then(document => {
     const workoutData = document.data()
     dispatch({ type: FETCH_WORKOUT_DATA, payload: workoutData })
+    const timeLastUpdated = workoutData.runningWorkout.timeLastUpdated
+    if (!timeLastUpdated || timeLastUpdated < new Date().getTime() - 1800000) {
+      dispatch(updateWorkout({ isWorkoutRunning: false }))
+    }
   })
 }
 
-// export const setWorkoutData = (data, uid) => async dispatch => {hange js
-//   const workoutRef = doc(db, 'workoutData', uid)
-//   await updateDoc(workoutRef, {
-//     ...data,
-//   })
-// }
 export const updateWorkout = data => async (dispatch, getState) => {
   const uid = getState().auth.userAuth.uid
   if (!uid) console.error('UID not defined in updateWorkout')
@@ -70,6 +68,8 @@ export const startWorkout = exercise => async (dispatch, getState) => {
   const data = {
     isWorkoutRunning: true,
     runningWorkout: {
+      workoutStartTime: new Date().getTime(),
+      timeLastUpdated: new Date().getTime(),
       remainingWorkout: { currIdx: 0, currSet: 1 },
       currWorkout: exercise,
       timer: {
@@ -82,8 +82,56 @@ export const startWorkout = exercise => async (dispatch, getState) => {
   dispatch(setWorkoutFinished(false))
 }
 
+const incCurrWorkoutStats = (
+  currWorkoutStats,
+  incSets,
+  incReps,
+  exerciseID
+) => {
+  const workoutStats = currWorkoutStats
+    ? currWorkoutStats
+    : {
+        totalStats: {
+          totalReps: 0,
+          totalSets: 0,
+        },
+        exerciseStats: [],
+      }
+
+  if (
+    workoutStats.exerciseStats.findIndex(
+      exercise => exercise.exerciseID === exerciseID
+    ) === -1
+  ) {
+    workoutStats.exerciseStats.push({ exerciseID, totalReps: 0, totalSets: 0 })
+  }
+  console.log(
+    workoutStats,
+    workoutStats.totalStats,
+    workoutStats.totalStats.totalSets
+  )
+  console.log(workoutStats.exerciseStats)
+  if (incSets) {
+    workoutStats.totalStats.totalSets += 1
+    const exerciseStatsIdx = workoutStats.exerciseStats.findIndex(
+      exercise => exercise.exerciseID === exerciseID
+    )
+    console.log(exerciseStatsIdx)
+    workoutStats.exerciseStats[exerciseStatsIdx].totalSets += 1
+  }
+  if (incReps) {
+    workoutStats.totalStats.totalReps += incReps
+    const exerciseStatsIdx = workoutStats.exerciseStats.findIndex(
+      exercise => exercise.exerciseID === exerciseID
+    )
+    workoutStats.exerciseStats[exerciseStatsIdx].totalReps += incReps
+  }
+  return workoutStats
+}
+
 export const completeSet =
-  (currSetTotal, lastSetFailed) => async (dispatch, getState) => {
+  (currSetTotal, completedReps, exerciseID, lastSetFailed) =>
+  async (dispatch, getState) => {
     const runningWorkout = getState().workout.workoutData.runningWorkout
     const currSet = runningWorkout.remainingWorkout.currSet
     const currIdx = runningWorkout.remainingWorkout.currIdx
@@ -101,12 +149,19 @@ export const completeSet =
         const nextIdx = currIdx + 1
         const nextSet = 1
 
+        const workoutStats = incCurrWorkoutStats(
+          getState().workout.workoutData.workoutStats,
+          true,
+          completedReps,
+          exerciseID
+        )
         const updatedData = {
           'runningWorkout.remainingWorkout.currIdx': nextIdx,
           'runningWorkout.remainingWorkout.currSet': nextSet,
           'runningWorkout.timer.isTimer': true,
           'runningWorkout.timer.timerStart': startTime,
           'runningWorkout.currWorkout.lastSetFailed': false,
+          workoutStats,
         }
 
         dispatch(updateWorkout(updatedData))
@@ -115,18 +170,28 @@ export const completeSet =
       const startTime = new Date().getTime()
       const nextSet = currSet + 1
 
+      console.log()
+
+      const workoutStats = incCurrWorkoutStats(
+        getState().workout.workoutData.workoutStats,
+        true,
+        completedReps,
+        exerciseID
+      )
       const updatedData = {
         'runningWorkout.remainingWorkout.currSet': nextSet,
         'runningWorkout.timer.isTimer': true,
         'runningWorkout.timer.timerStart': startTime,
         'runningWorkout.currWorkout.lastSetFailed': lastSetFailed || false,
+        workoutStats,
       }
       dispatch(updateWorkout(updatedData))
     }
   }
 
 export const failSet =
-  (newWeight, exerciseID, currSetTotal) => async (dispatch, getState) => {
+  (newWeight, exerciseID, currSetTotal, completedReps) =>
+  async (dispatch, getState) => {
     const weights = getState().workout.workoutData.weights
 
     const modWeights = weights.map(weight => {
@@ -137,7 +202,7 @@ export const failSet =
       return weight
     })
     console.log(newWeight, modWeights)
-    await dispatch(completeSet(currSetTotal, true))
+    await dispatch(completeSet(currSetTotal, completedReps, true))
     await dispatch(
       updateWorkout({
         weights: modWeights,

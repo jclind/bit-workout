@@ -11,23 +11,36 @@ const ConfirmSetFailedModal = ({
   currWeight,
   weightExerciseId,
   currSetTotal,
+  currRepTotal,
 }) => {
   const [weightCount, setWeightCount] = useState(10)
+  const [repCount, setRepCount] = useState(0)
   const modalContent = useClickOutside(() => {
     onClose()
   })
 
-  const increment = () => {
+  const incrementWeightCount = () => {
     setWeightCount(weightCount + 5)
   }
-  const decrement = () => {
+  const decrementWeightCount = () => {
     if (weightCount > 0) {
       setWeightCount(weightCount - 5)
     }
   }
 
+  const incrementRepCount = () => {
+    if (repCount < currRepTotal) {
+      setRepCount(repCount + 1)
+    }
+  }
+  const decrementRepCount = () => {
+    if (repCount > 0) {
+      setRepCount(repCount - 1)
+    }
+  }
+
   const handleFailSet = () => {
-    failSet(currWeight - weightCount, weightExerciseId, currSetTotal)
+    failSet(currWeight - weightCount, weightExerciseId, currSetTotal, repCount)
       .then(() => {
         onClose()
       })
@@ -48,12 +61,24 @@ const ConfirmSetFailedModal = ({
               (New Weight: <strong>{currWeight - weightCount}</strong>)
             </div>
             <div className='decrease-weight-counter'>
-              <button className='decrease' onClick={decrement}>
+              <button className='decrease' onClick={decrementWeightCount}>
                 -5
               </button>
               <div className='count'>{weightCount}lbs</div>
-              <button className='increase' onClick={increment}>
+              <button className='increase' onClick={incrementWeightCount}>
                 +5
+              </button>
+            </div>
+          </div>
+          <div className='reps-completed-container'>
+            <div className='counter-label'>Number of completed reps: </div>
+            <div className='reps-completed-counter'>
+              <button className='decrease' onClick={decrementRepCount}>
+                -
+              </button>
+              <div className='count'>{repCount} Reps</div>
+              <button className='increase' onClick={incrementRepCount}>
+                +
               </button>
             </div>
           </div>
@@ -74,8 +99,8 @@ const ConfirmSetFailedModal = ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    failSet: (newWeight, exerciseID, currSetTotal) =>
-      dispatch(failSet(newWeight, exerciseID, currSetTotal)),
+    failSet: (newWeight, exerciseID, currSetTotal, completedReps) =>
+      dispatch(failSet(newWeight, exerciseID, currSetTotal, completedReps)),
   }
 }
 
