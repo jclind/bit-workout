@@ -1,36 +1,118 @@
 @import '../../helpers.scss';
 
 .past-workouts-link {
-  h3.title {
+  background: $secondary-background;
+  padding: 1.5rem 0;
+  border-radius: $border-radius;
+  .no-data {
+    font-size: 1.25rem;
+    text-align: center;
+    height: fit-content;
+
+    .btn {
+      background: $secondary;
+      color: $primary;
+      width: fit-content;
+      padding: 0.5rem 1rem;
+      height: auto;
+      margin-top: 1rem !important;
+      text-decoration: none;
+    }
+  }
+
+  h1 {
+    font-size: 1.25rem !important;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  .last-workout {
+    display: flex;
+    // justify-content: space-between;
+    gap: 1rem;
+    background: $primary-background;
+    width: 90%;
+    margin: 1rem auto;
+    padding: 0.75rem;
+    box-sizing: border-box;
+    border-radius: 5px;
+
+    .image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-items: center;
+      height: 55px;
+      width: 55px;
+      border-radius: 50%;
+      padding: 0.25rem;
+      box-sizing: border-box;
+      background: $secondary-background;
+      margin: auto 0;
+      .workout-image {
+        object-fit: contain;
+        height: 40px;
+        width: 40px;
+      }
+    }
+    .date {
+      // flex: 1;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 1ch;
+    flex-wrap: wrap;
     text-align: center;
     font-size: 1rem;
-    width: 30ch;
     margin: 0 auto;
+    span {
+      font-size: 0.75rem;
+      color: $secondary-text;
+    }
+    // width: 100%;
     // width: ;
+  }
+  .label {
+    font-size: 0.75rem;
+    color: $tertiary-text;
   }
   .workout-time {
     display: flex;
-    justify-content: center;
+    text-align: center;
     align-items: center;
-    padding-top: 0.25rem;
+    padding-top: 0.5rem;
     .label {
-      font-size: 0.75rem;
-      color: $tertiary-text;
+      .icon {
+        height: 25px;
+        width: 25px;
+      }
     }
     .time {
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      gap: 0.75rem;
+      gap: 0.5rem;
       .time-type {
         display: flex;
         align-items: center;
+        font-size: 1.1rem;
         gap: 0.25rem;
       }
     }
     .time-indicator {
       color: $tertiary-text;
-      font-size: 0.75rem;
+      font-size: 0.9rem;
     }
+  }
+  .workout-date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 0.25rem;
   }
 }

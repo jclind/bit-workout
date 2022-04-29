@@ -285,13 +285,14 @@ export const finishWorkout = () => async (dispatch, getState) => {
   // Get path data with weights included for pastWorkoutData stats
   const pathData = path.map(ex => {
     const exerciseID = ex.exerciseID
+    const imageURL = exerciseList.find(ex => ex.id === exerciseID).imageURL
     let currWeight = null
     weights.forEach(w => {
       if (w.exerciseID === exerciseID) {
         currWeight = w.weight
       }
     })
-    return { ...ex, weight: currWeight }
+    return { ...ex, weight: currWeight, imageURL }
   })
 
   const timeLastUpdated =
@@ -350,6 +351,7 @@ export const queryPastWorkoutData =
     let dataExists
     querySnapshot.forEach(doc => {
       dataExists = true
+      const data = doc.data()
       queriedData.push(doc.data())
     })
     console.log(dataExists)
