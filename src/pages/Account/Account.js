@@ -16,7 +16,12 @@ const Account = ({ name, height, weight }) => {
             title={'height'}
             text={`${height.feet}' ${height.inches}"`}
           />
-          <InfoTile title={'weight'} text={weight} subtext={'lbs'} />
+          <InfoTile
+            title={'weight'}
+            text={weight}
+            subtext={'lbs'}
+            link='/account/weight'
+          />
         </div>
         <Link to='/account/settings' className='settings-btn-container'>
           <img src={rightIcon} alt='right' className='icon' />

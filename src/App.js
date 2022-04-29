@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import Account from './pages/Account/Account'
@@ -16,8 +17,12 @@ import UpdateUsername from './pages/Settings/UpdateUsername'
 import UpdateEmail from './pages/Settings/UpdateEmail'
 import Security from './pages/Settings/Security/Security'
 import NavbarContainer from './components/Navbar/Navbar'
+import WeightData from './pages/Account/WeightData/WeightData'
+import Auth from './Auth'
 
 function App() {
+  const [loading, setLoading] = useState(true)
+
   return (
     <>
       <Helmet>
@@ -26,65 +31,74 @@ function App() {
           content='width=device-width, initial-scale=1.0, viewport-fit=cover'
         />
       </Helmet>
-      <Router>
-        <Routes>
-          <Route exact path='/' element={<PrivateRoute />}>
-            <Route exact path='/' element={<Dashboard />} />
-          </Route>
-          <Route path='/account' element={<PrivateRoute />}>
-            <Route exact path='/account' element={<Account />} />
-            <Route exact path='/account/settings' element={<Settings />} />
+      <Auth setLoading={setLoading} />
+      {loading ? (
+        'Loading'
+      ) : (
+        <Router>
+          <Routes>
+            <Route exact path='/' element={<PrivateRoute />}>
+              <Route exact path='/' element={<Dashboard />} />
+            </Route>
+            <Route path='/account' element={<PrivateRoute />}>
+              <Route exact path='/account' element={<Account />} />
+              <Route exact path='/account/weight' element={<WeightData />} />
+              <Route exact path='/account/settings' element={<Settings />} />
+              <Route
+                exact
+                path='/account/settings/manage-account'
+                element={<ManageAccount />}
+              />
+              <Route
+                exact
+                path='/account/settings/manage-account/update-name'
+                element={<UpdateName />}
+              />
+              <Route
+                exact
+                path='/account/settings/manage-account/update-name'
+                element={<UpdateName />}
+              />
+              <Route
+                exact
+                path='/account/settings/manage-account/update-username'
+                element={<UpdateUsername />}
+              />
+              <Route
+                exact
+                path='/account/settings/manage-account/update-email'
+                element={<UpdateEmail />}
+              />
+              <Route
+                exact
+                path='/account/settings/security'
+                element={<Security />}
+              />
+            </Route>
+            <Route path='/signup' element={<Signup />}>
+              <Route path='account-info' element={<SignupAccountContainer />} />
+              <Route
+                path='personal-info'
+                element={<SignupPersonalContainer />}
+              />
+            </Route>
+            <Route path='/login' element={<Login />} />
             <Route
-              exact
-              path='/account/settings/manage-account'
-              element={<ManageAccount />}
+              path='/forgot-password'
+              element={<ForgotPasswordContainer />}
             />
             <Route
-              exact
-              path='/account/settings/manage-account/update-name'
-              element={<UpdateName />}
+              path='/workout'
+              element={
+                <>
+                  <Workout />
+                  <NavbarContainer />
+                </>
+              }
             />
-            <Route
-              exact
-              path='/account/settings/manage-account/update-name'
-              element={<UpdateName />}
-            />
-            <Route
-              exact
-              path='/account/settings/manage-account/update-username'
-              element={<UpdateUsername />}
-            />
-            <Route
-              exact
-              path='/account/settings/manage-account/update-email'
-              element={<UpdateEmail />}
-            />
-            <Route
-              exact
-              path='/account/settings/security'
-              element={<Security />}
-            />
-          </Route>
-          <Route path='/signup' element={<Signup />}>
-            <Route path='account-info' element={<SignupAccountContainer />} />
-            <Route path='personal-info' element={<SignupPersonalContainer />} />
-          </Route>
-          <Route path='/login' element={<Login />} />
-          <Route
-            path='/forgot-password'
-            element={<ForgotPasswordContainer />}
-          />
-          <Route
-            path='/workout'
-            element={
-              <>
-                <Workout />
-                <NavbarContainer />
-              </>
-            }
-          />
-        </Routes>
-      </Router>
+          </Routes>
+        </Router>
+      )}
     </>
   )
 }
