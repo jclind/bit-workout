@@ -2,7 +2,7 @@
 
 .past-workouts-link {
   background: $secondary-background;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   border-radius: $border-radius;
   .no-data {
     font-size: 1.25rem;
@@ -28,8 +28,8 @@
   }
   .last-workout {
     display: flex;
-    // justify-content: space-between;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 1.5rem;
     background: $primary-background;
     width: 90%;
     margin: 1rem auto;
@@ -37,82 +37,61 @@
     box-sizing: border-box;
     border-radius: 5px;
 
-    .image {
+    .head {
       display: flex;
+      justify-content: space-evenly;
       align-items: center;
-      justify-content: center;
-      align-items: center;
-      height: 55px;
-      width: 55px;
-      border-radius: 50%;
-      padding: 0.25rem;
-      box-sizing: border-box;
-      background: $secondary-background;
-      margin: auto 0;
-      .workout-image {
-        object-fit: contain;
-        height: 40px;
-        width: 40px;
-      }
-    }
-    .date {
-      // flex: 1;
+
       width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-  }
-  .title {
-    display: flex;
-    align-items: center;
-    gap: 1ch;
-    flex-wrap: wrap;
-    text-align: center;
-    font-size: 1rem;
-    margin: 0 auto;
-    span {
-      font-size: 0.75rem;
-      color: $secondary-text;
-    }
-    // width: 100%;
-    // width: ;
-  }
-  .label {
-    font-size: 0.75rem;
-    color: $tertiary-text;
-  }
-  .workout-time {
-    display: flex;
-    text-align: center;
-    align-items: center;
-    padding-top: 0.5rem;
-    .label {
-      .icon {
-        height: 25px;
-        width: 25px;
-      }
-    }
-    .time {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 0.5rem;
-      .time-type {
+
+      .image {
         display: flex;
         align-items: center;
+        justify-content: center;
+        align-items: center;
+        height: 55px;
+        width: 55px;
+        border-radius: 50%;
+        padding: 0.25rem;
+        box-sizing: border-box;
+        background: $secondary-background;
+        margin: auto 0;
+        .workout-image {
+          object-fit: contain;
+          height: 40px;
+          width: 40px;
+        }
+      }
+      .title {
         font-size: 1.1rem;
-        gap: 0.25rem;
       }
     }
-    .time-indicator {
-      color: $tertiary-text;
-      font-size: 0.9rem;
+    .info {
+      display: flex;
+      justify-content: space-evenly;
+      .icon {
+        height: 20px;
+        width: 20px;
+      }
+      .date,
+      .time {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.9rem;
+        color: $secondary-text;
+      }
+      .time {
+        display: flex;
+        .time-type {
+          display: flex;
+          gap: 0.2rem;
+          color: $secondary-text;
+          .time-indicator {
+            color: $tertiary-text;
+          }
+        }
+      }
     }
-  }
-  .workout-date {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding-top: 0.25rem;
   }
 }
