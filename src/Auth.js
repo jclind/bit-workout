@@ -8,7 +8,7 @@ import {
   setUserStatusSignedOut,
 } from './redux/actions/auth/authStatus'
 
-const Auth = ({ signInAndFetchUserAccountData, signOut }) => {
+const Auth = ({ signInAndFetchUserAccountData, signOut, setLoading }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
@@ -18,6 +18,7 @@ const Auth = ({ signInAndFetchUserAccountData, signOut }) => {
         console.log('logged out')
         signOut()
       }
+      setLoading(false)
     })
     return () => unsubscribe()
   }, [])
