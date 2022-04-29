@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import './PastWorkoutsLink.scss'
 import { connect } from 'react-redux'
 import { queryPastWorkoutData } from '../../redux/actions/workout/workout'
 import Skeleton from 'react-loading-skeleton'
 import { formatTimeToObject } from '../../util/formatTime'
+import { formatDate } from '../../util/formatDate'
+import { AiOutlineClockCircle } from 'react-icons/ai'
 
 const PastWorkoutsLink = ({ queryPastWorkoutData }) => {
-  const [loading, setLoading] = useState(true)
   const [data, setData] = useState(null)
   const [isResponse, setIsResponse] = useState(true)
 
@@ -16,58 +18,83 @@ const PastWorkoutsLink = ({ queryPastWorkoutData }) => {
     const descending = true
 
     queryPastWorkoutData(order, numResults, descending).then(res => {
+      if (
+        res &&
+        typeof res.isResponse !== 'undefined' &&
+        res.isResponse === false
+      ) {
+        setIsResponse(false)
+      }
       setData(res[0])
     })
   }, [])
 
   const workoutTime = data ? formatTimeToObject(data.totalWorkoutTime) : null
+  const workoutDate = data ? formatDate(data.workoutStartTime) : null
+  const workoutImageURL = data ? data.path[0].imageURL : null
+  console.log(workoutImageURL)
 
-  useEffect(() => {
-    if (
-      data &&
-      typeof data.isResponse !== 'undefined' &&
-      data.isResponse === false
-    ) {
-      console.log(data)
-      setIsResponse(false)
-    } else {
-      if (data) {
-        setLoading(false)
-        console.log(data)
-      } else {
-        setLoading(true)
-      }
-    }
-  }, [data])
   return (
     <div className='past-workouts-link'>
       {!isResponse ? (
-        <h1>No Past Workout Data</h1>
+        <div className='no-data'>
+          <div className='text'>No Past Workout Data</div>
+          <Link to='/workout'>
+            <button className='start-workout-btn btn'>Start Workout</button>
+          </Link>
+        </div>
       ) : (
         <>
-          <h3 className='title'>{data?.workoutName || <Skeleton />}</h3>
-          <div className='workout-time'>
-            <div className='label'>Workout Time:</div>
-            <div className='time'>
-              {workoutTime ? (
-                <>
-                  <div className='time-type'>
-                    {workoutTime.h
-                      ? `${workoutTime.h}<span className='time-indicator'>H</span>`
-                      : ''}
-                  </div>
-                  <div className='time-type'>
-                    {workoutTime.m} <span className='time-indicator'>M</span>
-                  </div>
-                  {!workoutTime.h && (
-                    <div className='time-type'>
-                      {workoutTime.s} <span className='time-indicator'>S</span>
-                    </div>
-                  )}
-                </>
+          <h1>Last Workout</h1>
+          <div className='last-workout'>
+            <div className='image'>
+              {workoutImageURL ? (
+                <img
+                  src={workoutImageURL}
+                  alt={data.workoutName}
+                  className='workout-image'
+                />
               ) : (
-                <Skeleton />
+                <Skeleton
+                  circle
+                  height='100%'
+                  containerClassName='workout-image'
+                />
               )}
+            </div>
+            <div className='data'>
+              <div className='title'>
+                {data?.workoutName || <Skeleton />}
+                <span>{workoutDate ? workoutDate : <Skeleton />}</span>
+              </div>
+              <div className='workout-time'>
+                <div className='label'>
+                  <AiOutlineClockCircle className='icon' />
+                </div>
+                <div className='time'>
+                  {workoutTime ? (
+                    <>
+                      <div className='time-type'>
+                        {workoutTime.h
+                          ? `${workoutTime.h}<span className='time-indicator'>H</span>`
+                          : ''}
+                      </div>
+                      <div className='time-type'>
+                        {workoutTime.m}{' '}
+                        <span className='time-indicator'>M</span>
+                      </div>
+                      {!workoutTime.h && (
+                        <div className='time-type'>
+                          {workoutTime.s}{' '}
+                          <span className='time-indicator'>S</span>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <Skeleton />
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </>
