@@ -6,7 +6,7 @@ import { queryPastWorkoutData } from '../../redux/actions/workout/workout'
 import Skeleton from 'react-loading-skeleton'
 import { formatTimeToObject } from '../../util/formatTime'
 import { formatDate } from '../../util/formatDate'
-import { AiOutlineClockCircle } from 'react-icons/ai'
+import { AiOutlineCalendar, AiOutlineClockCircle } from 'react-icons/ai'
 
 const PastWorkoutsLink = ({ queryPastWorkoutData }) => {
   const [data, setData] = useState(null)
@@ -47,53 +47,51 @@ const PastWorkoutsLink = ({ queryPastWorkoutData }) => {
         <>
           <h1>Last Workout</h1>
           <div className='last-workout'>
-            <div className='image'>
-              {workoutImageURL ? (
-                <img
-                  src={workoutImageURL}
-                  alt={data.workoutName}
-                  className='workout-image'
-                />
-              ) : (
-                <Skeleton
-                  circle
-                  height='100%'
-                  containerClassName='workout-image'
-                />
-              )}
-            </div>
-            <div className='data'>
-              <div className='title'>
-                {data?.workoutName || <Skeleton />}
-                <span>{workoutDate ? workoutDate : <Skeleton />}</span>
+            <div className='head'>
+              <div className='image'>
+                {workoutImageURL ? (
+                  <img
+                    src={workoutImageURL}
+                    alt={data.workoutName}
+                    className='workout-image'
+                  />
+                ) : (
+                  <Skeleton
+                    circle
+                    height='100%'
+                    containerClassName='workout-image'
+                  />
+                )}
               </div>
-              <div className='workout-time'>
-                <div className='label'>
-                  <AiOutlineClockCircle className='icon' />
-                </div>
-                <div className='time'>
-                  {workoutTime ? (
-                    <>
+              <div className='title'>{data?.workoutName || <Skeleton />}</div>
+            </div>
+            <div className='info'>
+              <div className='date'>
+                <AiOutlineCalendar className='icon' />
+                {workoutDate ? workoutDate : <Skeleton />}
+              </div>
+              <div className='time'>
+                <AiOutlineClockCircle className='icon' />
+                {workoutTime ? (
+                  <>
+                    <div className='time-type'>
+                      {workoutTime.h
+                        ? `${workoutTime.h}<span className='time-indicator'>H</span>`
+                        : ''}
+                    </div>
+                    <div className='time-type'>
+                      {workoutTime.m} <span className='time-indicator'>M</span>
+                    </div>
+                    {!workoutTime.h && (
                       <div className='time-type'>
-                        {workoutTime.h
-                          ? `${workoutTime.h}<span className='time-indicator'>H</span>`
-                          : ''}
+                        {workoutTime.s}{' '}
+                        <span className='time-indicator'>S</span>
                       </div>
-                      <div className='time-type'>
-                        {workoutTime.m}{' '}
-                        <span className='time-indicator'>M</span>
-                      </div>
-                      {!workoutTime.h && (
-                        <div className='time-type'>
-                          {workoutTime.s}{' '}
-                          <span className='time-indicator'>S</span>
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <Skeleton />
-                  )}
-                </div>
+                    )}
+                  </>
+                ) : (
+                  <Skeleton />
+                )}
               </div>
             </div>
           </div>
