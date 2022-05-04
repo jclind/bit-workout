@@ -18,6 +18,7 @@ import UpdateEmail from './pages/Settings/UpdateEmail'
 import Security from './pages/Settings/Security/Security'
 import NavbarContainer from './components/Navbar/Navbar'
 import WeightData from './pages/Account/WeightData/WeightData'
+import AddWeightInput from './pages/Account/WeightData/AddWeightInput/AddWeightInput'
 import Auth from './Auth'
 
 function App() {
@@ -43,6 +44,11 @@ function App() {
             <Route path='/account' element={<PrivateRoute />}>
               <Route exact path='/account' element={<Account />} />
               <Route exact path='/account/weight' element={<WeightData />} />
+              <Route
+                exact
+                path='/account/weight/add-weight'
+                element={<AddWeightInput />}
+              />
               <Route exact path='/account/settings' element={<Settings />} />
               <Route
                 exact

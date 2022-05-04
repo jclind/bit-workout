@@ -1,0 +1,55 @@
+@import '../../../../helpers.scss';
+
+.add-weight-input {
+  position: relative;
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    label {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid $tertiary-text;
+      padding: 0.75rem 0;
+
+      .text {
+        flex: 1;
+      }
+      input {
+        width: 8ch;
+        font-size: 0.9rem !important;
+        text-align: end;
+        padding-right: 0.5rem;
+        color: $primary;
+
+        &::placeholder {
+          color: $placeholder-color;
+        }
+      }
+    }
+
+    .date {
+      input {
+        width: 15ch;
+        padding: 0;
+        color: $primary;
+        &::-webkit-date-and-time-value {
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  .add-weight-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: fit-content;
+    width: fit-content;
+    background: none;
+    .icon {
+      height: 22px;
+      width: 22px;
+    }
+  }
+}

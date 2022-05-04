@@ -36,10 +36,19 @@ const Account = ({ name, height, weight }) => {
 
 const mapStateToProps = state => {
   const userAccountData = state.auth.userAccountData
+  console.log(state.auth)
+  const weights = state.auth.userAccountData.weight
+  const latestWeightEntry = weights.reduce((prev, curr) => {
+    return new Date(prev.date).getTime() < new Date(curr.date).getTime()
+      ? prev
+      : curr
+  })
+
+  console.log(latestWeightEntry)
   return {
     name: userAccountData.name,
     height: userAccountData.height,
-    weight: userAccountData.weight,
+    weight: latestWeightEntry.weight,
   }
 }
 
