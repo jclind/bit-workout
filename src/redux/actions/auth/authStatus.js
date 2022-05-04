@@ -76,6 +76,7 @@ export const fetchUserData = uid => async dispatch => {
 
 export const setWorkout = (weight, gender, uid) => async dispatch => {
   const weights = exerciseList.map(ex => {
+    console.log(ex)
     const id = ex.id
     console.log(id, weight, gender)
     return { exerciseID: id, weight: calculateWeight(id, weight, gender) }
@@ -94,7 +95,7 @@ export const signup = (email, password, userData) => async dispatch => {
     const username = userData.usernameVal
 
     console.log(userData)
-    const weight = userData.weight
+    const weight = userData.weightVal
     const gender = userData.genderVal
 
     addNewUsername(username, uid)
@@ -232,8 +233,7 @@ export const addWeight = weightData => async (dispatch, getState) => {
   const userRef = doc(db, 'users', uid)
   let error = null
   await updateDoc(userRef, {
-    // weight: arrayUnion(weightData),
-    weight: [weightData],
+    weight: arrayUnion(weightData),
   })
     .then(() => {
       dispatch({ type: SET_USER_ACCOUNT_DATA, payload: currUserAccountData })

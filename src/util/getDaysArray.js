@@ -20,6 +20,21 @@ export const getTimeSpanData = (timeSpan, data) => {
   const endDate = new Date().getTime()
   let startDate = new Date()
 
+  let hash = Object.create(null)
+
+  for (let { date, weight } of data) {
+    console.log(date, weight)
+    const currDay = new Date(date).toISOString().substring(0, 10)
+    if (hash[currDay]) {
+      if (hash[currDay].date < date) {
+        // console.log('IN HERE')
+        hash[currDay] = { date, weight }
+      }
+    } else {
+      hash[currDay] = { date, weight }
+    }
+  }
+
   switch (timeSpan.value) {
     case 'week':
       startDate.setDate(startDate.getDate() - 7)
@@ -31,7 +46,8 @@ export const getTimeSpanData = (timeSpan, data) => {
       startDate.setMonth(startDate.getMonth() - 6)
       break
     case 'year':
-      startDate.setFullYear(new Date().getFullYear() - 1)
+      startDate.setYear(startDate.getFullYear() - 1)
+      startDate.setDate(startDate.getDate() + 1)
       break
     case 'all':
       startDate = Math.min.apply(
@@ -43,7 +59,11 @@ export const getTimeSpanData = (timeSpan, data) => {
       break
   }
 
-  timeSpanData = data
+  timeSpanData = Object.entries(hash)
+    .map(([dateDay, weightObj]) => ({
+      weight: weightObj.weight,
+      date: weightObj.date,
+    }))
     .filter(el => el.date >= startDate)
     .map(el => {
       const currDate = el.date
@@ -54,6 +74,8 @@ export const getTimeSpanData = (timeSpan, data) => {
         y: weight,
       }
     })
+    .sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0))
+
   console.log(timeSpanData)
 
   return {
