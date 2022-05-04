@@ -13,12 +13,14 @@ const Auth = ({ signInAndFetchUserAccountData, signOut, setLoading }) => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         console.log('logged in')
-        signInAndFetchUserAccountData(user)
+        signInAndFetchUserAccountData(user).then(() => {
+          setLoading(false)
+        })
       } else {
         console.log('logged out')
         signOut()
+        setLoading(false)
       }
-      setLoading(false)
     })
     return () => unsubscribe()
   }, [])

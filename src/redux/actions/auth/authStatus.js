@@ -10,6 +10,7 @@ import {
   setDoc,
   updateDoc,
   deleteDoc,
+  arrayUnion,
   collection,
   where,
   query,
@@ -93,7 +94,7 @@ export const signup = (email, password, userData) => async dispatch => {
     const username = userData.usernameVal
 
     console.log(userData)
-    const weight = userData.weightVal
+    const weight = userData.weight
     const gender = userData.genderVal
 
     addNewUsername(username, uid)
@@ -119,7 +120,7 @@ export const setUserAccountData = (uid, userData) => async () => {
     gender: genderVal,
     birthday: birthdayVal,
     height: heightVal,
-    weight: weightVal,
+    weight: [{ weight: weightVal, date: new Date().getTime() }],
     email: emailVal,
   })
 }
@@ -218,4 +219,28 @@ async function reauthenticate(currPassword) {
 export const handleUpdatePassword = (oldPassword, newPassword) => async () => {
   await reauthenticate(oldPassword)
   await updatePassword(auth.currentUser, newPassword)
+}
+
+export const addWeight = weightData => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
+
+  const currUserAccountData = {
+    ...getState().auth.userAccountData,
+    weight: [...getState().auth.userAccountData.weight, weightData],
+  }
+
+  const userRef = doc(db, 'users', uid)
+  let error = null
+  await updateDoc(userRef, {
+    // weight: arrayUnion(weightData),
+    weight: [weightData],
+  })
+    .then(() => {
+      dispatch({ type: SET_USER_ACCOUNT_DATA, payload: currUserAccountData })
+    })
+    .catch(err => {
+      error = err
+    })
+
+  return error
 }

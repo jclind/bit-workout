@@ -45,3 +45,8 @@ $form-input-height: toRem(45);
 
 // Fonts and font-styles
 $font-family: 'Montserrat', sans-serif;
+
+:export {
+  secondaryColor: $secondary;
+  primaryBackground: $primary-background;
+}
