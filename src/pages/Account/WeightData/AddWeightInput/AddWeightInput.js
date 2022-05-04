@@ -28,7 +28,15 @@ const AddWeightInput = ({ addWeight, latestWeightEntry }) => {
     if (!weight || !date) {
       return
     }
-    const weightObj = { date: new Date(date).getTime(), weight }
+
+    const weightDate =
+      formatYearMonthDay(new Date()) === date
+        ? new Date().getTime()
+        : new Date(date).getTime()
+
+    console.log(weightDate)
+
+    const weightObj = { date: weightDate, weight }
     let error = await addWeight(weightObj)
     if (error) {
       console.log(error)
@@ -69,14 +77,16 @@ const AddWeightInput = ({ addWeight, latestWeightEntry }) => {
 
 const mapStateToProps = state => {
   const weights = state.auth.userAccountData.weight
-  const latestWeightEntry = weights.reduce((prev, curr) => {
-    return new Date(prev.date).getTime() < new Date(curr.date).getTime()
-      ? prev
-      : curr
-  })
+  const latestWeightEntry = Array.isArray(weights)
+    ? weights.reduce((prev, curr) => {
+        return new Date(prev.date).getTime() < new Date(curr.date).getTime()
+          ? prev
+          : curr
+      }).weight
+    : weights
 
   return {
-    latestWeightEntry: latestWeightEntry.weight,
+    latestWeightEntry: latestWeightEntry,
   }
 }
 

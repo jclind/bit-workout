@@ -8,9 +8,10 @@ import { Line } from 'react-chartjs-2'
 import colors from '../../../helpers.scss'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { Chart, registerables } from 'chart.js'
+import { connect } from 'react-redux'
 Chart.register(...registerables)
 
-const WeightData = () => {
+const WeightData = ({ weightData }) => {
   const timeSpanOptions = [
     { value: 'week', label: 'W' },
     { value: 'month', label: 'M' },
@@ -21,20 +22,7 @@ const WeightData = () => {
 
   const [selectedTimeSpan, setSelectedTimeSpan] = useState(timeSpanOptions[0])
 
-  const tempData = [
-    { date: 1651273676214, weight: 144 },
-    { date: 1651100876214, weight: 143.2 },
-    { date: 1650928076214, weight: 142 },
-    { date: 1650755276214, weight: 139.6 },
-    { date: 1650582476214, weight: 136.9 },
-    { date: 1650409676214, weight: 136.2 },
-    { date: 1650236876214, weight: 132 },
-    { date: 1649891276214, weight: 130 },
-    { date: 1648891276214, weight: 130 },
-    { date: 1647891276214, weight: 129 },
-  ]
-
-  const timeSpanData = getTimeSpanData(selectedTimeSpan, tempData)
+  const timeSpanData = getTimeSpanData(selectedTimeSpan, weightData)
   const labels = timeSpanData.labels
   const chartData = timeSpanData.data
 
@@ -66,7 +54,8 @@ const WeightData = () => {
     },
     elements: {
       point: {
-        radius: selectedTimeSpan.value === 'week' ? 3 : 0,
+        radius:
+          selectedTimeSpan.value === 'week' || weightData.length < 3 ? 3 : 0,
       },
     },
     responsive: true,
@@ -108,4 +97,21 @@ const WeightData = () => {
   )
 }
 
-export default WeightData
+const mapStateToProps = state => {
+  const weights = state.auth.userAccountData.weight
+
+  let weightsArray = []
+  if (!Array.isArray(weights)) {
+    const createdDate = state.auth.userAuth.createdAd
+    const weight = state.auth.userAccountData.weight
+    weightsArray = [{ date: createdDate, weight }]
+  } else {
+    weightsArray = weights
+  }
+  console.log(weightsArray)
+  return {
+    weightData: weightsArray,
+  }
+}
+
+export default connect(mapStateToProps)(WeightData)
