@@ -19,6 +19,7 @@ import Security from './pages/Settings/Security/Security'
 import NavbarContainer from './components/Navbar/Navbar'
 import WeightData from './pages/Account/WeightData/WeightData'
 import AddWeightInput from './pages/Account/WeightData/AddWeightInput/AddWeightInput'
+import CreateWorkout from './pages/CreateWorkout/CreateWorkout'
 import Auth from './Auth'
 
 function App() {
@@ -98,6 +99,15 @@ function App() {
               element={
                 <>
                   <Workout />
+                  <NavbarContainer />
+                </>
+              }
+            />
+            <Route
+              path='/create-workout'
+              element={
+                <>
+                  <CreateWorkout />
                   <NavbarContainer />
                 </>
               }
