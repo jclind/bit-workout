@@ -1,9 +1,11 @@
 import React from 'react'
 import SingleWorkout from '../SingleWorkout/SingleWorkout'
 import { workouts } from '../../../assets/data/workouts'
+import './WorkoutSelection.scss'
+
 const WorkoutSelection = () => {
   return (
-    <div>
+    <div className='workout-selection'>
       {workouts.map(workout => {
         return (
           <React.Fragment key={workout.id}>

@@ -1,0 +1,36 @@
+@import '../../helpers.scss';
+
+.create-workout {
+  .create-workout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    .label {
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .rest-time,
+    .fail-set-rest-time {
+      .inputs-container {
+        display: flex;
+        gap: 1rem;
+        width: 100%;
+      }
+    }
+
+    button.select-exercise {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: none;
+      margin: 0 auto;
+      width: fit-content;
+      padding: 0 2rem;
+      .icon {
+        height: 30px;
+        width: 30px;
+      }
+    }
+  }
+}
