@@ -1,6 +1,10 @@
 @import '../../../helpers.scss';
 
 .added-exercise-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   border: 1px solid $secondary-background;
   border-radius: $border-radius;
   padding: 1rem;
@@ -8,6 +12,7 @@
   flex: 1;
   .select-exercise-container {
     position: relative;
+    width: 100%;
     .select-exercise {
       position: relative;
       display: flex;
@@ -85,6 +90,35 @@
       label {
         height: 40px;
       }
+      input {
+        margin: 0;
+      }
+    }
+  }
+
+  .remove-exercise-btn {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    height: 1ch;
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    text-align: center;
+    color: $error-red;
+    font-weight: 600;
+    &:hover {
+      text-decoration: underline;
+    }
+
+    .icon {
+      height: 15px;
+      width: 15px;
+      padding: 0 !important;
+      margin: 0 !important;
     }
   }
 
