@@ -4,6 +4,7 @@ import BackButton from '../../components/SettingsComponents/BackButton/BackButto
 import { AiOutlinePlusCircle, AiOutlineMenu } from 'react-icons/ai'
 import AddedExerciseItem from '../../components/CreateWorkout/AddedExerciseItem/AddedExerciseItem'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { v4 as uuidv4 } from 'uuid'
 import './CreateWorkout.scss'
 
 const CreateWorkout = () => {
@@ -18,18 +19,52 @@ const CreateWorkout = () => {
 
   const [addedExercises, setAddedExercises] = useState([])
 
+  const changeAddedExerciseData = (data, id) => {
+    const currAddedExercisesData = [...addedExercises]
+
+    const addedExerciseIdx = addedExercises.findIndex(ex => ex.id === id)
+
+    currAddedExercisesData[addedExerciseIdx] = {
+      ...currAddedExercisesData[addedExerciseIdx],
+      ...data,
+    }
+
+    setAddedExercises(currAddedExercisesData)
+  }
+
   const addExercise = () => {
     setAddedExercises([
       ...addedExercises,
-      { exercise: null, reps: null, sets: null },
+      { exercise: null, reps: null, sets: null, id: uuidv4() },
     ])
   }
 
-  // !CREATE MODAL FOR SEARCHING EXERCISES
+  // Help reordering addedExercise list dragged items
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list)
+    const [removed] = result.splice(startIndex, 1)
+    result.splice(endIndex, 0, removed)
 
-  const onDragEnd = res => {
-    console.log(res)
+    return result
   }
+  const onDragEnd = res => {
+    // `destination` is `undefined` if the item was dropped outside the list
+    // In this case, do nothing
+    if (!res.destination) {
+      return
+    }
+
+    const items = reorder(
+      addedExercises,
+      res.source.index,
+      res.destination.index
+    )
+
+    console.log(items)
+
+    setAddedExercises(items)
+  }
+
   return (
     <div className='create-workout page'>
       <div className='settings-title'>Create Workout</div>
@@ -114,6 +149,7 @@ const CreateWorkout = () => {
                             <AddedExerciseItem
                               item={item}
                               className={snapshot.isDraggingOver && 'dragging'}
+                              changeAddedExerciseData={changeAddedExerciseData}
                             />
                             {provided.placeholder}
                           </div>
