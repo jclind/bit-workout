@@ -9,6 +9,7 @@ import './CreateWorkout.scss'
 
 const CreateWorkout = () => {
   const [workoutName, setWorkoutName] = useState('')
+  const [workoutDescription, setWorkoutDescription] = useState('')
   const [restTimeMinutes, setRestTimeMinutes] = useState('')
   const [restTimeSeconds, setRestTimeSeconds] = useState('')
 
@@ -68,16 +69,33 @@ const CreateWorkout = () => {
     setAddedExercises(items)
   }
 
+  const handleCreateWorkoutSubmit = e => {
+    e.preventDefault()
+  }
+
   return (
     <div className='create-workout page'>
       <div className='settings-title'>Create Workout</div>
-      <form className='create-workout-form'>
+      <form
+        className='create-workout-form'
+        onSubmit={handleCreateWorkoutSubmit}
+      >
         <div className='name-input-container'>
           <div className='label'>Workout Name:</div>
           <FormInput
             val={workoutName}
             setVal={setWorkoutName}
             placeholder={'Enter Name'}
+          />
+        </div>
+        <div className='description-input-container'>
+          <div className='label'>Workout Description:</div>
+          <FormInput
+            val={workoutDescription}
+            setVal={setWorkoutDescription}
+            placeholder={'Enter Description'}
+            required={false}
+            textarea={true}
           />
         </div>
         <div className='rest-time'>
@@ -182,6 +200,9 @@ const CreateWorkout = () => {
             </button>
           </div>
         </div>
+        <button type='submit' className='submit-btn btn'>
+          Create Workout
+        </button>
       </form>
       <BackButton />
     </div>

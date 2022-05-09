@@ -12,6 +12,7 @@ const FormInput = ({
   required,
   error,
   showPasswordBtn,
+  textarea,
 }) => {
   const [type, setType] = useState(inputType)
   const [clear, setClear] = useState(false)
@@ -49,14 +50,18 @@ const FormInput = ({
       }
     >
       {icon && <img src={icon} alt={placeholder} className='icon' />}
-      <input
-        type={`${type}`}
-        placeholder={placeholder}
-        onChange={e => handleInput(e)}
-        value={val}
-        required={required}
-        className={icon ? 'active-icon' : null}
-      />
+      {textarea ? (
+        <textarea placeholder={placeholder} required={required} />
+      ) : (
+        <input
+          type={`${type}`}
+          placeholder={placeholder}
+          onChange={e => handleInput(e)}
+          value={val}
+          required={required}
+          className={icon ? 'active-icon' : null}
+        />
+      )}
 
       <div className='icons'>
         {showPasswordBtn && (
