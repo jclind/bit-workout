@@ -43,6 +43,7 @@ const AddedExerciseItem = ({
 
   const toggleDropdown = () => {
     setIsDropdown(!isDropdown)
+    setExerciseSearchVal('')
   }
 
   return (
