@@ -31,6 +31,9 @@ const CreateWorkout = () => {
 
     setAddedExercises(currAddedExercisesData)
   }
+  const deleteAddedExercise = id => {
+    setAddedExercises(addedExercises.filter(ex => ex.id !== id))
+  }
 
   const addExercise = () => {
     setAddedExercises([
@@ -114,53 +117,60 @@ const CreateWorkout = () => {
         <div className='workout-path'>
           <div className='title'>Workout Path:</div>
           <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable key={'droppable-key'} droppableId='droppable'>
-              {(provided, snapshot) => (
-                <div
-                  key={'droppable-key-div'}
-                  ref={provided.innerRef}
-                  className={
-                    snapshot.isDraggingOver
-                      ? 'added-exercises-container dragging'
-                      : 'added-exercises-container'
-                  }
-                  {...provided.droppableProps}
-                >
-                  {addedExercises.map((item, idx) => {
-                    console.log(item)
-                    return (
-                      <Draggable
-                        key={item.id}
-                        draggableId={`draggable-${idx}`}
-                        index={idx}
-                      >
-                        {(provided, snapshot) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            className='add-exercise-drag-container'
-                          >
+            {addedExercises.length > 0 && (
+              <Droppable key={'droppable-key'} droppableId='droppable'>
+                {(provided, snapshot) => (
+                  <div
+                    key={'droppable-key-div'}
+                    ref={provided.innerRef}
+                    className={
+                      snapshot.isDraggingOver
+                        ? 'added-exercises-container dragging'
+                        : 'added-exercises-container'
+                    }
+                    {...provided.droppableProps}
+                  >
+                    {addedExercises.map((item, idx) => {
+                      console.log(item)
+                      return (
+                        <Draggable
+                          key={item.id}
+                          draggableId={`draggable-${idx}`}
+                          index={idx}
+                        >
+                          {(provided, snapshot) => (
                             <div
-                              className='handle-icon-container'
-                              {...provided.dragHandleProps}
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              className='add-exercise-drag-container'
                             >
-                              <AiOutlineMenu className='icon handle-icon' />
+                              <div
+                                className='handle-icon-container'
+                                {...provided.dragHandleProps}
+                              >
+                                <AiOutlineMenu className='icon handle-icon' />
+                              </div>
+                              <AddedExerciseItem
+                                item={item}
+                                className={
+                                  snapshot.isDraggingOver && 'dragging'
+                                }
+                                changeAddedExerciseData={
+                                  changeAddedExerciseData
+                                }
+                                deleteAddedExercise={deleteAddedExercise}
+                              />
+                              {provided.placeholder}
                             </div>
-                            <AddedExerciseItem
-                              item={item}
-                              className={snapshot.isDraggingOver && 'dragging'}
-                              changeAddedExerciseData={changeAddedExerciseData}
-                            />
-                            {provided.placeholder}
-                          </div>
-                        )}
-                      </Draggable>
-                    )
-                  })}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
+                          )}
+                        </Draggable>
+                      )
+                    })}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            )}
           </DragDropContext>
           <div className='select-exercise-container'>
             <button

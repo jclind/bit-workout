@@ -1,14 +1,31 @@
 import React, { useState, useEffect } from 'react'
-import { BsFillTagFill } from 'react-icons/bs'
+import { BiTrashAlt } from 'react-icons/bi'
 import { FiChevronDown } from 'react-icons/fi'
 import FormInput from '../../FormInput/FormInput'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import './AddedExerciseItem.scss'
 import useClickOutside from '../../../util/useClickOutside'
 
-const AddedExerciseItem = ({ item, changeAddedExerciseData }) => {
+const AddedExerciseItem = ({
+  item,
+  changeAddedExerciseData,
+  deleteAddedExercise,
+}) => {
+  const id = item.id
+
   const [reps, setReps] = useState('')
   const [sets, setSets] = useState('')
+
+  useEffect(() => {
+    if (reps && reps !== item.reps) {
+      changeAddedExerciseData({ reps }, id)
+    }
+  }, [reps])
+  useEffect(() => {
+    if (sets && sets !== item.sets) {
+      changeAddedExerciseData({ sets }, id)
+    }
+  }, [sets])
 
   const [isDropdown, setIsDropdown] = useState(false)
   const [exerciseSearchVal, setExerciseSearchVal] = useState('')
@@ -19,7 +36,6 @@ const AddedExerciseItem = ({ item, changeAddedExerciseData }) => {
   })
 
   const selectExercise = ex => {
-    const id = item.id
     changeAddedExerciseData({ exercise: ex }, id)
     setSelectedExercise(ex)
     toggleDropdown()
@@ -113,6 +129,13 @@ const AddedExerciseItem = ({ item, changeAddedExerciseData }) => {
           />
         </div>
       </div>
+      <button
+        type='button'
+        className='remove-exercise-btn btn'
+        onClick={() => deleteAddedExercise(id)}
+      >
+        Remove From List
+      </button>
     </div>
   )
 }
