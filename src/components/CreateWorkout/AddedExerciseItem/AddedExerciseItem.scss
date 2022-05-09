@@ -4,7 +4,8 @@
   border: 1px solid $secondary-background;
   border-radius: $border-radius;
   padding: 1rem;
-
+  width: 100%;
+  flex: 1;
   .select-exercise-container {
     position: relative;
     .select-exercise {
@@ -12,12 +13,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 40px;
+      height: 50px;
       // background: $tag-select-background;
       border-radius: $border-radius;
-      padding: 0.5rem 0.25rem;
+      padding: 0 0.2rem !important;
       box-sizing: border-box;
       width: 100% !important;
+      text-transform: capitalize;
       // border: 1px solid $tag-select-border;
 
       background: $secondary-background !important;
@@ -39,6 +41,22 @@
         color: $primary;
         text-align: center;
         font-weight: 500;
+
+        .img-container {
+          height: 40px;
+          width: 40px;
+          img {
+            object-fit: contain;
+            height: 40px;
+            width: 40px;
+          }
+        }
+        .name {
+          .weights {
+            font-size: 0.8rem;
+            color: $secondary-text;
+          }
+        }
 
         .tag-icon {
           height: 18px;

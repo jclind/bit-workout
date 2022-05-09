@@ -4,22 +4,54 @@ import { FiChevronDown } from 'react-icons/fi'
 import FormInput from '../../FormInput/FormInput'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import './AddedExerciseItem.scss'
+import useClickOutside from '../../../util/useClickOutside'
 
 const AddedExerciseItem = ({ item }) => {
   const [reps, setReps] = useState('')
   const [sets, setSets] = useState('')
 
-  const [isDropdown, setIsDropdown] = useState(true)
+  const [isDropdown, setIsDropdown] = useState(false)
   const [exerciseSearchVal, setExerciseSearchVal] = useState('')
+  const [selectedExercise, setSelectedExercise] = useState(null)
+
+  const exerciseContainer = useClickOutside(() => {
+    setIsDropdown(false)
+  })
+
+  const selectExercise = ex => {
+    setSelectedExercise(ex)
+    toggleDropdown()
+  }
+
+  const toggleDropdown = () => {
+    setIsDropdown(!isDropdown)
+  }
 
   return (
     <div className='added-exercise-item'>
-      <div className='select-exercise-container'>
-        <button type='button' className='select-exercise btn'>
+      <div className='select-exercise-container' ref={exerciseContainer}>
+        <button
+          type='button'
+          className='select-exercise btn'
+          onClick={toggleDropdown}
+        >
           <div className='selector-text'>
-            <div className='text'>
-              {item.exercise ? 'FIX ME' : 'Choose An Exercise'}
-            </div>
+            {selectedExercise ? (
+              <>
+                <div className='img-container'>
+                  <img src={selectedExercise.imageURL} alt='' />
+                </div>
+                <div className='name'>
+                  {selectedExercise.name}{' '}
+                  <span className='weights'>
+                    {selectedExercise.weights ? '(Weights)' : '(No Weights)'}
+                  </span>
+                </div>
+              </>
+            ) : (
+              <div className='text'>Choose An Exercise</div>
+            )}
+
             <FiChevronDown className='icon' />
           </div>
         </button>
@@ -41,7 +73,10 @@ const AddedExerciseItem = ({ item }) => {
               return null
             }
             return (
-              <div className='dropdown-cell exercise-cell'>
+              <div
+                className='dropdown-cell exercise-cell'
+                onClick={() => selectExercise(ex)}
+              >
                 <div className='img-container'>
                   <img src={ex.imageURL} alt='' />
                 </div>
