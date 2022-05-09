@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import FormInput from '../../components/FormInput/FormInput'
 import BackButton from '../../components/SettingsComponents/BackButton/BackButton'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
+import AddedExerciseItem from '../../components/CreateWorkout/AddedExerciseItem/AddedExerciseItem'
 import './CreateWorkout.scss'
 
 const CreateWorkout = () => {
@@ -13,6 +14,15 @@ const CreateWorkout = () => {
   const [failedRestTimeSeconds, setFailedRestTimeSeconds] = useState('')
 
   const [searchExerciseVal, setSearchExerciseVal] = useState('')
+
+  const [addedExercises, setAddedExercises] = useState([])
+
+  const addExercise = () => {
+    setAddedExercises([
+      ...addedExercises,
+      { exercise: null, reps: null, sets: null },
+    ])
+  }
 
   // !CREATE MODAL FOR SEARCHING EXERCISES
 
@@ -70,13 +80,30 @@ const CreateWorkout = () => {
             placeholder='Search For Exercise'
           />
         </div> */}
+        <div className='added-exercises-container'>
+          {addedExercises.map(item => {
+            return <AddedExerciseItem item={item} />
+          })}
+        </div>
         <div className='select-exercise-container'>
-          <button type='button' className='select-exercise'>
+          <button
+            type='button'
+            className='select-exercise'
+            onClick={addExercise}
+          >
             <AiOutlinePlusCircle className='icon' /> <span>Add Exercise</span>
           </button>
         </div>
       </form>
       <BackButton />
+      {/* 
+      {isExerciseSelectModalOpen ? (
+        <ExerciseSelectModal
+          onClose={() => {
+            setIsExerciseSelectModalOpen(false)
+          }}
+        />
+      ) : null} */}
     </div>
   )
 }
