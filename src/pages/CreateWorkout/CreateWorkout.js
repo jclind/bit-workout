@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import FormInput from '../../components/FormInput/FormInput'
 import BackButton from '../../components/SettingsComponents/BackButton/BackButton'
-import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { AiOutlinePlusCircle, AiOutlineMenu } from 'react-icons/ai'
 import AddedExerciseItem from '../../components/CreateWorkout/AddedExerciseItem/AddedExerciseItem'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import './CreateWorkout.scss'
 
 const CreateWorkout = () => {
@@ -26,6 +27,9 @@ const CreateWorkout = () => {
 
   // !CREATE MODAL FOR SEARCHING EXERCISES
 
+  const onDragEnd = res => {
+    console.log(res)
+  }
   return (
     <div className='create-workout page'>
       <div className='settings-title'>Create Workout</div>
@@ -72,38 +76,68 @@ const CreateWorkout = () => {
             />
           </div>
         </div>
-        {/* <div className='select-exercise-container'>
-          <div className='label'>Add Exercise To Workout</div>
-          <FormInput
-            val={searchExerciseVal}
-            setVal={setSearchExerciseVal}
-            placeholder='Search For Exercise'
-          />
-        </div> */}
-        <div className='added-exercises-container'>
-          {addedExercises.map(item => {
-            return <AddedExerciseItem item={item} />
-          })}
-        </div>
-        <div className='select-exercise-container'>
-          <button
-            type='button'
-            className='select-exercise'
-            onClick={addExercise}
-          >
-            <AiOutlinePlusCircle className='icon' /> <span>Add Exercise</span>
-          </button>
+        <div className='workout-path'>
+          <div className='title'>Workout Path:</div>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable key={'droppable-key'} droppableId='droppable'>
+              {(provided, snapshot) => (
+                <div
+                  key={'droppable-key-div'}
+                  ref={provided.innerRef}
+                  className={
+                    snapshot.isDraggingOver
+                      ? 'added-exercises-container dragging'
+                      : 'added-exercises-container'
+                  }
+                  {...provided.droppableProps}
+                >
+                  {addedExercises.map((item, idx) => {
+                    console.log(item)
+                    return (
+                      <Draggable
+                        key={item.id}
+                        draggableId={`draggable-${idx}`}
+                        index={idx}
+                      >
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            className='add-exercise-drag-container'
+                          >
+                            <div
+                              className='handle-icon-container'
+                              {...provided.dragHandleProps}
+                            >
+                              <AiOutlineMenu className='icon handle-icon' />
+                            </div>
+                            <AddedExerciseItem
+                              item={item}
+                              className={snapshot.isDraggingOver && 'dragging'}
+                            />
+                            {provided.placeholder}
+                          </div>
+                        )}
+                      </Draggable>
+                    )
+                  })}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+          <div className='select-exercise-container'>
+            <button
+              type='button'
+              className='select-exercise'
+              onClick={addExercise}
+            >
+              <AiOutlinePlusCircle className='icon' /> <span>Add Exercise</span>
+            </button>
+          </div>
         </div>
       </form>
       <BackButton />
-      {/* 
-      {isExerciseSelectModalOpen ? (
-        <ExerciseSelectModal
-          onClose={() => {
-            setIsExerciseSelectModalOpen(false)
-          }}
-        />
-      ) : null} */}
     </div>
   )
 }
