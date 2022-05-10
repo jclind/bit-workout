@@ -360,3 +360,16 @@ export const queryPastWorkoutData =
     }
     return { isResponse: false }
   }
+
+// CREATE NEW WORKOUT
+
+export const createWorkout = data => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
+  const dateCreated = new Date().getTime()
+
+  await setDoc(doc(db, 'workouts', data.id), {
+    ...data,
+    authorUID: uid,
+    dateCreated,
+  })
+}

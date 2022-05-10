@@ -115,7 +115,10 @@ const AddedExerciseItem = ({
           <div className='label'>Num Reps:</div>
           <FormInput
             val={reps}
-            setVal={setReps}
+            setVal={val => {
+              if (val % 1 !== 0 || val < 0) return
+              setReps(val)
+            }}
             placeholder={'5'}
             inputType='number'
           />
@@ -124,7 +127,10 @@ const AddedExerciseItem = ({
           <div className='label'>Num Sets:</div>
           <FormInput
             val={sets}
-            setVal={setSets}
+            setVal={val => {
+              if (val % 1 !== 0 || val < 0) return
+              setSets(val)
+            }}
             placeholder={'5'}
             inputType='number'
           />
