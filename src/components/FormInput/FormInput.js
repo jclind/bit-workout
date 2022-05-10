@@ -51,7 +51,12 @@ const FormInput = ({
     >
       {icon && <img src={icon} alt={placeholder} className='icon' />}
       {textarea ? (
-        <textarea placeholder={placeholder} required={required} />
+        <textarea
+          placeholder={placeholder}
+          required={required}
+          value={val}
+          onChange={e => setVal(e.target.value)}
+        />
       ) : (
         <input
           type={`${type}`}

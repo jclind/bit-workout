@@ -9,9 +9,13 @@ import {
 import AddedExerciseItem from '../../components/CreateWorkout/AddedExerciseItem/AddedExerciseItem'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { v4 as uuidv4 } from 'uuid'
+import { connect } from 'react-redux'
 import './CreateWorkout.scss'
+import { createWorkout } from '../../redux/actions/workout/workout'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { TailSpin } from 'react-loader-spinner'
 
-const CreateWorkout = () => {
+const CreateWorkout = ({ createWorkout }) => {
   const titleRef = useRef()
   const [error, setError] = useState('')
   // Scroll to top of page if there is an error
@@ -20,6 +24,8 @@ const CreateWorkout = () => {
       titleRef.current.scrollIntoView()
     }
   }, [error])
+
+  const [loading, setLoading] = useState(false)
 
   const [workoutName, setWorkoutName] = useState('')
   const [workoutDescription, setWorkoutDescription] = useState('')
@@ -46,6 +52,8 @@ const CreateWorkout = () => {
   const [searchExerciseVal, setSearchExerciseVal] = useState('')
 
   const [addedExercises, setAddedExercises] = useState([])
+
+  const navigate = useNavigate()
 
   const changeAddedExerciseData = (data, id) => {
     const currAddedExercisesData = [...addedExercises]
@@ -91,14 +99,23 @@ const CreateWorkout = () => {
       res.destination.index
     )
 
-    console.log(items)
-
     setAddedExercises(items)
+  }
+
+  const clearForm = () => {
+    setWorkoutName('')
+    setWorkoutDescription('')
+    setRestTimeMinutes('')
+    setRestTimeSeconds('')
+    setFailedRestTimeMinutes('')
+    setFailedRestTimeSeconds('')
+    setAddedExercises([])
   }
 
   const handleCreateWorkoutSubmit = e => {
     e.preventDefault()
     setError('')
+    setLoading(true)
 
     if (!workoutName) return setError('Please Enter Workout Name')
     if (addedExercises.length <= 0)
@@ -118,6 +135,32 @@ const CreateWorkout = () => {
     })
     if (!allExercisesValid)
       return setError('Please Fill All Exercise Path Fields In Workout Path')
+
+    const newWorkout = {
+      id: uuidv4(),
+      name: workoutName,
+      restTime: restTimeMS > 0 ? restTimeMS : 90000,
+      failSetRestTime: failedRestTimeMS > 0 ? failedRestTimeMS : 300000,
+      lastSetFailed: false,
+      path: addedExercises.map(ex => {
+        return {
+          id: uuidv4(),
+          exerciseID: ex.exercise.id,
+          reps: ex.reps,
+          sets: ex.sets,
+        }
+      }),
+    }
+
+    createWorkout(newWorkout)
+      .then(() => {
+        clearForm()
+        navigate('/')
+      })
+      .catch(err => {
+        setError(`ERROR: ${err.code}`)
+      })
+    setLoading(false)
   }
 
   return (
@@ -220,7 +263,6 @@ const CreateWorkout = () => {
                     {...provided.droppableProps}
                   >
                     {addedExercises.map((item, idx) => {
-                      console.log(item)
                       return (
                         <Draggable
                           key={item.id}
@@ -266,8 +308,22 @@ const CreateWorkout = () => {
               type='button'
               className='select-exercise'
               onClick={addExercise}
+              disabled={loading}
             >
-              <AiOutlinePlusCircle className='icon' /> <span>Add Exercise</span>
+              {loading ? (
+                <TailSpin
+                  height='30'
+                  width='30'
+                  color='white'
+                  arialLabel='loading'
+                  className='spinner'
+                />
+              ) : (
+                <>
+                  <AiOutlinePlusCircle className='icon' />{' '}
+                  <span>Add Exercise</span>
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -280,4 +336,10 @@ const CreateWorkout = () => {
   )
 }
 
-export default CreateWorkout
+const mapDispatchToProps = dispatch => {
+  return {
+    createWorkout: data => dispatch(createWorkout(data)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(CreateWorkout)
