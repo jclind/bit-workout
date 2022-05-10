@@ -1,6 +1,10 @@
 @import '../../helpers.scss';
 
 .create-workout {
+  .form-error {
+    width: 100%;
+    box-sizing: border-box;
+  }
   .create-workout-form {
     display: flex;
     flex-direction: column;

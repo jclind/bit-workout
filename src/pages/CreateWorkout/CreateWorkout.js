@@ -1,20 +1,47 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import FormInput from '../../components/FormInput/FormInput'
 import BackButton from '../../components/SettingsComponents/BackButton/BackButton'
-import { AiOutlinePlusCircle, AiOutlineMenu } from 'react-icons/ai'
+import {
+  AiOutlinePlusCircle,
+  AiOutlineMenu,
+  AiOutlineWarning,
+} from 'react-icons/ai'
 import AddedExerciseItem from '../../components/CreateWorkout/AddedExerciseItem/AddedExerciseItem'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { v4 as uuidv4 } from 'uuid'
 import './CreateWorkout.scss'
 
 const CreateWorkout = () => {
+  const titleRef = useRef()
+  const [error, setError] = useState('')
+  // Scroll to top of page if there is an error
+  useEffect(() => {
+    if (error && titleRef.current) {
+      titleRef.current.scrollIntoView()
+    }
+  }, [error])
+
   const [workoutName, setWorkoutName] = useState('')
   const [workoutDescription, setWorkoutDescription] = useState('')
+
+  const [restTimeMS, setRestTimeMS] = useState('')
   const [restTimeMinutes, setRestTimeMinutes] = useState('')
   const [restTimeSeconds, setRestTimeSeconds] = useState('')
 
+  // When restTime Minutes or Seconds changes, set totalTestTime to the total time in seconds
+  useEffect(() => {
+    setRestTimeMS((restTimeMinutes * 60 + restTimeSeconds) * 1000)
+  }, [restTimeMinutes, restTimeSeconds])
+
+  const [failedRestTimeMS, setFailedRestTimeMS] = useState('')
   const [failedRestTimeMinutes, setFailedRestTimeMinutes] = useState('')
   const [failedRestTimeSeconds, setFailedRestTimeSeconds] = useState('')
+  // When failedRestTime Minutes or Seconds changes, set totalFailedRestTime to the total time in seconds
+  useEffect(() => {
+    setFailedRestTimeMS(
+      (failedRestTimeMinutes * 60 + failedRestTimeSeconds) * 1000
+    )
+  }, [failedRestTimeMinutes, failedRestTimeSeconds])
 
   const [searchExerciseVal, setSearchExerciseVal] = useState('')
 
@@ -71,15 +98,43 @@ const CreateWorkout = () => {
 
   const handleCreateWorkoutSubmit = e => {
     e.preventDefault()
+    setError('')
+
+    if (!workoutName) return setError('Please Enter Workout Name')
+    if (addedExercises.length <= 0)
+      return setError('Please Add Exercise To Workout Path')
+
+    let allExercisesValid = true
+    // Check that every addedExercise has all fields selected
+    addedExercises.forEach(ex => {
+      if (
+        !ex.exercise ||
+        !ex.reps ||
+        ex.reps === 0 ||
+        !ex.sets ||
+        ex.sets === 0
+      )
+        return (allExercisesValid = false)
+    })
+    if (!allExercisesValid)
+      return setError('Please Fill All Exercise Path Fields In Workout Path')
   }
 
   return (
     <div className='create-workout page'>
-      <div className='settings-title'>Create Workout</div>
+      <div className='settings-title' ref={titleRef}>
+        Create Workout
+      </div>
       <form
         className='create-workout-form'
         onSubmit={handleCreateWorkoutSubmit}
       >
+        {error && (
+          <div className='form-error'>
+            <AiOutlineWarning className='icon' />
+            {error}
+          </div>
+        )}
         <div className='name-input-container'>
           <div className='label'>Workout Name:</div>
           <FormInput
@@ -105,13 +160,21 @@ const CreateWorkout = () => {
               placeholder='Minutes'
               inputType='number'
               val={restTimeMinutes}
-              setVal={setRestTimeMinutes}
+              setVal={val => {
+                if (val % 1 !== 0) return
+                if (val > 20) return
+                setRestTimeMinutes(val)
+              }}
             />
             <FormInput
               placeholder='Seconds'
               inputType='number'
               val={restTimeSeconds}
-              setVal={setRestTimeSeconds}
+              setVal={val => {
+                if (val % 1 !== 0) return
+                if (val >= 60) return
+                setRestTimeSeconds(val)
+              }}
             />
           </div>
         </div>
@@ -122,13 +185,21 @@ const CreateWorkout = () => {
               placeholder='Minutes'
               inputType='number'
               val={failedRestTimeMinutes}
-              setVal={setFailedRestTimeMinutes}
+              setVal={val => {
+                if (val % 1 !== 0) return
+                if (val > 20) return
+                setFailedRestTimeMinutes(val)
+              }}
             />
             <FormInput
               placeholder='Seconds'
               inputType='number'
               val={failedRestTimeSeconds}
-              setVal={setFailedRestTimeSeconds}
+              setVal={val => {
+                if (val % 1 !== 0) return
+                if (val >= 60) return
+                setFailedRestTimeSeconds(val)
+              }}
             />
           </div>
         </div>
