@@ -308,27 +308,23 @@ const CreateWorkout = ({ createWorkout }) => {
               type='button'
               className='select-exercise'
               onClick={addExercise}
-              disabled={loading}
             >
-              {loading ? (
-                <TailSpin
-                  height='30'
-                  width='30'
-                  color='white'
-                  arialLabel='loading'
-                  className='spinner'
-                />
-              ) : (
-                <>
-                  <AiOutlinePlusCircle className='icon' />{' '}
-                  <span>Add Exercise</span>
-                </>
-              )}
+              <AiOutlinePlusCircle className='icon' /> <span>Add Exercise</span>
             </button>
           </div>
         </div>
-        <button type='submit' className='submit-btn btn'>
-          Create Workout
+        <button type='submit' className='submit-btn btn' disabled={loading}>
+          {loading ? (
+            <TailSpin
+              height='30'
+              width='30'
+              color='white'
+              arialLabel='loading'
+              className='spinner'
+            />
+          ) : (
+            'Create Workout'
+          )}
         </button>
       </form>
       <BackButton />
