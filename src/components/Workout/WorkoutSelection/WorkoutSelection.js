@@ -12,8 +12,8 @@ const WorkoutSelection = ({ getWorkouts }) => {
   const [workouts, setWorkouts] = useState(null)
 
   useEffect(() => {
-    getWorkouts('squ').then(res => {
-      console.log(res)
+    getWorkouts('').then(res => {
+      setWorkouts(res)
     })
   }, [])
 

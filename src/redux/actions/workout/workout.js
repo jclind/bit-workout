@@ -112,7 +112,8 @@ const incCurrWorkoutStats = (
         exerciseStats: [],
       }
   if (incTotalTime) {
-    workoutStats.totalStats.totalWorkoutTime += incTotalTime
+    workoutStats.totalStats.totalWorkoutTime =
+      Number(workoutStats.totalStats.totalWorkoutTime) + Number(incTotalTime)
   }
   if (exerciseID) {
     if (
@@ -145,7 +146,9 @@ const incCurrWorkoutStats = (
       const exerciseStatsIdx = workoutStats.exerciseStats.findIndex(
         exercise => exercise.exerciseID === exerciseID
       )
-      workoutStats.exerciseStats[exerciseStatsIdx].totalReps += incReps
+      workoutStats.exerciseStats[exerciseStatsIdx].totalReps =
+        Number(workoutStats.exerciseStats[exerciseStatsIdx].totalReps) +
+        Number(incReps)
     }
   }
   return workoutStats
@@ -163,7 +166,7 @@ export const completeSet =
 
     // If the current set is the last set
     // Else start rest timer, increment set, and updateWorkout
-    if (currSet === currSetTotal) {
+    if (currSet >= currSetTotal) {
       // If the last set of the last exercise is finished then call finishWorkout
       // Else begin next rest timer, increment currSet and currIdx, and updateWorkout
       if (currIdx >= currWorkoutPathLength - 1) {
