@@ -5,6 +5,7 @@ nav {
   z-index: 100;
   bottom: 0;
   width: 100%;
+  max-width: 450px;
   height: $navbar-height;
   border-top: 1px solid $primary;
   background: $primary-background;

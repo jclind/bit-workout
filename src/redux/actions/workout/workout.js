@@ -373,3 +373,18 @@ export const createWorkout = data => async (dispatch, getState) => {
     dateCreated,
   })
 }
+
+// GET WORKOUT LIST
+export const getWorkouts = (queryString, order, limit) => async () => {
+  const workoutsRef = collection(db, 'workouts')
+
+  const q = query(workoutsRef, where('name', '>=', queryString))
+
+  const querySnapshot = await getDocs(q)
+  const arr = []
+  querySnapshot.forEach(doc => {
+    arr.push(doc.data())
+  })
+
+  return arr
+}

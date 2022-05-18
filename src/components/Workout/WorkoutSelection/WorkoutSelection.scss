@@ -1,8 +1,33 @@
 @import '../../../helpers.scss';
 
 .workout-selection {
+  display: flex;
+  flex-direction: column;
   margin-bottom: $navbar-height;
   padding-bottom: 2rem;
+  width: 100%;
+
+  .create-workout-link {
+    margin: 0.5rem auto;
+    text-decoration: none;
+    button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      background: none;
+      width: fit-content;
+      height: fit-content;
+      color: $primary;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0;
+      .icon {
+        height: 25px;
+        width: 25px;
+      }
+    }
+  }
 
   .search-workouts-container {
     position: relative;

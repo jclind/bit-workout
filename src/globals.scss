@@ -12,10 +12,16 @@ body {
   overflow-x: hidden;
 }
 body {
-  background: $primary-background;
   position: relative;
   width: 100%;
   color: $primary;
+  background: $tertiary-background;
+  padding: 0;
+}
+
+#root {
+  height: 100%;
+  padding: 0;
 }
 
 button {
@@ -60,11 +66,18 @@ h1 {
   font-size: toRem(36) !important;
 }
 
+.app-container {
+  max-width: 450px;
+  height: 100%;
+  margin: 0 auto;
+  background: $primary-background;
+}
+
 .page {
   position: relative;
   width: 90%;
   margin: 0 auto;
-  margin-top: $page-margin-top;
+  padding-top: $page-margin-top;
 
   .error {
     margin: 0 auto;
