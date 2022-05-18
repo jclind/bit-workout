@@ -37,8 +37,12 @@ const CreateWorkout = ({ createWorkout }) => {
   // When restTime Minutes or Seconds changes, set totalTestTime to the total time in seconds
   useEffect(() => {
     setRestTimeMS((restTimeMinutes * 60 + restTimeSeconds) * 1000)
+    console.log(restTimeMinutes, restTimeSeconds)
   }, [restTimeMinutes, restTimeSeconds])
 
+  useEffect(() => {
+    console.log(restTimeMS)
+  }, [restTimeMS])
   const [failedRestTimeMS, setFailedRestTimeMS] = useState('')
   const [failedRestTimeMinutes, setFailedRestTimeMinutes] = useState('')
   const [failedRestTimeSeconds, setFailedRestTimeSeconds] = useState('')
@@ -204,9 +208,10 @@ const CreateWorkout = ({ createWorkout }) => {
               inputType='number'
               val={restTimeMinutes}
               setVal={val => {
-                if (val % 1 !== 0) return
-                if (val > 20) return
-                setRestTimeMinutes(val)
+                const num = Number(val)
+                if (num % 1 !== 0) return
+                if (num > 20) return
+                setRestTimeMinutes(num)
               }}
             />
             <FormInput
@@ -214,9 +219,10 @@ const CreateWorkout = ({ createWorkout }) => {
               inputType='number'
               val={restTimeSeconds}
               setVal={val => {
-                if (val % 1 !== 0) return
-                if (val >= 60) return
-                setRestTimeSeconds(val)
+                const num = Number(val)
+                if (num % 1 !== 0) return
+                if (num >= 60) return
+                setRestTimeSeconds(num)
               }}
             />
           </div>
@@ -229,9 +235,10 @@ const CreateWorkout = ({ createWorkout }) => {
               inputType='number'
               val={failedRestTimeMinutes}
               setVal={val => {
-                if (val % 1 !== 0) return
-                if (val > 20) return
-                setFailedRestTimeMinutes(val)
+                const num = Number(val)
+                if (num % 1 !== 0) return
+                if (num > 20) return
+                setFailedRestTimeMinutes(num)
               }}
             />
             <FormInput
@@ -239,9 +246,10 @@ const CreateWorkout = ({ createWorkout }) => {
               inputType='number'
               val={failedRestTimeSeconds}
               setVal={val => {
-                if (val % 1 !== 0) return
-                if (val >= 60) return
-                setFailedRestTimeSeconds(val)
+                const num = Number(val)
+                if (num % 1 !== 0) return
+                if (num >= 60) return
+                setFailedRestTimeSeconds(num)
               }}
             />
           </div>

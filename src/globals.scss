@@ -71,13 +71,14 @@ h1 {
   height: 100%;
   margin: 0 auto;
   background: $primary-background;
+  overflow: auto;
 }
 
 .page {
   position: relative;
   width: 90%;
   margin: 0 auto;
-  padding-top: $page-margin-top;
+  margin-top: $page-margin-top;
 
   .error {
     margin: 0 auto;
