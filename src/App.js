@@ -26,7 +26,7 @@ function App() {
   const [loading, setLoading] = useState(true)
 
   return (
-    <>
+    <div className='app-container'>
       <Helmet>
         <meta
           name='viewport'
@@ -115,7 +115,7 @@ function App() {
           </Routes>
         </Router>
       )}
-    </>
+    </div>
   )
 }
 
