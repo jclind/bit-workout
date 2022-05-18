@@ -21,6 +21,7 @@ import WeightData from './pages/Account/WeightData/WeightData'
 import AddWeightInput from './pages/Account/WeightData/AddWeightInput/AddWeightInput'
 import CreateWorkout from './pages/CreateWorkout/CreateWorkout'
 import Auth from './Auth'
+import AppLoadingScreen from './components/AppLoadingScreen/AppLoadingScreen'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -35,7 +36,7 @@ function App() {
       </Helmet>
       <Auth setLoading={setLoading} />
       {loading ? (
-        'Loading'
+        <AppLoadingScreen />
       ) : (
         <Router>
           <Routes>
