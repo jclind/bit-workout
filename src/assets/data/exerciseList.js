@@ -40,7 +40,7 @@ export const exerciseList = [
     name: 'dumbbell row',
     animation: null,
     weights: true,
-    imageURL: '/workouts/dumbbell-row.png',
+    imageURL: '/workouts/dumbbell-row.svg',
   },
   {
     id: 6,
@@ -48,5 +48,12 @@ export const exerciseList = [
     animation: null,
     weights: true,
     imageURL: '/workouts/barbell-curl.png',
+  },
+  {
+    id: 7,
+    name: 'skull crusher',
+    animation: null,
+    weights: true,
+    imageURL: '/workouts/skull-crusher.svg',
   },
 ]

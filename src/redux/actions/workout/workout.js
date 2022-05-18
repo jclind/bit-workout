@@ -139,7 +139,8 @@ const incCurrWorkoutStats = (
         exercise => exercise.exerciseID === exerciseID
       )
       console.log(exerciseStatsIdx)
-      workoutStats.exerciseStats[exerciseStatsIdx].totalSets += 1
+      workoutStats.exerciseStats[exerciseStatsIdx].totalSets =
+        Number(workoutStats.exerciseStats[exerciseStatsIdx].totalSets) + 1
     }
     if (incReps) {
       workoutStats.totalStats.totalReps += incReps
