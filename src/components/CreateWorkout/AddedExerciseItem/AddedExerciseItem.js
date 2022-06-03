@@ -84,30 +84,32 @@ const AddedExerciseItem = ({
               onChange={e => setExerciseSearchVal(e.target.value)}
             />
           </div>
-          {exerciseList.slice(0, 8).map(ex => {
-            if (
-              exerciseSearchVal &&
-              !ex.name.toLowerCase().includes(exerciseSearchVal.toLowerCase())
-            ) {
-              return null
-            }
-            return (
-              <div
-                className='dropdown-cell exercise-cell'
-                onClick={() => selectExercise(ex)}
-              >
-                <div className='img-container'>
-                  <img src={ex.imageURL} alt='' />
+          <div className='exercise-cells'>
+            {exerciseList.slice(0, 8).map(ex => {
+              if (
+                exerciseSearchVal &&
+                !ex.name.toLowerCase().includes(exerciseSearchVal.toLowerCase())
+              ) {
+                return null
+              }
+              return (
+                <div
+                  className='dropdown-cell exercise-cell'
+                  onClick={() => selectExercise(ex)}
+                >
+                  <div className='img-container'>
+                    <img src={ex.imageURL} alt='' />
+                  </div>
+                  <div className='name'>
+                    {ex.name}{' '}
+                    <span className='weights'>
+                      {ex.weights ? '(Weights)' : '(No Weights)'}
+                    </span>
+                  </div>
                 </div>
-                <div className='name'>
-                  {ex.name}{' '}
-                  <span className='weights'>
-                    {ex.weights ? '(Weights)' : '(No Weights)'}
-                  </span>
-                </div>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
       </div>
       <div className='inputs'>

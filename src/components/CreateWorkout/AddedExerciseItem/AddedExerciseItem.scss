@@ -130,8 +130,6 @@
     z-index: -1;
     width: 100%;
     height: fit-content;
-    max-height: 350px;
-    overflow-y: scroll;
     box-sizing: border-box;
     background: $secondary-background;
     border: 1px solid $tertiary-text;
@@ -145,6 +143,10 @@
       margin: 0 auto;
       border-bottom: 1px solid $tertiary-text;
       box-sizing: border-box;
+    }
+    .exercise-cells {
+      overflow-y: scroll;
+      height: 260px;
     }
     .exercise-cell {
       display: flex;
