@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { BiTrashAlt } from 'react-icons/bi'
 import { FiChevronDown } from 'react-icons/fi'
 import FormInput from '../../FormInput/FormInput'
 import { exerciseList } from '../../../assets/data/exerciseList'

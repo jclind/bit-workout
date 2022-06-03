@@ -34,6 +34,10 @@ const PastWorkoutsLink = ({ queryPastWorkoutData }) => {
   const workoutImageURL = data ? data.path[0].imageURL : null
   console.log(workoutImageURL)
 
+  if (data) {
+    console.log(data.totalWorkoutTime)
+  }
+
   return (
     <div className='past-workouts-link'>
       {!isResponse ? (
@@ -75,9 +79,14 @@ const PastWorkoutsLink = ({ queryPastWorkoutData }) => {
                 {workoutTime ? (
                   <>
                     <div className='time-type'>
-                      {workoutTime.h
-                        ? `${workoutTime.h}<span className='time-indicator'>H</span>`
-                        : ''}
+                      {workoutTime.h ? (
+                        <>
+                          {workoutTime.h}
+                          <span className='time-indicator'>H</span>
+                        </>
+                      ) : (
+                        ''
+                      )}
                     </div>
                     <div className='time-type'>
                       {workoutTime.m} <span className='time-indicator'>M</span>
