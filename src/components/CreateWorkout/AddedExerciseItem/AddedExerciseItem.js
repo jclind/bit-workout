@@ -84,7 +84,7 @@ const AddedExerciseItem = ({
             />
           </div>
           <div className='exercise-cells'>
-            {exerciseList.slice(0, 8).map(ex => {
+            {exerciseList.slice(0, 50).map(ex => {
               if (
                 exerciseSearchVal &&
                 !ex.name.toLowerCase().includes(exerciseSearchVal.toLowerCase())

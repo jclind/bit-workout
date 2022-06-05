@@ -56,4 +56,18 @@ export const exerciseList = [
     weights: true,
     imageURL: '/workouts/skull-crusher.svg',
   },
+  {
+    id: 8,
+    name: 'dumbbell lateral raise',
+    animation: null,
+    weights: true,
+    imageURL: '/workouts/dumbbell-lat-raise.png',
+  },
+  {
+    id: 9,
+    name: 'dumbbell fly',
+    animation: null,
+    weights: true,
+    imageURL: '/workouts/dumbbell-fly.png',
+  },
 ]
