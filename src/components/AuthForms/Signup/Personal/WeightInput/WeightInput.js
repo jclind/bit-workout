@@ -2,7 +2,15 @@ import React, { useState, useEffect } from 'react'
 import './WeightInput.scss'
 import deleteIcon from '../../../../../assets/images/icons/delete.svg'
 
-const WeightInput = ({ icon, placeholder, val, setVal, required }) => {
+const WeightInput = ({
+  icon,
+  placeholder,
+  val,
+  setVal,
+  required,
+  weightInputRef,
+  signupBtnRef,
+}) => {
   const [clear, setClear] = useState(false)
 
   useEffect(() => {
@@ -20,7 +28,7 @@ const WeightInput = ({ icon, placeholder, val, setVal, required }) => {
 
     setVal(currVal)
     if (currVal >= 100) {
-      e.target.blur()
+      signupBtnRef.current.focus()
     }
   }
   return (
@@ -34,6 +42,7 @@ const WeightInput = ({ icon, placeholder, val, setVal, required }) => {
         required={required}
         data-lpignore='true'
         pattern='\d*'
+        ref={weightInputRef}
       />
       {clear && (
         <div onClick={() => setVal('')} className='delete-icon'>
