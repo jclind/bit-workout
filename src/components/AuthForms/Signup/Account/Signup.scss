@@ -72,20 +72,26 @@
     height: fit-content;
     justify-content: center;
     align-items: center;
-    div {
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       box-sizing: border-box;
       font-size: toRem(16);
       font-weight: 500;
+      height: 48px;
       width: 100%;
       text-align: center;
       background: $secondary-background;
+      opacity: 0.8;
       padding: 0.75rem 2rem;
       margin: 0;
       border-radius: $border-radius;
       border: 3px solid $secondary-background;
     }
-    div.selected {
+    button.selected {
       border: 3px solid $secondary;
+      opacity: 1;
     }
   }
   .inputs {

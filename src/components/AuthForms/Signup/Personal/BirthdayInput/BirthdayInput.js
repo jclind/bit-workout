@@ -19,7 +19,6 @@ const BirthdayInput = ({ icon, placeholder, val, setVal, required }) => {
           val={val}
           setVal={setVal}
           required={required}
-          autoFocus={true}
         />
       </div>
     </>

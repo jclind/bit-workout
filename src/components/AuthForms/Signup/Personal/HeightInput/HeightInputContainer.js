@@ -2,7 +2,13 @@ import React, { useState, useEffect, useRef } from 'react'
 import HeightInput from './HeightInput'
 import './HeightInput.scss'
 
-const HeightInputContainer = ({ icon, placeholder, val, setVal }) => {
+const HeightInputContainer = ({
+  icon,
+  placeholder,
+  val,
+  setVal,
+  weightInputRef,
+}) => {
   const [focus, setFocus] = useState(false)
   const [clear, setClear] = useState(false)
 
@@ -48,7 +54,7 @@ const HeightInputContainer = ({ icon, placeholder, val, setVal }) => {
       ((currVal > 1 && currVal <= 11) || Number(currVal) === 0) &&
       currVal !== ''
     ) {
-      inchesRef.current.blur()
+      weightInputRef.current.focus()
     }
   }
   const handleFocus = e => {

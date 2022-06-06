@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef } from 'react'
 import { SignupContext } from '../../../../pages/Auth/Signup/Signup'
 import birthdayIcon from '../../../../assets/images/icons/birthday.svg'
 import heightIcon from '../../../../assets/images/icons/height.svg'
@@ -22,6 +22,9 @@ const SignupPersonal = () => {
   } = useContext(SignupContext)
 
   const [error, setError] = useState('')
+
+  const weightInputRef = useRef('')
+  const signupBtnRef = useRef('')
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -62,18 +65,22 @@ const SignupPersonal = () => {
         <form action='' onSubmit={handleSubmit}>
           <h3 className='sub-text'>Please enter the following information:</h3>
           <div className='gender-inputs'>
-            <div
+            <button
+              type='button'
               className={genderVal === 'female' ? 'female selected' : 'female'}
               onClick={() => setGenderVal('female')}
+              tabIndex={1}
             >
               Female
-            </div>
-            <div
+            </button>
+            <button
+              type='button'
               className={genderVal === 'male' ? 'male selected' : 'male'}
               onClick={() => setGenderVal('male')}
+              tabIndex={2}
             >
               Male
-            </div>
+            </button>
           </div>
           <div className='inputs'>
             <BirthdayInput
@@ -82,12 +89,14 @@ const SignupPersonal = () => {
               val={birthdayVal}
               setVal={setBirthdayVal}
               required={true}
+              tabIndex={3}
             />
             <HeightInputContainer
               icon={heightIcon}
               placeholder='height'
               val={heightVal}
               setVal={setHeightVal}
+              weightInputRef={weightInputRef}
             />
             <WeightInput
               icon={weightIcon}
@@ -96,9 +105,11 @@ const SignupPersonal = () => {
               val={weightVal}
               setVal={setWeightVal}
               required={true}
+              weightInputRef={weightInputRef}
+              signupBtnRef={signupBtnRef}
             />
           </div>
-          <button type='submit' className='submit-btn'>
+          <button type='submit' className='submit-btn' ref={signupBtnRef}>
             Complete Sign Up
           </button>
         </form>
