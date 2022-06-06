@@ -49,7 +49,9 @@ const ActiveWorkout = ({
       <div className='exercise-weight' onClick={() => setIsModalOpen(true)}>
         <span>{exerciseWeight} lbs</span> <AiFillInfoCircle className='icon' />
       </div>
-      <img src={imageURL} alt={name} className='exercise-img' />
+      <div className='exercise-img-container'>
+        <img src={imageURL} alt={name} className='exercise-img' />
+      </div>
       <button
         className='submit-btn'
         onClick={() => completeSet(currSetTotal, currRepTotal, exerciseID)}
