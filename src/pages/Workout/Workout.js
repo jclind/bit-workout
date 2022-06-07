@@ -10,6 +10,7 @@ const Workout = ({ uid, fetchWorkoutData, isWorkoutFinished, workoutData }) => {
     if (uid) {
       fetchWorkoutData(uid)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid])
 
   const isWorkoutRunning = workoutData ? workoutData.isWorkoutRunning : null

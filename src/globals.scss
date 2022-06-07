@@ -12,9 +12,9 @@ body {
   overflow-x: hidden;
 }
 body {
+  color: $primary;
   position: relative;
   width: 100%;
-  color: $primary;
   background: $tertiary-background;
   padding: 0;
 }

@@ -26,6 +26,7 @@ const FormInput = ({
         setType('password')
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [passwordShow])
 
   useEffect(() => {

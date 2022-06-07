@@ -19,11 +19,13 @@ const AddedExerciseItem = ({
     if (reps && reps !== item.reps) {
       changeAddedExerciseData({ reps }, id)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reps])
   useEffect(() => {
     if (sets && sets !== item.sets) {
       changeAddedExerciseData({ sets }, id)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sets])
 
   const [isDropdown, setIsDropdown] = useState(false)

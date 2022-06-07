@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import ForgotPassword from './ForgotPassword'
 import { connect } from 'react-redux'
 import { resetPassword } from '../../../redux/actions/auth/authStatus'

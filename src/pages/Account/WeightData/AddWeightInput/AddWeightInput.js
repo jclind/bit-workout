@@ -14,8 +14,6 @@ const AddWeightInput = ({ addWeight, latestWeightEntry }) => {
   const [weight, setWeight] = useState('')
   const [date, setDate] = useState(formatYearMonthDay(tempDate))
 
-  const [error, setError] = useState('')
-
   const handleWeightChange = e => {
     const value = e.target.value
     if ((value * 10) % 1 !== 0 || value >= 1000) {
@@ -40,7 +38,6 @@ const AddWeightInput = ({ addWeight, latestWeightEntry }) => {
     let error = await addWeight(weightObj)
     if (error) {
       console.log(error)
-      return setError(error.code)
     }
     navigate(-1)
   }

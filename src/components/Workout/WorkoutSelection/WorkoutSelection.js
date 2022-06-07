@@ -15,6 +15,7 @@ const WorkoutSelection = ({ getWorkouts }) => {
     getWorkouts('').then(res => {
       setWorkouts(res)
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

@@ -11,10 +11,6 @@ import {
   updateDoc,
   deleteDoc,
   arrayUnion,
-  collection,
-  where,
-  query,
-  getDocs,
 } from 'firebase/firestore'
 import { db } from '../../../firebase'
 import { auth } from '../../../firebase'

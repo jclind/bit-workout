@@ -54,6 +54,7 @@ const TimerContainer = ({
       }
     }, 100)
     skipTimer(skipRestBtn, timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timerStart, restTime, updateWorkout])
 
   return (

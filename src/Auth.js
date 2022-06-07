@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { auth } from './firebase'
 import { connect } from 'react-redux'
-import { setDoc, doc } from 'firebase/firestore'
-import { db } from './firebase'
 import {
   signInAndFetchUserAccountData,
   setUserStatusSignedOut,
@@ -23,6 +21,7 @@ const Auth = ({ signInAndFetchUserAccountData, signOut, setLoading }) => {
       }
     })
     return () => unsubscribe()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return null
 }
