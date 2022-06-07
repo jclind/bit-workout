@@ -1,0 +1,37 @@
+@import '../../../helpers.scss';
+
+.stop-workout-modal {
+  .modal-content {
+    .text {
+      font-size: 0.8rem;
+      color: $secondary-text;
+      margin-bottom: 2rem;
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+
+      .cancel-btn {
+        width: fit-content;
+        height: 40px;
+        padding: 0.5rem 1rem;
+        background: $gray-background;
+        color: $secondary-text;
+        cursor: pointer;
+        &:hover {
+          color: $primary;
+        }
+      }
+      .confirm-btn {
+        width: fit-content;
+        height: 40px;
+        padding: 0.5rem 1rem;
+        background: $error-red;
+        &:hover {
+          background: $error-red-hover;
+        }
+      }
+    }
+  }
+}
