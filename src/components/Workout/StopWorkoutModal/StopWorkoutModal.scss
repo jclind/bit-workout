@@ -2,6 +2,7 @@
 
 .stop-workout-modal {
   .modal-content {
+    width: calc(#{$max-width} * 0.9);
     .text {
       font-size: 0.8rem;
       color: $secondary-text;

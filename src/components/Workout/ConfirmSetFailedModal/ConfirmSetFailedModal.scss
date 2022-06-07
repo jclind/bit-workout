@@ -6,6 +6,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 350px;
+    width: calc(#{$max-width} * 0.9);
     .counter-label {
       font-size: 0.8rem;
       padding-bottom: 0.25rem;

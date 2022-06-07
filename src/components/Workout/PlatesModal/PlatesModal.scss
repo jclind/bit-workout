@@ -2,6 +2,7 @@
 
 .plates-modal {
   .modal-content {
+    width: calc(#{$max-width} * 0.9);
     .sub-text {
       margin: 0;
       margin-top: toRem(5);
