@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import NavbarContainer from './Navbar/Navbar'
 import { connect } from 'react-redux'
 import PastWorkoutsLink from './PastWorkoutsLink/PastWorkoutsLink'

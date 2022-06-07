@@ -25,7 +25,7 @@ const workoutReducer = (state = INITIAL_STATE, action) => {
       const newState = JSON.parse(JSON.stringify(state.workoutData))
       Object.keys(action.payload).map(key => {
         const currVal = action.payload[key]
-        setToValue(newState, key, currVal)
+        return setToValue(newState, key, currVal)
       })
       return {
         ...state,

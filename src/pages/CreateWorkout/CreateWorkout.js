@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { connect } from 'react-redux'
 import './CreateWorkout.scss'
 import { createWorkout } from '../../redux/actions/workout/workout'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { TailSpin } from 'react-loader-spinner'
 
 const CreateWorkout = ({ createWorkout }) => {
@@ -52,8 +52,6 @@ const CreateWorkout = ({ createWorkout }) => {
       (failedRestTimeMinutes * 60 + failedRestTimeSeconds) * 1000
     )
   }, [failedRestTimeMinutes, failedRestTimeSeconds])
-
-  const [searchExerciseVal, setSearchExerciseVal] = useState('')
 
   const [addedExercises, setAddedExercises] = useState([])
 

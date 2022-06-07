@@ -24,6 +24,7 @@ const UpdateEmail = ({ updateEmail, userAuth }) => {
           console.log(err)
         })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newEmail, email, navigate, updateEmail])
 
   return (

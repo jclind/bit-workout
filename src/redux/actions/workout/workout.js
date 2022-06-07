@@ -351,7 +351,7 @@ export const queryPastWorkoutData =
     querySnapshot.forEach(doc => {
       dataExists = true
       const data = doc.data()
-      queriedData.push(doc.data())
+      queriedData.push(data)
     })
     console.log(dataExists)
     if (dataExists) {

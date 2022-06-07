@@ -28,6 +28,7 @@
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
     "sass": "^1.50.1",
+    "stylelint-scss": "^4.2.0",
     "thunk": "^0.0.1",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
@@ -58,6 +59,9 @@
     ]
   },
   "devDependencies": {
-    "faker": "^5.5.3"
+    "faker": "^5.5.3",
+    "stylelint": "^14.8.5",
+    "stylelint-config-standard": "^25.0.0",
+    "stylelint-config-standard-scss": "^4.0.0"
   }
 }
