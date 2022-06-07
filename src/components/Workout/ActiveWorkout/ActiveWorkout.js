@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { AiFillInfoCircle } from 'react-icons/ai'
+import { AiFillInfoCircle, AiOutlineClose } from 'react-icons/ai'
 import { calculatePlates } from '../../../util/calculatePlates'
 import PlatesModal from '../PlatesModal/PlatesModal'
 import ConfirmSetFailedModal from '../ConfirmSetFailedModal/ConfirmSetFailedModal'
+import StopWorkoutModal from '../StopWorkoutModal/StopWorkoutModal'
 import { connect } from 'react-redux'
 import {
   completeSet,
   getSingleWorkout,
+  stopWorkout,
 } from '../../../redux/actions/workout/workout'
 
 const ActiveWorkout = ({
@@ -16,9 +18,11 @@ const ActiveWorkout = ({
   currWorkout,
   completeSet,
   weights,
+  stopWorkout,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isPlatesModalOpen, setIsPlatesModalOpen] = useState(false)
   const [isSetFailedModalOpen, setIsSetFailedModalOpen] = useState(false)
+  const [isStopModalOpen, setIsStopModalOpen] = useState(false)
 
   const currExerciseID = currWorkout.path[currIdx].exerciseID
   const currExercise = getSingleWorkout(currExerciseID)
@@ -38,15 +42,16 @@ const ActiveWorkout = ({
     exerciseWeight = exerciseWeightData.weight
   }
 
-  console.log(weights)
-
   const plateWeights = calculatePlates(45, exerciseWeight)
   return (
     <div className='active-workout'>
       <div className='current-workout-text'>Current Workout</div>
       <div className='exercise-title'>{name}</div>
       <div className='rep-set-text'>{`${currRepTotal} Reps, Set ${currSet} of ${currSetTotal}`}</div>
-      <div className='exercise-weight' onClick={() => setIsModalOpen(true)}>
+      <div
+        className='exercise-weight'
+        onClick={() => setIsPlatesModalOpen(true)}
+      >
         <span>{exerciseWeight} lbs</span> <AiFillInfoCircle className='icon' />
       </div>
       <div className='exercise-img-container'>
@@ -65,11 +70,20 @@ const ActiveWorkout = ({
         Failed
       </button>
 
-      {isModalOpen ? (
+      <button
+        type='button'
+        className='stop-workout-btn'
+        aria-label='Stop Workout Button'
+        onClick={() => setIsStopModalOpen(true)}
+      >
+        <AiOutlineClose className='icon' />
+      </button>
+
+      {isPlatesModalOpen ? (
         <PlatesModal
           weights={plateWeights}
           onClose={() => {
-            setIsModalOpen(false)
+            setIsPlatesModalOpen(false)
           }}
           currExercise={currExercise}
           exerciseWeight={exerciseWeight}
@@ -84,6 +98,14 @@ const ActiveWorkout = ({
           weightExerciseId={exerciseID}
           currSetTotal={currSetTotal}
           currRepTotal={currRepTotal}
+        />
+      ) : null}
+      {isStopModalOpen ? (
+        <StopWorkoutModal
+          onClose={() => {
+            setIsStopModalOpen(false)
+          }}
+          stopWorkout={stopWorkout}
         />
       ) : null}
     </div>
@@ -105,6 +127,7 @@ const mapDispatchToProps = dispatch => {
     getSingleWorkout: id => dispatch(getSingleWorkout(id)),
     completeSet: (currSetTotal, numReps, exerciseID, lastSetFailed) =>
       dispatch(completeSet(currSetTotal, numReps, exerciseID, lastSetFailed)),
+    stopWorkout: () => dispatch(stopWorkout()),
   }
 }
 

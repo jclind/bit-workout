@@ -18,7 +18,6 @@ import {
   getDocs,
 } from 'firebase/firestore'
 import { exerciseList } from '../../../assets/data/exerciseList'
-import { v4 as uuidv4 } from 'uuid'
 
 export const fetchWorkoutData = uid => async dispatch => {
   await getDoc(doc(db, 'workoutData', uid)).then(document => {
@@ -35,7 +34,6 @@ export const updateWorkout = data => async (dispatch, getState) => {
   const uid = getState().auth.userAuth.uid
   if (!uid) console.error('UID not defined in updateWorkout')
   const workoutRef = doc(db, 'workoutData', uid)
-  console.log(data)
 
   await updateDoc(workoutRef, {
     ...data,
@@ -52,6 +50,9 @@ export const setWorkoutFinished = isFinished => {
     type: SET_WORKOUT_FINISHED,
     payload: isFinished,
   }
+}
+export const stopWorkout = () => async dispatch => {
+  await dispatch(updateWorkout({ isWorkoutRunning: false }))
 }
 
 export const getSingleWorkout = id => (dispatch, getState) => {
@@ -127,12 +128,6 @@ const incCurrWorkoutStats = (
         totalSets: 0,
       })
     }
-    console.log(
-      workoutStats,
-      workoutStats.totalStats,
-      workoutStats.totalStats.totalSets
-    )
-    console.log(workoutStats.exerciseStats)
     if (incSets) {
       workoutStats.totalStats.totalSets += 1
       const exerciseStatsIdx = workoutStats.exerciseStats.findIndex(
