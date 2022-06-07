@@ -67,7 +67,7 @@ h1 {
 }
 
 .app-container {
-  max-width: 450px;
+  max-width: $max-width;
   height: 100%;
   margin: 0 auto;
   background: $primary-background;
