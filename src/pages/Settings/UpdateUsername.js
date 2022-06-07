@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import UpdateUserInput from '../../components/SettingsComponents/UpdateUserInput'
+import UpdateUserInput from '../../components/SettingsComponents/UpdateUserInput/UpdateUserInput'
 import { useNavigate } from 'react-router'
-import { useAuth } from '../../contexts/AuthContext'
+import { connect } from 'react-redux'
+import { updateUserAccountData } from '../../redux/actions/auth/authStatus'
 
-const UpdateUsername = () => {
-  const { updateUserData, currUserData } = useAuth()
-  const { username } = currUserData
+const UpdateUsername = ({ updateUserAccountData, userAccountData }) => {
+  const { username } = userAccountData
   const navigate = useNavigate()
 
   const [newUsername, setNewUsername] = useState(username)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     if (newUsername !== '' && newUsername !== username) {
       const payload = { prop: 'username', val: newUsername }
-      updateUserData(payload)
+      updateUserAccountData(payload)
         .then(() => {
           console.log('hello there')
           navigate(-1)
@@ -22,19 +23,32 @@ const UpdateUsername = () => {
           console.log(err)
         })
     }
-  }, [newUsername, username, updateUserData, navigate])
+  }, [newUsername, username, updateUserAccountData, navigate])
 
   return (
     <div className='update-name-page page'>
       <div className='settings-title'>Username</div>
+      <div className='error'>{error}</div>
       <UpdateUserInput
         placeholder={'Enter Updated Username'}
         val={newUsername}
         setVal={setNewUsername}
         maxCharacters={30}
+        setError={setError}
       />
     </div>
   )
 }
 
-export default UpdateUsername
+const mapStateToProps = state => {
+  return {
+    userAccountData: state.auth.userAccountData,
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    updateUserAccountData: data => dispatch(updateUserAccountData(data)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateUsername)

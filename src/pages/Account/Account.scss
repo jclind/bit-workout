@@ -1,0 +1,33 @@
+@import '../../helpers.scss';
+
+.account-page {
+  padding-top: toRem(50);
+  width: 90%;
+  margin: 0 auto;
+  .info-tiles {
+    margin: 0 auto;
+    display: grid;
+    justify-items: center;
+    margin-top: toRem(40);
+    grid-template-columns: 1fr 1fr;
+  }
+  .settings-btn-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    text-decoration: none;
+    margin-top: 4rem;
+    .icon {
+      position: absolute;
+      height: 20px;
+      right: toRem(10);
+    }
+    button {
+      background: none;
+      border: 2px solid $primary;
+      font-size: toRem(14);
+      font-weight: 700;
+      height: 45px;
+    }
+  }
+}

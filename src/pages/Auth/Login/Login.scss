@@ -1,0 +1,82 @@
+@import '../../../helpers.scss';
+
+.login-container {
+  overflow-y: scroll;
+  .login-background {
+    z-index: 1;
+    width: 100%;
+    height: 35vh;
+    object-fit: fill;
+  }
+  .title {
+    position: absolute;
+    top: calc(40vh * 0.15);
+    margin: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+  .form-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+    padding: 0 toRem(20);
+    padding-top: toRem(25);
+    padding-bottom: 2rem;
+    margin: 0;
+
+    .error {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 5px;
+      font-size: toRem(14);
+      font-weight: 600;
+      padding: 0.5rem;
+      margin: 0 auto;
+      background: $error-red;
+      .icon {
+        flex-shrink: 0;
+      }
+    }
+
+    form {
+      width: 100%;
+      .inputs {
+        display: flex;
+        flex-direction: column;
+        gap: toRem(25);
+        margin: toRem(25) 0 toRem(10) 0;
+      }
+      .forgot-password {
+        font-size: toRem(12);
+        font-weight: 500;
+        color: $secondary;
+        padding: 0;
+        margin: 0;
+      }
+      .submit-btn {
+        display: flex;
+        justify-content: center;
+        margin-top: toRem(50);
+        height: 53px;
+      }
+      .dont-have-account {
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        margin-top: toRem(25);
+        font-size: toRem(12);
+        gap: 1ch;
+        font-weight: 700;
+        color: $secondary-text;
+
+        .dont-have-account-btn {
+          color: $secondary;
+        }
+      }
+    }
+  }
+}

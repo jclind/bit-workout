@@ -1,0 +1,36 @@
+@import '../../../helpers.scss';
+
+.change-weight-modal {
+  .modal-content {
+    width: calc(#{$max-width} * 0.9);
+    .sub-text {
+      margin: 0;
+      margin-top: toRem(10);
+      margin-bottom: toRem(30);
+      font-size: toRem(12);
+      font-weight: 500;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin: 0;
+      margin-top: toRem(50);
+      .cancel-btn,
+      .save-btn {
+        font-size: toRem(18);
+        font-weight: 600;
+        padding: 0.75rem 0.75rem;
+        border-radius: $border-radius;
+        margin: 0;
+      }
+      .cancel-btn {
+        // background: $placeholder-color;
+        // color: $secondary-text;
+        border: 1px solid $primary;
+      }
+      .save-btn {
+        background: $secondary;
+      }
+    }
+  }
+}

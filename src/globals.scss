@@ -1,0 +1,242 @@
+@import './helpers.scss';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+* {
+  font-family: $font-family;
+  letter-spacing: 0.05em;
+}
+
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+}
+body {
+  color: $primary;
+  position: relative;
+  width: 100%;
+  background: $tertiary-background;
+  padding: 0;
+}
+
+#root {
+  height: 100%;
+  padding: 0;
+}
+
+button {
+  height: 40px;
+  border: none;
+  margin-top: 2rem;
+  width: 100%;
+  border-radius: toRem(5);
+  color: $primary;
+}
+
+input {
+  background: none;
+  outline: none;
+  border: none;
+  border-radius: none !important;
+  box-shadow: none;
+  font-size: toRem(16) !important;
+}
+input::placeholder {
+  text-transform: capitalize;
+  color: $placeholder-color;
+}
+.placeholder {
+  text-transform: capitalize;
+  color: $placeholder-color;
+}
+input {
+  -webkit-appearance: none;
+}
+
+h1,
+h2 {
+  padding: 0;
+  margin: 0;
+  background: none;
+
+  font-weight: 700;
+}
+
+h1 {
+  font-size: toRem(36) !important;
+}
+
+.app-container {
+  max-width: $max-width;
+  height: 100%;
+  margin: 0 auto;
+  background: $primary-background;
+  overflow: auto;
+}
+
+.page {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: $page-margin-top;
+
+  .error {
+    margin: 0 auto;
+    text-align: center;
+    font-size: toRem(16);
+    color: $error-red;
+  }
+}
+
+.form-error,
+.form-success {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 5px;
+  font-size: toRem(14);
+  font-weight: 600;
+  padding: 0.5rem;
+  width: 90%;
+  margin: 0 auto;
+  .icon {
+    flex-shrink: 0;
+  }
+}
+.form-success {
+  background: $success-green;
+}
+.form-error {
+  background: $error-red;
+}
+
+// Form Styles
+.form-label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: $form-label-height;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  border-radius: none;
+  border-bottom: 1px solid $primary;
+
+  &:focus-within {
+    border-bottom: 2px solid $secondary;
+  }
+  .delete-icon {
+    display: flex;
+    align-items: center;
+    height: 22px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    cursor: pointer;
+    img {
+      height: 15px;
+    }
+  }
+}
+label.input-error,
+.input-error label {
+  border-bottom: 2px solid $error-red !important;
+}
+.error-text {
+  color: $error-red;
+  font-size: toRem(16);
+}
+
+// Settings Styles
+.settings-title {
+  font-size: toRem(18);
+  font-weight: 700;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: toRem(50);
+}
+.settings-section {
+  padding-bottom: toRem(25);
+  margin-bottom: toRem(25);
+  border-bottom: 1px solid $primary;
+  &:last-of-type {
+    border: none;
+  }
+}
+
+// Modal Styles
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  margin: 0;
+}
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  text-align: center;
+  width: 90%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem 2rem;
+  font-size: toRem(16);
+  font-weight: 600;
+  background: $secondary-background;
+  border-radius: $border-radius;
+  .title {
+    font-size: toRem(18);
+    color: $primary;
+    margin: 0;
+    text-transform: capitalize;
+  }
+}
+
+.sub-text {
+  font-size: toRem(12);
+  font-weight: 700;
+  color: $secondary-text;
+  text-align: center;
+}
+
+.text-link {
+  color: $secondary;
+  font-size: inherit;
+  text-decoration: underline;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+input:-internal-autofill-selected,
+input:-internal-autofill-previewed,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: none !important;
+  color: $primary;
+  -webkit-text-fill-color: $primary !important;
+  -webkit-box-shadow: 0 0 0px 1000px $primary-background inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input:-webkit-autofill::first-line {
+  font-size: 16px;
+}
+
+input[type='date']::-webkit-inner-spin-button,
+input[type='date']::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}

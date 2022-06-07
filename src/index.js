@@ -1,12 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import './assets/styles/globals.scss'
+import './globals.scss'
 import 'normalize.css'
+import { Provider } from 'react-redux'
+import store from './redux/store'
+import { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <SkeletonTheme baseColor='#3a495e' highlightColor='#406f86'>
+        <App />
+      </SkeletonTheme>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 )

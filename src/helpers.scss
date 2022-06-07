@@ -1,0 +1,54 @@
+@function toRem($value) {
+  $remValue: $value / 16 + rem;
+  @return $remValue;
+}
+
+$primary: #eeeeee;
+$secondary: #548ca8;
+$placeholder-color: #8e8e8e;
+
+$white-text: #ffffff;
+$secondary-text: #c0c0c0;
+$tertiary-text: #748194;
+
+$primary-background: #334257;
+$secondary-background: #476072;
+$tertiary-background: #283445;
+
+$max-width: 450px;
+
+$gray-background: #606a7a;
+
+$white: rgb(255, 255, 255);
+$gray-50: #fafafa;
+$gray-200: #eeeeee;
+$gray-300: #e6e6e6;
+$gray-400: #d6d6d6;
+$gray-500: #bebebe;
+$gray-600: #a6a6a6;
+$gray-900: #5f5f5f;
+
+$success-green: #28a745;
+$error-red: #dc3545;
+$error-red-hover: #b02a37;
+
+$alert-error-red: #f8d7da;
+$alert-error-red-border: #f5c6cb;
+$alert-error-red-text: #721c24;
+
+$border-radius: 5px;
+
+$navbar-height: toRem(65);
+
+$page-margin-top: toRem(30);
+
+$form-label-height: toRem(55);
+$form-input-height: toRem(45);
+
+// Fonts and font-styles
+$font-family: 'Montserrat', sans-serif;
+
+:export {
+  secondaryColor: $secondary;
+  primaryBackground: $primary-background;
+}
