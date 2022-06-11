@@ -20,8 +20,10 @@ const WeightData = ({ weightData }) => {
     { value: 'all', label: 'A' },
   ]
 
-  const [selectedTimeSpan, setSelectedTimeSpan] = useState(timeSpanOptions[0])
-
+  const [selectedTimeSpan, setSelectedTimeSpan] = useState(
+    timeSpanOptions[0].value
+  )
+  console.log(weightData)
   const timeSpanData = getTimeSpanData(selectedTimeSpan, weightData)
   const labels = timeSpanData.labels
   const chartData = timeSpanData.data
@@ -62,7 +64,6 @@ const WeightData = ({ weightData }) => {
     maintainAspectRatio: false,
   }
 
-  // console.log(labels)
   const data = {
     labels: labels,
     datasets: [
@@ -102,7 +103,7 @@ const mapStateToProps = state => {
 
   let weightsArray = []
   if (!Array.isArray(weights)) {
-    const createdDate = state.auth.userAuth.createdAd
+    const createdDate = state.auth.userAuth.createdAt
     const weight = state.auth.userAccountData.weight
     weightsArray = [{ date: createdDate, weight }]
   } else {
