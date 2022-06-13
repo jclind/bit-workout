@@ -25,6 +25,7 @@ import {
   updatePassword,
   sendPasswordResetEmail,
 } from 'firebase/auth'
+import { fetchCharacterData } from '../character/character'
 
 export const signInAndFetchUserAccountData =
   user => async (dispatch, getState) => {
@@ -33,6 +34,7 @@ export const signInAndFetchUserAccountData =
     await dispatch(setUserStatusSignedIn(user))
 
     await dispatch(fetchUserData(uid))
+    await dispatch(fetchCharacterData(uid))
 
     // Migrating email to be used from userAccountData instead of user auth.
     // If email doesn't exists in userAccountData, add the current user's email

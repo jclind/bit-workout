@@ -1,4 +1,10 @@
-import { INC_COINS, DEC_COINS, INC_EXP, DEC_EXP } from '../types'
+import {
+  INC_COINS,
+  DEC_COINS,
+  INC_EXP,
+  DEC_EXP,
+  FETCH_CHARACTER_DATA,
+} from '../types'
 
 const INITIAL_STATE = {
   coins: 0,
@@ -9,6 +15,8 @@ const INITIAL_STATE = {
 
 const characterReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case FETCH_CHARACTER_DATA:
+      return { ...action.payload }
     case INC_COINS:
       const incCoins = state.coins + action.payload
       return { ...state, coins: incCoins }

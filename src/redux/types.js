@@ -13,6 +13,7 @@ export const SET_WORKOUT_DATA = 'SET_WORKOUT_DATA'
 export const SET_WORKOUT_FINISHED = 'SET_WORKOUT_FINISHED'
 
 // Character Types
+export const FETCH_CHARACTER_DATA = 'FETCH_CHARACTER_DATA'
 export const INC_COINS = 'INC_COINS'
 export const DEC_COINS = 'DEC_COINS'
 export const INC_EXP = 'INC_EXP'
