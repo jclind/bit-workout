@@ -1,5 +1,6 @@
 import {
   FETCH_WORKOUT_DATA,
+  SET_COMPLETED_WORKOUT_DATA,
   SET_WORKOUT_DATA,
   SET_WORKOUT_FINISHED,
 } from '../../types'
@@ -141,7 +142,7 @@ const incCurrWorkoutStats = (
         Number(workoutStats.exerciseStats[exerciseStatsIdx].totalSets) + 1
     }
     if (incReps) {
-      workoutStats.totalStats.totalReps += incReps
+      workoutStats.totalStats.totalReps += Number(incReps)
       const exerciseStatsIdx = workoutStats.exerciseStats.findIndex(
         exercise => exercise.exerciseID === exerciseID
       )
@@ -344,6 +345,7 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
     path: pathData,
   }
   dispatch(updateWorkout(updatedData))
+  dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
   dispatch(setWorkoutFinished(true))
   dispatch(addWorkoutToPastWorkouts(finishedWorkoutData))
 }
