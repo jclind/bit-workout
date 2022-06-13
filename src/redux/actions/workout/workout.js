@@ -18,7 +18,7 @@ import {
   getDocs,
 } from 'firebase/firestore'
 import { exerciseList } from '../../../assets/data/exerciseList'
-import { logWorkout } from '../character/character'
+import { calcCoins, calcExp, logWorkout } from '../character/character'
 
 export const fetchWorkoutData = uid => async dispatch => {
   await getDoc(doc(db, 'workoutData', uid)).then(document => {
@@ -90,6 +90,8 @@ export const startWorkout = exercise => async (dispatch, getState) => {
         isTimer: false,
         timerStart: null,
       },
+      coins: 0,
+      exp: 0,
     },
   }
   dispatch(updateWorkout(data))
@@ -162,13 +164,18 @@ export const completeSet =
     const currWorkoutPathLength = runningWorkout.currWorkout.path.length
     const elapsedTime = new Date().getTime() - timeLastUpdated
 
+    const currCoins = runningWorkout.coins ? runningWorkout.coins : 0
+    const totalCoins = calcCoins(completedReps) + currCoins
+    const currExp = runningWorkout.exp ? runningWorkout.exp : 0
+    const totalExp = calcExp(completedReps) + currExp
+
     // If the current set is the last set
     // Else start rest timer, increment set, and updateWorkout
     if (currSet >= currSetTotal) {
       // If the last set of the last exercise is finished then call finishWorkout
       // Else begin next rest timer, increment currSet and currIdx, and updateWorkout
       if (currIdx >= currWorkoutPathLength - 1) {
-        dispatch(finishWorkout())
+        dispatch(finishWorkout(totalCoins, totalExp))
       } else {
         const startTime = new Date().getTime()
         const nextIdx = currIdx + 1
@@ -188,6 +195,8 @@ export const completeSet =
           'runningWorkout.timer.timerStart': startTime,
           'runningWorkout.currWorkout.lastSetFailed': false,
           'runningWorkout.timeLastUpdated': new Date().getTime(),
+          'runningWorkout.coins': totalCoins,
+          'runningWorkout.exp': totalExp,
           workoutStats,
         }
 
@@ -212,6 +221,8 @@ export const completeSet =
         'runningWorkout.timer.timerStart': startTime,
         'runningWorkout.currWorkout.lastSetFailed': lastSetFailed || false,
         'runningWorkout.timeLastUpdated': new Date().getTime(),
+        'runningWorkout.coins': totalCoins,
+        'runningWorkout.exp': totalExp,
         workoutStats,
       }
       dispatch(updateWorkout(updatedData))
@@ -279,7 +290,7 @@ export const addWorkoutToPastWorkouts = data => async (dispatch, getState) => {
       console.log('workout not added to data:', err)
     })
 }
-export const finishWorkout = () => async (dispatch, getState) => {
+export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
   const workoutData = getState().workout.workoutData
   const runningWorkout = workoutData.runningWorkout
   const currWorkout = runningWorkout.currWorkout
@@ -328,6 +339,8 @@ export const finishWorkout = () => async (dispatch, getState) => {
     workoutRestTime: currWorkout.restTime,
     workoutStartTime,
     totalWorkoutTime,
+    coinsEarned: coins,
+    expEarned: exp,
     path: pathData,
   }
   dispatch(updateWorkout(updatedData))

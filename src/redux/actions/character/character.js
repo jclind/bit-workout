@@ -1,11 +1,15 @@
 import { DEC_COINS, DEC_EXP, INC_COINS, INC_EXP } from '../../types'
 
-export const logWorkout = reps => async dispatch => {
-  const numCoins = Math.ceil(reps * 0.8)
-  const exp = Math.ceil(reps * 0.5)
+export const calcCoins = reps => {
+  return Math.ceil(reps * 0.8)
+}
+export const calcExp = reps => {
+  return Math.ceil(reps * 0.5)
+}
 
-  dispatch(addCoins(numCoins))
-  dispatch(addExp(exp))
+export const logWorkout = reps => async dispatch => {
+  dispatch(addCoins(calcCoins(reps)))
+  dispatch(addExp(calcExp(reps)))
 }
 
 export const addCoins = numCoins => async (dispatch, state) => {
