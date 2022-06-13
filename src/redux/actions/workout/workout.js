@@ -18,6 +18,7 @@ import {
   getDocs,
 } from 'firebase/firestore'
 import { exerciseList } from '../../../assets/data/exerciseList'
+import { logWorkout } from '../character/character'
 
 export const fetchWorkoutData = uid => async dispatch => {
   await getDoc(doc(db, 'workoutData', uid)).then(document => {
@@ -147,6 +148,7 @@ const incCurrWorkoutStats = (
         Number(incReps)
     }
   }
+
   return workoutStats
 }
 
@@ -214,6 +216,9 @@ export const completeSet =
       }
       dispatch(updateWorkout(updatedData))
     }
+
+    // Calculate character stats based on completed reps
+    dispatch(logWorkout(completedReps))
   }
 
 export const failSet =
