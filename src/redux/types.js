@@ -15,3 +15,7 @@ export const SET_WORKOUT_FINISHED = 'SET_WORKOUT_FINISHED'
 // Character Types
 export const INC_COINS = 'INC_COINS'
 export const DEC_COINS = 'DEC_COINS'
+export const INC_EXP = 'INC_EXP'
+export const DEC_EXP = 'DEC_EXP'
+export const INC_HEALTH = 'INC_HEALTH'
+export const DEC_HEALTH = 'DEC_HEALTH'
