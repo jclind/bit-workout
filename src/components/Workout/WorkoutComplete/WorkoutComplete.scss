@@ -8,12 +8,6 @@
   height: calc(100vh - #{$navbar-height});
   max-height: -webkit-fill-available;
   overflow: hidden;
-  .anim {
-    // position: absolute;
-    // width: 140%;
-    // top: 50%;
-    // transform: translateY(-50%);
-  }
   .content {
     text-align: center;
     z-index: 10;
@@ -24,6 +18,31 @@
     }
     .text {
       font-size: toRem(18);
+    }
+    .stats {
+      display: flex;
+      gap: 1.5rem;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 0;
+      .stat {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 auto;
+        width: 80%;
+        .label {
+          color: $secondary-text;
+          font-size: 0.9rem;
+        }
+        .data {
+          display: flex;
+          font-size: 1.1rem;
+        }
+        .data.time {
+          gap: 0.5rem;
+        }
+      }
     }
     .back-home-btn {
       background: $secondary;
