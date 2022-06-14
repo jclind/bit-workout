@@ -1,6 +1,11 @@
 @import '../../helpers.scss';
 
 .character {
+  background: $secondary-background;
+  padding: 1rem;
+  border-radius: $border-radius;
+  margin-bottom: 2rem;
+
   .head {
     display: flex;
     align-items: center;
