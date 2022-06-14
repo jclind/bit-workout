@@ -41,7 +41,7 @@ const Character = ({ username, exp, coins }) => {
             </div>
             <div className='text'>
               <div className='data'>
-                {expThroughCurrLevel} / {levelDifference}
+                {expThroughCurrLevel || 0} / {levelDifference}
               </div>
               <div className='title'>Experience</div>
             </div>
