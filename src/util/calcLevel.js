@@ -10,6 +10,10 @@ export const calcLevel = exp => {
 export const calcExp = level => {
   return Math.floor(Math.pow(level / X, Y))
 }
+// const calcTotalLvlExp = lvl => {
+//   let totalExp = 0
+//   for (let i = 1; i >= 1)
+// }
 
 export const expToAdvanceFrom = level => {
   const nextLevel = level + 1
@@ -27,4 +31,8 @@ export const expToLevelAndDifference = totalExp => {
     level++
   }
   if (expLeft < 0) level--
+
+  const expThroughCurrLevel = totalExp - calcExp(level)
+  const levelDifference = calcExp(level + 1) - calcExp(level)
+  return { level, expThroughCurrLevel, levelDifference }
 }
