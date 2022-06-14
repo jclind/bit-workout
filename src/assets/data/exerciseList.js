@@ -84,4 +84,11 @@ export const exerciseList = [
     weights: true,
     imageURL: '/workouts/incline-bench-press.png',
   },
+  {
+    id: 12,
+    name: 'Reverse Barbell Curl',
+    animation: null,
+    weights: true,
+    imageURL: '/workouts/reverse-barbell-curl.png',
+  },
 ]
