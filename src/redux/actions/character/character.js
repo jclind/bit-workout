@@ -16,10 +16,10 @@ export const fetchCharacterData = uid => async dispatch => {
 }
 
 export const calcCoins = reps => {
-  return Math.ceil(reps * 0.8)
+  return Math.ceil(reps * 0.5)
 }
 export const calcExp = reps => {
-  return Math.ceil(reps * 0.5)
+  return Math.ceil(reps * 0.8)
 }
 
 export const logWorkout = reps => async (dispatch, getState) => {

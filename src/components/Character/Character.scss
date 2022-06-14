@@ -37,13 +37,18 @@
         }
         .coins {
           display: flex;
+          align-items: center;
           gap: 0.15rem;
           margin-left: auto;
-          align-items: center;
+          color: $coin-color;
+          .text {
+            display: flex;
+            font-weight: 500;
+            height: 1rem;
+          }
           .coin-icon {
             height: 20px;
             width: 20px;
-            color: $coin-color;
           }
         }
       }
