@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux'
 const Character = ({ username, exp, coins }) => {
   const { level, expThroughCurrLevel, levelDifference } =
-    expToLevelAndDifference(544)
+    expToLevelAndDifference(exp)
 
   return (
     <div className='character'>
@@ -25,7 +25,8 @@ const Character = ({ username, exp, coins }) => {
             <div className='username'>{username}</div>-
             <div className='level'>Level {level}</div>
             <div className='coins'>
-              <RiCopperCoinLine className='coin-icon' /> {coins || 0}
+              <RiCopperCoinLine className='coin-icon' />{' '}
+              <div className='text'>{coins || 0}</div>
             </div>
           </div>
           <div className='exp-bar-container'>
