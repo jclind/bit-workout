@@ -22,6 +22,7 @@ import AddWeightInput from './pages/Account/WeightData/AddWeightInput/AddWeightI
 import CreateWorkout from './pages/CreateWorkout/CreateWorkout'
 import Auth from './Auth'
 import AppLoadingScreen from './components/AppLoadingScreen/AppLoadingScreen'
+import Feedback from './pages/Settings/Feedback'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -81,6 +82,11 @@ function App() {
                 exact
                 path='/account/settings/security'
                 element={<Security />}
+              />
+              <Route
+                exact
+                path='/account/settings/feedback'
+                element={<Feedback />}
               />
             </Route>
             <Route path='/signup' element={<Signup />}>
