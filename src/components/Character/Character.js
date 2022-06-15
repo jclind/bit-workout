@@ -11,8 +11,10 @@ import {
 } from '../../util/calcLevel'
 import { connect } from 'react-redux'
 const Character = ({ username, exp, coins }) => {
-  const { level, expThroughCurrLevel, levelDifference } =
-    expToLevelAndDifference(exp)
+  const expData = expToLevelAndDifference(exp)
+  const level = expData.level || 0
+  const expThroughCurrLevel = expData.expThroughCurrLevel || 0
+  const levelDifference = expData.levelDifference || 33
 
   return (
     <div className='character'>
