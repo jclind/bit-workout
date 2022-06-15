@@ -158,6 +158,14 @@ const Feedback = () => {
             <button type='submit' className='submit-help-btn btn'>
               Submit
             </button>
+            <a
+              href='https://github.com/jclind/bit-workout/issues'
+              className='issue-link'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              Report issue on github
+            </a>
           </form>
         )}
       </div>

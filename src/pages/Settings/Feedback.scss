@@ -83,10 +83,10 @@
 
       label {
         .text {
-          font-size: toRem(14);
+          font-size: 0.8rem;
           font-weight: 600;
           padding-bottom: 0.5rem;
-          color: $primary;
+          color: $secondary-text;
         }
       }
       input,
@@ -118,6 +118,12 @@
         border-radius: $border-radius;
         color: $white;
         background: $secondary;
+      }
+      a.issue-link {
+        margin: 0 auto;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: $secondary;
       }
     }
   }
