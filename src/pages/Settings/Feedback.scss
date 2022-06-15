@@ -66,6 +66,7 @@
           height: 40px;
           box-sizing: border-box;
           padding: 0.5rem;
+          color: $primary;
         }
       }
       label.description-input-label {
@@ -76,6 +77,7 @@
           box-sizing: border-box;
           resize: vertical;
           padding: 0.5rem;
+          color: $primary;
         }
       }
 
@@ -106,6 +108,10 @@
       }
 
       button.submit-help-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 45px;
         padding: 0.75rem;
         font-size: toRem(20);
         font-weight: 600;
