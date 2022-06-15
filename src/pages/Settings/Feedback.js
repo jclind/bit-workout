@@ -27,9 +27,10 @@ const customStyles = {
   }),
   singleValue: (provided, state) => ({
     ...provided,
-    color: 'hsl(0, 0%, 0%)',
+    color: 'white',
     fontWeight: '500',
     paddingBottom: '3px',
+    background: 'none',
   }),
 
   valueContainer: (provided, state) => ({
@@ -53,6 +54,21 @@ const customStyles = {
     ...provided,
     fontWeight: '500',
     color: '#bebebe',
+  }),
+  menu: (provided, state) => ({
+    ...provided,
+    background: '#334257',
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    background: state.isSelected
+      ? '#548ca8'
+      : state.isFocused
+      ? '#476072'
+      : 'none',
+    ':active': {
+      background: '#476072',
+    },
   }),
 }
 
