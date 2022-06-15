@@ -3,6 +3,7 @@ import Select from 'react-select'
 import { useForm } from '@formspree/react'
 import './Feedback.scss'
 import BackButton from '../../components/SettingsComponents/BackButton/BackButton'
+import { AiOutlineCheck } from 'react-icons/ai'
 
 const options = [
   { value: 'bug', label: 'Reporting A Bug' },
@@ -79,7 +80,7 @@ const Feedback = () => {
 
   const [error, setError] = useState('')
 
-  const [formState, submitFormspree] = useForm('xknyboeq')
+  const [formState, submitFormspree] = useForm('xjvlzdkq')
 
   const handleSelectChange = e => {
     setSelectOption(e)
@@ -103,10 +104,11 @@ const Feedback = () => {
       <div className='form-container'>
         {formState.succeeded ? (
           <div className='form-success'>
-            <h1>Form Submitted!</h1>
-            <div className='image-container'>
-              <img src='/images/form-submitted.svg' alt='letter submitted' />
+            <AiOutlineCheck className='icon' />
+            <div className='text'>
+              Thank you for your feedback, we really appreciate it!
             </div>
+
             <button
               className='submit-another-form-btn btn'
               onClick={() => window.location.reload()}
