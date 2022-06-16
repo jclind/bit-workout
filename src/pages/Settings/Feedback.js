@@ -4,6 +4,7 @@ import { useForm } from '@formspree/react'
 import './Feedback.scss'
 import BackButton from '../../components/SettingsComponents/BackButton/BackButton'
 import { AiOutlineCheck } from 'react-icons/ai'
+import { RiCopperCoinLine } from 'react-icons/ri'
 import { connect } from 'react-redux'
 import { submitUserFeedback } from '../../redux/actions/auth/authStatus'
 
@@ -80,7 +81,7 @@ const Feedback = ({ submitUserFeedback }) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
 
-  const [coinsEarned, setCoinsEarned] = useState(0)
+  const [coinsEarned, setCoinsEarned] = useState(null)
 
   const [error, setError] = useState('')
 
@@ -99,12 +100,13 @@ const Feedback = ({ submitUserFeedback }) => {
     if (!selectOption) return setError('Please Enter Category')
 
     submitFormspree(e)
-    const test = await submitUserFeedback(
+    const numCoinsEarned = await submitUserFeedback(
       selectOption.value,
       title,
       description
     )
-    console.log(test)
+    console.log(numCoinsEarned)
+    setCoinsEarned(numCoinsEarned)
     clearForm()
   }
 
@@ -118,6 +120,13 @@ const Feedback = ({ submitUserFeedback }) => {
             <div className='text'>
               Thank you for your feedback, we really appreciate it!
             </div>
+
+            {coinsEarned !== null ? (
+              <div className='coins'>
+                <div className='text'>+</div>
+                <RiCopperCoinLine className='coin-icon' /> {coinsEarned}
+              </div>
+            ) : null}
 
             <button
               className='submit-another-form-btn btn'
