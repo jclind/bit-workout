@@ -278,7 +278,7 @@ export const submitUserFeedback =
       description,
     })
 
-    let coinsAdded
+    let coinsAdded = 0
 
     // Only give user coins for every 2 feedback forms they submit per day
     if (feedbackSubmittedToday.length === 0) {
