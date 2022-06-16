@@ -40,7 +40,6 @@ const Settings = ({ logout }) => {
       </section>
       <section className='support-section settings-section'>
         <SettingsSectionTitle text={'support'} />
-        <SettingsButton title={'Report A Problem'} icon={bugIcon} link={'/'} />
         <SettingsButton
           title={'Feedback'}
           icon={feedbackIcon}
