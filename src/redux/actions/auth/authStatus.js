@@ -11,6 +11,12 @@ import {
   updateDoc,
   deleteDoc,
   arrayUnion,
+  collection,
+  query,
+  where,
+  QuerySnapshot,
+  getDocs,
+  addDoc,
 } from 'firebase/firestore'
 import { db } from '../../../firebase'
 import { auth } from '../../../firebase'
@@ -25,7 +31,11 @@ import {
   updatePassword,
   sendPasswordResetEmail,
 } from 'firebase/auth'
-import { fetchCharacterData } from '../character/character'
+import {
+  addCoins,
+  fetchCharacterData,
+  updateCoins,
+} from '../character/character'
 
 export const signInAndFetchUserAccountData =
   user => async (dispatch, getState) => {
@@ -242,3 +252,42 @@ export const addWeight = weightData => async (dispatch, getState) => {
 
   return error
 }
+
+// Add Feedback to user account
+export const submitUserFeedback =
+  (category, title, description) => async (dispatch, getState) => {
+    const uid = getState().auth.userAuth.uid
+    const date = new Date().toISOString().substring(0, 10)
+
+    const userDataRef = doc(db, 'users', uid)
+    const userFeedbackRef = collection(userDataRef, 'feedback')
+
+    const q = query(userFeedbackRef, where('date', '==', date))
+    const querySnapshot = await getDocs(q).catch(err => console.log(err))
+    const feedbackSubmittedToday = []
+    querySnapshot.forEach(doc => {
+      console.log(doc)
+      feedbackSubmittedToday.push(doc.data())
+    })
+    console.log('', feedbackSubmittedToday)
+
+    await addDoc(userFeedbackRef, {
+      date,
+      category,
+      title,
+      description,
+    })
+
+    let coinsAdded
+
+    // Only give user coins for every 2 feedback forms they submit per day
+    if (feedbackSubmittedToday.length === 0) {
+      coinsAdded = 10
+      dispatch(updateCoins(coinsAdded))
+    } else if (feedbackSubmittedToday.length === 1) {
+      coinsAdded = 5
+      dispatch(updateCoins(coinsAdded))
+    }
+
+    return coinsAdded
+  }
