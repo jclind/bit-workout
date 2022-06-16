@@ -25,7 +25,7 @@ export const expToAdvanceFrom = level => {
 
 export const expToLevelAndDifference = totalExp => {
   let expLeft = totalExp
-  let level = 1
+  let level = 0
   while (expLeft >= 0) {
     expLeft = expLeft - expToAdvanceFrom(level)
     level++
