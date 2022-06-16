@@ -4,6 +4,8 @@ import { useForm } from '@formspree/react'
 import './Feedback.scss'
 import BackButton from '../../components/SettingsComponents/BackButton/BackButton'
 import { AiOutlineCheck } from 'react-icons/ai'
+import { connect } from 'react-redux'
+import { submitUserFeedback } from '../../redux/actions/auth/authStatus'
 
 const options = [
   { value: 'bug', label: 'Reporting A Bug' },
@@ -73,10 +75,12 @@ const customStyles = {
   }),
 }
 
-const Feedback = () => {
+const Feedback = ({ submitUserFeedback }) => {
   const [selectOption, setSelectOption] = useState(null)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+
+  const [coinsEarned, setCoinsEarned] = useState(0)
 
   const [error, setError] = useState('')
 
@@ -90,11 +94,17 @@ const Feedback = () => {
     setTitle('')
     setDescription('')
   }
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
     if (!selectOption) return setError('Please Enter Category')
 
     submitFormspree(e)
+    const test = await submitUserFeedback(
+      selectOption.value,
+      title,
+      description
+    )
+    console.log(test)
     clearForm()
   }
 
@@ -176,4 +186,11 @@ const Feedback = () => {
   )
 }
 
-export default Feedback
+const mapDispatchToProps = dispatch => {
+  return {
+    submitUserFeedback: (category, title, description) =>
+      dispatch(submitUserFeedback(category, title, description)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Feedback)

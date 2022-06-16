@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
 import { db } from '../../../firebase'
 import {
   DEC_COINS,
@@ -9,10 +9,19 @@ import {
 } from '../../types'
 
 export const fetchCharacterData = uid => async dispatch => {
-  await getDoc(doc(db, 'characterData', uid)).then(document => {
-    const characterData = document.data()
-    dispatch({ type: FETCH_CHARACTER_DATA, payload: characterData })
-  })
+  const characterDataRef = doc(db, 'characterData', uid)
+  const characterDoc = await getDoc(characterDataRef)
+  let characterData = characterDoc.data()
+  if (!characterDoc.exists()) {
+    const characterInitialState = {
+      coins: 0,
+      exp: 0,
+      health: 0,
+    }
+    characterData = characterInitialState
+    await setDoc(characterDataRef, characterInitialState)
+  }
+  dispatch({ type: FETCH_CHARACTER_DATA, payload: characterData })
 }
 
 export const calcCoins = reps => {
@@ -42,6 +51,22 @@ export const logWorkout = reps => async (dispatch, getState) => {
 
   dispatch(addCoins(incCoins))
   dispatch(addExp(incExp))
+}
+
+export const updateCoins = numCoins => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
+  const currCoins = getState().character.coins
+
+  if (numCoins >= 0) {
+    dispatch(addCoins(numCoins))
+  } else {
+    dispatch(removeCoins(numCoins))
+  }
+
+  const characterData = doc(db, 'characterData', uid)
+  updateDoc(characterData, {
+    coins: currCoins + numCoins,
+  })
 }
 
 export const addCoins = numCoins => async (dispatch, state) => {
