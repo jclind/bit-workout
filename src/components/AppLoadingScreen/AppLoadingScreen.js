@@ -1,7 +1,7 @@
 import React from 'react'
-import './AppLoadingScreen.scss'
 import dumbbellIcon from '../../assets/images/icons/dumbbell-icon.svg'
 import HashLoader from 'react-spinners/HashLoader'
+import './AppLoadingScreen.scss'
 
 const AppLoadingScreen = () => {
   return (

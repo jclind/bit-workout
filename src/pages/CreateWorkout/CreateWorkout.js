@@ -6,7 +6,7 @@ import {
   AiOutlineMenu,
   AiOutlineWarning,
 } from 'react-icons/ai'
-import AddedExerciseItem from '../../components/CreateWorkout/AddedExerciseItem/AddedExerciseItem'
+import AddedExerciseItemContainer from '../../components/CreateWorkout/AddedExerciseItem/AddedExerciseItemContainer'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { v4 as uuidv4 } from 'uuid'
 import { connect } from 'react-redux'
@@ -287,7 +287,7 @@ const CreateWorkout = ({ createWorkout }) => {
                               >
                                 <AiOutlineMenu className='icon handle-icon' />
                               </div>
-                              <AddedExerciseItem
+                              <AddedExerciseItemContainer
                                 item={item}
                                 className={
                                   snapshot.isDraggingOver && 'dragging'

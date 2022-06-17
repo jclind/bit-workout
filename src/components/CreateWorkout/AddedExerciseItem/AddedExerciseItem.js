@@ -1,52 +1,24 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { FiChevronDown } from 'react-icons/fi'
 import FormInput from '../../FormInput/FormInput'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import './AddedExerciseItem.scss'
-import useClickOutside from '../../../util/useClickOutside'
 
 const AddedExerciseItem = ({
-  item,
-  changeAddedExerciseData,
+  id,
+  selectedExercise,
+  selectExercise,
+  exerciseContainer,
+  toggleDropdown,
+  isDropdown,
+  exerciseSearchVal,
+  setExerciseSearchVal,
+  reps,
+  setReps,
+  sets,
+  setSets,
   deleteAddedExercise,
 }) => {
-  const id = item.id
-
-  const [reps, setReps] = useState('')
-  const [sets, setSets] = useState('')
-
-  useEffect(() => {
-    if (reps && reps !== item.reps) {
-      changeAddedExerciseData({ reps }, id)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reps])
-  useEffect(() => {
-    if (sets && sets !== item.sets) {
-      changeAddedExerciseData({ sets }, id)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sets])
-
-  const [isDropdown, setIsDropdown] = useState(false)
-  const [exerciseSearchVal, setExerciseSearchVal] = useState('')
-  const [selectedExercise, setSelectedExercise] = useState(item.exercise)
-
-  const exerciseContainer = useClickOutside(() => {
-    setIsDropdown(false)
-  })
-
-  const selectExercise = ex => {
-    changeAddedExerciseData({ exercise: ex }, id)
-    setSelectedExercise(ex)
-    toggleDropdown()
-  }
-
-  const toggleDropdown = () => {
-    setIsDropdown(!isDropdown)
-    setExerciseSearchVal('')
-  }
-
   return (
     <div className='added-exercise-item'>
       <div className='select-exercise-container' ref={exerciseContainer}>
@@ -97,6 +69,7 @@ const AddedExerciseItem = ({
                 <div
                   className='dropdown-cell exercise-cell'
                   onClick={() => selectExercise(ex)}
+                  key={ex.id}
                 >
                   <div className='img-container'>
                     <img src={ex.imageURL} alt='' />

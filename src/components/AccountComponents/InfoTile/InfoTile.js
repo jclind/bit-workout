@@ -4,13 +4,15 @@ import './InfoTile.scss'
 
 const InfoTile = ({ title, text, subtext, link }) => {
   const navigate = useNavigate()
-  const handleClick = () => {
+  const handleInfoTileClick = () => {
     if (link) {
       navigate(link)
+    } else {
+      // !ERROR
     }
   }
   return (
-    <div className='info-tile' onClick={handleClick}>
+    <div className='info-tile' onClick={handleInfoTileClick}>
       <div className='info-tile-title'>{title}</div>
       <div className='text-container'>
         <div className='info-tile-text'>{text}</div>
@@ -21,3 +23,4 @@ const InfoTile = ({ title, text, subtext, link }) => {
 }
 
 export default InfoTile
+
