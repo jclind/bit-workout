@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import UpdateUserInput from '../../components/SettingsComponents/UpdateUserInput/UpdateUserInput'
+import UpdateUserInputContainer from '../../components/SettingsComponents/UpdateUserInput/UpdateUserInputContainer'
 import { useNavigate } from 'react-router'
 import { connect } from 'react-redux'
 import { updateUserAccountData } from '../../redux/actions/auth/authStatus'
@@ -28,7 +28,7 @@ const UpdateName = ({ updateUserAccountData, userAccountData }) => {
     <div className='update-name-page page'>
       <div className='settings-title'>Name</div>
       <div className='error'>{error}</div>
-      <UpdateUserInput
+      <UpdateUserInputContainer
         placeholder={'Enter Updated Name'}
         val={userName}
         setVal={setUserName}
