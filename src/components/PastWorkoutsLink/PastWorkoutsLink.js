@@ -18,6 +18,14 @@ const NoPastWorkout = () => {
 }
 
 const WorkoutTime = ({ workoutTime }) => {
+  if (!workoutTime) {
+    return (
+      <div className='time'>
+        <AiOutlineClockCircle className='icon' />
+      </div>
+    )
+  }
+
   const hours = workoutTime.h
   const minutes = workoutTime.m
   const seconds = workoutTime.s
