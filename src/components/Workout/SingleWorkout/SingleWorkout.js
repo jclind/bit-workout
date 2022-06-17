@@ -9,12 +9,33 @@ import {
   startWorkout,
 } from '../../../redux/actions/workout/workout'
 
-const SingleWorkout = ({
-  exercise,
-  workoutData,
-  startWorkout,
-  addNewExerciseWeight,
-}) => {
+const SingleWorkoutExercise = (exercise, idx, workoutData) => {
+  const currExercise = exerciseList.find(obj => obj.id === exercise.exerciseID)
+  const exerciseID = currExercise.id
+  const currWeightData = workoutData.weights.find(
+    ex => ex.exerciseID === exerciseID
+  )
+
+  let currWeight
+  if (!currWeightData) {
+    currWeight = 45
+    addNewExerciseWeight(45, exerciseID)
+  } else {
+    currWeight = currWeightData.weight
+  }
+  const image = currExercise.imageURL
+  const name = currExercise.name
+
+  return (
+    <div key={idx}>
+      <img src={image} alt={name} className='exercise-img' />
+      <div className='exercise-title'>{name}</div>
+      <div className='exercise-weight'>{currWeight}lbs.</div>
+    </div>
+  )
+}
+
+const SingleWorkout = ({ exercise, workoutData, startWorkout }) => {
   const estTime = msToTime(estimateTime(exercise))
 
   return (
@@ -24,29 +45,13 @@ const SingleWorkout = ({
         <div className='est-time'>Time: ≈{estTime}</div>
       </div>
       <div className='exercises-container'>
-        {exercise.path.map((e, idx) => {
-          const currExercise = exerciseList.find(obj => obj.id === e.exerciseID)
-          const exerciseID = currExercise.id
-          const currWeightData = workoutData.weights.find(
-            ex => ex.exerciseID === exerciseID
-          )
-          console.log(currWeightData)
-          let currWeight
-          if (!currWeightData) {
-            currWeight = 45
-            addNewExerciseWeight(45, exerciseID)
-          } else {
-            currWeight = currWeightData.weight
-          }
-          const image = currExercise.imageURL
-          const name = currExercise.name
-
+        {exercise.path.map((exercise, idx) => {
           return (
-            <div key={idx}>
-              <img src={image} alt={name} className='exercise-img' />
-              <div className='exercise-title'>{name}</div>
-              <div className='exercise-weight'>{currWeight}lbs.</div>
-            </div>
+            <SingleWorkoutExercise
+              exercise={exercise}
+              idx={idx}
+              workoutData={workoutData}
+            />
           )
         })}
       </div>
@@ -65,8 +70,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     startWorkout: exercise => dispatch(startWorkout(exercise)),
-    addNewExerciseWeight: (newWeight, exerciseID) =>
-      dispatch(addNewExerciseWeight(newWeight, exerciseID)),
   }
 }
 

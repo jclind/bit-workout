@@ -38,7 +38,7 @@ const TimerContainer = ({
     }
 
     let timer = setInterval(() => {
-      // Get current time and subtrack start time to get total elapsed time
+      // Get current time and subtract start time to get total elapsed time
       const elapsed = new Date().getTime() - timerStart
 
       // Format elapsed time to milliseconds

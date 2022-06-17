@@ -43,6 +43,7 @@ const ActiveWorkout = ({
   }
 
   const plateWeights = calculatePlates(45, exerciseWeight)
+
   return (
     <div className='active-workout'>
       <div className='current-workout-text'>Current Workout</div>
