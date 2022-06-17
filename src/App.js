@@ -18,7 +18,7 @@ import UpdateEmail from './pages/Settings/UpdateEmail'
 import Security from './pages/Settings/Security/Security'
 import NavbarContainer from './components/Navbar/Navbar'
 import WeightData from './pages/Account/WeightData/WeightData'
-import AddWeightInput from './pages/Account/WeightData/AddWeightInput/AddWeightInput'
+import AddWeightInputContainer from './pages/Account/WeightData/AddWeightInput/AddWeightInputContainer'
 import CreateWorkout from './pages/CreateWorkout/CreateWorkout'
 import Auth from './Auth'
 import AppLoadingScreen from './components/AppLoadingScreen/AppLoadingScreen'
@@ -50,7 +50,7 @@ function App() {
               <Route
                 exact
                 path='/account/weight/add-weight'
-                element={<AddWeightInput />}
+                element={<AddWeightInputContainer />}
               />
               <Route exact path='/account/settings' element={<Settings />} />
               <Route

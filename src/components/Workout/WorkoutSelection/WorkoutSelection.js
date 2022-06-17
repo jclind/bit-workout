@@ -34,10 +34,10 @@ const WorkoutSelection = ({ getWorkouts }) => {
       </div>
       {workouts &&
         workouts.slice(0, 8).map(workout => {
-          if (
-            workoutSearchVal &&
-            !workout.name.toLowerCase().includes(workoutSearchVal.toLowerCase())
-          ) {
+          const workoutMatchesSearchVal = workout.name
+            .toLowerCase()
+            .includes(workoutSearchVal.toLowerCase())
+          if (workoutSearchVal && !workoutMatchesSearchVal) {
             return null
           }
           return (
