@@ -4,6 +4,35 @@ import { connect } from 'react-redux'
 import { setWorkoutFinished } from '../../../redux/actions/workout/workout'
 import { formatTimeToObject } from '../../../util/formatTime'
 
+const WorkoutTime = ({ workoutTime }) => {
+  if (!workoutTime) return null
+
+  const hours = workoutTime.h
+  const minutes = workoutTime.m
+  const seconds = workoutTime.s
+
+  return (
+    <div className='data time'>
+      <div className='time-type'>
+        {hours !== 0 && (
+          <>
+            {hours}
+            <span className='time-indicator'>H</span>
+          </>
+        )}
+      </div>
+      <div className='time-type'>
+        {minutes} <span className='time-indicator'>M</span>
+      </div>
+      {!hours && (
+        <div className='time-type'>
+          {seconds} <span className='time-indicator'>S</span>
+        </div>
+      )}
+    </div>
+  )
+}
+
 const WorkoutComplete = ({ setWorkoutFinished, workoutStats }) => {
   const returnFromWorkout = () => {
     setWorkoutFinished(false)
@@ -22,26 +51,7 @@ const WorkoutComplete = ({ setWorkoutFinished, workoutStats }) => {
         <div className='stats'>
           <div className='stat'>
             <div className='label'>Workout Time:</div>
-            <div className='data time'>
-              <div className='time-type'>
-                {workoutTime.h ? (
-                  <>
-                    {workoutTime.h}
-                    <span className='time-indicator'>H</span>
-                  </>
-                ) : (
-                  ''
-                )}
-              </div>
-              <div className='time-type'>
-                {workoutTime.m} <span className='time-indicator'>M</span>
-              </div>
-              {!workoutTime.h && (
-                <div className='time-type'>
-                  {workoutTime.s} <span className='time-indicator'>S</span>
-                </div>
-              )}
-            </div>
+            <WorkoutTime workoutTime={workoutTime} />
           </div>
           <div className='stat'>
             <div className='label'>Coins Earned:</div>
