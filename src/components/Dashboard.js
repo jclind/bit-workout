@@ -1,7 +1,7 @@
 import NavbarContainer from './Navbar/Navbar'
 import { connect } from 'react-redux'
-import PastWorkoutsLink from './PastWorkoutsLink/PastWorkoutsLink'
 import Character from './Character/Character'
+import PastWorkoutsLinkContainer from './PastWorkoutsLink/PastWorkoutsLinkContainer'
 
 const Dashboard = ({ userAuth, userAccountData }) => {
   if (!userAuth || !userAccountData) {
@@ -12,7 +12,7 @@ const Dashboard = ({ userAuth, userAccountData }) => {
     <>
       <div className='page'>
         <Character />
-        <PastWorkoutsLink />
+        <PastWorkoutsLinkContainer />
       </div>
 
       <NavbarContainer />
