@@ -16,11 +16,11 @@ const UpdateUsername = ({ updateUserAccountData, userAccountData }) => {
       const payload = { prop: 'username', val: newUsername }
       updateUserAccountData(payload)
         .then(() => {
-          console.log('hello there')
           navigate(-1)
         })
         .catch(err => {
           console.log(err)
+          // !ERROR
         })
     }
   }, [newUsername, username, updateUserAccountData, navigate])

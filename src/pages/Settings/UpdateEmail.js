@@ -17,11 +17,11 @@ const UpdateEmail = ({ updateEmail, userAuth }) => {
     if (newEmail !== '' && newEmail !== email && password) {
       updateEmail(newEmail, password)
         .then(() => {
-          console.log('hello there')
           navigate(-1)
         })
         .catch(err => {
           console.log(err)
+          // !ERROR
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
