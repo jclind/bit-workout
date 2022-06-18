@@ -11,6 +11,79 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import './CreateWorkout.scss'
 import { TailSpin } from 'react-loader-spinner'
 
+const WorkoutPath = ({
+  addedExercises,
+  setAddedExercises,
+  changeAddedExerciseData,
+  deleteAddedExercise,
+  addExercise,
+}) => {
+  // Help reordering addedExercise list dragged items
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list)
+    const [removed] = result.splice(startIndex, 1)
+    result.splice(endIndex, 0, removed)
+
+    return result
+  }
+  const onDragEnd = res => {
+    // `destination` is `undefined` if the item was dropped outside the list
+    // In this case, do nothing
+    if (!res.destination) {
+      return
+    }
+
+    const items = reorder(
+      addedExercises,
+      res.source.index,
+      res.destination.index
+    )
+
+    setAddedExercises(items)
+  }
+
+  return (
+    <div className='workout-path'>
+      <div className='title'>Workout Path:</div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        {addedExercises.length > 0 && (
+          <Droppable key={'droppable-key'} droppableId='droppable'>
+            {(provided, snapshot) => (
+              <div
+                key={'droppable-key-div'}
+                ref={provided.innerRef}
+                className={
+                  snapshot.isDraggingOver
+                    ? 'added-exercises-container dragging'
+                    : 'added-exercises-container'
+                }
+                {...provided.droppableProps}
+              >
+                {addedExercises.map((item, idx) => {
+                  return (
+                    <ExerciseItem
+                      item={item}
+                      idx={idx}
+                      changeAddedExerciseData={changeAddedExerciseData}
+                      deleteAddedExercise={deleteAddedExercise}
+                      key={item.id}
+                    />
+                  )
+                })}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        )}
+      </DragDropContext>
+      <div className='select-exercise-container'>
+        <button type='button' className='select-exercise' onClick={addExercise}>
+          <AiOutlinePlusCircle className='icon' /> <span>Add Exercise</span>
+        </button>
+      </div>
+    </div>
+  )
+}
 const ExerciseItem = ({
   item,
   idx,
@@ -18,7 +91,7 @@ const ExerciseItem = ({
   deleteAddedExercise,
 }) => {
   return (
-    <Draggable key={item.id} draggableId={`draggable-${idx}`} index={idx}>
+    <Draggable draggableId={`draggable-${idx}`} index={idx}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
@@ -64,30 +137,6 @@ const CreateWorkout = ({
   error,
   loading,
 }) => {
-  // Help reordering addedExercise list dragged items
-  const reorder = (list, startIndex, endIndex) => {
-    const result = Array.from(list)
-    const [removed] = result.splice(startIndex, 1)
-    result.splice(endIndex, 0, removed)
-
-    return result
-  }
-  const onDragEnd = res => {
-    // `destination` is `undefined` if the item was dropped outside the list
-    // In this case, do nothing
-    if (!res.destination) {
-      return
-    }
-
-    const items = reorder(
-      addedExercises,
-      res.source.index,
-      res.destination.index
-    )
-
-    setAddedExercises(items)
-  }
-
   return (
     <div className='create-workout page'>
       <div className='settings-title' ref={titleRef}>
@@ -175,48 +224,13 @@ const CreateWorkout = ({
             />
           </div>
         </div>
-        <div className='workout-path'>
-          <div className='title'>Workout Path:</div>
-          <DragDropContext onDragEnd={onDragEnd}>
-            {addedExercises.length > 0 && (
-              <Droppable key={'droppable-key'} droppableId='droppable'>
-                {(provided, snapshot) => (
-                  <div
-                    key={'droppable-key-div'}
-                    ref={provided.innerRef}
-                    className={
-                      snapshot.isDraggingOver
-                        ? 'added-exercises-container dragging'
-                        : 'added-exercises-container'
-                    }
-                    {...provided.droppableProps}
-                  >
-                    {addedExercises.map((item, idx) => {
-                      return (
-                        <ExerciseItem
-                          item={item}
-                          idx={idx}
-                          changeAddedExerciseData={changeAddedExerciseData}
-                          deleteAddedExercise={deleteAddedExercise}
-                        />
-                      )
-                    })}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            )}
-          </DragDropContext>
-          <div className='select-exercise-container'>
-            <button
-              type='button'
-              className='select-exercise'
-              onClick={addExercise}
-            >
-              <AiOutlinePlusCircle className='icon' /> <span>Add Exercise</span>
-            </button>
-          </div>
-        </div>
+        <WorkoutPath
+          addedExercises={addedExercises}
+          setAddedExercises={setAddedExercises}
+          changeAddedExerciseData={changeAddedExerciseData}
+          deleteAddedExercise={deleteAddedExercise}
+          addExercise={addExercise}
+        />
         <button type='submit' className='submit-btn btn' disabled={loading}>
           {loading ? (
             <TailSpin
