@@ -17,9 +17,9 @@ import UpdateUsername from './pages/Settings/UpdateUsername'
 import UpdateEmail from './pages/Settings/UpdateEmail'
 import Security from './pages/Settings/Security/Security'
 import NavbarContainer from './components/Navbar/Navbar'
-import WeightData from './pages/Account/WeightData/WeightData'
+import WeightDataContainer from './pages/Account/WeightData/WeightDataContainer'
 import AddWeightInputContainer from './pages/Account/WeightData/AddWeightInput/AddWeightInputContainer'
-import CreateWorkout from './pages/CreateWorkout/CreateWorkout'
+import CreateWorkoutContainer from './pages/CreateWorkout/CreateWorkoutContainer'
 import Auth from './Auth'
 import AppLoadingScreen from './components/AppLoadingScreen/AppLoadingScreen'
 import Feedback from './pages/Settings/Feedback'
@@ -46,7 +46,11 @@ function App() {
             </Route>
             <Route path='/account' element={<PrivateRoute />}>
               <Route exact path='/account' element={<Account />} />
-              <Route exact path='/account/weight' element={<WeightData />} />
+              <Route
+                exact
+                path='/account/weight'
+                element={<WeightDataContainer />}
+              />
               <Route
                 exact
                 path='/account/weight/add-weight'
@@ -114,7 +118,7 @@ function App() {
               path='/create-workout'
               element={
                 <>
-                  <CreateWorkout />
+                  <CreateWorkoutContainer />
                   <NavbarContainer />
                 </>
               }

@@ -9,7 +9,7 @@ import {
   startWorkout,
 } from '../../../redux/actions/workout/workout'
 
-const SingleWorkoutExercise = (exercise, idx, workoutData) => {
+const SingleWorkoutExercise = ({ exercise, workoutData }) => {
   const currExercise = exerciseList.find(obj => obj.id === exercise.exerciseID)
   const exerciseID = currExercise.id
   const currWeightData = workoutData.weights.find(
@@ -27,7 +27,7 @@ const SingleWorkoutExercise = (exercise, idx, workoutData) => {
   const name = currExercise.name
 
   return (
-    <div key={idx}>
+    <div>
       <img src={image} alt={name} className='exercise-img' />
       <div className='exercise-title'>{name}</div>
       <div className='exercise-weight'>{currWeight}lbs.</div>
@@ -45,11 +45,11 @@ const SingleWorkout = ({ exercise, workoutData, startWorkout }) => {
         <div className='est-time'>Time: ≈{estTime}</div>
       </div>
       <div className='exercises-container'>
-        {exercise.path.map((exercise, idx) => {
+        {exercise.path.map((ex, idx) => {
           return (
             <SingleWorkoutExercise
-              exercise={exercise}
-              idx={idx}
+              key={idx}
+              exercise={ex}
               workoutData={workoutData}
             />
           )
