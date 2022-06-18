@@ -1,73 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import SettingsSectionTitle from '../../../components/SettingsComponents/SettingsSectionTitle/SettingsSectionTitle'
 import FormInput from '../../../components/FormInput/FormInput'
 import './Security.scss'
-import { useNavigate } from 'react-router'
 import BackButton from '../../../components/SettingsComponents/BackButton/BackButton'
-import { connect } from 'react-redux'
-import { handleUpdatePassword } from '../../../redux/actions/auth/authStatus'
 
-const Security = ({ updatePassword }) => {
-  const [oldPass, setOldPass] = useState('')
-  const [newPass, setNewPass] = useState('')
-  const [repNewPass, setRepNewPass] = useState('')
-
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
-  const [passNotMatch, setPassNotMatch] = useState(false)
-
-  const [showPassword, setShowPassword] = useState()
-
-  const navigate = useNavigate()
-
-  const resetPasswordForm = () => {
-    setOldPass('')
-    setNewPass('')
-    setRepNewPass('')
-  }
-
-  const handlePasswordSubmit = e => {
-    e.preventDefault()
-    setError('')
-    setSuccess('')
-
-    if (newPass !== repNewPass) {
-      return setError('New Passwords Must Match')
-    } else if (newPass === oldPass) {
-      return setError('New Password Must Be Different Than Old.')
-    }
-
-    updatePassword(oldPass, newPass)
-      .then(() => {
-        setError('')
-
-        setSuccess('Password Changed')
-        setTimeout(() => {
-          setSuccess('')
-        }, 4000)
-        resetPasswordForm()
-        navigate(-1)
-      })
-      .catch(err => {
-        const errCode = err.code
-        setSuccess('')
-
-        if (errCode === 'auth/wrong-password') {
-          setError('Incorrect Password, Try Again.')
-        } else {
-          setError('Something went wrong, try re-logging in')
-        }
-        console.log(err)
-      })
-  }
-
-  useEffect(() => {
-    if (newPass !== repNewPass && repNewPass) {
-      return setPassNotMatch(true)
-    }
-    return setPassNotMatch(false)
-  }, [repNewPass, newPass])
-
+const Security = ({
+  oldPass,
+  setOldPass,
+  newPass,
+  setNewPass,
+  repNewPass,
+  setRepNewPass,
+  showPassword,
+  setShowPassword,
+  handlePasswordSubmit,
+  error,
+  success,
+  passMatches,
+}) => {
   return (
     <div className='security-page page'>
       <div className='settings-title'>Security</div>
@@ -94,7 +44,7 @@ const Security = ({ updatePassword }) => {
             setVal={setNewPass}
             inputType={showPassword ? 'text' : 'password'}
             required={true}
-            error={passNotMatch}
+            error={!passMatches}
           />
           <FormInput
             placeholder='Repeat New Password'
@@ -102,7 +52,7 @@ const Security = ({ updatePassword }) => {
             setVal={setRepNewPass}
             inputType={showPassword ? 'text' : 'password'}
             required={true}
-            error={passNotMatch}
+            error={!passMatches}
           />
           <div
             className='show-passwords-btn'
@@ -118,11 +68,4 @@ const Security = ({ updatePassword }) => {
   )
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    updatePassword: (oldPassword, newPassword) =>
-      dispatch(handleUpdatePassword(oldPassword, newPassword)),
-  }
-}
-
-export default connect(null, mapDispatchToProps)(Security)
+export default Security

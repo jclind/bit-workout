@@ -15,14 +15,14 @@ import ManageAccount from './pages/Settings/ManageAccount'
 import UpdateName from './pages/Settings/UpdateName'
 import UpdateUsername from './pages/Settings/UpdateUsername'
 import UpdateEmail from './pages/Settings/UpdateEmail'
-import Security from './pages/Settings/Security/Security'
+import SecurityContainer from './pages/Settings/Security/SecurityContainer'
 import NavbarContainer from './components/Navbar/Navbar'
 import WeightDataContainer from './pages/Account/WeightData/WeightDataContainer'
 import AddWeightInputContainer from './pages/Account/WeightData/AddWeightInput/AddWeightInputContainer'
 import CreateWorkoutContainer from './pages/CreateWorkout/CreateWorkoutContainer'
 import Auth from './Auth'
 import AppLoadingScreen from './components/AppLoadingScreen/AppLoadingScreen'
-import Feedback from './pages/Settings/Feedback'
+import FeedbackContainer from './pages/Settings/Feedback/FeedbackContainer'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -85,12 +85,12 @@ function App() {
               <Route
                 exact
                 path='/account/settings/security'
-                element={<Security />}
+                element={<SecurityContainer />}
               />
               <Route
                 exact
                 path='/account/settings/feedback'
-                element={<Feedback />}
+                element={<FeedbackContainer />}
               />
             </Route>
             <Route path='/signup' element={<Signup />}>
