@@ -84,9 +84,7 @@ export const fetchUserData = uid => async dispatch => {
 
 export const setWorkout = (weight, gender, uid) => async dispatch => {
   const weights = exerciseList.map(ex => {
-    console.log(ex)
     const id = ex.id
-    console.log(id, weight, gender)
     return { exerciseID: id, weight: calculateWeight(id, weight, gender) }
   })
 
@@ -102,7 +100,6 @@ export const signup = (email, password, userData) => async dispatch => {
     const uid = cred.user.uid
     const username = userData.usernameVal
 
-    console.log(userData)
     const weight = userData.weightVal
     const gender = userData.genderVal
 
@@ -173,7 +170,6 @@ export const checkUsernameAvailability = async (username, setLoading) => {
     setLoading(true)
   }
 
-  console.log('here', username)
   const usernameRef = doc(db, 'usernames', username)
   const usernameSnap = await getDoc(usernameRef)
 
@@ -186,7 +182,6 @@ export const checkUsernameAvailability = async (username, setLoading) => {
 export const login = (email, password) => async () => {
   let error = null
   await signInWithEmailAndPassword(auth, email, password).catch(err => {
-    console.log(err.code)
     error = err
   })
   return error
@@ -198,7 +193,6 @@ export const logout = () => async () => {
 export const resetPassword = email => async () => {
   let error = null
   await sendPasswordResetEmail(auth, email).catch(err => {
-    console.log(err.code)
     error = err
   })
   return error
@@ -207,23 +201,18 @@ export const resetPassword = email => async () => {
 export const handleUpdateEmail = (newEmail, password) => async dispatch => {
   await reauthenticate(password).catch(err => {
     console.log(err)
+    // !ERROR
   })
   await updateEmail(auth.currentUser, newEmail)
   dispatch(updateUserAccountData({ prop: 'email', val: newEmail }))
 }
 
 async function reauthenticate(currPassword) {
-  console.log(auth.currentUser.email, currPassword)
   const credential = EmailAuthProvider.credential(
     auth.currentUser.email,
     currPassword
   )
   await reauthenticateWithCredential(auth.currentUser, credential)
-  // const user = auth.currentUser
-  // console.log(auth)
-  // const credential = auth.EmailAuthProvider.credential(user.email, currPassword)
-  // console.log(credential, auth)
-  // await user.reauthenticateWithCredential(credential)
 }
 export const handleUpdatePassword = (oldPassword, newPassword) => async () => {
   await reauthenticate(oldPassword)
@@ -266,10 +255,8 @@ export const submitUserFeedback =
     const querySnapshot = await getDocs(q).catch(err => console.log(err))
     const feedbackSubmittedToday = []
     querySnapshot.forEach(doc => {
-      console.log(doc)
       feedbackSubmittedToday.push(doc.data())
     })
-    console.log('', feedbackSubmittedToday)
 
     await addDoc(userFeedbackRef, {
       date,

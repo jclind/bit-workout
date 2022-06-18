@@ -20,6 +20,7 @@ const UpdateName = ({ updateUserAccountData, userAccountData }) => {
         })
         .catch(err => {
           console.log(err)
+          // !ERROR
         })
     }
   }, [userName, name, updateUserAccountData, navigate])

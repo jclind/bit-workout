@@ -45,6 +45,7 @@ export const updateWorkout = data => async (dispatch, getState) => {
     })
     .catch(err => {
       console.log(err)
+      // !ERROR
     })
 }
 export const setWorkoutFinished = isFinished => {
@@ -137,7 +138,6 @@ const incCurrWorkoutStats = (
       const exerciseStatsIdx = workoutStats.exerciseStats.findIndex(
         exercise => exercise.exerciseID === exerciseID
       )
-      console.log(exerciseStatsIdx)
       workoutStats.exerciseStats[exerciseStatsIdx].totalSets =
         Number(workoutStats.exerciseStats[exerciseStatsIdx].totalSets) + 1
     }
@@ -207,8 +207,6 @@ export const completeSet =
       const startTime = new Date().getTime()
       const nextSet = currSet + 1
 
-      console.log()
-
       const workoutStats = incCurrWorkoutStats(
         getState().workout.workoutData.workoutStats,
         true,
@@ -239,13 +237,11 @@ export const failSet =
     const weights = getState().workout.workoutData.weights
 
     const modWeights = weights.map(weight => {
-      console.log(weight.exerciseID, exerciseID)
       if (weight.exerciseID === exerciseID) {
         return { ...weight, weight: newWeight }
       }
       return weight
     })
-    console.log(newWeight, modWeights)
     await dispatch(completeSet(currSetTotal, completedReps, true))
     await dispatch(
       updateWorkout({
@@ -283,13 +279,10 @@ export const addWorkoutToPastWorkouts = data => async (dispatch, getState) => {
   const userWorkoutDataRef = doc(db, 'workoutData', uid)
   const userPastWorkoutsRef = collection(userWorkoutDataRef, 'pastWorkouts')
 
-  addDoc(userPastWorkoutsRef, data)
-    .then(() => {
-      console.log('workout added to data')
-    })
-    .catch(err => {
-      console.log('workout not added to data:', err)
-    })
+  addDoc(userPastWorkoutsRef, data).catch(err => {
+    console.log('workout not added to data:', err)
+    // !ERROR
+  })
 }
 export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
   const workoutData = getState().workout.workoutData
@@ -365,7 +358,6 @@ export const queryPastWorkoutData =
       limit(numResults)
     )
     const querySnapshot = await getDocs(q)
-    console.log(querySnapshot)
     // If dataExists is false, will return no data response
     let dataExists
     querySnapshot.forEach(doc => {
@@ -373,7 +365,6 @@ export const queryPastWorkoutData =
       const data = doc.data()
       queriedData.push(data)
     })
-    console.log(dataExists)
     if (dataExists) {
       return queriedData
     }
