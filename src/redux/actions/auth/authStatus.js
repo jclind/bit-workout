@@ -165,19 +165,20 @@ export const addNewUsername = async (username, uid) => {
     uid,
   })
 }
-export const checkUsernameAvailability = async (username, setLoading) => {
-  if (setLoading) {
-    setLoading(true)
-  }
+export const checkUsernameAvailability =
+  (username, setLoading) => async dispatch => {
+    if (setLoading) {
+      setLoading(true)
+    }
 
-  const usernameRef = doc(db, 'usernames', username)
-  const usernameSnap = await getDoc(usernameRef)
+    const usernameRef = doc(db, 'usernames', username)
+    const usernameSnap = await getDoc(usernameRef)
 
-  if (usernameSnap.exists()) {
-    return false
+    if (usernameSnap.exists()) {
+      return false
+    }
+    return true
   }
-  return true
-}
 
 export const login = (email, password) => async () => {
   let error = null
