@@ -70,4 +70,25 @@ export const exerciseList = [
     weights: true,
     imageURL: '/workouts/dumbbell-fly.png',
   },
+  {
+    id: 10,
+    name: 'Incline dumbbell fly',
+    animation: null,
+    weights: true,
+    imageURL: '/workouts/incline-dumbbell-fly.png',
+  },
+  {
+    id: 11,
+    name: 'Incline Bench Press',
+    animation: null,
+    weights: true,
+    imageURL: '/workouts/incline-bench-press.png',
+  },
+  {
+    id: 12,
+    name: 'Reverse Barbell Curl',
+    animation: null,
+    weights: true,
+    imageURL: '/workouts/reverse-barbell-curl.png',
+  },
 ]

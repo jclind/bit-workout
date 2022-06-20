@@ -15,22 +15,20 @@
   .timer-title {
     font-size: toRem(18);
     font-weight: 500;
-    margin-top: toRem(30);
   }
   .timer {
+    margin-top: 1rem;
     font-size: toRem(36);
     font-weight: 700;
   }
   .rest-img {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     width: 60%;
     margin: 0 auto;
+    margin-top: 5rem;
   }
   .skip-rest-btn {
     position: absolute;
-    bottom: $navbar-height;
+    bottom: calc(#{$navbar-height} + 3rem);
     display: flex;
     justify-content: center;
     align-items: center;

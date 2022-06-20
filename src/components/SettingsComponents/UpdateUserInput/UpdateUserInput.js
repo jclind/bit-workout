@@ -1,53 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import deleteIcon from '../../../assets/images/icons/delete.svg'
 import './UpdateUserInput.scss'
 
 const UpdateUserInput = ({
-  placeholder,
   input,
+  placeholder,
   val,
-  setVal,
+  unsavedVal,
+  setUnsavedVal,
+  numCharacters,
   maxCharacters,
-  setError,
+  handleInput,
+  activeSave,
+  handleSave,
 }) => {
-  const [unsavedVal, setUnsavedVal] = useState(val)
-  const [numCharacters, setNumCharacters] = useState('')
-  const [activeSave, setActiveSave] = useState(false)
-
   const navigate = useNavigate()
-
-  const handleInput = e => {
-    const currVal = e.target.value
-    setUnsavedVal(currVal)
-  }
-  const handleSave = () => {
-    setError('')
-    if (unsavedVal === val || unsavedVal === '')
-      return setError('New value cannot be empty / equal original value')
-
-    if (input === 'email') {
-      if (
-        !String(unsavedVal)
-          .toLowerCase()
-          .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          )
-      ) {
-        return setError('invalid email')
-      }
-    }
-    setVal(unsavedVal)
-  }
-
-  useEffect(() => {
-    if (unsavedVal === val || unsavedVal === '') {
-      setActiveSave(false)
-    } else {
-      setActiveSave(true)
-    }
-    setNumCharacters(unsavedVal.length)
-  }, [unsavedVal, val])
 
   return (
     <div className='update-user-input'>
@@ -73,7 +41,11 @@ const UpdateUserInput = ({
           </div>
         )}
       </div>
-      <div className='characters'>{`${numCharacters} / ${maxCharacters}`}</div>
+      {maxCharacters ? (
+        <div className='characters'>{`${numCharacters} / ${maxCharacters}`}</div>
+      ) : (
+        <br />
+      )}
       <div className='action-buttons'>
         <button className='cancel' type='button' onClick={() => navigate(-1)}>
           cancel

@@ -21,13 +21,10 @@ export const getTimeSpanData = (timeSpan, data) => {
   let startDate = new Date()
 
   let hash = Object.create(null)
-
   for (let { date, weight } of data) {
-    console.log(date, weight)
-    const currDay = new Date(date).toISOString().substring(0, 10)
+    const currDay = new Date(Number(date)).toISOString().substring(0, 10)
     if (hash[currDay]) {
       if (hash[currDay].date < date) {
-        // console.log('IN HERE')
         hash[currDay] = { date, weight }
       }
     } else {
@@ -75,8 +72,6 @@ export const getTimeSpanData = (timeSpan, data) => {
       }
     })
     .sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0))
-
-  console.log(timeSpanData)
 
   return {
     labels: getDaysArray(startDate, endDate),

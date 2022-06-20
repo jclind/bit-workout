@@ -19,6 +19,7 @@ const HeightInputContainer = ({
   const inchesRef = useRef()
 
   useEffect(() => {
+    // Show clear input btn
     if (feet || inches) {
       setClear(true)
     } else {
@@ -30,6 +31,7 @@ const HeightInputContainer = ({
 
   const handleFeetChange = e => {
     let currVal = e.target.value
+
     if (currVal >= 10) {
       currVal = currVal % 10
     }
