@@ -32,8 +32,14 @@
         display: flex;
         gap: 0.25rem;
         margin-bottom: 0.75rem;
+        .user-info {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.15rem;
+        }
         .level {
           color: $secondary-text;
+          font-size: 0.9rem;
         }
         .coins {
           display: flex;

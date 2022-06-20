@@ -19,8 +19,10 @@ const Character = ({ username, exp, coins }) => {
         </div>
         <div className='info'>
           <div className='info-heading'>
-            <div className='username'>{username}</div>-
-            <div className='level'>Level {level}</div>
+            <div className='user-info'>
+              <div className='username'>{username}</div>
+              <div className='level'>Level {level}</div>
+            </div>
             <div className='coins'>
               <RiCopperCoinLine className='coin-icon' />{' '}
               <div className='text'>{coins || 0}</div>

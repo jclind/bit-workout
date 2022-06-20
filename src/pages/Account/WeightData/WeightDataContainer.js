@@ -54,7 +54,7 @@ const WeightDataContainer = ({ weightData }) => {
     elements: {
       point: {
         radius:
-          selectedTimeSpan.value === 'week' || chartData.length < 3 ? 3 : 0,
+          selectedTimeSpan.value === 'week' || chartData.length <= 3 ? 3 : 0,
       },
     },
     responsive: true,
