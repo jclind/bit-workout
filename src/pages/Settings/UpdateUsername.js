@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import UpdateUserInput from '../../components/SettingsComponents/UpdateUserInput/UpdateUserInput'
+import UpdateUserInputContainer from '../../components/SettingsComponents/UpdateUserInput/UpdateUserInputContainer'
 import { useNavigate } from 'react-router'
+import { AiOutlineWarning } from 'react-icons/ai'
 import { connect } from 'react-redux'
-import { updateUserAccountData } from '../../redux/actions/auth/authStatus'
+import {
+  checkUsernameAvailability,
+  updateUserAccountData,
+} from '../../redux/actions/auth/authStatus'
 
 const UpdateUsername = ({ updateUserAccountData, userAccountData }) => {
   const { username } = userAccountData
@@ -12,24 +16,35 @@ const UpdateUsername = ({ updateUserAccountData, userAccountData }) => {
   const [error, setError] = useState('')
 
   useEffect(() => {
+    setError('')
     if (newUsername !== '' && newUsername !== username) {
       const payload = { prop: 'username', val: newUsername }
-      updateUserAccountData(payload)
-        .then(() => {
-          console.log('hello there')
-          navigate(-1)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      checkUsernameAvailability(newUsername).then(checkUsernameAvailability => {
+        if (checkUsernameAvailability) {
+          updateUserAccountData(payload)
+            .then(() => {
+              navigate(-1)
+            })
+            .catch(err => {
+              setError(err)
+            })
+        } else {
+          setError('Username taken')
+        }
+      })
     }
   }, [newUsername, username, updateUserAccountData, navigate])
 
   return (
     <div className='update-name-page page'>
       <div className='settings-title'>Username</div>
-      <div className='error'>{error}</div>
-      <UpdateUserInput
+      {error && (
+        <div className='error'>
+          <AiOutlineWarning className='icon' />
+          {error}
+        </div>
+      )}
+      <UpdateUserInputContainer
         placeholder={'Enter Updated Username'}
         val={newUsername}
         setVal={setNewUsername}

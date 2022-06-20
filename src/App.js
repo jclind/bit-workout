@@ -15,13 +15,14 @@ import ManageAccount from './pages/Settings/ManageAccount'
 import UpdateName from './pages/Settings/UpdateName'
 import UpdateUsername from './pages/Settings/UpdateUsername'
 import UpdateEmail from './pages/Settings/UpdateEmail'
-import Security from './pages/Settings/Security/Security'
+import SecurityContainer from './pages/Settings/Security/SecurityContainer'
 import NavbarContainer from './components/Navbar/Navbar'
-import WeightData from './pages/Account/WeightData/WeightData'
-import AddWeightInput from './pages/Account/WeightData/AddWeightInput/AddWeightInput'
-import CreateWorkout from './pages/CreateWorkout/CreateWorkout'
+import WeightDataContainer from './pages/Account/WeightData/WeightDataContainer'
+import AddWeightInputContainer from './pages/Account/WeightData/AddWeightInput/AddWeightInputContainer'
+import CreateWorkoutContainer from './pages/CreateWorkout/CreateWorkoutContainer'
 import Auth from './Auth'
 import AppLoadingScreen from './components/AppLoadingScreen/AppLoadingScreen'
+import FeedbackContainer from './pages/Settings/Feedback/FeedbackContainer'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -45,11 +46,15 @@ function App() {
             </Route>
             <Route path='/account' element={<PrivateRoute />}>
               <Route exact path='/account' element={<Account />} />
-              <Route exact path='/account/weight' element={<WeightData />} />
+              <Route
+                exact
+                path='/account/weight'
+                element={<WeightDataContainer />}
+              />
               <Route
                 exact
                 path='/account/weight/add-weight'
-                element={<AddWeightInput />}
+                element={<AddWeightInputContainer />}
               />
               <Route exact path='/account/settings' element={<Settings />} />
               <Route
@@ -80,7 +85,12 @@ function App() {
               <Route
                 exact
                 path='/account/settings/security'
-                element={<Security />}
+                element={<SecurityContainer />}
+              />
+              <Route
+                exact
+                path='/account/settings/feedback'
+                element={<FeedbackContainer />}
               />
             </Route>
             <Route path='/signup' element={<Signup />}>
@@ -108,7 +118,7 @@ function App() {
               path='/create-workout'
               element={
                 <>
-                  <CreateWorkout />
+                  <CreateWorkoutContainer />
                   <NavbarContainer />
                 </>
               }

@@ -1,53 +1,80 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import './PastWorkoutsLink.scss'
-import { connect } from 'react-redux'
-import { queryPastWorkoutData } from '../../redux/actions/workout/workout'
 import Skeleton from 'react-loading-skeleton'
-import { formatTimeToObject } from '../../util/formatTime'
-import { formatDate } from '../../util/formatDate'
 import { AiOutlineCalendar, AiOutlineClockCircle } from 'react-icons/ai'
+import { formatDate } from '../../util/formatDate'
+import { formatTimeToObject } from '../../util/formatTime'
 
-const PastWorkoutsLink = ({ queryPastWorkoutData }) => {
-  const [data, setData] = useState(null)
-  const [isResponse, setIsResponse] = useState(true)
+const NoPastWorkout = () => {
+  return (
+    <div className='no-data'>
+      <div className='text'>No Past Workout Data</div>
+      <Link to='/workout'>
+        <button className='start-workout-btn btn'>Start Workout</button>
+      </Link>
+    </div>
+  )
+}
 
-  useEffect(() => {
-    const order = 'workoutStartTime'
-    const numResults = 1
-    const descending = true
-
-    queryPastWorkoutData(order, numResults, descending).then(res => {
-      if (
-        res &&
-        typeof res.isResponse !== 'undefined' &&
-        res.isResponse === false
-      ) {
-        setIsResponse(false)
-      }
-      setData(res[0])
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const workoutTime = data ? formatTimeToObject(data.totalWorkoutTime) : null
-  const workoutDate = data ? formatDate(data.workoutStartTime) : null
-  const workoutImageURL = data ? data.path[0].imageURL : null
-  console.log(workoutImageURL)
-
-  if (data) {
-    console.log(data.totalWorkoutTime)
+const WorkoutTime = ({ workoutTime }) => {
+  if (!workoutTime) {
+    return (
+      <div className='time'>
+        <AiOutlineClockCircle className='icon' />
+      </div>
+    )
   }
+
+  const hours = workoutTime.h
+  const minutes = workoutTime.m
+  const seconds = workoutTime.s
+
+  return (
+    <div className='time'>
+      <AiOutlineClockCircle className='icon' />
+      {workoutTime ? (
+        <>
+          <div className='time-type'>
+            {hours !== 0 && (
+              <>
+                {hours}
+                <span className='time-indicator'>H</span>
+              </>
+            )}
+          </div>
+          <div className='time-type'>
+            {minutes} <span className='time-indicator'>M</span>
+          </div>
+          {!hours && (
+            <div className='time-type'>
+              {seconds} <span className='time-indicator'>S</span>
+            </div>
+          )}
+        </>
+      ) : (
+        <Skeleton />
+      )}
+    </div>
+  )
+}
+
+const PastWorkoutsLink = ({ pastWorkoutData, isResponse }) => {
+  const workoutTime = pastWorkoutData
+    ? formatTimeToObject(pastWorkoutData.totalWorkoutTime)
+    : null
+  const workoutDate = pastWorkoutData
+    ? formatDate(pastWorkoutData.workoutStartTime)
+    : null
+  const workoutImageURL = pastWorkoutData
+    ? pastWorkoutData.path[0].imageURL
+    : null
+  const workoutName = pastWorkoutData && pastWorkoutData.workoutName
 
   return (
     <div className='past-workouts-link'>
       {!isResponse ? (
-        <div className='no-data'>
-          <div className='text'>No Past Workout Data</div>
-          <Link to='/workout'>
-            <button className='start-workout-btn btn'>Start Workout</button>
-          </Link>
-        </div>
+        <NoPastWorkout />
       ) : (
         <>
           <h1>Last Workout</h1>
@@ -57,7 +84,7 @@ const PastWorkoutsLink = ({ queryPastWorkoutData }) => {
                 {workoutImageURL ? (
                   <img
                     src={workoutImageURL}
-                    alt={data.workoutName}
+                    alt={workoutName}
                     className='workout-image'
                   />
                 ) : (
@@ -68,41 +95,14 @@ const PastWorkoutsLink = ({ queryPastWorkoutData }) => {
                   />
                 )}
               </div>
-              <div className='title'>{data?.workoutName || <Skeleton />}</div>
+              <div className='title'>{workoutName || <Skeleton />}</div>
             </div>
             <div className='info'>
               <div className='date'>
                 <AiOutlineCalendar className='icon' />
                 {workoutDate ? workoutDate : <Skeleton />}
               </div>
-              <div className='time'>
-                <AiOutlineClockCircle className='icon' />
-                {workoutTime ? (
-                  <>
-                    <div className='time-type'>
-                      {workoutTime.h ? (
-                        <>
-                          {workoutTime.h}
-                          <span className='time-indicator'>H</span>
-                        </>
-                      ) : (
-                        ''
-                      )}
-                    </div>
-                    <div className='time-type'>
-                      {workoutTime.m} <span className='time-indicator'>M</span>
-                    </div>
-                    {!workoutTime.h && (
-                      <div className='time-type'>
-                        {workoutTime.s}{' '}
-                        <span className='time-indicator'>S</span>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <Skeleton />
-                )}
-              </div>
+              <WorkoutTime workoutTime={workoutTime} />
             </div>
           </div>
         </>
@@ -111,11 +111,4 @@ const PastWorkoutsLink = ({ queryPastWorkoutData }) => {
   )
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    queryPastWorkoutData: (order, numResults, descending) =>
-      dispatch(queryPastWorkoutData(order, numResults, descending)),
-  }
-}
-
-export default connect(null, mapDispatchToProps)(PastWorkoutsLink)
+export default PastWorkoutsLink

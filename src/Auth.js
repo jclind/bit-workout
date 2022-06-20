@@ -10,12 +10,10 @@ const Auth = ({ signInAndFetchUserAccountData, signOut, setLoading }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        console.log('logged in')
         signInAndFetchUserAccountData(user).then(() => {
           setLoading(false)
         })
       } else {
-        console.log('logged out')
         signOut()
         setLoading(false)
       }

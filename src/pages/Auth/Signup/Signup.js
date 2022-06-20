@@ -23,7 +23,6 @@ const Signup = ({ signup }) => {
   useEffect(() => {
     if (usernameVal.trim().length >= 3) {
       checkUsernameAvailability(usernameVal).then(isAvailable => {
-        console.log('is available:', isAvailable)
         setUsernameAvailable(isAvailable)
       })
     } else {
@@ -48,15 +47,9 @@ const Signup = ({ signup }) => {
       navigate('/')
     } catch (error) {
       console.log(error)
-      // setError('Failed to sign in')
+      // !ERROR
     }
-    // setLoading(false)
   }
-
-  useEffect(() => {
-    console.log(birthdayVal)
-    console.log(new Date(birthdayVal))
-  }, [birthdayVal])
 
   const location = useLocation()
   const outlet = useOutlet()
@@ -66,10 +59,13 @@ const Signup = ({ signup }) => {
   }
   // If the fields from /signup/account-info aren't all filled out
   // then redirect back to that page
-  if (
-    location.pathname === '/signup/personal-info' &&
-    !(usernameVal && fullNameVal && emailVal && passwordVal)
-  ) {
+  const signupFieldsAreFilled =
+    usernameVal !== null &&
+    fullNameVal !== null &&
+    emailVal !== null &&
+    passwordVal !== null
+
+  if (location.pathname === '/signup/personal-info' && !signupFieldsAreFilled) {
     return <Navigate to='/signup/account-info' />
   }
 

@@ -18,7 +18,6 @@ export const getNextEvent = (
   // Console log if nextEvent doesn't exist meaning there are no more elements
   if (!nextEvent) {
     setWorkoutFinished(true)
-    console.log('No more exercises!')
   } else {
     // Set the current event to the next event
     setCurrEvent(nextEvent)

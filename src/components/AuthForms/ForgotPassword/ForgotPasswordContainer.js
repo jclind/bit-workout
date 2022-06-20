@@ -16,6 +16,7 @@ const ForgotPasswordContainer = ({ resetPassword }) => {
     setMessage('')
     setError('')
     setLoading(true)
+
     const err = await resetPassword(email)
 
     if (err) {

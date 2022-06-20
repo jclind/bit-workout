@@ -19,9 +19,9 @@ const WeightChartOptions = ({
   return (
     <div className='weight-chart-options'>
       <div className='time-span-selection'>
-        {timeSpanOptions.map(timeSpan => {
+        {timeSpanOptions.map((timeSpan, idx) => {
           return (
-            <>
+            <React.Fragment key={idx}>
               {selectedTimeSpan ? (
                 <button
                   className={
@@ -37,7 +37,7 @@ const WeightChartOptions = ({
               ) : (
                 <Skeleton />
               )}
-            </>
+            </React.Fragment>
           )
         })}
       </div>

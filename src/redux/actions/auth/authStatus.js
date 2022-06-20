@@ -11,6 +11,11 @@ import {
   updateDoc,
   deleteDoc,
   arrayUnion,
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
 } from 'firebase/firestore'
 import { db } from '../../../firebase'
 import { auth } from '../../../firebase'
@@ -25,6 +30,7 @@ import {
   updatePassword,
   sendPasswordResetEmail,
 } from 'firebase/auth'
+import { fetchCharacterData, updateCoins } from '../character/character'
 
 export const signInAndFetchUserAccountData =
   user => async (dispatch, getState) => {
@@ -33,6 +39,7 @@ export const signInAndFetchUserAccountData =
     await dispatch(setUserStatusSignedIn(user))
 
     await dispatch(fetchUserData(uid))
+    await dispatch(fetchCharacterData(uid))
 
     // Migrating email to be used from userAccountData instead of user auth.
     // If email doesn't exists in userAccountData, add the current user's email
@@ -72,9 +79,7 @@ export const fetchUserData = uid => async dispatch => {
 
 export const setWorkout = (weight, gender, uid) => async dispatch => {
   const weights = exerciseList.map(ex => {
-    console.log(ex)
     const id = ex.id
-    console.log(id, weight, gender)
     return { exerciseID: id, weight: calculateWeight(id, weight, gender) }
   })
 
@@ -90,7 +95,6 @@ export const signup = (email, password, userData) => async dispatch => {
     const uid = cred.user.uid
     const username = userData.usernameVal
 
-    console.log(userData)
     const weight = userData.weightVal
     const gender = userData.genderVal
 
@@ -161,7 +165,6 @@ export const checkUsernameAvailability = async (username, setLoading) => {
     setLoading(true)
   }
 
-  console.log('here', username)
   const usernameRef = doc(db, 'usernames', username)
   const usernameSnap = await getDoc(usernameRef)
 
@@ -174,7 +177,6 @@ export const checkUsernameAvailability = async (username, setLoading) => {
 export const login = (email, password) => async () => {
   let error = null
   await signInWithEmailAndPassword(auth, email, password).catch(err => {
-    console.log(err.code)
     error = err
   })
   return error
@@ -186,7 +188,6 @@ export const logout = () => async () => {
 export const resetPassword = email => async () => {
   let error = null
   await sendPasswordResetEmail(auth, email).catch(err => {
-    console.log(err.code)
     error = err
   })
   return error
@@ -195,23 +196,18 @@ export const resetPassword = email => async () => {
 export const handleUpdateEmail = (newEmail, password) => async dispatch => {
   await reauthenticate(password).catch(err => {
     console.log(err)
+    // !ERROR
   })
   await updateEmail(auth.currentUser, newEmail)
   dispatch(updateUserAccountData({ prop: 'email', val: newEmail }))
 }
 
 async function reauthenticate(currPassword) {
-  console.log(auth.currentUser.email, currPassword)
   const credential = EmailAuthProvider.credential(
     auth.currentUser.email,
     currPassword
   )
   await reauthenticateWithCredential(auth.currentUser, credential)
-  // const user = auth.currentUser
-  // console.log(auth)
-  // const credential = auth.EmailAuthProvider.credential(user.email, currPassword)
-  // console.log(credential, auth)
-  // await user.reauthenticateWithCredential(credential)
 }
 export const handleUpdatePassword = (oldPassword, newPassword) => async () => {
   await reauthenticate(oldPassword)
@@ -240,3 +236,40 @@ export const addWeight = weightData => async (dispatch, getState) => {
 
   return error
 }
+
+// Add Feedback to user account
+export const submitUserFeedback =
+  (category, title, description) => async (dispatch, getState) => {
+    const uid = getState().auth.userAuth.uid
+    const date = new Date().toISOString().substring(0, 10)
+
+    const userDataRef = doc(db, 'users', uid)
+    const userFeedbackRef = collection(userDataRef, 'feedback')
+
+    const q = query(userFeedbackRef, where('date', '==', date))
+    const querySnapshot = await getDocs(q).catch(err => console.log(err))
+    const feedbackSubmittedToday = []
+    querySnapshot.forEach(doc => {
+      feedbackSubmittedToday.push(doc.data())
+    })
+
+    await addDoc(userFeedbackRef, {
+      date,
+      category,
+      title,
+      description,
+    })
+
+    let coinsAdded = 0
+
+    // Only give user coins for every 2 feedback forms they submit per day
+    if (feedbackSubmittedToday.length === 0) {
+      coinsAdded = 10
+      dispatch(updateCoins(coinsAdded))
+    } else if (feedbackSubmittedToday.length === 1) {
+      coinsAdded = 5
+      dispatch(updateCoins(coinsAdded))
+    }
+
+    return coinsAdded
+  }
