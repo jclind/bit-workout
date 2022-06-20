@@ -14,7 +14,6 @@ import {
   collection,
   query,
   where,
-  QuerySnapshot,
   getDocs,
   addDoc,
 } from 'firebase/firestore'
@@ -31,11 +30,7 @@ import {
   updatePassword,
   sendPasswordResetEmail,
 } from 'firebase/auth'
-import {
-  addCoins,
-  fetchCharacterData,
-  updateCoins,
-} from '../character/character'
+import { fetchCharacterData, updateCoins } from '../character/character'
 
 export const signInAndFetchUserAccountData =
   user => async (dispatch, getState) => {
