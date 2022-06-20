@@ -29,7 +29,7 @@ const AddWeightInputContainer = ({ addWeight, latestWeightEntry }) => {
         ? new Date().getTime()
         : new Date(date).getTime()
 
-    const weightObj = { date: weightDate, weight }
+    const weightObj = { date: weightDate, weight: Number(weight) }
     let error = await addWeight(weightObj)
     if (error) {
       console.log(error)
