@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import UpdateUserInput from '../../components/SettingsComponents/UpdateUserInput/UpdateUserInput'
+import UpdateUserInputContainer from '../../components/SettingsComponents/UpdateUserInput/UpdateUserInputContainer'
 import { useNavigate } from 'react-router'
+import { AiOutlineWarning } from 'react-icons/ai'
 import { connect } from 'react-redux'
 import { handleUpdateEmail } from '../../redux/actions/auth/authStatus'
 import FormInput from '../../components/FormInput/FormInput'
@@ -17,11 +18,11 @@ const UpdateEmail = ({ updateEmail, userAuth }) => {
     if (newEmail !== '' && newEmail !== email && password) {
       updateEmail(newEmail, password)
         .then(() => {
-          console.log('hello there')
           navigate(-1)
         })
         .catch(err => {
           console.log(err)
+          // !ERROR
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -30,12 +31,16 @@ const UpdateEmail = ({ updateEmail, userAuth }) => {
   return (
     <div className='update-name-page page'>
       <div className='settings-title'>Email</div>
-      <div className='error'>{error}</div>
-      <UpdateUserInput
+      {error && (
+        <div className='error'>
+          <AiOutlineWarning className='icon' />
+          {error}
+        </div>
+      )}
+      <UpdateUserInputContainer
         placeholder={'Enter New Email'}
         val={newEmail}
         setVal={setNewEmail}
-        maxCharacters={30}
         input={'email'}
         setError={setError}
       />

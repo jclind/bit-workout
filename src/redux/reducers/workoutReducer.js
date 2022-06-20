@@ -1,5 +1,6 @@
 import {
   FETCH_WORKOUT_DATA,
+  SET_COMPLETED_WORKOUT_DATA,
   SET_WORKOUT_DATA,
   SET_WORKOUT_FINISHED,
 } from '../types'
@@ -33,6 +34,8 @@ const workoutReducer = (state = INITIAL_STATE, action) => {
       }
     case SET_WORKOUT_FINISHED:
       return { ...state, isWorkoutFinished: action.payload }
+    case SET_COMPLETED_WORKOUT_DATA:
+      return { ...state, completedWorkoutData: { ...action.payload } }
     default:
       return state
   }
