@@ -41,7 +41,11 @@ const UpdateUserInput = ({
           </div>
         )}
       </div>
-      <div className='characters'>{`${numCharacters} / ${maxCharacters}`}</div>
+      {maxCharacters ? (
+        <div className='characters'>{`${numCharacters} / ${maxCharacters}`}</div>
+      ) : (
+        <br />
+      )}
       <div className='action-buttons'>
         <button className='cancel' type='button' onClick={() => navigate(-1)}>
           cancel

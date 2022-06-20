@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import UpdateUserInputContainer from '../../components/SettingsComponents/UpdateUserInput/UpdateUserInputContainer'
 import { useNavigate } from 'react-router'
+import { AiOutlineWarning } from 'react-icons/ai'
 import { connect } from 'react-redux'
 import { handleUpdateEmail } from '../../redux/actions/auth/authStatus'
 import FormInput from '../../components/FormInput/FormInput'
@@ -30,12 +31,16 @@ const UpdateEmail = ({ updateEmail, userAuth }) => {
   return (
     <div className='update-name-page page'>
       <div className='settings-title'>Email</div>
-      <div className='error'>{error}</div>
+      {error && (
+        <div className='error'>
+          <AiOutlineWarning className='icon' />
+          {error}
+        </div>
+      )}
       <UpdateUserInputContainer
         placeholder={'Enter New Email'}
         val={newEmail}
         setVal={setNewEmail}
-        maxCharacters={30}
         input={'email'}
         setError={setError}
       />
