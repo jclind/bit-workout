@@ -24,12 +24,10 @@ const UpdateUserInputContainer = ({
       return setError('New value cannot be empty / equal original value')
 
     if (input === 'email') {
-      const isValidEmailAddress = String(unsavedVal)
-        .toLowerCase()
-        .match(
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        )
-      if (isValidEmailAddress) {
+      const re = /\S+@\S+\.\S+/
+      const isValidEmailAddress = re.test(unsavedVal)
+
+      if (!isValidEmailAddress) {
         return setError('invalid email')
       }
     }
