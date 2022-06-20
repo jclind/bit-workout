@@ -23,8 +23,15 @@ const WeightDataContainer = ({ weightData }) => {
   const labels = timeSpanData.labels
   const chartData = timeSpanData.data
 
-  const maxDataVal = Math.max.apply(Math)
-  const minDataVal = Math.min.apply(Math)
+  const maxDataVal = Math.max.apply(
+    Math,
+    chartData.map(o => Number(o.weight))
+  )
+  const minDataVal = Math.min.apply(
+    Math,
+    chartData.map(o => Number(o.weight))
+  )
+  console.log(maxDataVal, minDataVal)
 
   const options = {
     scales: {
@@ -47,13 +54,12 @@ const WeightDataContainer = ({ weightData }) => {
     elements: {
       point: {
         radius:
-          selectedTimeSpan.value === 'week' || weightData.length < 3 ? 3 : 0,
+          selectedTimeSpan.value === 'week' || chartData.length < 3 ? 3 : 0,
       },
     },
     responsive: true,
     maintainAspectRatio: false,
   }
-
   const data = {
     labels: labels,
     datasets: [
@@ -82,11 +88,14 @@ const mapStateToProps = state => {
   let weightsArray = []
   if (!Array.isArray(weights)) {
     const createdDate = state.auth.userAuth.createdAt
-    const weight = state.auth.userAccountData.weight
+    const weight = Number(state.auth.userAccountData.weight)
     weightsArray = [{ date: createdDate, weight }]
   } else {
-    weightsArray = weights
+    weightsArray = weights.map(w => {
+      return { ...w, weight: Number(w.weight) }
+    })
   }
+  console.log(weightsArray)
   return {
     weightData: weightsArray,
   }

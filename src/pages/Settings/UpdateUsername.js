@@ -8,11 +8,7 @@ import {
   updateUserAccountData,
 } from '../../redux/actions/auth/authStatus'
 
-const UpdateUsername = ({
-  updateUserAccountData,
-  userAccountData,
-  checkUsernameAvailability,
-}) => {
+const UpdateUsername = ({ updateUserAccountData, userAccountData }) => {
   const { username } = userAccountData
   const navigate = useNavigate()
 
@@ -67,8 +63,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     updateUserAccountData: data => dispatch(updateUserAccountData(data)),
-    checkUsernameAvailability: username =>
-      dispatch(checkUsernameAvailability(username)),
   }
 }
 
