@@ -23,6 +23,7 @@ import CreateWorkoutContainer from './pages/CreateWorkout/CreateWorkoutContainer
 import Auth from './Auth'
 import AppLoadingScreen from './components/AppLoadingScreen/AppLoadingScreen'
 import FeedbackContainer from './pages/Settings/Feedback/FeedbackContainer'
+import PastWorkouts from './pages/PastWorkouts/PastWorkouts'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -44,6 +45,15 @@ function App() {
             <Route exact path='/' element={<PrivateRoute />}>
               <Route exact path='/' element={<Dashboard />} />
             </Route>
+            <Route
+              path='/past-workouts'
+              element={
+                <>
+                  <PastWorkouts />
+                  <NavbarContainer />
+                </>
+              }
+            />
             <Route path='/account' element={<PrivateRoute />}>
               <Route exact path='/account' element={<Account />} />
               <Route
