@@ -345,7 +345,8 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
 
 // PAST WORKOUT DATA
 export const queryPastWorkoutData =
-  (order, numResults, descending) => async (dispatch, getState) => {
+  (order, numResults, pageNum = 0, descending = true) =>
+  async (dispatch, getState) => {
     const uid = getState().auth.userAuth.uid
     const userWorkoutDataRef = doc(db, 'workoutData', uid)
     const userPastWorkoutsRef = collection(userWorkoutDataRef, 'pastWorkouts')
