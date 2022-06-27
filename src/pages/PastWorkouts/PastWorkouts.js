@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import PastWorkoutsItem from '../../components/PastWorkoutsItem/PastWorkoutsItem'
 import { queryPastWorkoutData } from '../../redux/actions/workout/workout'
 import './PastWorkouts.scss'
 
@@ -16,7 +17,15 @@ const PastWorkouts = ({ queryPastWorkoutData }) => {
     })
   }, [])
 
-  return <div className='past-workouts page'></div>
+  return (
+    <div className='past-workouts page'>
+      {pastWorkoutData &&
+        pastWorkoutData.map(workout => {
+          const id = workout.id
+          return <PastWorkoutsItem key={id} workout={workout} />
+        })}
+    </div>
+  )
 }
 
 const mapPropsToDispatch = dispatch => {

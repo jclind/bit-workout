@@ -2,9 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './PastWorkoutsLink.scss'
 import Skeleton from 'react-loading-skeleton'
-import { AiOutlineCalendar, AiOutlineClockCircle } from 'react-icons/ai'
+import { AiOutlineCalendar } from 'react-icons/ai'
 import { formatDate } from '../../util/formatDate'
 import { formatTimeToObject } from '../../util/formatTime'
+import WorkoutTime from '../WorkoutTime/WorkoutTime'
 
 const NoPastWorkout = () => {
   return (
@@ -13,48 +14,6 @@ const NoPastWorkout = () => {
       <Link to='/workout'>
         <button className='start-workout-btn btn'>Start Workout</button>
       </Link>
-    </div>
-  )
-}
-
-const WorkoutTime = ({ workoutTime }) => {
-  if (!workoutTime) {
-    return (
-      <div className='time'>
-        <AiOutlineClockCircle className='icon' />
-      </div>
-    )
-  }
-
-  const hours = workoutTime.h
-  const minutes = workoutTime.m
-  const seconds = workoutTime.s
-
-  return (
-    <div className='time'>
-      <AiOutlineClockCircle className='icon' />
-      {workoutTime ? (
-        <>
-          <div className='time-type'>
-            {hours !== 0 && (
-              <>
-                {hours}
-                <span className='time-indicator'>H</span>
-              </>
-            )}
-          </div>
-          <div className='time-type'>
-            {minutes} <span className='time-indicator'>M</span>
-          </div>
-          {!hours && (
-            <div className='time-type'>
-              {seconds} <span className='time-indicator'>S</span>
-            </div>
-          )}
-        </>
-      ) : (
-        <Skeleton />
-      )}
     </div>
   )
 }
