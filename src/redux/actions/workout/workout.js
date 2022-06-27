@@ -20,6 +20,7 @@ import {
 } from 'firebase/firestore'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import { calcCoins, calcExp, logWorkout } from '../character/character'
+import { v4 as uuidv4 } from 'uuid'
 
 export const fetchWorkoutData = uid => async dispatch => {
   await getDoc(doc(db, 'workoutData', uid)).then(document => {
@@ -279,7 +280,9 @@ export const addWorkoutToPastWorkouts = data => async (dispatch, getState) => {
   const userWorkoutDataRef = doc(db, 'workoutData', uid)
   const userPastWorkoutsRef = collection(userWorkoutDataRef, 'pastWorkouts')
 
-  addDoc(userPastWorkoutsRef, data).catch(err => {
+  const workoutId = uuidv4()
+
+  addDoc(userPastWorkoutsRef, { ...data, id: workoutId }).catch(err => {
     console.log('workout not added to data:', err)
     // !ERROR
   })

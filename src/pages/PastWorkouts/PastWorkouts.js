@@ -12,7 +12,7 @@ const PastWorkouts = ({ queryPastWorkoutData }) => {
     const limit = 8
 
     queryPastWorkoutData(order, limit, pageNum).then(res => {
-      console.log(res)
+      setPastWorkoutData(res)
     })
   }, [])
 
