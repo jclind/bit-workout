@@ -61,24 +61,12 @@
         height: 20px;
         width: 20px;
       }
-      .date,
-      .time {
+      .date {
         display: flex;
         align-items: center;
         gap: 0.35rem;
         font-size: 0.9rem;
         color: $secondary-text;
-      }
-      .time {
-        display: flex;
-        .time-type {
-          display: flex;
-          gap: 0.2rem;
-          color: $secondary-text;
-          .time-indicator {
-            color: $tertiary-text;
-          }
-        }
       }
     }
   }
