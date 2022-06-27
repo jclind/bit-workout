@@ -19,7 +19,7 @@ export const formatAMPM = d => {
   hours = hours ? hours : 12
   minutes = minutes < 10 ? '0' + minutes : minutes
 
-  return hours + ':' + minutes + ' ' + ampm
+  return hours + ':' + minutes + ampm
 }
 
 export const formatDateMonthDay = time => {
