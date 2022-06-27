@@ -2,13 +2,18 @@
 
 .past-workouts-item {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: $secondary-background;
   border-radius: $border-radius;
+  height: fit-content;
   padding: 1rem 0.785rem;
 
   .head {
     display: flex;
     cursor: pointer;
+    width: 100%;
   }
 
   .image {
@@ -45,20 +50,10 @@
     .bottom {
       display: flex;
       flex-direction: column;
-
-      // .icon {
-      //   height: 20px;
-      //   width: 20px;
-      // }
-
       .workout-time {
         font-size: 1rem !important;
       }
     }
-  }
-  .start-finish-time {
-    font-size: 0.8rem;
-    color: $secondary-text;
   }
   .date {
     display: flex;
@@ -66,6 +61,13 @@
     gap: 0.35rem;
     color: $secondary-text;
     font-size: 0.8rem;
+  }
+  .collapse-indicator {
+    display: flex;
+    align-items: flex-end;
+    color: $secondary-text;
+    padding-left: 0.25rem;
+
     .icon {
       height: 20px;
       width: 20px;
@@ -73,18 +75,106 @@
   }
 
   .collapse {
-    position: absolute;
-    height: 100px;
-    transition: 1s height linear;
-    background: $secondary-background;
     width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    max-height: 0;
+    background: $secondary-background;
     padding: 1rem;
+    transition: 0.1s max-height linear;
+    padding: 0;
   }
   .collapse.show {
-    height: none !important;
-    visibility: none;
-    opacity: 0;
-    background: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    max-height: 500px;
+
+    .workout-data {
+      border-top: 1px solid $tertiary-text;
+      width: 95%;
+      display: grid;
+
+      margin: 0;
+      margin-top: 1rem;
+      padding: 1rem 0;
+      row-gap: 1.5rem;
+      column-gap: 0.5rem;
+      grid-template-columns: 1fr 1fr;
+      .item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        .label {
+          color: $secondary-text;
+          font-size: 0.8rem;
+          font-weight: 500;
+        }
+        .data {
+          font-size: 1.3rem;
+          font-weight: 600;
+        }
+        .coins,
+        .exp {
+          display: flex;
+          align-items: center;
+
+          .icon {
+            padding: 0 0.15rem;
+          }
+        }
+        .coins {
+          color: $coin-color;
+        }
+        .exp {
+          color: $exp-color;
+        }
+      }
+      .start-finish-time {
+        grid-column: 1/3;
+      }
+      .workout-path {
+        grid-column: 1/3;
+
+        .data {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+          .workout-path-exercise {
+            display: flex;
+            gap: 1rem;
+            background: $secondary-background-card;
+            border-radius: $border-radius;
+            padding: 0.5rem;
+            .image {
+              background: none;
+            }
+            .exercise-data {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-around;
+
+              .name {
+                font-size: 1rem;
+                font-weight: 600;
+                text-transform: capitalize;
+              }
+              .reps-sets {
+                display: flex;
+                gap: 1rem;
+                font-size: 0.8rem;
+                color: $secondary-text;
+                span {
+                  color: $primary;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   .character-data {
