@@ -118,6 +118,10 @@ const PastWorkoutsItem = ({ workout }) => {
                         </div>
                       </div>
                     </div>
+                    <div className='weight'>
+                      {weight}
+                      <span>lbs</span>
+                    </div>
                   </div>
                 )
               })}
