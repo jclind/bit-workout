@@ -1,24 +1,12 @@
 @import '../../helpers.scss';
 
 .past-workouts-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: $secondary-background;
   padding: 1rem 0;
   border-radius: $border-radius;
-  .no-data {
-    font-size: 1.25rem;
-    text-align: center;
-    height: fit-content;
-
-    .btn {
-      background: $secondary;
-      color: $primary;
-      width: fit-content;
-      padding: 0.5rem 1rem;
-      height: auto;
-      margin-top: 1rem !important;
-      text-decoration: none;
-    }
-  }
 
   h1 {
     font-size: 1.25rem !important;
@@ -93,5 +81,27 @@
         }
       }
     }
+  }
+  .btn {
+    background: $secondary;
+    color: $primary;
+    width: fit-content;
+    padding: 0.5rem 1rem;
+    height: auto;
+    margin-top: 1rem !important;
+    text-decoration: none;
+    font-size: 1.25rem;
+    text-align: center;
+    height: fit-content;
+  }
+  .past-workouts-link {
+    text-decoration: none;
+    padding: 0;
+  }
+  .past-workouts-btn {
+    // margin-top: 0.5rem !important;
+    margin: 0.5rem 0 !important;
+    font-size: 1.1rem;
+    cursor: pointer;
   }
 }

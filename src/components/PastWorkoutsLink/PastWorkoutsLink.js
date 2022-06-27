@@ -105,6 +105,11 @@ const PastWorkoutsLink = ({ pastWorkoutData, isResponse }) => {
               <WorkoutTime workoutTime={workoutTime} />
             </div>
           </div>
+          <Link to='/past-workouts' className='past-workouts-link'>
+            <button type='button' className='past-workouts-btn btn'>
+              Past Workouts
+            </button>
+          </Link>
         </>
       )}
     </div>
