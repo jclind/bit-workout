@@ -20,9 +20,9 @@ const PastWorkouts = ({ queryPastWorkoutData }) => {
   return (
     <div className='past-workouts page'>
       {pastWorkoutData &&
-        pastWorkoutData.map(workout => {
+        pastWorkoutData.map((workout, idx) => {
           const id = workout.id
-          return <PastWorkoutsItem key={id} workout={workout} />
+          return <PastWorkoutsItem key={id || idx} workout={workout} />
         })}
     </div>
   )
