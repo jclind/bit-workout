@@ -36,6 +36,7 @@ const PastWorkouts = ({ queryPastWorkoutData }) => {
   useEffect(() => {
     queryPastWorkoutData(order, limit, latestDoc).then(res => {
       if (!res.data || res.data.length === 0) {
+        setPastWorkoutData([])
         return setIsMoreData(false)
       }
       setLatestDoc(res.latestDoc) // Set latestDoc to last element in data
