@@ -16,12 +16,13 @@ const PastWorkoutsLinkContainer = ({ queryPastWorkoutData }) => {
     queryPastWorkoutData(order, numResults, 0, descending).then(res => {
       if (
         res &&
+        res.data &&
         typeof res.isResponse !== 'undefined' &&
         res.isResponse === false
       ) {
         setIsResponse(false)
       }
-      setPastWorkoutData(res[0])
+      setPastWorkoutData(res.data[0])
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
