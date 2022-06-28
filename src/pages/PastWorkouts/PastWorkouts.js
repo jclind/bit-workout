@@ -35,7 +35,6 @@ const PastWorkouts = ({ queryPastWorkoutData }) => {
 
   useEffect(() => {
     queryPastWorkoutData(order, limit, latestDoc).then(res => {
-      return setPastWorkoutData([])
       if (!res.data || res.data.length === 0) {
         return setIsMoreData(false)
       }
@@ -98,8 +97,8 @@ const PastWorkouts = ({ queryPastWorkoutData }) => {
             return <PastWorkoutsItem key={id || idx} workout={workout} />
           })
         )}
-        <BackButton />
       </div>
+      <BackButton />
     </div>
   )
 }
