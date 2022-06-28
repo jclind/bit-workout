@@ -16,7 +16,6 @@ const PastWorkoutsLinkContainer = ({ queryPastWorkoutData }) => {
     queryPastWorkoutData(order, numResults, 0, descending).then(res => {
       if (
         res &&
-        res.data &&
         typeof res.isResponse !== 'undefined' &&
         res.isResponse === false
       ) {
