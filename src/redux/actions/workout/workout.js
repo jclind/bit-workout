@@ -17,6 +17,8 @@ import {
   orderBy,
   limit,
   getDocs,
+  startAt,
+  startAfter,
 } from 'firebase/firestore'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import { calcCoins, calcExp, logWorkout } from '../character/character'
@@ -348,7 +350,7 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
 
 // PAST WORKOUT DATA
 export const queryPastWorkoutData =
-  (order, numResults, pageNum = 0, descending = true) =>
+  (order, numResults, latestDoc, descending = true) =>
   async (dispatch, getState) => {
     const uid = getState().auth.userAuth.uid
     const userWorkoutDataRef = doc(db, 'workoutData', uid)
@@ -356,12 +358,25 @@ export const queryPastWorkoutData =
 
     const queriedData = []
 
-    const q = query(
-      userPastWorkoutsRef,
-      orderBy(order, `${descending ? 'desc' : ''}`),
-      limit(numResults)
-    )
+    // If latestDoc is not pasted in, get results from beginning of collection
+    let q
+    if (latestDoc) {
+      q = query(
+        userPastWorkoutsRef,
+        orderBy(order, `${descending ? 'desc' : ''}`),
+        startAfter(latestDoc),
+        limit(numResults)
+      )
+    } else {
+      q = query(
+        userPastWorkoutsRef,
+        orderBy(order, `${descending ? 'desc' : ''}`),
+        limit(numResults)
+      )
+    }
+
     const querySnapshot = await getDocs(q)
+    const newLatestDoc = querySnapshot.docs[querySnapshot.docs.length - 1]
     // If dataExists is false, will return no data response
     let dataExists
     querySnapshot.forEach(doc => {
@@ -370,7 +385,7 @@ export const queryPastWorkoutData =
       queriedData.push(data)
     })
     if (dataExists) {
-      return queriedData
+      return { data: queriedData, latestDoc: newLatestDoc }
     }
     return { isResponse: false }
   }

@@ -23,7 +23,6 @@ const PastWorkoutsItem = ({ workout }) => {
   const startTime = formatAMPM(workout.workoutStartTime)
   const workoutFinishTime =
     Number(workout.workoutStartTime) + Number(workout.totalWorkoutTime)
-  console.log(workout)
   const finishTime = formatAMPM(workoutFinishTime)
   const imageURL = workout.path[0].imageURL
   const coins = workout.coinsEarned

@@ -11,7 +11,6 @@ export const formatDate = time => {
 // Code from @bbrame https://stackoverflow.com/a/8888498/12269295
 export const formatAMPM = d => {
   const date = new Date(d)
-  console.log(d)
   let hours = date.getHours()
   let minutes = date.getMinutes()
   const ampm = hours >= 12 ? 'pm' : 'am'
