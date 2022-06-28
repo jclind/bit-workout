@@ -28,7 +28,7 @@ const NoPastWorkoutData = () => {
 const PastWorkouts = ({ queryPastWorkoutData }) => {
   const [pastWorkoutData, setPastWorkoutData] = useState(null)
   const [order, setOrder] = useState('workoutStartTime')
-  const [limit, setLimit] = useState(8)
+  const [limit, setLimit] = useState(10)
   const [latestDoc, setLatestDoc] = useState(null)
   const [isPaginationLoading, setIsPaginationLoading] = useState(false)
   const [isMoreData, setIsMoreData] = useState(true)
@@ -82,7 +82,7 @@ const PastWorkouts = ({ queryPastWorkoutData }) => {
     >
       {!isNoData && <div className='settings-title'>Past Workouts</div>}
       <div className='past-workouts-container'>
-        {isDataLoading || true ? (
+        {isDataLoading ? (
           <>
             <PastWorkoutsItem key={1} workout={null} loading={true} />
             <PastWorkoutsItem key={2} workout={null} loading={true} />
