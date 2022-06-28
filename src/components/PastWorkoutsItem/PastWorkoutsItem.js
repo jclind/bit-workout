@@ -1,12 +1,7 @@
 import React, { useState } from 'react'
 import { formatAMPM, formatDate } from '../../util/formatDate'
 import { formatTimeToObject } from '../../util/formatTime'
-import {
-  AiOutlineCalendar,
-  AiOutlineStar,
-  AiOutlineRight,
-  AiOutlineDown,
-} from 'react-icons/ai'
+import { AiOutlineStar, AiOutlineRight, AiOutlineDown } from 'react-icons/ai'
 import { RiCopperCoinLine } from 'react-icons/ri'
 import Skeleton from 'react-loading-skeleton'
 
@@ -46,10 +41,7 @@ const PastWorkoutsItem = ({ workout }) => {
             <WorkoutTime workoutTime={workoutTime} />
           </div>
         </div>
-        <div className='date'>
-          {/* <AiOutlineCalendar className='icon' /> */}
-          {date ? date : <Skeleton />}
-        </div>
+        <div className='date'>{date ? date : <Skeleton />}</div>
         <div className='collapse-indicator'>
           {isCollapsed ? (
             <AiOutlineRight className='icon ' />
@@ -58,13 +50,7 @@ const PastWorkoutsItem = ({ workout }) => {
           )}
         </div>
       </div>
-      {/* <div className='collapse-indicator'>
-        {isCollapsed ? (
-          <AiOutlineCaretUp className='icon' />
-        ) : (
-          <AiOutlineCaretDown className='icon' />
-        )}
-      </div> */}
+
       <div className={isCollapsed ? 'collapse' : 'collapse show'}>
         <div className='workout-data'>
           <div className='start-finish-time item'>
@@ -128,15 +114,6 @@ const PastWorkoutsItem = ({ workout }) => {
           </div>
         </div>
       </div>
-
-      {/* <div className='character-data'>
-        <div className='coins'>
-          
-        </div>
-        <div className='exp'>
-          
-        </div>
-      </div> */}
     </div>
   )
 }
