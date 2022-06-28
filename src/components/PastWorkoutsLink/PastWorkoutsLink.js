@@ -7,6 +7,9 @@ import { formatDate } from '../../util/formatDate'
 import { formatTimeToObject } from '../../util/formatTime'
 import WorkoutTime from '../WorkoutTime/WorkoutTime'
 
+const SKELETON_BASE_COLOR = '#546d80'
+const SKELETON_HIGHLIGHT_COLOR = '#548ca8'
+
 const NoPastWorkout = () => {
   return (
     <div className='no-data'>
@@ -49,20 +52,47 @@ const PastWorkoutsLink = ({ pastWorkoutData, isResponse }) => {
                 ) : (
                   <Skeleton
                     circle
-                    height='100%'
-                    containerClassName='workout-image'
+                    className='workout-image-skeleton'
+                    baseColor={SKELETON_BASE_COLOR}
+                    highlightColor={SKELETON_HIGHLIGHT_COLOR}
                   />
                 )}
               </div>
               <div className='info'>
                 <div className='top'>
-                  <div className='title'>{workoutName || <Skeleton />}</div>
+                  <div className='title'>
+                    <div className='title'>
+                      {workoutName || (
+                        <Skeleton
+                          baseColor={SKELETON_BASE_COLOR}
+                          highlightColor={SKELETON_HIGHLIGHT_COLOR}
+                        />
+                      )}
+                    </div>
+                  </div>
                 </div>
                 <div className='bottom'>
-                  <WorkoutTime workoutTime={workoutTime} />
+                  {workoutTime ? (
+                    <WorkoutTime workoutTime={workoutTime} />
+                  ) : (
+                    <Skeleton
+                      width='8ch'
+                      baseColor={SKELETON_BASE_COLOR}
+                      highlightColor={SKELETON_HIGHLIGHT_COLOR}
+                    />
+                  )}
                   <div className='date'>
-                    <AiOutlineCalendar className='icon' />
-                    {workoutDate ? workoutDate : <Skeleton />}
+                    {workoutDate ? (
+                      <>
+                        <AiOutlineCalendar className='icon' />
+                        {workoutDate}
+                      </>
+                    ) : (
+                      <Skeleton
+                        baseColor={SKELETON_BASE_COLOR}
+                        highlightColor={SKELETON_HIGHLIGHT_COLOR}
+                      />
+                    )}
                   </div>
                 </div>
               </div>

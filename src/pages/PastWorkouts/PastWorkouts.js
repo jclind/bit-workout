@@ -82,7 +82,7 @@ const PastWorkouts = ({ queryPastWorkoutData }) => {
     >
       {!isNoData && <div className='settings-title'>Past Workouts</div>}
       <div className='past-workouts-container'>
-        {isDataLoading ? (
+        {isDataLoading || true ? (
           <>
             <PastWorkoutsItem key={1} workout={null} loading={true} />
             <PastWorkoutsItem key={2} workout={null} loading={true} />
