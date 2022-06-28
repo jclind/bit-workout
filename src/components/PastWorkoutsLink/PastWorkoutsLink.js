@@ -54,14 +54,18 @@ const PastWorkoutsLink = ({ pastWorkoutData, isResponse }) => {
                   />
                 )}
               </div>
-              <div className='title'>{workoutName || <Skeleton />}</div>
-            </div>
-            <div className='info'>
-              <div className='date'>
-                <AiOutlineCalendar className='icon' />
-                {workoutDate ? workoutDate : <Skeleton />}
+              <div className='info'>
+                <div className='top'>
+                  <div className='title'>{workoutName || <Skeleton />}</div>
+                </div>
+                <div className='bottom'>
+                  <WorkoutTime workoutTime={workoutTime} />
+                  <div className='date'>
+                    <AiOutlineCalendar className='icon' />
+                    {workoutDate ? workoutDate : <Skeleton />}
+                  </div>
+                </div>
               </div>
-              <WorkoutTime workoutTime={workoutTime} />
             </div>
           </div>
           <Link to='/past-workouts' className='past-workouts-link'>
