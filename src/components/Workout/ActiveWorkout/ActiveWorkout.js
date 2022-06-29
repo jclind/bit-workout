@@ -4,12 +4,14 @@ import { calculatePlates } from '../../../util/calculatePlates'
 import PlatesModal from '../PlatesModal/PlatesModal'
 import ConfirmSetFailedModal from '../ConfirmSetFailedModal/ConfirmSetFailedModal'
 import StopWorkoutModal from '../StopWorkoutModal/StopWorkoutModal'
+import { AiOutlineRight } from 'react-icons/ai'
 import { connect } from 'react-redux'
 import {
   completeSet,
   getSingleWorkout,
   stopWorkout,
 } from '../../../redux/actions/workout/workout'
+import WorkoutPathModal from '../WorkoutPathModal/WorkoutPathModal'
 
 const ActiveWorkout = ({
   getSingleWorkout,
@@ -23,6 +25,7 @@ const ActiveWorkout = ({
   const [isPlatesModalOpen, setIsPlatesModalOpen] = useState(false)
   const [isSetFailedModalOpen, setIsSetFailedModalOpen] = useState(false)
   const [isStopModalOpen, setIsStopModalOpen] = useState(false)
+  const [isWorkoutPathModalOpen, setIsWorkoutPathModalOpen] = useState(false)
 
   const currExerciseID = currWorkout.path[currIdx].exerciseID
   const currExercise = getSingleWorkout(currExerciseID)
@@ -58,6 +61,12 @@ const ActiveWorkout = ({
       <div className='exercise-img-container'>
         <img src={imageURL} alt={name} className='exercise-img' />
       </div>
+      <button
+        className='view-workout-path'
+        onClick={() => setIsWorkoutPathModalOpen(true)}
+      >
+        Workout Path <AiOutlineRight className='icon' />
+      </button>
       <button
         className='submit-btn'
         onClick={() => completeSet(currSetTotal, currRepTotal, exerciseID)}
@@ -107,6 +116,16 @@ const ActiveWorkout = ({
             setIsStopModalOpen(false)
           }}
           stopWorkout={stopWorkout}
+        />
+      ) : null}
+      {isWorkoutPathModalOpen ? (
+        <WorkoutPathModal
+          onClose={() => {
+            setIsWorkoutPathModalOpen(false)
+          }}
+          currIdx={currIdx}
+          currSet={currSet}
+          workout={currWorkout}
         />
       ) : null}
     </div>
