@@ -110,6 +110,7 @@ const PastWorkouts = ({ queryPastWorkoutData }) => {
         }
         setLatestDoc(res.latestDoc) // Set latestDoc to last element in data
         setPastWorkoutData(res.data)
+        setIsMoreData(true)
       }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
