@@ -13,7 +13,7 @@ const PastWorkoutsLinkContainer = ({ queryPastWorkoutData }) => {
     const numResults = 1
     const descending = true
 
-    queryPastWorkoutData(order, numResults, descending).then(res => {
+    queryPastWorkoutData(order, numResults, 0, descending).then(res => {
       if (
         res &&
         typeof res.isResponse !== 'undefined' &&
@@ -21,7 +21,7 @@ const PastWorkoutsLinkContainer = ({ queryPastWorkoutData }) => {
       ) {
         setIsResponse(false)
       }
-      setPastWorkoutData(res[0])
+      setPastWorkoutData(res.data[0])
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -36,8 +36,8 @@ const PastWorkoutsLinkContainer = ({ queryPastWorkoutData }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    queryPastWorkoutData: (order, numResults, descending) =>
-      dispatch(queryPastWorkoutData(order, numResults, descending)),
+    queryPastWorkoutData: (order, numResults, pageNum, descending) =>
+      dispatch(queryPastWorkoutData(order, numResults, pageNum, descending)),
   }
 }
 

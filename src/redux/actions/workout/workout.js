@@ -17,9 +17,11 @@ import {
   orderBy,
   limit,
   getDocs,
+  startAfter,
 } from 'firebase/firestore'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import { calcCoins, calcExp, logWorkout } from '../character/character'
+import { v4 as uuidv4 } from 'uuid'
 
 export const fetchWorkoutData = uid => async dispatch => {
   await getDoc(doc(db, 'workoutData', uid)).then(document => {
@@ -279,7 +281,9 @@ export const addWorkoutToPastWorkouts = data => async (dispatch, getState) => {
   const userWorkoutDataRef = doc(db, 'workoutData', uid)
   const userPastWorkoutsRef = collection(userWorkoutDataRef, 'pastWorkouts')
 
-  addDoc(userPastWorkoutsRef, data).catch(err => {
+  const workoutId = uuidv4()
+
+  addDoc(userPastWorkoutsRef, { ...data, id: workoutId }).catch(err => {
     console.log('workout not added to data:', err)
     // !ERROR
   })
@@ -345,19 +349,46 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
 
 // PAST WORKOUT DATA
 export const queryPastWorkoutData =
-  (order, numResults, descending) => async (dispatch, getState) => {
+  (order, numResults, latestDoc, descending = true) =>
+  async (dispatch, getState) => {
     const uid = getState().auth.userAuth.uid
     const userWorkoutDataRef = doc(db, 'workoutData', uid)
     const userPastWorkoutsRef = collection(userWorkoutDataRef, 'pastWorkouts')
 
     const queriedData = []
 
-    const q = query(
-      userPastWorkoutsRef,
-      orderBy(order, `${descending ? 'desc' : ''}`),
-      limit(numResults)
-    )
+    // If latestDoc is not pasted in, get results from beginning of collection
+    let q
+    if (latestDoc) {
+      if (descending) {
+        q = query(
+          userPastWorkoutsRef,
+          orderBy(order, 'desc'),
+          startAfter(latestDoc),
+          limit(numResults)
+        )
+      } else {
+        q = query(
+          userPastWorkoutsRef,
+          orderBy(order),
+          startAfter(latestDoc),
+          limit(numResults)
+        )
+      }
+    } else {
+      if (descending) {
+        q = query(
+          userPastWorkoutsRef,
+          orderBy(order, 'desc'),
+          limit(numResults)
+        )
+      } else {
+        q = query(userPastWorkoutsRef, orderBy(order), limit(numResults))
+      }
+    }
+
     const querySnapshot = await getDocs(q)
+    const newLatestDoc = querySnapshot.docs[querySnapshot.docs.length - 1]
     // If dataExists is false, will return no data response
     let dataExists
     querySnapshot.forEach(doc => {
@@ -366,7 +397,7 @@ export const queryPastWorkoutData =
       queriedData.push(data)
     })
     if (dataExists) {
-      return queriedData
+      return { data: queriedData, latestDoc: newLatestDoc }
     }
     return { isResponse: false }
   }
