@@ -17,7 +17,6 @@ import {
   orderBy,
   limit,
   getDocs,
-  startAt,
   startAfter,
 } from 'firebase/firestore'
 import { exerciseList } from '../../../assets/data/exerciseList'
