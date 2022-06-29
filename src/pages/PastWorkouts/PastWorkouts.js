@@ -102,7 +102,6 @@ const PastWorkouts = ({ queryPastWorkoutData }) => {
   const [isMoreData, setIsMoreData] = useState(true)
 
   useEffect(() => {
-    console.log(order)
     queryPastWorkoutData(order.sort, limit, null, order.descending).then(
       res => {
         if (!res.data || res.data.length === 0) {
@@ -113,6 +112,7 @@ const PastWorkouts = ({ queryPastWorkoutData }) => {
         setPastWorkoutData(res.data)
       }
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order])
 
   const getMoreWorkoutData = () => {
@@ -147,7 +147,6 @@ const PastWorkouts = ({ queryPastWorkoutData }) => {
 
   const isDataLoading = isMoreData && !pastWorkoutData
   const isNoData = !isDataLoading && pastWorkoutData.length === 0
-  console.log(pastWorkoutData)
 
   const sortOptions = [
     { value: 'new', label: 'Newest' },
