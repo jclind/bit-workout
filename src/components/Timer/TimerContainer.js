@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
+import useSound from 'use-sound'
+import timerFinishedSound from '../../assets/sounds/timer-finished.mp3'
 import { formatTime } from '../../util/formatTime'
 import Timer from './Timer'
 import './Timer.scss'
@@ -13,6 +15,8 @@ const TimerContainer = ({
   updateWorkout,
 }) => {
   const [timerVal, setTimerVal] = useState()
+
+  const [play] = useSound(timerFinishedSound)
 
   const skipRestBtn = useRef()
 

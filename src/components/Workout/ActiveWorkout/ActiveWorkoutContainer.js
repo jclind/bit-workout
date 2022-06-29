@@ -1,9 +1,19 @@
+import React, { useEffect } from 'react'
 import ActiveWorkout from './ActiveWorkout'
 import TimerContainer from '../../Timer/TimerContainer'
+import useSound from 'use-sound'
+import timerFinishedSound from '../../../assets/sounds/timer-finished.mp3'
 import './ActiveWorkout.scss'
 import { connect } from 'react-redux'
 
 const WorkoutContainer = ({ isTimer, timerStart }) => {
+  const [play] = useSound(timerFinishedSound)
+
+  useEffect(() => {
+    if (!isTimer) {
+      play()
+    }
+  }, [isTimer])
   return (
     <>
       {isTimer && timerStart ? (
