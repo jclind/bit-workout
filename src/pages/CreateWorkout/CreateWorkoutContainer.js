@@ -29,7 +29,6 @@ const CreateWorkoutContainer = ({ createWorkout }) => {
   // When restTime Minutes or Seconds changes, set totalTestTime to the total time in seconds
   useEffect(() => {
     setRestTimeMS((restTimeMinutes * 60 + restTimeSeconds) * 1000)
-    console.log(restTimeMinutes, restTimeSeconds)
   }, [restTimeMinutes, restTimeSeconds])
 
   const [failedRestTimeMS, setFailedRestTimeMS] = useState('')

@@ -2,9 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './PastWorkoutsLink.scss'
 import Skeleton from 'react-loading-skeleton'
-import { AiOutlineCalendar, AiOutlineClockCircle } from 'react-icons/ai'
+import { AiOutlineCalendar } from 'react-icons/ai'
 import { formatDate } from '../../util/formatDate'
 import { formatTimeToObject } from '../../util/formatTime'
+import WorkoutTime from '../WorkoutTime/WorkoutTime'
+
+const SKELETON_BASE_COLOR = '#546d80'
+const SKELETON_HIGHLIGHT_COLOR = '#548ca8'
 
 const NoPastWorkout = () => {
   return (
@@ -13,48 +17,6 @@ const NoPastWorkout = () => {
       <Link to='/workout'>
         <button className='start-workout-btn btn'>Start Workout</button>
       </Link>
-    </div>
-  )
-}
-
-const WorkoutTime = ({ workoutTime }) => {
-  if (!workoutTime) {
-    return (
-      <div className='time'>
-        <AiOutlineClockCircle className='icon' />
-      </div>
-    )
-  }
-
-  const hours = workoutTime.h
-  const minutes = workoutTime.m
-  const seconds = workoutTime.s
-
-  return (
-    <div className='time'>
-      <AiOutlineClockCircle className='icon' />
-      {workoutTime ? (
-        <>
-          <div className='time-type'>
-            {hours !== 0 && (
-              <>
-                {hours}
-                <span className='time-indicator'>H</span>
-              </>
-            )}
-          </div>
-          <div className='time-type'>
-            {minutes} <span className='time-indicator'>M</span>
-          </div>
-          {!hours && (
-            <div className='time-type'>
-              {seconds} <span className='time-indicator'>S</span>
-            </div>
-          )}
-        </>
-      ) : (
-        <Skeleton />
-      )}
     </div>
   )
 }
@@ -90,21 +52,57 @@ const PastWorkoutsLink = ({ pastWorkoutData, isResponse }) => {
                 ) : (
                   <Skeleton
                     circle
-                    height='100%'
-                    containerClassName='workout-image'
+                    className='workout-image-skeleton'
+                    baseColor={SKELETON_BASE_COLOR}
+                    highlightColor={SKELETON_HIGHLIGHT_COLOR}
                   />
                 )}
               </div>
-              <div className='title'>{workoutName || <Skeleton />}</div>
-            </div>
-            <div className='info'>
-              <div className='date'>
-                <AiOutlineCalendar className='icon' />
-                {workoutDate ? workoutDate : <Skeleton />}
+              <div className='info'>
+                <div className='top'>
+                  <div className='title'>
+                    <div className='title'>
+                      {workoutName || (
+                        <Skeleton
+                          baseColor={SKELETON_BASE_COLOR}
+                          highlightColor={SKELETON_HIGHLIGHT_COLOR}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className='bottom'>
+                  {workoutTime ? (
+                    <WorkoutTime workoutTime={workoutTime} />
+                  ) : (
+                    <Skeleton
+                      width='8ch'
+                      baseColor={SKELETON_BASE_COLOR}
+                      highlightColor={SKELETON_HIGHLIGHT_COLOR}
+                    />
+                  )}
+                  <div className='date'>
+                    {workoutDate ? (
+                      <>
+                        <AiOutlineCalendar className='icon' />
+                        {workoutDate}
+                      </>
+                    ) : (
+                      <Skeleton
+                        baseColor={SKELETON_BASE_COLOR}
+                        highlightColor={SKELETON_HIGHLIGHT_COLOR}
+                      />
+                    )}
+                  </div>
+                </div>
               </div>
-              <WorkoutTime workoutTime={workoutTime} />
             </div>
           </div>
+          <Link to='/past-workouts' className='past-workouts-link'>
+            <button type='button' className='past-workouts-btn btn'>
+              Past Workouts
+            </button>
+          </Link>
         </>
       )}
     </div>
