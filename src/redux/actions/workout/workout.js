@@ -361,18 +361,31 @@ export const queryPastWorkoutData =
     // If latestDoc is not pasted in, get results from beginning of collection
     let q
     if (latestDoc) {
-      q = query(
-        userPastWorkoutsRef,
-        orderBy(order, `${descending ? 'desc' : ''}`),
-        startAfter(latestDoc),
-        limit(numResults)
-      )
+      if (descending) {
+        q = query(
+          userPastWorkoutsRef,
+          orderBy(order, 'desc'),
+          startAfter(latestDoc),
+          limit(numResults)
+        )
+      } else {
+        q = query(
+          userPastWorkoutsRef,
+          orderBy(order),
+          startAfter(latestDoc),
+          limit(numResults)
+        )
+      }
     } else {
-      q = query(
-        userPastWorkoutsRef,
-        orderBy(order, `${descending ? 'desc' : ''}`),
-        limit(numResults)
-      )
+      if (descending) {
+        q = query(
+          userPastWorkoutsRef,
+          orderBy(order, 'desc'),
+          limit(numResults)
+        )
+      } else {
+        q = query(userPastWorkoutsRef, orderBy(order), limit(numResults))
+      }
     }
 
     const querySnapshot = await getDocs(q)
