@@ -10,6 +10,21 @@
   .settings-title {
     padding-top: 2rem;
   }
+  .sort-options {
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+
+    .select {
+      width: 135px;
+      margin-left: auto;
+
+      .select-placeholder {
+        display: flex;
+        gap: 0.35rem;
+      }
+    }
+  }
 
   .past-workouts-container {
     position: relative;
