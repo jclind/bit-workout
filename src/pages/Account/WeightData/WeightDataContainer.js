@@ -31,7 +31,6 @@ const WeightDataContainer = ({ weightData }) => {
     Math,
     chartData.map(o => Number(o.weight))
   )
-  console.log(maxDataVal, minDataVal)
 
   const options = {
     scales: {
@@ -95,7 +94,6 @@ const mapStateToProps = state => {
       return { ...w, weight: Number(w.weight) }
     })
   }
-  console.log(weightsArray)
   return {
     weightData: weightsArray,
   }

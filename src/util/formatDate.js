@@ -8,6 +8,19 @@ export const formatDate = time => {
   return `${month}/${day}/${year}`
 }
 
+// Code from @bbrame https://stackoverflow.com/a/8888498/12269295
+export const formatAMPM = d => {
+  const date = new Date(d)
+  let hours = date.getHours()
+  let minutes = date.getMinutes()
+  const ampm = hours >= 12 ? 'pm' : 'am'
+  hours = hours % 12
+  hours = hours ? hours : 12
+  minutes = minutes < 10 ? '0' + minutes : minutes
+
+  return hours + ':' + minutes + ampm
+}
+
 export const formatDateMonthDay = time => {
   const date = new Date(time)
   const day = date.getDate()
