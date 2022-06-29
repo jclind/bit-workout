@@ -48,7 +48,6 @@ const ConfirmSetFailedModal = ({
       })
   }
 
-  console.log(currWeight)
   return ReactDom.createPortal(
     <>
       <div className='confirm-set-failed-modal overlay'>
