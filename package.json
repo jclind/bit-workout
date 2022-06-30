@@ -31,6 +31,7 @@
     "sass": "^1.52.2",
     "stylelint-scss": "^4.2.0",
     "thunk": "^0.0.1",
+    "use-sound": "^4.0.1",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
