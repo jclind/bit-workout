@@ -4,6 +4,7 @@ import { calculatePlates } from '../../../util/calculatePlates'
 import PlatesModal from '../PlatesModal/PlatesModal'
 import ConfirmSetFailedModal from '../ConfirmSetFailedModal/ConfirmSetFailedModal'
 import StopWorkoutModal from '../StopWorkoutModal/StopWorkoutModal'
+import { AiOutlineRight } from 'react-icons/ai'
 import { connect } from 'react-redux'
 import {
   completeSet,
@@ -19,6 +20,7 @@ const ActiveWorkout = ({
   completeSet,
   weights,
   stopWorkout,
+  setIsWorkoutPathModalOpen,
 }) => {
   const [isPlatesModalOpen, setIsPlatesModalOpen] = useState(false)
   const [isSetFailedModalOpen, setIsSetFailedModalOpen] = useState(false)
@@ -58,6 +60,12 @@ const ActiveWorkout = ({
       <div className='exercise-img-container'>
         <img src={imageURL} alt={name} className='exercise-img' />
       </div>
+      <button
+        className='view-workout-path'
+        onClick={() => setIsWorkoutPathModalOpen(true)}
+      >
+        Workout Path <AiOutlineRight className='icon' />
+      </button>
       <button
         className='submit-btn'
         onClick={() => completeSet(currSetTotal, currRepTotal, exerciseID)}
@@ -99,6 +107,8 @@ const ActiveWorkout = ({
           weightExerciseId={exerciseID}
           currSetTotal={currSetTotal}
           currRepTotal={currRepTotal}
+          currWorkout={currWorkout}
+          currIdx={currIdx}
         />
       ) : null}
       {isStopModalOpen ? (
@@ -128,7 +138,7 @@ const mapDispatchToProps = dispatch => {
     getSingleWorkout: id => dispatch(getSingleWorkout(id)),
     completeSet: (currSetTotal, numReps, exerciseID, lastSetFailed) =>
       dispatch(completeSet(currSetTotal, numReps, exerciseID, lastSetFailed)),
-    stopWorkout: () => dispatch(stopWorkout()),
+    stopWorkout: (coins, exp) => dispatch(stopWorkout(coins, exp)),
   }
 }
 

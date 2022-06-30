@@ -1,6 +1,12 @@
 import React from 'react'
+import { AiOutlineRight } from 'react-icons/ai'
 
-const Timer = ({ timerVal, skipRestBtn, lastSetFailed }) => {
+const Timer = ({
+  timerVal,
+  skipRestBtn,
+  lastSetFailed,
+  setIsWorkoutPathModalOpen,
+}) => {
   return (
     <div className='workout-timer'>
       <div className='timer-title'>
@@ -14,6 +20,12 @@ const Timer = ({ timerVal, skipRestBtn, lastSetFailed }) => {
         alt='Adorable sloths cuddling awwww <33333'
         className='rest-img'
       />
+      <button
+        className='view-workout-path'
+        onClick={() => setIsWorkoutPathModalOpen(true)}
+      >
+        Workout Path <AiOutlineRight className='icon' />
+      </button>
       <button className='skip-rest-btn' ref={skipRestBtn}>
         Skip Rest
       </button>

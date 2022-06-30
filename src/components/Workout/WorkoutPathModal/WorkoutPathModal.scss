@@ -1,0 +1,76 @@
+@import '../../../helpers.scss';
+
+.workout-path-modal {
+  .modal-content {
+    width: calc(#{$max-width} * 0.9);
+    max-width: 90%;
+    .path {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .workout-path-exercise {
+        display: flex;
+        background: $secondary-background-card;
+        padding: 0.5rem 1rem;
+        border-radius: $border-radius;
+        box-sizing: border-box;
+        .image {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          align-items: center;
+          height: 50px;
+          width: 50px;
+          border-radius: 50%;
+          padding: 0.25rem;
+          box-sizing: border-box;
+          background: $primary-background;
+          margin: auto 0;
+          img {
+            object-fit: contain;
+            height: 35px;
+            width: 35px;
+          }
+        }
+        .exercise-data {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          flex: 1;
+          margin-left: 1rem;
+
+          .name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: capitalize;
+            text-align: left;
+          }
+          .reps-sets {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: $secondary-text;
+            span {
+              color: $primary;
+            }
+          }
+        }
+      }
+      .workout-path-exercise.COMPLETED {
+        background: $primary-background;
+        color: $secondary;
+
+        .reps,
+        .sets,
+        .reps span,
+        .sets span {
+          color: $secondary;
+        }
+      }
+      .workout-path-exercise.ACTIVE {
+        background: $secondary;
+      }
+    }
+  }
+}

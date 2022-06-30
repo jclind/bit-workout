@@ -11,6 +11,7 @@ const TimerContainer = ({
   failSetRestTime,
   lastSetFailed,
   updateWorkout,
+  setIsWorkoutPathModalOpen,
 }) => {
   const [timerVal, setTimerVal] = useState()
 
@@ -44,9 +45,12 @@ const TimerContainer = ({
       // Format elapsed time to milliseconds
       const elapsedMS = Math.round(elapsed / 1000) * 1000
       // Get time left on timer
-      const timeLeft = lastSetFailed
+      let timeLeft = lastSetFailed
         ? failSetRestTime - elapsedMS
         : restTime - elapsedMS
+      if (timeLeft < 0) {
+        timeLeft = 0
+      }
 
       setTimerVal(formatTime(timeLeft))
       if (timeLeft <= 0) {
@@ -62,6 +66,7 @@ const TimerContainer = ({
       timerVal={timerVal}
       skipRestBtn={skipRestBtn}
       lastSetFailed={lastSetFailed}
+      setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
     />
   )
 }
