@@ -108,6 +108,8 @@ const ActiveWorkout = ({
           weightExerciseId={exerciseID}
           currSetTotal={currSetTotal}
           currRepTotal={currRepTotal}
+          currWorkout={currWorkout}
+          currIdx={currIdx}
         />
       ) : null}
       {isStopModalOpen ? (

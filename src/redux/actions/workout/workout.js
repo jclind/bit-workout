@@ -167,6 +167,24 @@ export const completeSet =
     const currWorkoutPathLength = runningWorkout.currWorkout.path.length
     const elapsedTime = new Date().getTime() - timeLastUpdated
 
+    const currExerciseWeight = getState().workout.workoutData.weights.find(
+      ex => ex.exerciseID === exerciseID
+    ).weight
+
+    let updatedPath = [...runningWorkout.currWorkout.path]
+    const currSetPath = updatedPath[currIdx].setPath || []
+    updatedPath[currIdx].setPath = [
+      ...currSetPath,
+      {
+        setNum: currSet,
+        completedReps,
+        weight: currExerciseWeight,
+        isFailed: lastSetFailed || false,
+      },
+    ]
+
+    console.log(updatedPath)
+
     const currCoins = runningWorkout.coins ? runningWorkout.coins : 0
     const totalCoins = calcCoins(completedReps) + currCoins
     const currExp = runningWorkout.exp ? runningWorkout.exp : 0
@@ -200,6 +218,7 @@ export const completeSet =
           'runningWorkout.timeLastUpdated': new Date().getTime(),
           'runningWorkout.coins': totalCoins,
           'runningWorkout.exp': totalExp,
+          'runningWorkout.currWorkout.path': updatedPath,
           workoutStats,
         }
 
@@ -248,6 +267,7 @@ export const failSet =
     await dispatch(
       updateWorkout({
         weights: modWeights,
+        // 'runningWorkout.currWorkout.path'
       })
     )
   }
