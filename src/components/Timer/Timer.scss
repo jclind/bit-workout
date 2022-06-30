@@ -26,6 +26,17 @@
     margin: 0 auto;
     margin-top: 5rem;
   }
+  .view-workout-path {
+    display: flex;
+    align-items: center;
+    background: none;
+    font-size: 0.9rem;
+    height: fit-content;
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 1rem;
+    color: $secondary;
+  }
   .skip-rest-btn {
     position: absolute;
     bottom: calc(#{$navbar-height} + 3rem);
