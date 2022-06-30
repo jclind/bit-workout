@@ -39,17 +39,6 @@ const WorkoutPathModal = ({ onClose, currIdx, currSet, workout }) => {
               if (exerciseState === 'COMPLETED') completedSets = sets
               if (exerciseState === 'ACTIVE') completedSets = currSet - 1
 
-              // const name = workout && workout.workoutName
-              // const workoutTime =
-              //   workout && formatTimeToObject(workout.totalWorkoutTime)
-              // const date = workout && formatDate(workout.workoutStartTime)
-              // const startTime =
-              //   workout && formatAMPM(workout.workoutStartTime)
-              // const workoutFinishTime =
-              //   workout &&
-              //   Number(workout.workoutStartTime) +
-              //     Number(workout.totalWorkoutTime)
-              // const finishTime = workout && formatAMPM(workoutFinishTime)
               return (
                 <div className={`workout-path-exercise ${exerciseState}`}>
                   <div className='image'>

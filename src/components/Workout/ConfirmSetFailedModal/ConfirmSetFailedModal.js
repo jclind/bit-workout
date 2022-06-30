@@ -12,6 +12,8 @@ const ConfirmSetFailedModal = ({
   weightExerciseId,
   currSetTotal,
   currRepTotal,
+  currWorkout,
+  currIdx,
 }) => {
   const [weightCount, setWeightCount] = useState(10)
   const [repCount, setRepCount] = useState(0)
@@ -39,6 +41,9 @@ const ConfirmSetFailedModal = ({
     }
   }
   const handleFailSet = () => {
+    // let updatedPath = [...currWorkout.path]
+    // updatedPath[currIdx].
+
     failSet(currWeight - weightCount, weightExerciseId, currSetTotal, repCount)
       .then(() => {
         onClose()
