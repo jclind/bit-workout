@@ -11,7 +11,6 @@ import {
   getSingleWorkout,
   stopWorkout,
 } from '../../../redux/actions/workout/workout'
-import WorkoutPathModal from '../WorkoutPathModal/WorkoutPathModal'
 
 const ActiveWorkout = ({
   getSingleWorkout,
@@ -21,11 +20,11 @@ const ActiveWorkout = ({
   completeSet,
   weights,
   stopWorkout,
+  setIsWorkoutPathModalOpen,
 }) => {
   const [isPlatesModalOpen, setIsPlatesModalOpen] = useState(false)
   const [isSetFailedModalOpen, setIsSetFailedModalOpen] = useState(false)
   const [isStopModalOpen, setIsStopModalOpen] = useState(false)
-  const [isWorkoutPathModalOpen, setIsWorkoutPathModalOpen] = useState(false)
 
   const currExerciseID = currWorkout.path[currIdx].exerciseID
   const currExercise = getSingleWorkout(currExerciseID)
@@ -118,16 +117,6 @@ const ActiveWorkout = ({
             setIsStopModalOpen(false)
           }}
           stopWorkout={stopWorkout}
-        />
-      ) : null}
-      {isWorkoutPathModalOpen ? (
-        <WorkoutPathModal
-          onClose={() => {
-            setIsWorkoutPathModalOpen(false)
-          }}
-          currIdx={currIdx}
-          currSet={currSet}
-          workout={currWorkout}
         />
       ) : null}
     </div>
