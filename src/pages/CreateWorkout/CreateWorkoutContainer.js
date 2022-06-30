@@ -21,6 +21,7 @@ const CreateWorkoutContainer = ({ createWorkout }) => {
   const titleRef = useRef()
   // Scroll to top of page if there is an error
   useEffect(() => {
+    setLoading(false)
     if (error && titleRef.current) {
       titleRef.current.scrollIntoView()
     }
