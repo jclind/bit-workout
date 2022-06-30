@@ -13,6 +13,7 @@ const WorkoutContainer = ({ isTimer, timerStart }) => {
     if (!isTimer) {
       play()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTimer])
   return (
     <>
