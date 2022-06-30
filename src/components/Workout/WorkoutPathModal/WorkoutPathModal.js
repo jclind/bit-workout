@@ -8,7 +8,6 @@ const WorkoutPathModal = ({ onClose, currIdx, currSet, workout }) => {
   const modalContent = useClickOutside(() => {
     onClose()
   })
-  console.log(workout.path)
   return ReactDom.createPortal(
     <>
       <div className='workout-path-modal overlay'>
@@ -40,7 +39,10 @@ const WorkoutPathModal = ({ onClose, currIdx, currSet, workout }) => {
               if (exerciseState === 'ACTIVE') completedSets = currSet - 1
 
               return (
-                <div className={`workout-path-exercise ${exerciseState}`}>
+                <div
+                  key={ex.exerciseID}
+                  className={`workout-path-exercise ${exerciseState}`}
+                >
                   <div className='image'>
                     <img src={imageURL} alt={name} />
                   </div>

@@ -180,8 +180,6 @@ export const completeSet =
       },
     ]
 
-    console.log(updatedPath)
-
     const currCoins = runningWorkout.coins ? runningWorkout.coins : 0
     const totalCoins = calcCoins(completedReps) + currCoins
     const currExp = runningWorkout.exp ? runningWorkout.exp : 0
@@ -390,7 +388,6 @@ export const stopWorkout = () => async (dispatch, getState) => {
     })
     return { ...ex, weight: currWeight, imageURL, setPath }
   })
-  console.log(pathData)
 
   const finishedWorkoutData = {
     workoutName: currWorkout.name,
@@ -401,7 +398,7 @@ export const stopWorkout = () => async (dispatch, getState) => {
     expEarned: exp,
     path: pathData,
   }
-  console.log(finishedWorkoutData)
+
   await dispatch(updateWorkout({ isWorkoutRunning: false }))
   dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
   dispatch(setWorkoutFinished(true))
