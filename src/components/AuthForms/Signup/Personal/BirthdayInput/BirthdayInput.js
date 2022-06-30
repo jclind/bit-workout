@@ -10,15 +10,16 @@ const BirthdayInput = ({ icon, placeholder, val, setVal, required }) => {
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
       >
-        {!focus && !val ? (
+        {/* {!focus && !val ? (
           <div className='birthday-placeholder'>{placeholder}</div>
-        ) : null}
+        ) : null} */}
         <FormInput
           icon={icon}
           inputType='date'
           val={val}
           setVal={setVal}
           required={required}
+          placeholder={placeholder}
         />
       </div>
     </>
