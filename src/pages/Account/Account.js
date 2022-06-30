@@ -37,13 +37,18 @@ const Account = ({ name, height, weight }) => {
 const mapStateToProps = state => {
   const userAccountData = state.auth.userAccountData
   const weights = state.auth.userAccountData.weight
-  const latestWeightEntry = Array.isArray(weights)
-    ? weights.reduce((prev, curr) => {
-        return new Date(prev.date).getTime() < new Date(curr.date).getTime()
-          ? prev
-          : curr
-      }).weight
-    : weights
+  let latestWeightEntry
+
+  if (Array.isArray(weights)) {
+    const latestDate = Math.max.apply(
+      Math,
+      weights.map(o => Number(o.date))
+    )
+
+    latestWeightEntry = weights.find(w => w.date === latestDate).weight
+  } else {
+    latestWeightEntry = weights
+  }
 
   return {
     name: userAccountData.name,
