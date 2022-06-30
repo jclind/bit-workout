@@ -149,7 +149,7 @@ const mapDispatchToProps = dispatch => {
     getSingleWorkout: id => dispatch(getSingleWorkout(id)),
     completeSet: (currSetTotal, numReps, exerciseID, lastSetFailed) =>
       dispatch(completeSet(currSetTotal, numReps, exerciseID, lastSetFailed)),
-    stopWorkout: () => dispatch(stopWorkout()),
+    stopWorkout: (coins, exp) => dispatch(stopWorkout(coins, exp)),
   }
 }
 

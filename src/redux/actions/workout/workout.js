@@ -56,9 +56,6 @@ export const setWorkoutFinished = isFinished => {
     payload: isFinished,
   }
 }
-export const stopWorkout = () => async dispatch => {
-  await dispatch(updateWorkout({ isWorkoutRunning: false }))
-}
 
 export const getSingleWorkout = id => (dispatch, getState) => {
   const weights = getState().workout.workoutData.weights
@@ -362,6 +359,50 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
     path: pathData,
   }
   dispatch(updateWorkout(updatedData))
+  dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
+  dispatch(setWorkoutFinished(true))
+  dispatch(addWorkoutToPastWorkouts(finishedWorkoutData))
+}
+export const stopWorkout = () => async (dispatch, getState) => {
+  const workoutData = getState().workout.workoutData
+  const runningWorkout = workoutData.runningWorkout
+  const currWorkout = runningWorkout.currWorkout
+  const workoutStartTime = runningWorkout.workoutStartTime
+  const totalWorkoutTime = new Date() - workoutStartTime
+  const weights = workoutData.weights
+
+  const coins = runningWorkout.coins ? runningWorkout.coins : 0
+  const exp = runningWorkout.exp ? runningWorkout.exp : 0
+
+  const currIdx = runningWorkout.remainingWorkout.currIdx
+
+  const path = [...currWorkout.path.slice(0, currIdx + 1)]
+  // Get path data with weights included for pastWorkoutData stats
+  const pathData = path.map(ex => {
+    const exerciseID = ex.exerciseID
+    const imageURL = exerciseList.find(ex => ex.id === exerciseID).imageURL
+    const setPath = ex.setPath || []
+    let currWeight = null
+    weights.forEach(w => {
+      if (w.exerciseID === exerciseID) {
+        currWeight = w.weight
+      }
+    })
+    return { ...ex, weight: currWeight, imageURL, setPath }
+  })
+  console.log(pathData)
+
+  const finishedWorkoutData = {
+    workoutName: currWorkout.name,
+    workoutRestTime: currWorkout.restTime,
+    workoutStartTime,
+    totalWorkoutTime,
+    coinsEarned: coins,
+    expEarned: exp,
+    path: pathData,
+  }
+  console.log(finishedWorkoutData)
+  await dispatch(updateWorkout({ isWorkoutRunning: false }))
   dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
   dispatch(setWorkoutFinished(true))
   dispatch(addWorkoutToPastWorkouts(finishedWorkoutData))
