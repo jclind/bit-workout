@@ -45,6 +45,16 @@
     height: toRem(150);
     margin-top: toRem(10);
   }
+  .view-workout-path {
+    display: flex;
+    align-items: center;
+    background: none;
+    font-size: 0.9rem;
+    height: fit-content;
+    width: fit-content;
+    margin: 0 auto;
+    color: $secondary;
+  }
   .exercise-weight {
     position: relative;
     background: $secondary-background;

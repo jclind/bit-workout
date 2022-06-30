@@ -12,6 +12,8 @@ const ConfirmSetFailedModal = ({
   weightExerciseId,
   currSetTotal,
   currRepTotal,
+  currWorkout,
+  currIdx,
 }) => {
   const [weightCount, setWeightCount] = useState(10)
   const [repCount, setRepCount] = useState(0)
