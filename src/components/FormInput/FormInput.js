@@ -40,7 +40,7 @@ const FormInput = ({
     const currVal = e.target.value
     setVal(currVal)
   }
-
+  console.log(icon)
   return (
     <label
       htmlFor=''

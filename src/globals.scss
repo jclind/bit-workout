@@ -233,3 +233,15 @@ input[type='date']::-webkit-calendar-picker-indicator {
   display: none;
   -webkit-appearance: none;
 }
+
+// Sign up
+.signup-page {
+  .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
+}
