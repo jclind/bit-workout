@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import BirthdayInput from '../../../../components/AuthForms/Signup/Personal/BirthdayInput/BirthdayInput'
 import 'react-datepicker/dist/react-datepicker.css'
 import DatePicker from 'react-datepicker'
@@ -13,6 +13,15 @@ const Profile = () => {
   const dayRef = useRef()
   const yearRef = useRef()
 
+  const nextBtnRef = useRef()
+
+  useEffect(() => {
+    if (monthRef && monthRef.current) {
+      monthRef.current.focus()
+    }
+  }, [monthRef])
+
+  const [test, setTest] = useState('')
   const handleMonthChange = e => {
     const newVal = e.target.value
 
@@ -21,10 +30,7 @@ const Profile = () => {
     }
 
     // Don't allow non-number inputs
-    console.log(isNaN(newVal))
-    if (isNaN(newVal)) {
-      return setMonth('')
-    }
+    if (isNaN(newVal)) return
 
     // Only allow 12 months
     if (newVal > 12) return
@@ -39,34 +45,59 @@ const Profile = () => {
     }
   }
   const handleDayChange = e => {
-    const newVal = e
+    const newVal = e.target.value
 
-    if (!newVal) {
-      setMonth('')
+    if (newVal === '') {
+      setDay('')
     }
     // Don't allow non-number inputs
-    if (newVal && isNaN(newVal)) return
+    if (isNaN(newVal)) return
 
     if (newVal > 31) {
       return
     }
 
-    setMonth(newVal)
+    if (newVal > 3) {
+      setDay(newVal)
+      return yearRef.current.focus()
+    }
+
+    setDay(newVal)
   }
-  const handleYearChange = e => {}
+  const handleYearChange = e => {
+    const newVal = e.target.value
+
+    if (newVal === '') {
+      setYear('')
+    }
+    // Don't allow non-number inputs
+    if (isNaN(newVal)) return
+
+    const currYear = new Date().getFullYear()
+
+    if (newVal > currYear - 10) return
+
+    if (newVal > currYear - 100 && newVal > currYear - 10) {
+      setYear(newVal)
+      return nextBtnRef.current.focus()
+    }
+
+    setYear(newVal)
+  }
 
   return (
     <div className='signup-page birthday'>
       <div className='title'>Date Of Birth</div>
+      {test}
       <div className='birthday-input-container'>
-        <span>{month}</span>
         <div className='month'>
           <input
             type='text'
             placeholder={'MM'}
             onChange={e => handleMonthChange(e)}
             value={month}
-            inputMode='number'
+            inputMode='numeric'
+            ref={monthRef}
           />
         </div>
         <div className='day'>
@@ -76,7 +107,7 @@ const Profile = () => {
             onChange={e => handleDayChange(e)}
             value={day}
             ref={dayRef}
-            inputMode='number'
+            inputMode='numeric'
           />
         </div>
         <div className='year'>
@@ -86,10 +117,13 @@ const Profile = () => {
             onChange={e => handleYearChange(e)}
             value={year}
             ref={yearRef}
-            inputMode='number'
+            inputMode='numeric'
           />
         </div>
       </div>
+      <button className='signup-next-btn' ref={nextBtnRef}>
+        NEXT
+      </button>
     </div>
   )
 }
