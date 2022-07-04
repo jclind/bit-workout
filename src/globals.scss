@@ -238,13 +238,14 @@ input[type='date']::-webkit-calendar-picker-indicator {
 .signup-page {
   position: relative;
   height: 100%;
+  width: 100%;
   .title {
     font-size: 1.5rem;
     font-weight: 700;
     text-align: center;
 
     margin-top: 4rem;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
   }
   .signup-next-btn {
     position: absolute;
@@ -257,5 +258,23 @@ input[type='date']::-webkit-calendar-picker-indicator {
     height: fit-content;
     padding: 1rem 0;
     border-radius: $border-radius;
+  }
+
+  .error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 5px;
+    font-size: toRem(14);
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    width: 80%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    background: $error-red;
+    .icon {
+      flex-shrink: 0;
+    }
   }
 }
