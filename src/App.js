@@ -26,6 +26,8 @@ import FeedbackContainer from './pages/Settings/Feedback/FeedbackContainer'
 import PastWorkouts from './pages/PastWorkouts/PastWorkouts'
 import Gender from './pages/Auth/Signup/Gender/Gender'
 import Birthday from './pages/Auth/Signup/Birthday/Birthday'
+import Weight from './pages/Auth/Signup/Weight/Weight'
+import Height from './pages/Auth/Signup/Height/Height'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -108,6 +110,8 @@ function App() {
             <Route path='/signup' element={<Signup />}>
               <Route path='gender' element={<Gender />} />
               <Route path='birthday' element={<Birthday />} />
+              <Route path='height' element={<Height />} />
+              <Route path='weight' element={<Weight />} />
 
               <Route path='account-info' element={<SignupAccountContainer />} />
               <Route

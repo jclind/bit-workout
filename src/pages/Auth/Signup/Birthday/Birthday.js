@@ -124,7 +124,7 @@ const Profile = () => {
     }
 
     saveSignupData('birthday', `${month}/${day}/${year}`)
-    navigate('/signup/weight')
+    navigate('/signup/height')
   }
 
   return (

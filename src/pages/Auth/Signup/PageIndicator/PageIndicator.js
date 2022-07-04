@@ -25,8 +25,8 @@ const PageIndicator = ({ currPage }) => {
   return (
     <div className='signup-page-indicator'>
       <div className='tiles'>
-        {tiles.map(tile => {
-          return tile
+        {tiles.map((tile, idx) => {
+          return <React.Fragment key={idx}>{tile}</React.Fragment>
         })}
       </div>
     </div>
