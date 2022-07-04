@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import BirthdayInput from '../../../../components/AuthForms/Signup/Personal/BirthdayInput/BirthdayInput'
 import 'react-datepicker/dist/react-datepicker.css'
 import DatePicker from 'react-datepicker'
+import moment from 'moment'
 import './Birthday.scss'
 
 const Profile = () => {
@@ -53,6 +54,11 @@ const Profile = () => {
     if (newVal === '') {
       setDay('')
     }
+
+    if (newVal.length === 1 && newVal === '0') {
+      setDay('0')
+    }
+
     // Don't allow non-number inputs
     if (isNaN(newVal)) return
 
@@ -60,8 +66,12 @@ const Profile = () => {
       return
     }
 
-    if (newVal > 3) {
-      setDay(newVal)
+    if (newVal > 3 || (newVal.length === 2 && Number(newVal) <= 3)) {
+      if (Number(newVal) >= 10) {
+        setDay(`${Number(newVal)}`)
+      } else {
+        setDay(`0${Number(newVal)}`)
+      }
       return yearRef.current.focus()
     }
 
@@ -80,12 +90,18 @@ const Profile = () => {
 
     if (newVal > currYear - 10) return
 
-    if (newVal > currYear - 100 && newVal > currYear - 10) {
+    if (newVal > currYear - 100 && newVal < currYear - 10) {
       setYear(newVal)
+      yearRef.current.blur()
       return nextBtnRef.current.focus()
     }
 
     setYear(newVal)
+  }
+
+  const validateDate = (month, day, year) => {
+    console.log(month, day, year)
+    console.log(moment(`${month}/${day}/${year}`, 'MM/DD/YYYY', true).isValid())
   }
 
   return (
@@ -122,8 +138,13 @@ const Profile = () => {
             inputMode='numeric'
           />
         </div>
+        <div className='clear-inputs-btn'></div>
       </div>
-      <button className='signup-next-btn' ref={nextBtnRef}>
+      <button
+        className='signup-next-btn'
+        ref={nextBtnRef}
+        onClick={() => validateDate(month, day, year)}
+      >
         NEXT
       </button>
     </div>
