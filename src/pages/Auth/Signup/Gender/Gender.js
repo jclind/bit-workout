@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { SignupContext } from '../Signup'
 import { AiOutlineWarning } from 'react-icons/ai'
+import PageIndicator from '../PageIndicator/PageIndicator'
 import './Gender.scss'
 import { useEffect } from 'react'
 
@@ -8,6 +10,8 @@ const Gender = () => {
   const [gender, setGender] = useState(null)
 
   const [error, setError] = useState('')
+
+  const navigate = useNavigate()
 
   const { saveSignupData } = useContext(SignupContext)
 
@@ -19,6 +23,7 @@ const Gender = () => {
     }
 
     saveSignupData('gender', gender)
+    navigate('/signup/birthday')
   }
 
   useEffect(() => {
@@ -27,6 +32,7 @@ const Gender = () => {
 
   return (
     <div className='signup-page gender'>
+      <PageIndicator currPage={1} />
       <div className='title'>Gender</div>
       {error && (
         <div className='error'>

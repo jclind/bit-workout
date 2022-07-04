@@ -1,0 +1,41 @@
+@import '../../../../helpers.scss';
+
+.signup-page-indicator {
+  position: absolute;
+  margin-top: 1rem;
+  width: 80%;
+  .tiles {
+    display: flex;
+    justify-content: space-between;
+    .tile {
+      height: 4px;
+      width: 50px;
+      border-radius: $border-radius;
+      background: $tertiary-text;
+      .color {
+        height: 0;
+        width: 0;
+        border-radius: $border-radius;
+      }
+    }
+    .tile.last-completed .color {
+      animation: last-completed-slide 1000ms;
+    }
+    .tile.completed {
+      .color {
+        background: red;
+        height: 100%;
+        width: 50px;
+      }
+    }
+    @keyframes last-completed-slide {
+      from {
+        width: 0px;
+      }
+
+      to {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { AiOutlineClose } from 'react-icons/ai'
 import moment from 'moment'
 import { SignupContext } from '../Signup'
 import './Birthday.scss'
+import PageIndicator from '../PageIndicator/PageIndicator'
 
 const Profile = () => {
   const [month, setMonth] = useState('')
@@ -114,6 +115,7 @@ const Profile = () => {
 
   return (
     <div className='signup-page birthday'>
+      <PageIndicator currPage={2} />
       <div className='title'>Date Of Birth</div>
       <div className='birthday-input-container'>
         <div className='month'>
