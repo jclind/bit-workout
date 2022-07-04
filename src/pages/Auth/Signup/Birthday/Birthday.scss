@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   .birthday-input-container {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -42,6 +43,25 @@
     .year {
       input {
         width: 5ch;
+      }
+    }
+
+    .clear-inputs-btn {
+      position: absolute;
+      right: -2.5rem;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      background: none;
+
+      .icon {
+        height: 20px;
+        width: 20px;
+        color: $tertiary-text;
+        flex-shrink: 0;
       }
     }
   }
