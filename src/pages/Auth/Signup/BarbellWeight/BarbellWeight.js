@@ -3,22 +3,22 @@ import { useNavigate } from 'react-router-dom'
 import PageIndicator from '../PageIndicator/PageIndicator'
 import { AiOutlineWarning } from 'react-icons/ai'
 import { SignupContext } from '../Signup'
-import './Weight.scss'
+import './BarbellWeight.scss'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
 
-const Weight = () => {
+const BarbellWeight = () => {
   const [weight, setWeight] = useState('')
   const [error, setError] = useState('')
 
   const { saveSignupData } = useContext(SignupContext)
   const navigate = useNavigate()
 
+  const weightRef = useRef()
+  const nextBtnRef = useRef()
+
   useEffect(() => {
     setError('')
   }, [weight])
-
-  const weightRef = useRef()
-  const nextBtnRef = useRef()
 
   const handleWeightChange = e => {
     const newVal = e.target.value
@@ -28,11 +28,10 @@ const Weight = () => {
     }
 
     if (isNaN(newVal)) return
+    // Don't allow decimal place
+    if (newVal % 1 !== 0) return
 
-    if (Number(newVal) > 999) return
-
-    // Don't allow more than one decimal place
-    if ((newVal * 10) % 1 !== 0) return
+    if (Number(newVal) > 200) return
 
     setWeight(newVal)
     if (newVal % 1 !== 0) {
@@ -43,20 +42,22 @@ const Weight = () => {
   const handleNextClick = () => {
     setError('')
     if (!weight) return setError('Please Enter Weight')
-    if (weight < 50 || weight > 999)
-      return setError('Please Enter Weight Between 50-999')
+    if (weight < 5 || weight > 200)
+      return setError('Please Enter Weight Between 5-200')
 
-    const date = new Date().getTime()
-
-    saveSignupData('weight', [{ date, weight }])
-    navigate('/signup/barbell-weight')
+    saveSignupData('barbell-weight', weight)
+    navigate()
   }
 
   return (
-    <div className='signup-page weight'>
-      <PageIndicator currPage={5} />
+    <div className='signup-page barbell-weight'>
+      <PageIndicator currPage={6} />
       <BackButton />
-      <div className='title'>Your Weight</div>
+      <div className='title'>Barbell Weight</div>
+      <p className='description'>
+        Enter the weight of the barbell you will be using for your weighted
+        workouts
+      </p>
       {error && (
         <div className='error'>
           <AiOutlineWarning className='icon' />
@@ -85,4 +86,4 @@ const Weight = () => {
   )
 }
 
-export default Weight
+export default BarbellWeight

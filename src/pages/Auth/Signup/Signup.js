@@ -51,15 +51,15 @@ const Signup = ({ signup }) => {
   //   }
   // }
 
-  // const location = useLocation()
+  const location = useLocation()
   const monthRef = useRef()
 
   const outlet = useOutlet()
   const navigate = useNavigate()
 
-  // if (location.pathname === '/signup') {
-  //   return <Navigate to='/signup/account-info' />
-  // }
+  if (location.pathname === '/signup') {
+    return <Navigate to='/signup/gender' />
+  }
   // // If the fields from /signup/account-info aren't all filled out
   // // then redirect back to that page
   // const signupFieldsAreFilled =

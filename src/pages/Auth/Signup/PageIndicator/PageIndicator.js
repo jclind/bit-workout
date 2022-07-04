@@ -2,7 +2,7 @@ import React from 'react'
 import './PageIndicator.scss'
 
 const PageIndicator = ({ currPage }) => {
-  const numPages = 5
+  const numPages = 7
 
   const tiles = []
 
@@ -16,6 +16,7 @@ const PageIndicator = ({ currPage }) => {
             ? 'completed '
             : ''
         }`}
+        style={{ width: `${100 / numPages - 3}%` }}
       >
         <div className='color'></div>
       </div>

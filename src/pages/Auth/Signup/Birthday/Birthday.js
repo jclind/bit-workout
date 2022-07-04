@@ -5,6 +5,7 @@ import moment from 'moment'
 import { SignupContext } from '../Signup'
 import './Birthday.scss'
 import PageIndicator from '../PageIndicator/PageIndicator'
+import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
 
 const Profile = () => {
   const [month, setMonth] = useState('')
@@ -129,7 +130,8 @@ const Profile = () => {
 
   return (
     <div className='signup-page birthday'>
-      <PageIndicator currPage={2} />
+      <PageIndicator currPage={3} />
+      <BackButton />
       <div className='title'>Date Of Birth</div>
       {error && (
         <div className='error'>

@@ -235,6 +235,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
 }
 
 // Sign up
+
 .signup-page {
   position: relative;
   display: flex;
@@ -242,12 +243,17 @@ input[type='date']::-webkit-calendar-picker-indicator {
   align-items: center;
   height: 100%;
   width: 100%;
+
+  .back-button {
+    top: 1.5rem !important;
+    left: 1.5rem !important;
+  }
   .title {
     font-size: 1.5rem;
     font-weight: 700;
     text-align: center;
 
-    margin-top: 4rem;
+    margin-top: 5rem;
     margin-bottom: 2rem;
   }
   .signup-next-btn {

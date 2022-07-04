@@ -1,6 +1,14 @@
 @import '../../../../helpers.scss';
 
-.signup-page.weight {
+.signup-page.barbell-weight {
+  .description {
+    width: 80%;
+    text-align: center;
+    color: $secondary-text;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+  }
+
   .weight-input-container {
     display: flex;
     align-items: center;

@@ -2,16 +2,15 @@
 
 .signup-page-indicator {
   position: absolute;
-  margin-top: 1rem;
-  width: 80%;
+  margin-top: 2rem;
+  width: 70%;
   .tiles {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     .tile {
-      height: 4px;
-      width: 50px;
+      height: 5px;
       border-radius: $border-radius;
-      background: $tertiary-text;
+      background: $secondary-background;
       .color {
         height: 0;
         width: 0;
@@ -23,9 +22,9 @@
     }
     .tile.completed {
       .color {
-        background: red;
+        background: $secondary;
         height: 100%;
-        width: 50px;
+        width: 100%;
       }
     }
     @keyframes last-completed-slide {
