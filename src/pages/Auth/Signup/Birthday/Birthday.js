@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import BirthdayInput from '../../../../components/AuthForms/Signup/Personal/BirthdayInput/BirthdayInput'
 import 'react-datepicker/dist/react-datepicker.css'
 import DatePicker from 'react-datepicker'
+import { AiOutlineClose } from 'react-icons/ai'
 import moment from 'moment'
 import './Birthday.scss'
 
@@ -103,6 +104,12 @@ const Profile = () => {
     console.log(month, day, year)
     console.log(moment(`${month}/${day}/${year}`, 'MM/DD/YYYY', true).isValid())
   }
+  const clearInputs = () => {
+    setMonth('')
+    setDay('')
+    setYear('')
+    monthRef.current.focus()
+  }
 
   return (
     <div className='signup-page birthday'>
@@ -138,7 +145,11 @@ const Profile = () => {
             inputMode='numeric'
           />
         </div>
-        <div className='clear-inputs-btn'></div>
+        {month || day || year ? (
+          <button className='clear-inputs-btn' onClick={clearInputs}>
+            <AiOutlineClose className='icon' />
+          </button>
+        ) : null}
       </div>
       <button
         className='signup-next-btn'
