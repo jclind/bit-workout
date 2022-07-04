@@ -46,7 +46,7 @@ const BarbellWeight = () => {
       return setError('Please Enter Weight Between 5-200')
 
     saveSignupData('barbell-weight', weight)
-    navigate()
+    navigate('/signup/username')
   }
 
   return (
