@@ -21,7 +21,6 @@ const Profile = () => {
     }
   }, [monthRef])
 
-  const [test, setTest] = useState('')
   const handleMonthChange = e => {
     const newVal = e.target.value
 
@@ -29,14 +28,18 @@ const Profile = () => {
       setMonth('')
     }
 
+    if (newVal.length === 1 && newVal === '0') {
+      setMonth('0')
+    }
+
     // Don't allow non-number inputs
-    if (isNaN(newVal)) return
+    if (isNaN(newVal) || newVal.length > 2) return
 
     // Only allow 12 months
     if (newVal > 12) return
 
-    if (newVal > 1) {
-      setMonth(Number(newVal))
+    if ((newVal > 1 || newVal === '01') && newVal < 10) {
+      setMonth(`0${Number(newVal)}`)
       return dayRef.current.focus()
     }
     if (newVal >= 10) {
@@ -88,7 +91,6 @@ const Profile = () => {
   return (
     <div className='signup-page birthday'>
       <div className='title'>Date Of Birth</div>
-      {test}
       <div className='birthday-input-container'>
         <div className='month'>
           <input
