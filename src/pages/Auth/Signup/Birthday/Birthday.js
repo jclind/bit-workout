@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
-import BirthdayInput from '../../../../components/AuthForms/Signup/Personal/BirthdayInput/BirthdayInput'
-import 'react-datepicker/dist/react-datepicker.css'
-import DatePicker from 'react-datepicker'
-import { AiOutlineClose } from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom'
+import { AiOutlineClose, AiOutlineWarning } from 'react-icons/ai'
 import moment from 'moment'
 import { SignupContext } from '../Signup'
 import './Birthday.scss'
@@ -13,17 +11,24 @@ const Profile = () => {
   const [day, setDay] = useState('')
   const [year, setYear] = useState('')
 
-  const { monthRef } = useContext(SignupContext)
+  const [error, setError] = useState('')
+
+  const { monthRef, saveSignupData } = useContext(SignupContext)
   const dayRef = useRef()
   const yearRef = useRef()
 
   const nextBtnRef = useRef()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (monthRef && monthRef.current) {
       monthRef.current.focus()
     }
   }, [monthRef])
+
+  useEffect(() => {
+    setError('')
+  }, [month, day, year])
 
   const handleMonthChange = e => {
     const newVal = e.target.value
@@ -103,8 +108,7 @@ const Profile = () => {
   }
 
   const validateDate = (month, day, year) => {
-    console.log(month, day, year)
-    console.log(moment(`${month}/${day}/${year}`, 'MM/DD/YYYY', true).isValid())
+    return moment(`${month}/${day}/${year}`, 'MM/DD/YYYY', true).isValid()
   }
   const clearInputs = () => {
     setMonth('')
@@ -113,10 +117,26 @@ const Profile = () => {
     monthRef.current.focus()
   }
 
+  const handleNextClick = () => {
+    setError('')
+    if (!validateDate(month, day, year)) {
+      return setError('Date Not Valid')
+    }
+
+    saveSignupData('birthday', `${month}/${day}/${year}`)
+    navigate('/signup/weight')
+  }
+
   return (
     <div className='signup-page birthday'>
       <PageIndicator currPage={2} />
       <div className='title'>Date Of Birth</div>
+      {error && (
+        <div className='error'>
+          <AiOutlineWarning className='icon' />
+          {error}
+        </div>
+      )}
       <div className='birthday-input-container'>
         <div className='month'>
           <input
@@ -157,7 +177,7 @@ const Profile = () => {
       <button
         className='signup-next-btn'
         ref={nextBtnRef}
-        onClick={() => validateDate(month, day, year)}
+        onClick={handleNextClick}
       >
         NEXT
       </button>
