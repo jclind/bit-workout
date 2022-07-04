@@ -5,6 +5,7 @@ import { AiOutlineWarning } from 'react-icons/ai'
 import PageIndicator from '../PageIndicator/PageIndicator'
 import './Gender.scss'
 import { useEffect } from 'react'
+import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
 
 const Gender = () => {
   const [gender, setGender] = useState(null)
@@ -32,7 +33,8 @@ const Gender = () => {
 
   return (
     <div className='signup-page gender'>
-      <PageIndicator currPage={1} />
+      <PageIndicator currPage={2} />
+      <BackButton />
       <div className='title'>Gender</div>
       {error && (
         <div className='error'>

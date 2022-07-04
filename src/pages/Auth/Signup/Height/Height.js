@@ -4,6 +4,7 @@ import PageIndicator from '../PageIndicator/PageIndicator'
 import { AiOutlineWarning } from 'react-icons/ai'
 import { SignupContext } from '../Signup'
 import './Height.scss'
+import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
 
 const Height = () => {
   const [feet, setFeet] = useState('')
@@ -25,7 +26,7 @@ const Height = () => {
   const navigate = useNavigate()
 
   const handleFeetChange = e => {
-    const newVal = e.target.value
+    const newVal = e.target.value.trim()
 
     if (newVal === '') {
       return setFeet('')
@@ -34,11 +35,11 @@ const Height = () => {
 
     if (newVal < 2 || newVal > 8) return
 
-    setFeet(newVal.trim())
+    setFeet(newVal)
     inchesRef.current.focus()
   }
   const handleInchesChange = e => {
-    const newVal = e.target.value
+    const newVal = e.target.value.trim()
 
     if (newVal === '') {
       return setInches('')
@@ -47,7 +48,7 @@ const Height = () => {
 
     if (newVal > 12) return
 
-    setInches(newVal.trim())
+    setInches(newVal)
 
     if (newVal > 1) {
       return nextBtnRef.current.focus()
@@ -66,7 +67,8 @@ const Height = () => {
 
   return (
     <div className='signup-page height'>
-      <PageIndicator currPage={3} />
+      <PageIndicator currPage={4} />
+      <BackButton />
       <div className='title'>Height</div>
       {error && (
         <div className='error'>
