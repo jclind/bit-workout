@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import BirthdayInput from '../../../../components/AuthForms/Signup/Personal/BirthdayInput/BirthdayInput'
 import 'react-datepicker/dist/react-datepicker.css'
 import DatePicker from 'react-datepicker'
 import { AiOutlineClose } from 'react-icons/ai'
 import moment from 'moment'
+import { SignupContext } from '../Signup'
 import './Birthday.scss'
 
 const Profile = () => {
@@ -11,7 +12,7 @@ const Profile = () => {
   const [day, setDay] = useState('')
   const [year, setYear] = useState('')
 
-  const monthRef = useRef()
+  const { monthRef } = useContext(SignupContext)
   const dayRef = useRef()
   const yearRef = useRef()
 
