@@ -35,7 +35,8 @@ const Profile = () => {
 
   const [error, setError] = useState('')
 
-  const { monthRef, saveSignupData } = useContext(SignupContext)
+  const { saveSignupData } = useContext(SignupContext)
+  const monthRef = useRef()
   const dayRef = useRef()
   const yearRef = useRef()
 
