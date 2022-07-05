@@ -32,6 +32,7 @@ import BarbellWeight from './pages/Auth/Signup/BarbellWeight/BarbellWeight'
 import Username from './pages/Auth/Signup/Username/Username'
 import SignupSelection from './pages/Auth/Signup/SignupSelection/SignupSelection'
 import EmailSignup from './pages/Auth/Signup/EmailSignup/EmailSignup'
+import AuthLandingPage from './pages/Auth/AuthLandingPage/AuthLandingPage'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -127,6 +128,7 @@ function App() {
                 element={<SignupPersonalContainer />}
               />
             </Route>
+            <Route path='/auth' element={<AuthLandingPage />} />
             <Route path='/login' element={<Login />} />
             <Route
               path='/forgot-password'
