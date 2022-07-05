@@ -8,9 +8,30 @@ import PageIndicator from '../PageIndicator/PageIndicator'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
 
 const Profile = () => {
-  const [month, setMonth] = useState('')
-  const [day, setDay] = useState('')
-  const [year, setYear] = useState('')
+  const [month, setMonth] = useState(() => {
+    const savedSignupData = JSON.parse(localStorage.getItem('signup'))
+    if (savedSignupData && savedSignupData.birthday) {
+      return savedSignupData.birthday.month
+    }
+
+    return ''
+  })
+  const [day, setDay] = useState(() => {
+    const savedSignupData = JSON.parse(localStorage.getItem('signup'))
+    if (savedSignupData && savedSignupData.birthday) {
+      return savedSignupData.birthday.day
+    }
+
+    return ''
+  })
+  const [year, setYear] = useState(() => {
+    const savedSignupData = JSON.parse(localStorage.getItem('signup'))
+    if (savedSignupData && savedSignupData.birthday) {
+      return savedSignupData.birthday.year
+    }
+
+    return ''
+  })
 
   const [error, setError] = useState('')
 
@@ -124,7 +145,7 @@ const Profile = () => {
       return setError('Date Not Valid')
     }
 
-    saveSignupData('birthday', `${month}/${day}/${year}`)
+    saveSignupData('birthday', { month, day, year })
     navigate('/signup/height')
   }
 

@@ -7,8 +7,22 @@ import './Height.scss'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
 
 const Height = () => {
-  const [feet, setFeet] = useState('')
-  const [inches, setInches] = useState('')
+  const [feet, setFeet] = useState(() => {
+    const savedSignupData = JSON.parse(localStorage.getItem('signup'))
+    if (savedSignupData && savedSignupData.height) {
+      return savedSignupData.height.feet
+    }
+
+    return ''
+  })
+  const [inches, setInches] = useState(() => {
+    const savedSignupData = JSON.parse(localStorage.getItem('signup'))
+    if (savedSignupData && savedSignupData.height) {
+      return savedSignupData.height.inches
+    }
+
+    return ''
+  })
 
   const [error, setError] = useState('')
 

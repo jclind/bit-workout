@@ -7,7 +7,14 @@ import './Weight.scss'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
 
 const Weight = () => {
-  const [weight, setWeight] = useState('')
+  const [weight, setWeight] = useState(() => {
+    const savedSignupData = JSON.parse(localStorage.getItem('signup'))
+    if (savedSignupData && savedSignupData.weight) {
+      return savedSignupData.weight
+    }
+
+    return ''
+  })
   const [error, setError] = useState('')
 
   const { saveSignupData } = useContext(SignupContext)
@@ -46,9 +53,7 @@ const Weight = () => {
     if (weight < 50 || weight > 999)
       return setError('Please Enter Weight Between 50-999')
 
-    const date = new Date().getTime()
-
-    saveSignupData('weight', [{ date, weight }])
+    saveSignupData('weight', weight)
     navigate('/signup/barbell-weight')
   }
 
@@ -69,7 +74,7 @@ const Weight = () => {
           placeholder={'Weight'}
           onChange={handleWeightChange}
           value={weight}
-          inputMode='numeric'
+          inputMode='decimal'
           ref={weightRef}
         />
         <span className='text'>lbs.</span>

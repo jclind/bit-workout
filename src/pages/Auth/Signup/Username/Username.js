@@ -3,17 +3,24 @@ import { useNavigate } from 'react-router-dom'
 import PageIndicator from '../PageIndicator/PageIndicator'
 import { AiOutlineWarning } from 'react-icons/ai'
 import { SignupContext } from '../Signup'
-import { connect } from 'react-redux'
 
 import './Username.scss'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
 import { checkUsernameAvailability } from '../../../../redux/actions/auth/authStatus'
 
 const Username = () => {
-  const [username, setUsername] = useState('')
+  const [username, setUsername] = useState(() => {
+    const savedSignupData = JSON.parse(localStorage.getItem('signup'))
+    if (savedSignupData && savedSignupData.username) {
+      return savedSignupData.username
+    }
+
+    return ''
+  })
 
   const [isUsernameAvailable, setIsUsernameAvailable] = useState(null)
   useEffect(() => {
+    setError('')
     if (username.trim().length >= 3) {
       checkUsernameAvailability(username).then(isAvailable => {
         setIsUsernameAvailable(isAvailable)
@@ -42,7 +49,8 @@ const Username = () => {
       return setError('Username length must be 3 or greater')
     if (!isUsernameAvailable) return setError('Username not available')
 
-    saveSignupData('username')
+    saveSignupData('username', username)
+    navigate('/signup/signup-selection')
   }
 
   return (

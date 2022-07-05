@@ -93,10 +93,10 @@ export const setWorkout = (weight, gender, uid) => async dispatch => {
 export const signup = (email, password, userData) => async dispatch => {
   await createUserWithEmailAndPassword(auth, email, password).then(cred => {
     const uid = cred.user.uid
-    const username = userData.usernameVal
+    const username = userData.username
 
-    const weight = userData.weightVal
-    const gender = userData.genderVal
+    const weight = userData.weight
+    const gender = userData.gender
 
     addNewUsername(username, uid)
     dispatch(setUserAccountData(uid, userData))
@@ -106,23 +106,27 @@ export const signup = (email, password, userData) => async dispatch => {
 
 export const setUserAccountData = (uid, userData) => async () => {
   const {
-    usernameVal,
-    fullNameVal,
-    genderVal,
-    birthdayVal,
-    heightVal,
-    weightVal,
-    emailVal,
+    email,
+    name,
+    birthday,
+    gender,
+    height,
+    username,
+    weight,
+    barbellWeight,
   } = userData
 
+  console.log(userData)
+
   setDoc(doc(db, 'users', uid), {
-    username: usernameVal,
-    name: fullNameVal,
-    gender: genderVal,
-    birthday: birthdayVal,
-    height: heightVal,
-    weight: [{ weight: weightVal, date: new Date().getTime() }],
-    email: emailVal,
+    username,
+    name,
+    gender,
+    birthday,
+    height,
+    weight: [{ weight, date: new Date().getTime() }],
+    email,
+    barbellWeight,
   })
 }
 export const updateUserAccountData = data => async (dispatch, getState) => {
