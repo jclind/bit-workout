@@ -8,7 +8,7 @@ import { checkUsernameAvailability } from '../../../redux/actions/auth/authStatu
 
 export const SignupContext = React.createContext({})
 
-const Signup = ({ signup }) => {
+const Signup = ({ signup, isSignedIn }) => {
   // const [usernameVal, setUsernameVal] = useState('')
   // const [usernameAvailable, setUsernameAvailable] = useState(null)
   // const [fullNameVal, setFullNameVal] = useState('')
@@ -55,7 +55,6 @@ const Signup = ({ signup }) => {
   const monthRef = useRef()
 
   const outlet = useOutlet()
-  const navigate = useNavigate()
 
   if (location.pathname === '/signup') {
     return <Navigate to='/signup/gender' />
@@ -68,9 +67,9 @@ const Signup = ({ signup }) => {
   //   emailVal !== null &&
   //   passwordVal !== null
 
-  // if (location.pathname === '/signup/personal-info' && !signupFieldsAreFilled) {
-  //   return <Navigate to='/signup/account-info' />
-  // }
+  if (isSignedIn) {
+    return <Navigate to='/' />
+  }
 
   // const value = {
   //   usernameVal,
@@ -117,7 +116,16 @@ const Signup = ({ signup }) => {
     </SignupContext.Provider>
   )
 }
+const mapStateToProps = state => {
+  let isSignedIn = false
+  if (state.auth && state.auth.userAuth && state.auth.userAuth.uid) {
+    isSignedIn = true
+  }
 
+  return {
+    isSignedIn: isSignedIn,
+  }
+}
 const mapDispatchToProps = dispatch => {
   return {
     signup: (email, password, userData) =>
@@ -125,4 +133,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Signup)
+export default connect(mapStateToProps, mapDispatchToProps)(Signup)
