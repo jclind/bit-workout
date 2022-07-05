@@ -7,7 +7,14 @@ import './BarbellWeight.scss'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
 
 const BarbellWeight = () => {
-  const [weight, setWeight] = useState('')
+  const [weight, setWeight] = useState(() => {
+    const savedSignupData = JSON.parse(localStorage.getItem('signup'))
+    if (savedSignupData && savedSignupData.barbellWeight) {
+      return savedSignupData.barbellWeight
+    }
+
+    return ''
+  })
   const [error, setError] = useState('')
 
   const { saveSignupData } = useContext(SignupContext)
@@ -45,7 +52,7 @@ const BarbellWeight = () => {
     if (weight < 5 || weight > 200)
       return setError('Please Enter Weight Between 5-200')
 
-    saveSignupData('barbell-weight', weight)
+    saveSignupData('barbellWeight', weight)
     navigate('/signup/username')
   }
 

@@ -8,7 +8,14 @@ import { useEffect } from 'react'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
 
 const Gender = () => {
-  const [gender, setGender] = useState(null)
+  const [gender, setGender] = useState(() => {
+    const savedSignupData = JSON.parse(localStorage.getItem('signup'))
+    if (savedSignupData && savedSignupData.gender) {
+      return savedSignupData.gender
+    }
+
+    return null
+  })
 
   const [error, setError] = useState('')
 

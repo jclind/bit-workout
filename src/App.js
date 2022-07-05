@@ -30,6 +30,8 @@ import Weight from './pages/Auth/Signup/Weight/Weight'
 import Height from './pages/Auth/Signup/Height/Height'
 import BarbellWeight from './pages/Auth/Signup/BarbellWeight/BarbellWeight'
 import Username from './pages/Auth/Signup/Username/Username'
+import SignupSelection from './pages/Auth/Signup/SignupSelection/SignupSelection'
+import EmailSignup from './pages/Auth/Signup/EmailSignup/EmailSignup'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -116,6 +118,8 @@ function App() {
               <Route path='weight' element={<Weight />} />
               <Route path='barbell-weight' element={<BarbellWeight />} />
               <Route path='username' element={<Username />} />
+              <Route path='signup-selection' element={<SignupSelection />} />
+              <Route path='email-signup' element={<EmailSignup />} />
 
               <Route path='account-info' element={<SignupAccountContainer />} />
               <Route
