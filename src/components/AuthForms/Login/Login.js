@@ -24,7 +24,7 @@ const Login = ({
           alt='login background'
           className='login-background'
         />
-        <h1 className='title'>Log In</h1>
+        <div className='title'>Log In</div>
         <div className='form-container'>
           {error && (
             <div className='error'>

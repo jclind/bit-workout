@@ -41,7 +41,7 @@ const Gender = () => {
   return (
     <div className='signup-page gender'>
       <PageIndicator currPage={2} />
-      <BackButton />
+      <BackButton link='/auth' />
       <div className='title'>Gender</div>
       {error && (
         <div className='error'>

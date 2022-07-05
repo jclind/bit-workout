@@ -19,10 +19,10 @@ const AuthLandingPage = () => {
         completing achievements.
       </p>
       <div className='options'>
-        <button className='signup' onClick={() => navigate('/login')}>
+        <button className='signup' onClick={() => navigate('/signup')}>
           Get Started
         </button>
-        <button className='login' onClick={() => navigate('/signup')}>
+        <button className='login' onClick={() => navigate('/login')}>
           Log In
         </button>
       </div>
