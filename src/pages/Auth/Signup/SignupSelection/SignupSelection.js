@@ -14,6 +14,7 @@ const SignupSelection = ({ signupWithGoogle }) => {
   const [error, setError] = useState('')
 
   const handleGoogleSignup = async () => {
+    setError('')
     const savedSignupData = JSON.parse(localStorage.getItem('signup'))
 
     const { barbellWeight, birthday, gender, height, username, weight } =
