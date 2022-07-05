@@ -7,10 +7,10 @@ import passwordIcon from '../../../../assets/images/icons/password.svg'
 import { AiOutlineWarning } from 'react-icons/ai'
 import { connect } from 'react-redux'
 import './EmailSignup.scss'
-import { signup } from '../../../../redux/actions/auth/authStatus'
+import { signupWithEmail } from '../../../../redux/actions/auth/authStatus'
 import { useNavigate } from 'react-router-dom'
 
-const EmailSignup = ({ signup }) => {
+const EmailSignup = ({ signupWithEmail }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -54,7 +54,7 @@ const EmailSignup = ({ signup }) => {
       barbellWeight,
     }
     try {
-      await signup(email, password, payload)
+      await signupWithEmail(email, password, payload)
       localStorage.setItem('signup', '{}')
       navigate('/')
     } catch (error) {
@@ -113,8 +113,8 @@ const EmailSignup = ({ signup }) => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    signup: (email, password, payload) =>
-      dispatch(signup(email, password, payload)),
+    signupWithEmail: (email, password, payload) =>
+      dispatch(signupWithEmail(email, password, payload)),
   }
 }
 
