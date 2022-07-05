@@ -1,9 +1,12 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import bitWorkoutLogo from '../../../assets/images/bit-workout-logo.png'
 import loginIMG from '../../../assets/images/login-background.png'
 import './AuthLandingPage.scss'
 
 const AuthLandingPage = () => {
+  const navigate = useNavigate()
+
   return (
     <div className='auth-landing-page signup-page'>
       <img src={loginIMG} alt='login background' className='background-img' />
@@ -16,8 +19,12 @@ const AuthLandingPage = () => {
         completing achievements.
       </p>
       <div className='options'>
-        <button className='signup'>Get Started</button>
-        <button className='login'>Log In</button>
+        <button className='signup' onClick={() => navigate('/login')}>
+          Get Started
+        </button>
+        <button className='login' onClick={() => navigate('/signup')}>
+          Log In
+        </button>
       </div>
     </div>
   )
