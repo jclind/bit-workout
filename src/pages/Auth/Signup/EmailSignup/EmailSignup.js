@@ -8,11 +8,14 @@ import { AiOutlineWarning } from 'react-icons/ai'
 import { connect } from 'react-redux'
 import './EmailSignup.scss'
 import { signup } from '../../../../redux/actions/auth/authStatus'
+import { useNavigate } from 'react-router-dom'
 
 const EmailSignup = ({ signup }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     setError('')
@@ -53,7 +56,7 @@ const EmailSignup = ({ signup }) => {
     try {
       await signup(email, password, payload)
       localStorage.setItem('signup', '{}')
-      // navigate('/')
+      navigate('/')
     } catch (error) {
       console.log(error)
       setError(error.code)
