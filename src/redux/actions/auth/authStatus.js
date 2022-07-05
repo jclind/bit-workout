@@ -29,6 +29,8 @@ import {
   createUserWithEmailAndPassword,
   updatePassword,
   sendPasswordResetEmail,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from 'firebase/auth'
 import { fetchCharacterData, updateCoins } from '../character/character'
 
@@ -90,17 +92,33 @@ export const setWorkout = (weight, gender, uid) => async dispatch => {
     runningWorkout: {},
   })
 }
-export const signup = (email, password, userData) => async dispatch => {
-  await createUserWithEmailAndPassword(auth, email, password).then(cred => {
+export const signup = (uid, userData) => async dispatch => {
+  const username = userData.username
+
+  const weight = userData.weight
+  const gender = userData.gender
+
+  addNewUsername(username, uid)
+  dispatch(setUserAccountData(uid, userData))
+  dispatch(setWorkout(weight, gender, uid)) // Set workout data on initial signup
+}
+export const signupWithEmail =
+  (email, password, userData) => async dispatch => {
+    await createUserWithEmailAndPassword(auth, email, password).then(cred => {
+      const uid = cred.user.uid
+      return dispatch(signup(uid, userData))
+    })
+  }
+export const signupWithGoogle = userData => async dispatch => {
+  const provider = new GoogleAuthProvider()
+
+  await signInWithPopup(auth, provider).then(cred => {
     const uid = cred.user.uid
-    const username = userData.username
+    const name = cred.user.displayName
+    const email = cred.user.email
+    const newUserData = { ...userData, name, email }
 
-    const weight = userData.weight
-    const gender = userData.gender
-
-    addNewUsername(username, uid)
-    dispatch(setUserAccountData(uid, userData))
-    dispatch(setWorkout(weight, gender, uid)) // Set workout data on initial signup
+    return dispatch(signup(uid, newUserData))
   })
 }
 
