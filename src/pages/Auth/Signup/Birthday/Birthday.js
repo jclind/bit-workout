@@ -78,6 +78,7 @@ const Profile = () => {
       setMonth(newVal)
       return dayRef.current.focus()
     }
+    setMonth(newVal)
   }
   const handleDayChange = e => {
     const newVal = e.target.value
@@ -170,6 +171,7 @@ const Profile = () => {
             value={month}
             inputMode='numeric'
             ref={monthRef}
+            data-testid='month'
           />
         </div>
         <div className='day'>
@@ -180,6 +182,7 @@ const Profile = () => {
             value={day}
             ref={dayRef}
             inputMode='numeric'
+            data-testid='day'
           />
         </div>
         <div className='year'>
@@ -190,6 +193,7 @@ const Profile = () => {
             value={year}
             ref={yearRef}
             inputMode='numeric'
+            data-testid='year'
           />
         </div>
         {month || day || year ? (

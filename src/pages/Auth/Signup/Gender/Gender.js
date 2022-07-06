@@ -24,7 +24,6 @@ const Gender = () => {
   const { saveSignupData } = useContext(SignupContext)
 
   const handleNextClick = () => {
-    console.log(gender)
     setError('')
     if (gender === null) {
       return setError('Please Select Gender')
@@ -47,7 +46,7 @@ const Gender = () => {
     <div className='signup-page gender'>
       <PageIndicator currPage={2} />
       <BackButton link='/auth' />
-      <div className='title'>Gender</div>
+      <h3 className='title'>Gender</h3>
       {error && (
         <div className='error'>
           <AiOutlineWarning className='icon' />
