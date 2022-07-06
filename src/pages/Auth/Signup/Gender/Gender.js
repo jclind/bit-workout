@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SignupContext } from '../Signup'
 import { AiOutlineWarning } from 'react-icons/ai'
@@ -34,8 +34,13 @@ const Gender = () => {
     navigate('/signup/birthday')
   }
 
+  const nextBtnRef = useRef()
+
   useEffect(() => {
     setError('')
+    if (gender) {
+      nextBtnRef.current.focus()
+    }
   }, [gender])
 
   return (
@@ -63,7 +68,11 @@ const Gender = () => {
           Male
         </button>
       </div>
-      <button className='signup-next-btn' onClick={handleNextClick}>
+      <button
+        className='signup-next-btn'
+        onClick={handleNextClick}
+        ref={nextBtnRef}
+      >
         NEXT
       </button>
     </div>

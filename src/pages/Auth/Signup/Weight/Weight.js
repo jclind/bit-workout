@@ -27,6 +27,12 @@ const Weight = () => {
   const weightRef = useRef()
   const nextBtnRef = useRef()
 
+  useEffect(() => {
+    if (weightRef && weightRef.current) {
+      weightRef.current.focus()
+    }
+  }, [weightRef])
+
   const handleWeightChange = e => {
     const newVal = e.target.value
 

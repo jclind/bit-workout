@@ -53,16 +53,34 @@ function App() {
           <Routes>
             <Route exact path='/' element={<PrivateRoute />}>
               <Route exact path='/' element={<Dashboard />} />
+              <Route
+                path='/workout'
+                element={
+                  <>
+                    <Workout />
+                    <NavbarContainer />
+                  </>
+                }
+              />
+              <Route
+                path='/create-workout'
+                element={
+                  <>
+                    <CreateWorkoutContainer />
+                    <NavbarContainer />
+                  </>
+                }
+              />
+              <Route
+                path='/past-workouts'
+                element={
+                  <>
+                    <PastWorkouts />
+                    <NavbarContainer />
+                  </>
+                }
+              />
             </Route>
-            <Route
-              path='/past-workouts'
-              element={
-                <>
-                  <PastWorkouts />
-                  <NavbarContainer />
-                </>
-              }
-            />
             <Route path='/account' element={<PrivateRoute />}>
               <Route exact path='/account' element={<Account />} />
               <Route
@@ -133,24 +151,6 @@ function App() {
             <Route
               path='/forgot-password'
               element={<ForgotPasswordContainer />}
-            />
-            <Route
-              path='/workout'
-              element={
-                <>
-                  <Workout />
-                  <NavbarContainer />
-                </>
-              }
-            />
-            <Route
-              path='/create-workout'
-              element={
-                <>
-                  <CreateWorkoutContainer />
-                  <NavbarContainer />
-                </>
-              }
             />
           </Routes>
         </Router>

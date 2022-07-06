@@ -13,6 +13,7 @@ const FormInput = ({
   error,
   showPasswordBtn,
   textarea,
+  inputRef,
 }) => {
   const [type, setType] = useState(inputType)
   const [clear, setClear] = useState(false)
@@ -56,6 +57,7 @@ const FormInput = ({
           required={required}
           value={val}
           onChange={e => setVal(e.target.value)}
+          ref={inputRef}
         />
       ) : (
         <input
@@ -65,6 +67,7 @@ const FormInput = ({
           value={val}
           required={required}
           className={icon ? 'active-icon' : null}
+          ref={inputRef}
         />
       )}
 
