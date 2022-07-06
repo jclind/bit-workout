@@ -31,6 +31,11 @@ const Username = () => {
   }, [username])
 
   const usernameRef = useRef()
+  useEffect(() => {
+    if (usernameRef && usernameRef.current) {
+      usernameRef.current.focus()
+    }
+  }, [usernameRef])
 
   const [error, setError] = useState('')
 

@@ -35,6 +35,12 @@ const Height = () => {
   const feetRef = useRef()
   const inchesRef = useRef()
 
+  useEffect(() => {
+    if (feetRef && feetRef.current) {
+      feetRef.current.focus()
+    }
+  }, [feetRef])
+
   const nextBtnRef = useRef()
 
   const navigate = useNavigate()

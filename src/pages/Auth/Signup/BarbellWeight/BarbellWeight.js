@@ -24,6 +24,12 @@ const BarbellWeight = () => {
   const nextBtnRef = useRef()
 
   useEffect(() => {
+    if (weightRef && weightRef.current) {
+      weightRef.current.focus()
+    }
+  }, [weightRef])
+
+  useEffect(() => {
     setError('')
   }, [weight])
 

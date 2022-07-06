@@ -21,6 +21,13 @@ const EmailSignup = ({ signupWithEmail }) => {
     setError('')
   }, [name, email, password])
 
+  const nameRef = useRef()
+  useEffect(() => {
+    if (nameRef && nameRef.current) {
+      nameRef.current.focus()
+    }
+  }, [nameRef])
+
   const [error, setError] = useState('')
 
   const signupBtnRef = useRef()
@@ -41,7 +48,6 @@ const EmailSignup = ({ signupWithEmail }) => {
 
     const { barbellWeight, birthday, gender, height, username, weight } =
       savedSignupData
-    console.log(savedSignupData)
 
     const payload = {
       email,
@@ -81,6 +87,7 @@ const EmailSignup = ({ signupWithEmail }) => {
           val={name}
           setVal={setName}
           required={true}
+          inputRef={nameRef}
         />
         <FormInput
           icon={emailIcon}
