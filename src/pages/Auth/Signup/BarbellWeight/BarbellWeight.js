@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PageIndicator from '../PageIndicator/PageIndicator'
 import { AiOutlineWarning } from 'react-icons/ai'
-import { SignupContext } from '../Signup'
 import './BarbellWeight.scss'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
+import { saveSignupData } from '../Signup'
 
 const BarbellWeight = () => {
   const [weight, setWeight] = useState(() => {
@@ -17,7 +17,6 @@ const BarbellWeight = () => {
   })
   const [error, setError] = useState('')
 
-  const { saveSignupData } = useContext(SignupContext)
   const navigate = useNavigate()
 
   const weightRef = useRef()

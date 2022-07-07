@@ -1,11 +1,11 @@
-import React, { useState, useRef, useContext } from 'react'
+import React, { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SignupContext } from '../Signup'
 import { AiOutlineWarning } from 'react-icons/ai'
 import PageIndicator from '../PageIndicator/PageIndicator'
 import './Gender.scss'
 import { useEffect } from 'react'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
+import { saveSignupData } from '../Signup'
 
 const Gender = () => {
   const [gender, setGender] = useState(() => {
@@ -20,8 +20,6 @@ const Gender = () => {
   const [error, setError] = useState('')
 
   const navigate = useNavigate()
-
-  const { saveSignupData } = useContext(SignupContext)
 
   const handleNextClick = () => {
     setError('')
@@ -48,7 +46,8 @@ const Gender = () => {
       <BackButton link='/auth' />
       <h3 className='title'>Gender</h3>
       {error && (
-        <div className='error'>
+        <div className='error' data-testid='error'>
+          ``
           <AiOutlineWarning className='icon' />
           {error}
         </div>

@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PageIndicator from '../PageIndicator/PageIndicator'
 import { AiOutlineWarning } from 'react-icons/ai'
-import { SignupContext } from '../Signup'
-
 import './Username.scss'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
 import { checkUsernameAvailability } from '../../../../redux/actions/auth/authStatus'
+import { saveSignupData } from '../Signup'
 
 const Username = () => {
   const [username, setUsername] = useState(() => {
@@ -39,7 +38,6 @@ const Username = () => {
 
   const [error, setError] = useState('')
 
-  const { saveSignupData } = useContext(SignupContext)
   const nextBtnRef = useRef()
   const navigate = useNavigate()
 
