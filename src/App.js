@@ -8,8 +8,6 @@ import Dashboard from './components/Dashboard'
 import Login from './pages/Auth/Login/Login'
 import PrivateRoute from './components/PrivateRoute'
 import ForgotPasswordContainer from './components/AuthForms/ForgotPassword/ForgotPasswordContainer'
-import SignupAccountContainer from './components/AuthForms/Signup/Account/SignupAccountContainer'
-import SignupPersonalContainer from './components/AuthForms/Signup/Personal/SignupPersonalContainer'
 import Settings from './pages/Settings/Settings'
 import ManageAccount from './pages/Settings/ManageAccount'
 import UpdateName from './pages/Settings/UpdateName'
@@ -139,12 +137,6 @@ function App() {
               <Route path='username' element={<Username />} />
               <Route path='signup-selection' element={<SignupSelection />} />
               <Route path='email-signup' element={<EmailSignup />} />
-
-              <Route path='account-info' element={<SignupAccountContainer />} />
-              <Route
-                path='personal-info'
-                element={<SignupPersonalContainer />}
-              />
             </Route>
             <Route path='/auth' element={<AuthLandingPage />} />
             <Route path='/login' element={<Login />} />
