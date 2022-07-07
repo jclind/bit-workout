@@ -21,11 +21,20 @@ describe('Birthday', () => {
     })
   })
   const saveSignupData = jest.fn()
+  const validateDate = jest.fn()
 
   it('Should render gender page', () => {
     render(<MockBirthday />)
     const pageTitle = screen.getByText(/Date Of Birth/i)
+    const monthInput = screen.getByTestId('month')
+    const dayInput = screen.getByTestId('day')
+    const yearInput = screen.getByTestId('year')
+    const nextBtn = screen.getByRole('button', { name: 'NEXT' })
     expect(pageTitle).toBeInTheDocument()
+    expect(monthInput).toBeInTheDocument()
+    expect(dayInput).toBeInTheDocument()
+    expect(yearInput).toBeInTheDocument()
+    expect(nextBtn).toBeInTheDocument()
   })
 
   describe('Birthday input testing', () => {
@@ -134,6 +143,20 @@ describe('Birthday', () => {
 
       fireEvent.click(nextBtn)
       expect(saveSignupData).toHaveBeenCalledTimes(0)
+    })
+    it('should call validateDate when nextBtn is clicked with all inputs filled', async () => {
+      render(<MockBirthday />)
+
+      // const monthInput = screen.getByTestId('month')
+      // const dayInput = screen.getByTestId('day')
+      // const yearInput = screen.getByTestId('year')
+      // const nextBtn = screen.getByRole('button', { name: 'NEXT' })
+
+      // await userEvent.type(monthInput, '2')
+      // await userEvent.type(dayInput, '28')
+      // await userEvent.type(yearInput, '2002')
+      // await fireEvent.click(nextBtn)
+      // expect(saveSignupData).toBeCalledTimes(1)
     })
   })
 })

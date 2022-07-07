@@ -3,7 +3,12 @@ import { useLocation, useOutlet, Navigate } from 'react-router-dom'
 import './Signup.scss'
 import { connect } from 'react-redux'
 
-export const SignupContext = React.createContext({})
+export const saveSignupData = (key, value) => {
+  const currSignupData = JSON.parse(localStorage.getItem('signup')) || {}
+
+  currSignupData[key] = value
+  localStorage.setItem('signup', JSON.stringify(currSignupData))
+}
 
 const Signup = ({ isSignedIn }) => {
   const location = useLocation()
@@ -17,22 +22,7 @@ const Signup = ({ isSignedIn }) => {
     return <Navigate to='/signup/gender' />
   }
 
-  const saveSignupData = (key, value) => {
-    const currSignupData = JSON.parse(localStorage.getItem('signup')) || {}
-
-    currSignupData[key] = value
-    localStorage.setItem('signup', JSON.stringify(currSignupData))
-  }
-
-  const value = {
-    saveSignupData,
-  }
-
-  return (
-    <SignupContext.Provider value={value} className='signup-container'>
-      {outlet}
-    </SignupContext.Provider>
-  )
+  return { outlet }
 }
 const mapStateToProps = state => {
   let isSignedIn = false

@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AiOutlineClose, AiOutlineWarning } from 'react-icons/ai'
 import moment from 'moment'
-import { SignupContext } from '../Signup'
 import './Birthday.scss'
 import PageIndicator from '../PageIndicator/PageIndicator'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
+import { saveSignupData } from '../Signup'
 
 const Profile = () => {
   const [month, setMonth] = useState(() => {
@@ -35,7 +35,6 @@ const Profile = () => {
 
   const [error, setError] = useState('')
 
-  const { saveSignupData } = useContext(SignupContext)
   const monthRef = useRef()
   const dayRef = useRef()
   const yearRef = useRef()
@@ -143,7 +142,8 @@ const Profile = () => {
 
   const handleNextClick = () => {
     setError('')
-    if (!validateDate(month, day, year)) {
+    const isDateValid = validateDate(month, day, year)
+    if (!isDateValid) {
       return setError('Date Not Valid')
     }
 
