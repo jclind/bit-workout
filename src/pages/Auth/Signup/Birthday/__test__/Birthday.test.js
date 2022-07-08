@@ -11,6 +11,30 @@ const MockBirthday = () => {
   )
 }
 
+const clickNextBtn = () => {
+  const nextBtn = screen.getByRole('button', { name: 'NEXT' })
+
+  fireEvent.click(nextBtn)
+}
+const typeIntoInput = async ({ month, day, year }) => {
+  const monthInput = screen.getByTestId('month')
+  if (month) {
+    await userEvent.type(monthInput, month)
+  }
+
+  const dayInput = screen.getByTestId('day')
+  if (day) {
+    await userEvent.type(dayInput, day)
+  }
+
+  const yearInput = screen.getByTestId('year')
+  if (year) {
+    await userEvent.type(yearInput, year)
+  }
+
+  return { monthInput, dayInput, yearInput }
+}
+
 describe('Birthday', () => {
   beforeEach(() => {
     Object.defineProperty(window, 'localStorage', {
@@ -21,30 +45,6 @@ describe('Birthday', () => {
       writable: true,
     })
   })
-
-  const clickNextBtn = () => {
-    const nextBtn = screen.getByRole('button', { name: 'NEXT' })
-
-    fireEvent.click(nextBtn)
-  }
-  const typeIntoInput = async ({ month, day, year }) => {
-    const monthInput = screen.getByTestId('month')
-    if (month) {
-      await userEvent.type(monthInput, month)
-    }
-
-    const dayInput = screen.getByTestId('day')
-    if (day) {
-      await userEvent.type(dayInput, day)
-    }
-
-    const yearInput = screen.getByTestId('year')
-    if (year) {
-      await userEvent.type(yearInput, year)
-    }
-
-    return { monthInput, dayInput, yearInput }
-  }
 
   it('Should render birthday page', () => {
     render(<MockBirthday />)
@@ -59,6 +59,10 @@ describe('Birthday', () => {
     expect(dayInput).toBeInTheDocument()
     expect(yearInput).toBeInTheDocument()
     expect(nextBtn).toBeInTheDocument()
+  })
+  it('Should call localStorage getItem on render', () => {
+    render(<MockBirthday />)
+    expect(window.localStorage.getItem).toHaveBeenCalledTimes(3) // One call for each input (month day year)
   })
 
   describe('Birthday input testing', () => {

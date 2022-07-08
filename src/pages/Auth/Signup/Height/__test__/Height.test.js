@@ -33,6 +33,16 @@ const typeIntoInput = async ({ feet, inches }) => {
 }
 
 describe('Height', () => {
+  beforeEach(() => {
+    Object.defineProperty(window, 'localStorage', {
+      value: {
+        getItem: jest.fn(() => null),
+        setItem: jest.fn(() => null),
+      },
+      writable: true,
+    })
+  })
+
   it('Should render birthday page', () => {
     render(<MockHeight />)
     const pageTitle = screen.getByText(/Height/i)
@@ -44,6 +54,10 @@ describe('Height', () => {
     expect(feetInput).toBeInTheDocument()
     expect(inchesInput).toBeInTheDocument()
     expect(nextBtn).toBeInTheDocument()
+  })
+  it('Should call localStorage getItem on render', () => {
+    render(<MockHeight />)
+    expect(window.localStorage.getItem).toHaveBeenCalledTimes(2) // One call for each input (feet, inches)
   })
 
   describe('Height inputs testing', () => {
