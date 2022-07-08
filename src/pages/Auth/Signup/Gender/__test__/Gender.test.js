@@ -11,6 +11,24 @@ const MockGender = () => {
   )
 }
 
+const clickNextBtn = () => {
+  const nextBtn = screen.getByRole('button', { name: 'NEXT' })
+
+  fireEvent.click(nextBtn)
+}
+const selectFemaleOption = () => {
+  const femaleBtn = screen.getByRole('button', { name: 'Female' })
+  fireEvent.click(femaleBtn)
+
+  return { femaleBtn }
+}
+const selectMaleOption = () => {
+  const maleBtn = screen.getByRole('button', { name: 'Male' })
+  fireEvent.click(maleBtn)
+
+  return { maleBtn }
+}
+
 describe('Gender', () => {
   beforeEach(() => {
     Object.defineProperty(window, 'localStorage', {
@@ -21,24 +39,6 @@ describe('Gender', () => {
       writable: true,
     })
   })
-
-  const clickNextBtn = () => {
-    const nextBtn = screen.getByRole('button', { name: 'NEXT' })
-
-    fireEvent.click(nextBtn)
-  }
-  const selectFemaleOption = () => {
-    const femaleBtn = screen.getByRole('button', { name: 'Female' })
-    fireEvent.click(femaleBtn)
-
-    return { femaleBtn }
-  }
-  const selectMaleOption = () => {
-    const maleBtn = screen.getByRole('button', { name: 'Male' })
-    fireEvent.click(maleBtn)
-
-    return { maleBtn }
-  }
 
   it('Should render gender page', () => {
     render(<MockGender />)

@@ -35,7 +35,7 @@ const BarbellWeight = () => {
   const handleWeightChange = e => {
     const newVal = e.target.value
 
-    if (newVal === '') {
+    if (newVal === '' || newVal === '0') {
       return setWeight('')
     }
 
@@ -43,7 +43,7 @@ const BarbellWeight = () => {
     // Don't allow decimal place
     if (newVal % 1 !== 0) return
 
-    if (Number(newVal) > 200) return
+    if (Number(newVal) > 55) return
 
     setWeight(newVal)
     if (newVal % 1 !== 0) {
@@ -54,8 +54,9 @@ const BarbellWeight = () => {
   const handleNextClick = () => {
     setError('')
     if (!weight) return setError('Please Enter Weight')
-    if (weight < 5 || weight > 200)
-      return setError('Please Enter Weight Between 5-200')
+    if (weight < 5 || weight > 55)
+      return setError('Please Enter Weight Between 5-55')
+    if (weight % 5 !== 0) return setError('Please Enter Value Divisible By 5')
 
     saveSignupData('barbellWeight', weight)
     navigate('/signup/username')
@@ -71,7 +72,7 @@ const BarbellWeight = () => {
         workouts
       </p>
       {error && (
-        <div className='error'>
+        <div className='error' data-testid='error'>
           <AiOutlineWarning className='icon' />
           {error}
         </div>
@@ -84,6 +85,7 @@ const BarbellWeight = () => {
           value={weight}
           inputMode='numeric'
           ref={weightRef}
+          data-testid='weight'
         />
         <span className='text'>lbs.</span>
       </div>

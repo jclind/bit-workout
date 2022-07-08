@@ -35,7 +35,7 @@ const Weight = () => {
   const handleWeightChange = e => {
     const newVal = e.target.value
 
-    if (newVal === '') {
+    if (newVal === '' || newVal === '0') {
       return setWeight('')
     }
 
@@ -68,7 +68,7 @@ const Weight = () => {
       <BackButton />
       <div className='title'>Your Weight</div>
       {error && (
-        <div className='error'>
+        <div className='error' data-testid='error'>
           <AiOutlineWarning className='icon' />
           {error}
         </div>
@@ -81,6 +81,7 @@ const Weight = () => {
           value={weight}
           inputMode='decimal'
           ref={weightRef}
+          data-testid='weight'
         />
         <span className='text'>lbs.</span>
       </div>
