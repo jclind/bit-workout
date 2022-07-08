@@ -22,7 +22,7 @@ const Signup = ({ isSignedIn }) => {
     return <Navigate to='/signup/gender' />
   }
 
-  return { outlet }
+  return <>{outlet}</>
 }
 const mapStateToProps = state => {
   let isSignedIn = false

@@ -121,7 +121,7 @@ const Profile = () => {
 
     if (newVal > currYear - 10) return
 
-    if (newVal > currYear - 100 && newVal < currYear - 10) {
+    if (newVal >= currYear - 100 && newVal < currYear - 10) {
       setYear(newVal)
       yearRef.current.blur()
       return nextBtnRef.current.focus()
@@ -131,7 +131,13 @@ const Profile = () => {
   }
 
   const validateDate = (month, day, year) => {
-    return moment(`${month}/${day}/${year}`, 'MM/DD/YYYY', true).isValid()
+    let formattedMonth = `${Number(month) < 10 ? '0' : ''}${Number(month)}`
+    let formattedDay = `${Number(day) < 10 ? '0' : ''}${Number(day)}`
+    return moment(
+      `${formattedMonth}/${formattedDay}/${year}`,
+      'MM/DD/YYYY',
+      true
+    ).isValid()
   }
   const clearInputs = () => {
     setMonth('')
@@ -142,6 +148,22 @@ const Profile = () => {
 
   const handleNextClick = () => {
     setError('')
+    if (!month) {
+      return setError('Please Enter Valid Month')
+    }
+    if (!day) {
+      return setError('Please Enter Valid Day')
+    }
+    if (!year) {
+      return setError('Please Enter Valid Year')
+    }
+    const currYear = new Date().getFullYear()
+    if (year < currYear - 100) {
+      return setError(
+        `Please Enter Year Between ${currYear - 100} and ${currYear - 10}`
+      )
+    }
+
     const isDateValid = validateDate(month, day, year)
     if (!isDateValid) {
       return setError('Date Not Valid')
@@ -157,7 +179,7 @@ const Profile = () => {
       <BackButton />
       <div className='title'>Date Of Birth</div>
       {error && (
-        <div className='error'>
+        <div className='error' data-testid='error'>
           <AiOutlineWarning className='icon' />
           {error}
         </div>

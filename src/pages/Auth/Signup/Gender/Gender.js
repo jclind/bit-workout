@@ -16,9 +16,15 @@ const Gender = () => {
 
     return null
   })
+  const nextBtnRef = useRef()
+  useEffect(() => {
+    setError('')
+    if (gender) {
+      nextBtnRef.current.focus()
+    }
+  }, [gender])
 
   const [error, setError] = useState('')
-
   const navigate = useNavigate()
 
   const handleNextClick = () => {
@@ -30,15 +36,6 @@ const Gender = () => {
     saveSignupData('gender', gender)
     navigate('/signup/birthday')
   }
-
-  const nextBtnRef = useRef()
-
-  useEffect(() => {
-    setError('')
-    if (gender) {
-      nextBtnRef.current.focus()
-    }
-  }, [gender])
 
   return (
     <div className='signup-page gender'>

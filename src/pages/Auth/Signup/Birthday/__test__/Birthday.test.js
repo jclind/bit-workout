@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
 import Birthday from '../Birthday'
@@ -16,12 +16,35 @@ describe('Birthday', () => {
     Object.defineProperty(window, 'localStorage', {
       value: {
         getItem: jest.fn(() => null),
+        setItem: jest.fn(() => null),
       },
       writable: true,
     })
   })
-  const saveSignupData = jest.fn()
-  const validateDate = jest.fn()
+
+  const clickNextBtn = () => {
+    const nextBtn = screen.getByRole('button', { name: 'NEXT' })
+
+    fireEvent.click(nextBtn)
+  }
+  const typeIntoInput = async ({ month, day, year }) => {
+    const monthInput = screen.getByTestId('month')
+    if (month) {
+      await userEvent.type(monthInput, month)
+    }
+
+    const dayInput = screen.getByTestId('day')
+    if (day) {
+      await userEvent.type(dayInput, day)
+    }
+
+    const yearInput = screen.getByTestId('year')
+    if (year) {
+      await userEvent.type(yearInput, year)
+    }
+
+    return { monthInput, dayInput, yearInput }
+  }
 
   it('Should render gender page', () => {
     render(<MockBirthday />)
@@ -30,6 +53,7 @@ describe('Birthday', () => {
     const dayInput = screen.getByTestId('day')
     const yearInput = screen.getByTestId('year')
     const nextBtn = screen.getByRole('button', { name: 'NEXT' })
+
     expect(pageTitle).toBeInTheDocument()
     expect(monthInput).toBeInTheDocument()
     expect(dayInput).toBeInTheDocument()
@@ -41,37 +65,31 @@ describe('Birthday', () => {
     it('Should only allow numbers to be typed into any birthday inputs', async () => {
       render(<MockBirthday />)
 
-      const monthInput = screen.getByTestId('month')
-      const dayInput = screen.getByTestId('day')
-      const yearInput = screen.getByTestId('year')
-
-      await userEvent.type(monthInput, 'letters')
+      const { monthInput, dayInput, yearInput } = await typeIntoInput({
+        month: '',
+        day: '',
+        year: '',
+      })
       expect(monthInput).toHaveValue('')
-      await userEvent.type(dayInput, 'letters')
       expect(dayInput).toHaveValue('')
-      await userEvent.type(yearInput, 'letters')
       expect(yearInput).toHaveValue('')
     })
     it('Should not allow values under 0 in any birthday input', async () => {
       render(<MockBirthday />)
 
-      const monthInput = screen.getByTestId('month')
-      const dayInput = screen.getByTestId('day')
-      const yearInput = screen.getByTestId('year')
-
-      await userEvent.type(monthInput, '-1')
+      const { monthInput, dayInput, yearInput } = await typeIntoInput({
+        month: '-1',
+        day: '-1',
+        year: '-1',
+      })
       expect(monthInput).toHaveValue('1')
-      await userEvent.type(dayInput, '-1')
       expect(dayInput).toHaveValue('1')
-      await userEvent.type(yearInput, '-1')
       expect(yearInput).toHaveValue('1')
     })
     it('Should not allow month input to have a value over 12', async () => {
       render(<MockBirthday />)
 
-      const monthInput = screen.getByTestId('month')
-
-      await userEvent.type(monthInput, '13')
+      const { monthInput } = await typeIntoInput({ month: '13' })
 
       expect(monthInput).toHaveValue('1')
       expect(monthInput).not.toHaveValue('13')
@@ -79,24 +97,19 @@ describe('Birthday', () => {
     describe('Should add preceding 0 to month value if initial input is 2-9', () => {
       it('Should show 02 in month input if 2 is entered as the first value', async () => {
         render(<MockBirthday />)
-        const monthInput = screen.getByTestId('month')
-        await userEvent.type(monthInput, '2')
+        const { monthInput } = await typeIntoInput({ month: '2' })
         expect(monthInput).toHaveValue('02')
       })
       it('Should show 09 in month input if 9 is entered as the first value', async () => {
         render(<MockBirthday />)
-        const monthInput = screen.getByTestId('month')
-        await userEvent.type(monthInput, '9')
+        const { monthInput } = await typeIntoInput({ month: '9' })
         expect(monthInput).toHaveValue('09')
       })
     })
-
     it('Should not allow day input to have a value over 31', async () => {
       render(<MockBirthday />)
 
-      const dayInput = screen.getByTestId('day')
-
-      await userEvent.type(dayInput, '32')
+      const { dayInput } = await typeIntoInput({ day: '32' })
 
       expect(dayInput).toHaveValue('3')
       expect(dayInput).not.toHaveValue('32')
@@ -104,25 +117,20 @@ describe('Birthday', () => {
     describe('Should add preceding 0 to day value if initial input is 4-9', () => {
       it('Should show 02 in month input if 2 is entered as the first value', async () => {
         render(<MockBirthday />)
-        const dayInput = screen.getByTestId('day')
-        await userEvent.type(dayInput, '4')
+        const { dayInput } = await typeIntoInput({ day: '4' })
         expect(dayInput).toHaveValue('04')
       })
       it('Should show 09 in month input if 9 is entered as the first value', async () => {
         render(<MockBirthday />)
-        const dayInput = screen.getByTestId('day')
-        await userEvent.type(dayInput, '9')
+        const { dayInput } = await typeIntoInput({ day: '9' })
         expect(dayInput).toHaveValue('09')
       })
     })
     it('Should not allow year input to have value less than 9 years previous to current year', async () => {
       render(<MockBirthday />)
 
-      const yearInput = screen.getByTestId('year')
-
       const maxYear = (new Date().getFullYear() - 9).toString()
-
-      await userEvent.type(yearInput, maxYear)
+      const { yearInput } = await typeIntoInput({ year: maxYear })
 
       expect(yearInput).toHaveValue(maxYear.substring(0, 3))
       expect(yearInput).not.toHaveValue(maxYear)
@@ -130,33 +138,52 @@ describe('Birthday', () => {
   })
 
   describe('Validation testing', () => {
-    it('should not call saveSignupData if one or all of the inputs are not filled out', async () => {
+    it('Should throw error if one or all inputs are empty on submit', async () => {
       render(<MockBirthday />)
 
-      const nextBtn = screen.getByRole('button', { name: 'NEXT' })
+      clickNextBtn()
 
-      fireEvent.click(nextBtn)
-      expect(saveSignupData).toHaveBeenCalledTimes(0)
+      const monthError = screen.getByText(/Please Enter Valid Month/i)
+      expect(monthError).toBeInTheDocument()
 
-      const yearInput = screen.getByTestId('year')
-      await userEvent.type(yearInput, '3')
+      await typeIntoInput({ month: '1' })
+      clickNextBtn()
 
-      fireEvent.click(nextBtn)
-      expect(saveSignupData).toHaveBeenCalledTimes(0)
+      const dayError = screen.getByText(/Please Enter Valid Day/i)
+      expect(dayError).toBeInTheDocument()
+
+      await typeIntoInput({ day: '15' })
+      clickNextBtn()
+
+      const yearError = screen.getByText(/Please Enter Valid Year/i)
+      expect(yearError).toBeInTheDocument()
     })
-    it('should call validateDate when nextBtn is clicked with all inputs filled', async () => {
+    it('Should throw error if entered date is not valid', async () => {
       render(<MockBirthday />)
 
-      // const monthInput = screen.getByTestId('month')
-      // const dayInput = screen.getByTestId('day')
-      // const yearInput = screen.getByTestId('year')
-      // const nextBtn = screen.getByRole('button', { name: 'NEXT' })
+      await typeIntoInput({ month: '2', day: '31', year: '2000' })
+      clickNextBtn()
 
-      // await userEvent.type(monthInput, '2')
-      // await userEvent.type(dayInput, '28')
-      // await userEvent.type(yearInput, '2002')
-      // await fireEvent.click(nextBtn)
-      // expect(saveSignupData).toBeCalledTimes(1)
+      const error = screen.getByText(/Date Not Valid/i)
+      expect(error).toBeInTheDocument()
+    })
+    it('Should throw error if year is before 100 years from the current year', async () => {
+      render(<MockBirthday />)
+      const currYear = new Date().getFullYear()
+      const minimumYear = currYear - 101
+      await typeIntoInput({
+        month: '3',
+        day: '1',
+        year: minimumYear.toString(),
+      })
+
+      const error = screen.getByText(/Please Enter Year Between/i)
+      expect(error).toBeInTheDocument()
+    })
+    it('Should not throw error if date is valid', async () => {
+      render(<MockBirthday />)
+
+      typeIntoInput({ month: '1', day: '1', year: '' })
     })
   })
 })
