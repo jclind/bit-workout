@@ -136,7 +136,6 @@ describe('Birthday', () => {
       expect(yearInput).not.toHaveValue(maxYear)
     })
   })
-
   describe('Validation testing', () => {
     const currYear = new Date().getFullYear()
 
