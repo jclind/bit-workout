@@ -1,7 +1,6 @@
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import userEvent from '@testing-library/user-event'
 import Gender from '../Gender'
 
 const MockGender = () => {
@@ -75,7 +74,7 @@ describe('Gender', () => {
     const error = screen.getByText(/Please Select Gender/i)
     expect(error).toBeInTheDocument()
   })
-  it('Should call saveSignupData to be called on submit with a gender option selected', async () => {
+  it('Should not throw error on submit if a gender is selected', async () => {
     render(<MockGender />)
 
     selectMaleOption()
