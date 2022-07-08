@@ -46,7 +46,7 @@ describe('Birthday', () => {
     return { monthInput, dayInput, yearInput }
   }
 
-  it('Should render gender page', () => {
+  it('Should render birthday page', () => {
     render(<MockBirthday />)
     const pageTitle = screen.getByText(/Date Of Birth/i)
     const monthInput = screen.getByTestId('month')

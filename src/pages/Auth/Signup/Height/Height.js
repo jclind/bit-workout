@@ -59,12 +59,12 @@ const Height = () => {
   const handleInchesChange = e => {
     const newVal = e.target.value.trim()
 
-    if (newVal === '') {
+    if (newVal === '' || newVal === '0') {
       return setInches('')
     }
     if (isNaN(newVal)) return
 
-    if (newVal > 12) return
+    if (newVal > 11) return
 
     setInches(newVal)
 
@@ -75,8 +75,11 @@ const Height = () => {
 
   const handleNextClick = () => {
     setError('')
-    if (!feet || !inches) {
-      return setError('Please Enter Feet and Inches')
+    if (!feet) {
+      return setError('Please Enter Feet')
+    }
+    if (!inches) {
+      return setError('Please Enter Inches')
     }
 
     saveSignupData('height', { feet, inches })
@@ -89,7 +92,7 @@ const Height = () => {
       <BackButton />
       <div className='title'>Height</div>
       {error && (
-        <div className='error'>
+        <div className='error' data-testid='error'>
           <AiOutlineWarning className='icon' />
           {error}
         </div>
@@ -103,6 +106,7 @@ const Height = () => {
             value={feet}
             inputMode='numeric'
             ref={feetRef}
+            data-testid='feet'
           />
           <span className='text'>ft</span>
         </div>
@@ -114,6 +118,7 @@ const Height = () => {
             value={inches}
             ref={inchesRef}
             inputMode='numeric'
+            data-testid='inches'
           />
           <span className='text'>in</span>
         </div>
