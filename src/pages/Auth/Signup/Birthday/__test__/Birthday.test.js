@@ -138,6 +138,8 @@ describe('Birthday', () => {
   })
 
   describe('Validation testing', () => {
+    const currYear = new Date().getFullYear()
+
     it('Should throw error if one or all inputs are empty on submit', async () => {
       render(<MockBirthday />)
 
@@ -169,7 +171,6 @@ describe('Birthday', () => {
     })
     it('Should throw error if year is before 100 years from the current year', async () => {
       render(<MockBirthday />)
-      const currYear = new Date().getFullYear()
       const minimumYear = currYear - 101
       await typeIntoInput({
         month: '3',
@@ -177,13 +178,197 @@ describe('Birthday', () => {
         year: minimumYear.toString(),
       })
 
+      clickNextBtn()
+
       const error = screen.getByText(/Please Enter Year Between/i)
       expect(error).toBeInTheDocument()
     })
-    it('Should not throw error if date is valid', async () => {
+    it('Should throw error if year is 9 years or less from the current year', async () => {
       render(<MockBirthday />)
+      const minimumYear = currYear - 9
+      await typeIntoInput({
+        month: '3',
+        day: '1',
+        year: minimumYear.toString(),
+      })
 
-      typeIntoInput({ month: '1', day: '1', year: '' })
+      clickNextBtn()
+
+      const error = screen.getByText(/Please Enter Year Between/i)
+      expect(error).toBeInTheDocument()
+    })
+    it('Should not throw error if year is 100 years before current year', async () => {
+      render(<MockBirthday />)
+      const minimumYear = currYear - 100
+      await typeIntoInput({
+        month: '3',
+        day: '1',
+        year: minimumYear.toString(),
+      })
+
+      clickNextBtn()
+
+      const error = screen.queryByTestId('error')
+      expect(error).not.toBeInTheDocument()
+    })
+    it('Should not throw error if year is 10 years before current year', async () => {
+      render(<MockBirthday />)
+      const minimumYear = currYear - 10
+      await typeIntoInput({
+        month: '3',
+        day: '1',
+        year: minimumYear.toString(),
+      })
+
+      clickNextBtn()
+
+      const error = screen.queryByTestId('error')
+      expect(error).not.toBeInTheDocument()
+    })
+    describe('Testing variations of valid dates', () => {
+      it('Should not throw error if date is 1, 1, currYear - 100', async () => {
+        render(<MockBirthday />)
+
+        await typeIntoInput({
+          month: '1',
+          day: '1',
+          year: (currYear - 100).toString(),
+        })
+
+        clickNextBtn()
+        const error = screen.queryByTestId('error')
+        expect(error).not.toBeInTheDocument()
+      })
+      it('4, 1, currYear - 100', async () => {
+        render(<MockBirthday />)
+
+        await typeIntoInput({
+          month: '4',
+          day: '1',
+          year: (currYear - 100).toString(),
+        })
+
+        clickNextBtn()
+        const error = screen.queryByTestId('error')
+        expect(error).not.toBeInTheDocument()
+      })
+      it('8, 1, currYear - 100', async () => {
+        render(<MockBirthday />)
+
+        await typeIntoInput({
+          month: '8',
+          day: '1',
+          year: (currYear - 100).toString(),
+        })
+
+        clickNextBtn()
+        const error = screen.queryByTestId('error')
+        expect(error).not.toBeInTheDocument()
+      })
+      it('12, 1, currYear - 100', async () => {
+        render(<MockBirthday />)
+
+        await typeIntoInput({
+          month: '12',
+          day: '1',
+          year: (currYear - 100).toString(),
+        })
+
+        clickNextBtn()
+        const error = screen.queryByTestId('error')
+        expect(error).not.toBeInTheDocument()
+      })
+      it('1, 4, currYear - 100', async () => {
+        render(<MockBirthday />)
+
+        await typeIntoInput({
+          month: '12',
+          day: '1',
+          year: (currYear - 100).toString(),
+        })
+
+        clickNextBtn()
+        const error = screen.queryByTestId('error')
+        expect(error).not.toBeInTheDocument()
+      })
+      it('1, 15, currYear - 100', async () => {
+        render(<MockBirthday />)
+
+        await typeIntoInput({
+          month: '12',
+          day: '1',
+          year: (currYear - 100).toString(),
+        })
+
+        clickNextBtn()
+        const error = screen.queryByTestId('error')
+        expect(error).not.toBeInTheDocument()
+      })
+      it('12, 24, currYear - 100', async () => {
+        render(<MockBirthday />)
+
+        await typeIntoInput({
+          month: '12',
+          day: '1',
+          year: (currYear - 100).toString(),
+        })
+
+        clickNextBtn()
+        const error = screen.queryByTestId('error')
+        expect(error).not.toBeInTheDocument()
+      })
+      it('1, 31, currYear - 100', async () => {
+        render(<MockBirthday />)
+
+        await typeIntoInput({
+          month: '12',
+          day: '1',
+          year: (currYear - 100).toString(),
+        })
+
+        clickNextBtn()
+        const error = screen.queryByTestId('error')
+        expect(error).not.toBeInTheDocument()
+      })
+      it('1, 1, currYear - 50', async () => {
+        render(<MockBirthday />)
+
+        await typeIntoInput({
+          month: '12',
+          day: '1',
+          year: (currYear - 50).toString(),
+        })
+
+        clickNextBtn()
+        const error = screen.queryByTestId('error')
+        expect(error).not.toBeInTheDocument()
+      })
+      it('1, 31, currYear - 25', async () => {
+        render(<MockBirthday />)
+
+        await typeIntoInput({
+          month: '12',
+          day: '1',
+          year: (currYear - 25).toString(),
+        })
+
+        clickNextBtn()
+        const error = screen.queryByTestId('error')
+        expect(error).not.toBeInTheDocument()
+      })
+      it('1, 31, currYear - 11', async () => {
+        render(<MockBirthday />)
+
+        await typeIntoInput({
+          month: '12',
+          day: '1',
+          year: (currYear - 11).toString(),
+        })
+
+        clickNextBtn()
+        const error = screen.queryByTestId('error')
+        expect(error).not.toBeInTheDocument()
+      })
     })
   })
 })
