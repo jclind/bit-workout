@@ -19,11 +19,14 @@ const Username = () => {
 
   const [isUsernameAvailable, setIsUsernameAvailable] = useState(null)
   useEffect(() => {
+    const validateUsername = async () => {
+      const isAvailable = await checkUsernameAvailability(username)
+      setIsUsernameAvailable(isAvailable)
+    }
+
     setError('')
     if (username.trim().length >= 3) {
-      checkUsernameAvailability(username).then(isAvailable => {
-        setIsUsernameAvailable(isAvailable)
-      })
+      validateUsername()
     } else {
       setIsUsernameAvailable(null)
     }
@@ -62,7 +65,7 @@ const Username = () => {
       <BackButton />
       <div className='title'>Choose Username</div>
       {error && (
-        <div className='error'>
+        <div className='error' data-testid='error'>
           <AiOutlineWarning className='icon' />
           {error}
         </div>
@@ -74,6 +77,7 @@ const Username = () => {
           onChange={handleUsernameChange}
           value={username}
           ref={usernameRef}
+          data-testid='username'
         />
         {isUsernameAvailable !== null && (
           <div

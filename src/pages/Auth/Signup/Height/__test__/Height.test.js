@@ -19,13 +19,11 @@ const clickNextBtn = () => {
 const typeIntoInput = async ({ feet, inches }) => {
   const feetInput = screen.getByTestId('feet')
   if (feet) {
-    console.log(feet)
     await userEvent.type(feetInput, feet)
   }
 
   const inchesInput = screen.getByTestId('inches')
   if (inches) {
-    console.log(inches)
     await userEvent.type(inchesInput, inches)
   }
 
@@ -43,7 +41,7 @@ describe('Height', () => {
     })
   })
 
-  it('Should render birthday page', () => {
+  it('Should render height page', () => {
     render(<MockHeight />)
     const pageTitle = screen.getByText(/Height/i)
     const feetInput = screen.getByTestId('feet')
