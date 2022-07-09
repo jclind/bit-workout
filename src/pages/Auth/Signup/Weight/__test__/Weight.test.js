@@ -34,7 +34,7 @@ describe('Weight', () => {
     })
   })
 
-  it('Should render birthday page', () => {
+  it('Should render weight page', () => {
     render(<MockWeight />)
     const pageTitle = screen.getByText(/Your Weight/i)
     const weightInput = screen.getByTestId('weight')
