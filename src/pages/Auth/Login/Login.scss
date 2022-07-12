@@ -1,6 +1,10 @@
 @import '../../../helpers.scss';
 
 .login-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
   .login-background {
     z-index: 1;
     width: 100%;
@@ -18,7 +22,6 @@
     text-align: center;
   }
   .form-container {
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,21 +51,44 @@
       .inputs {
         display: flex;
         flex-direction: column;
-        gap: toRem(25);
-        margin: toRem(25) 0 toRem(10) 0;
+        gap: 1.5rem;
+        margin-top: 2rem;
       }
       .forgot-password {
-        font-size: toRem(12);
-        font-weight: 500;
-        color: $secondary;
-        padding: 0;
-        margin: 0;
+        button {
+          background: none;
+          height: fit-content;
+          width: fit-content;
+          font-size: 0.75rem;
+          font-weight: 500;
+          text-decoration: underline;
+          color: $secondary;
+          padding: 0;
+          margin: 0;
+          margin-top: 1rem;
+          cursor: pointer;
+        }
       }
-      .submit-btn {
+      .buttons {
+        position: absolute;
+        bottom: 2rem;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+
         display: flex;
-        justify-content: center;
-        margin-top: toRem(50);
-        height: 53px;
+        flex-direction: column;
+        width: 90%;
+
+        // width: 90%;
+        .submit-btn {
+          background: $secondary;
+          font-size: 1rem;
+          font-weight: 600;
+          height: fit-content;
+          padding: 1rem 0;
+          border-radius: $border-radius;
+        }
       }
       .dont-have-account {
         margin: 0 auto;
