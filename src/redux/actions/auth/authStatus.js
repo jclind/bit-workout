@@ -33,6 +33,7 @@ import {
   signInWithPopup,
 } from 'firebase/auth'
 import { fetchCharacterData, updateCoins } from '../character/character'
+import chance from 'chance'
 
 export const signInAndFetchUserAccountData =
   user => async (dispatch, getState) => {
@@ -203,6 +204,11 @@ export const login = (email, password) => async () => {
   })
   return error
 }
+
+export const demoLogin = () => async () => {
+  let error = null
+}
+
 export const logout = () => async () => {
   await auth.signOut()
 }
