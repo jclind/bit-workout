@@ -1,11 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import bitWorkoutLogo from '../../../assets/images/bit-workout-logo.png'
 import loginIMG from '../../../assets/images/login-background.png'
+import { demoLogin } from '../../../redux/actions/auth/authStatus'
+import { connect } from 'react-redux'
+import { TailSpin } from 'react-loader-spinner'
 import './AuthLandingPage.scss'
 
-const AuthLandingPage = () => {
+const AuthLandingPage = ({ demoLogin }) => {
   const navigate = useNavigate()
+
+  const [isDemoLoginLoading, setIsDemoLoginLoading] = useState(false)
+
+  const handleDemoLoginClick = async () => {
+    setIsDemoLoginLoading(true)
+    await demoLogin()
+    setIsDemoLoginLoading(false)
+  }
 
   return (
     <div className='auth-landing-page signup-page'>
@@ -19,18 +30,40 @@ const AuthLandingPage = () => {
         completing achievements.
       </p>
       <div className='options'>
-        <button className='signup' onClick={() => navigate('/signup')}>
+        <button
+          className='signup'
+          onClick={() => navigate('/signup')}
+          disabled={isDemoLoginLoading}
+        >
           Get Started
         </button>
-        <button className='login' onClick={() => navigate('/login')}>
+        <button
+          className='login'
+          onClick={() => navigate('/login')}
+          disabled={isDemoLoginLoading}
+        >
           Log In
         </button>
-        <button className='demo-login' onClick={() => {}}>
-          Demo Login
+        <button className='demo-login' onClick={handleDemoLoginClick}>
+          {isDemoLoginLoading ? (
+            <TailSpin
+              height='25'
+              width='25'
+              color='white'
+              arialLabel='loading'
+              className='spinner'
+            />
+          ) : (
+            'Demo Login'
+          )}
         </button>
       </div>
     </div>
   )
 }
-
-export default AuthLandingPage
+const mapPropsToDispatch = dispatch => {
+  return {
+    demoLogin: () => dispatch(demoLogin()),
+  }
+}
+export default connect(null, mapPropsToDispatch)(AuthLandingPage)

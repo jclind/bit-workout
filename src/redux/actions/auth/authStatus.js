@@ -205,8 +205,35 @@ export const login = (email, password) => async () => {
   return error
 }
 
-export const demoLogin = () => async () => {
+export const demoLogin = () => async dispatch => {
   let error = null
+
+  const generatedString = Math.random().toString(36).slice(2)
+  const email = `demo-${generatedString}@bitworkout.com`
+  const password = generatedString
+
+  const date = new Date().getTime()
+
+  const userData = {
+    email,
+    name: 'Demo User',
+    birthday: '2000-01-01',
+    gender: 'male',
+    height: { feet: '5', inches: '9' },
+    username: generatedString,
+    weight: [{ weight: '165', date }],
+    barbellWeight: 45,
+  }
+
+  await createUserWithEmailAndPassword(auth, email, password)
+    .then(cred => {
+      const uid = cred.user.uid
+      return dispatch(signup(uid, userData))
+    })
+    .catch(err => {
+      console.log(err)
+      error = err
+    })
 }
 
 export const logout = () => async () => {
