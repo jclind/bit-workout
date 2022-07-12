@@ -43,11 +43,8 @@ const Weight = () => {
 
     if (Number(newVal) > 999) return
 
-    // Don't allow more than one decimal place
-    if ((newVal * 10) % 1 !== 0) return
-
     setWeight(newVal)
-    if (newVal % 1 !== 0) {
+    if (newVal % 1 !== 0 || newVal.length > 4) {
       return nextBtnRef.current.focus()
     }
   }
