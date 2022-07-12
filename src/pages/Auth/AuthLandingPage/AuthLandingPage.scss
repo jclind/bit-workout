@@ -66,6 +66,15 @@
       background: $secondary;
     }
     button.login {
+      background: $secondary-background;
+    }
+    button.demo-login {
+      font-size: 0.7rem;
+      text-decoration: underline;
+      color: $secondary-text;
+      padding: 0.5rem;
+      width: fit-content;
+      height: fit-content;
     }
   }
 }

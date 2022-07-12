@@ -25,6 +25,9 @@ const AuthLandingPage = () => {
         <button className='login' onClick={() => navigate('/login')}>
           Log In
         </button>
+        <button className='demo-login' onClick={() => {}}>
+          Demo Login
+        </button>
       </div>
     </div>
   )
