@@ -54,27 +54,30 @@ const Login = ({
                 showPasswordBtn={true}
               />
             </div>
+
             <Link to='/forgot-password' className='forgot-password'>
-              Forgot password?
+              <button className='forgot-password-btn'>Forgot password?</button>
             </Link>
-            <button className='submit-btn'>
-              {loading ? (
-                <TailSpin
-                  height='30'
-                  width='30'
-                  color='white'
-                  arialLabel='loading'
-                  className='spinner'
-                />
-              ) : (
-                'Log In'
-              )}
-            </button>
-            <div className='dont-have-account'>
-              Don't have an account?
-              <Link to='/signup' className='dont-have-account-btn'>
-                Sign Up
-              </Link>
+            <div className='buttons'>
+              <button className='submit-btn'>
+                {loading ? (
+                  <TailSpin
+                    height='30'
+                    width='30'
+                    color='white'
+                    arialLabel='loading'
+                    className='spinner'
+                  />
+                ) : (
+                  'Log In'
+                )}
+              </button>
+              <div className='dont-have-account'>
+                Don't have an account?
+                <Link to='/signup' className='dont-have-account-btn'>
+                  Sign Up
+                </Link>
+              </div>
             </div>
           </form>
         </div>
