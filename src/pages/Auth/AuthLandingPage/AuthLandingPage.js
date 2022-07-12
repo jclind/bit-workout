@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import bitWorkoutLogo from '../../../assets/images/bit-workout-logo.png'
 import loginIMG from '../../../assets/images/login-background.png'
 import { demoLogin } from '../../../redux/actions/auth/authStatus'
@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { TailSpin } from 'react-loader-spinner'
 import './AuthLandingPage.scss'
 
-const AuthLandingPage = ({ demoLogin }) => {
+const AuthLandingPage = ({ demoLogin, isSignedIn }) => {
   const navigate = useNavigate()
 
   const [isDemoLoginLoading, setIsDemoLoginLoading] = useState(false)
@@ -16,6 +16,10 @@ const AuthLandingPage = ({ demoLogin }) => {
     setIsDemoLoginLoading(true)
     await demoLogin()
     setIsDemoLoginLoading(false)
+  }
+
+  if (isSignedIn) {
+    return <Navigate to='/' />
   }
 
   return (
@@ -61,9 +65,19 @@ const AuthLandingPage = ({ demoLogin }) => {
     </div>
   )
 }
+
+const mapStateToProps = state => {
+  let isSignedIn = false
+  if (state.auth && state.auth.userAuth && state.auth.userAuth.uid) {
+    isSignedIn = true
+  }
+  return {
+    isSignedIn: isSignedIn,
+  }
+}
 const mapPropsToDispatch = dispatch => {
   return {
     demoLogin: () => dispatch(demoLogin()),
   }
 }
-export default connect(null, mapPropsToDispatch)(AuthLandingPage)
+export default connect(mapStateToProps, mapPropsToDispatch)(AuthLandingPage)

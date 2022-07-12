@@ -221,7 +221,7 @@ export const demoLogin = () => async dispatch => {
     gender: 'male',
     height: { feet: '5', inches: '9' },
     username: generatedString,
-    weight: [{ weight: '165', date }],
+    weight: 160,
     barbellWeight: 45,
   }
 
