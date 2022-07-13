@@ -5,7 +5,6 @@ import {
   signInAndFetchUserAccountData,
   setUserStatusSignedOut,
 } from './redux/actions/auth/authStatus'
-import { useNavigate } from 'react-router-dom'
 
 const Auth = ({ signInAndFetchUserAccountData, signOut, setLoading }) => {
   useEffect(() => {

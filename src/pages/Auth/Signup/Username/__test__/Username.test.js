@@ -2,7 +2,6 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
 import Username from '../Username'
-import { checkUsernameAvailability } from '../../../../../redux/actions/auth/authStatus'
 
 const MockUsername = () => {
   return (

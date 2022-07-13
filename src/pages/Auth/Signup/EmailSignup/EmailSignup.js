@@ -9,11 +9,14 @@ import { connect } from 'react-redux'
 import './EmailSignup.scss'
 import { signupWithEmail } from '../../../../redux/actions/auth/authStatus'
 import { useNavigate } from 'react-router-dom'
+import { TailSpin } from 'react-loader-spinner'
 
 const EmailSignup = ({ signupWithEmail }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
 
@@ -32,16 +35,31 @@ const EmailSignup = ({ signupWithEmail }) => {
 
   const signupBtnRef = useRef()
 
+  const handleSetName = val => {
+    if (val.length > 30) return
+
+    setName(val)
+  }
+
   const handleSignup = async e => {
     e.preventDefault()
+    setLoading(true)
+
     if (!name) {
+      setLoading(false)
       return setError('Please Enter Name')
     }
     if (!email) {
+      setLoading(false)
       return setError('Please Enter Email')
     }
     if (!password) {
+      setLoading(false)
       return setError('Please Enter Password')
+    }
+    if (password.length < 6) {
+      setLoading(false)
+      return setError('Password Must Be 6 Or More Characters')
     }
 
     const savedSignupData = JSON.parse(localStorage.getItem('signup'))
@@ -85,7 +103,7 @@ const EmailSignup = ({ signupWithEmail }) => {
           placeholder={'full name'}
           inputType={'name'}
           val={name}
-          setVal={setName}
+          setVal={val => handleSetName(val)}
           required={true}
           inputRef={nameRef}
         />
@@ -111,8 +129,19 @@ const EmailSignup = ({ signupWithEmail }) => {
           ref={signupBtnRef}
           onClick={handleSignup}
           type='submit'
+          disabled={loading}
         >
-          Sign Up
+          {loading ? (
+            <TailSpin
+              height='30'
+              width='30'
+              color='white'
+              arialLabel='loading'
+              className='spinner'
+            />
+          ) : (
+            'Sign Up'
+          )}
         </button>
       </form>
     </div>

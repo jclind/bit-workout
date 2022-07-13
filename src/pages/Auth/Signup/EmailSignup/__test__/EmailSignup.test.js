@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
 import EmailSignup from '../EmailSignup'
@@ -56,7 +56,7 @@ describe('EmailSignup', () => {
     it('Should not allow more than 30 characters in name input', async () => {
       render(<MockEmailSignup />)
       const strWith31Chars = '123456789abcdefghijklmnopqrstuv'
-      const { nameInput } = typeIntoInput({ name: strWith31Chars })
+      const { nameInput } = await typeIntoInput({ name: strWith31Chars })
 
       expect(nameInput).toHaveValue(strWith31Chars.slice(0, 30))
     })

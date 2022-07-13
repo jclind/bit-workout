@@ -24,15 +24,17 @@ const Login = ({
           alt='login background'
           className='login-background'
         />
-        <div className='title'>Log In</div>
+        <div className='title' data-testid='title'>
+          Log In
+        </div>
         <div className='form-container'>
           {error && (
-            <div className='error'>
+            <div className='error' data-testid='error'>
               <AiOutlineWarning className='icon' />
               {error}
             </div>
           )}
-          <form className='login-form' onSubmit={handleSubmit}>
+          <form className='login-form'>
             <div className='inputs'>
               <FormInput
                 placeholder='email'
@@ -59,7 +61,13 @@ const Login = ({
               <button className='forgot-password-btn'>Forgot password?</button>
             </Link>
             <div className='buttons'>
-              <button className='submit-btn'>
+              <button
+                className='submit-btn'
+                type='submit'
+                onClick={handleSubmit}
+                data-testid='login-btn'
+                disabled={loading}
+              >
                 {loading ? (
                   <TailSpin
                     height='30'
@@ -74,7 +82,11 @@ const Login = ({
               </button>
               <div className='dont-have-account'>
                 Don't have an account?
-                <Link to='/signup' className='dont-have-account-btn'>
+                <Link
+                  to='/signup'
+                  className='dont-have-account-btn'
+                  data-testid='sign-up-btn'
+                >
                   Sign Up
                 </Link>
               </div>
