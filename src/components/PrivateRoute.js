@@ -3,7 +3,7 @@ import { Outlet, Navigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 const PrivateRoute = ({ userAuth }) => {
-  return userAuth ? <Outlet /> : <Navigate to='/login' />
+  return userAuth ? <Outlet /> : <Navigate to='/auth' />
 }
 
 const mapStateToProps = state => {

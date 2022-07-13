@@ -1,23 +1,32 @@
 import React, { useState } from 'react'
-import { useNavigate, useLocation, Navigate } from 'react-router'
+import { useNavigate, Navigate } from 'react-router'
 import Login from '../../../components/AuthForms/Login/Login'
 import './Login.scss'
 import { connect } from 'react-redux'
 import { login } from '../../../redux/actions/auth/authStatus'
 
-const LoginPage = ({ login, userAuth }) => {
+const LoginPage = ({ login, isSignedIn }) => {
   const [emailVal, setEmailVal] = useState('')
   const [passwordVal, setPasswordVal] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-  const location = useLocation()
 
   const handleSubmit = async e => {
     e.preventDefault()
 
     setError('')
     setLoading(true)
+
+    if (!emailVal) {
+      setLoading(false)
+      return setError('Please Enter Email')
+    }
+    if (!passwordVal) {
+      setLoading(false)
+      return setError('Please Enter Password')
+    }
+
     const err = await login(emailVal, passwordVal)
 
     if (err) {
@@ -29,7 +38,7 @@ const LoginPage = ({ login, userAuth }) => {
     }
   }
 
-  if (location.pathname === '/login' && userAuth) {
+  if (isSignedIn) {
     return <Navigate to='/' />
   }
 
@@ -46,8 +55,12 @@ const LoginPage = ({ login, userAuth }) => {
   )
 }
 const mapStateToProps = state => {
+  let isSignedIn = false
+  if (state.auth && state.auth.userAuth && state.auth.userAuth.uid) {
+    isSignedIn = true
+  }
   return {
-    userAuth: state.auth.userAuth,
+    isSignedIn: isSignedIn,
   }
 }
 const mapPropsToDispatch = dispatch => {
