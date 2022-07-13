@@ -41,12 +41,12 @@ const BarbellWeight = () => {
 
     if (isNaN(newVal)) return
     // Don't allow decimal place
-    if (newVal % 1 !== 0) return
+    if (newVal % 1 !== 0 || newVal.length > 2) return
 
     if (Number(newVal) > 55) return
 
     setWeight(newVal)
-    if (newVal % 1 !== 0) {
+    if (newVal.length >= 2) {
       return nextBtnRef.current.focus()
     }
   }

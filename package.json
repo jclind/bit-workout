@@ -64,6 +64,7 @@
     "@testing-library/react": "^13.3.0",
     "cypress": "^10.3.0",
     "jest-dom": "^4.0.0",
-    "react-test-render": "^1.1.2"
+    "react-test-render": "^1.1.2",
+    "redux-mock-store": "^1.5.4"
   }
 }

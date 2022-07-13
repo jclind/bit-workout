@@ -82,6 +82,9 @@
 
         // width: 90%;
         .submit-btn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
           background: $secondary;
           font-size: 1rem;
           font-weight: 600;

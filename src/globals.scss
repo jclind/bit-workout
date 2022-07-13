@@ -271,6 +271,9 @@ input[type='date']::-webkit-calendar-picker-indicator {
     position: absolute;
     bottom: 2rem;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: $secondary;
     font-size: 1rem;
     font-weight: 600;

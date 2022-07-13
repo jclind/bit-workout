@@ -33,7 +33,6 @@ import {
   signInWithPopup,
 } from 'firebase/auth'
 import { fetchCharacterData, updateCoins } from '../character/character'
-import chance from 'chance'
 
 export const signInAndFetchUserAccountData =
   user => async (dispatch, getState) => {
@@ -212,8 +211,6 @@ export const demoLogin = () => async dispatch => {
   const email = `demo-${generatedString}@bitworkout.com`
   const password = generatedString
 
-  const date = new Date().getTime()
-
   const userData = {
     email,
     name: 'Demo User',
@@ -234,6 +231,8 @@ export const demoLogin = () => async dispatch => {
       console.log(err)
       error = err
     })
+
+  return error
 }
 
 export const logout = () => async () => {

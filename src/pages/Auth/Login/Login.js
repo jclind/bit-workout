@@ -17,6 +17,16 @@ const LoginPage = ({ login, isSignedIn }) => {
 
     setError('')
     setLoading(true)
+
+    if (!emailVal) {
+      setLoading(false)
+      return setError('Please Enter Email')
+    }
+    if (!passwordVal) {
+      setLoading(false)
+      return setError('Please Enter Password')
+    }
+
     const err = await login(emailVal, passwordVal)
 
     if (err) {
