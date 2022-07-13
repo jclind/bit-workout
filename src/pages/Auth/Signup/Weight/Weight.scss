@@ -1,0 +1,31 @@
+@import '../../../../helpers.scss';
+
+.signup-page.weight {
+  .weight-input-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    input {
+      font-size: 1.2rem !important;
+      border: 1px solid $secondary-text;
+      border-radius: $border-radius;
+      padding: 0.75rem 0.5rem;
+      color: $primary;
+      width: 8ch;
+
+      &:focus {
+        border: 2px solid $secondary;
+        margin: -1px;
+      }
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type='number'] {
+      -moz-appearance: textfield;
+    }
+  }
+}

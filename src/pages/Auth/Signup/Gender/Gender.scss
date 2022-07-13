@@ -1,0 +1,26 @@
+@import '../../../../helpers.scss';
+
+.signup-page.gender {
+  .gender-selection-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    margin-top: 2rem;
+    button {
+      height: fit-content;
+      width: 80%;
+      background: $primary-background;
+      border: 1px solid $placeholder-color;
+      outline: none;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0 auto;
+      padding: 1.1rem 0;
+    }
+    button.selected {
+      background: $secondary;
+      border-color: $secondary;
+    }
+  }
+}
