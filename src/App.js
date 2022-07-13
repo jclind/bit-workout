@@ -8,8 +8,6 @@ import Dashboard from './components/Dashboard'
 import Login from './pages/Auth/Login/Login'
 import PrivateRoute from './components/PrivateRoute'
 import ForgotPasswordContainer from './components/AuthForms/ForgotPassword/ForgotPasswordContainer'
-import SignupAccountContainer from './components/AuthForms/Signup/Account/SignupAccountContainer'
-import SignupPersonalContainer from './components/AuthForms/Signup/Personal/SignupPersonalContainer'
 import Settings from './pages/Settings/Settings'
 import ManageAccount from './pages/Settings/ManageAccount'
 import UpdateName from './pages/Settings/UpdateName'
@@ -24,6 +22,15 @@ import Auth from './Auth'
 import AppLoadingScreen from './components/AppLoadingScreen/AppLoadingScreen'
 import FeedbackContainer from './pages/Settings/Feedback/FeedbackContainer'
 import PastWorkouts from './pages/PastWorkouts/PastWorkouts'
+import Gender from './pages/Auth/Signup/Gender/Gender'
+import Birthday from './pages/Auth/Signup/Birthday/Birthday'
+import Weight from './pages/Auth/Signup/Weight/Weight'
+import Height from './pages/Auth/Signup/Height/Height'
+import BarbellWeight from './pages/Auth/Signup/BarbellWeight/BarbellWeight'
+import Username from './pages/Auth/Signup/Username/Username'
+import SignupSelection from './pages/Auth/Signup/SignupSelection/SignupSelection'
+import EmailSignup from './pages/Auth/Signup/EmailSignup/EmailSignup'
+import AuthLandingPage from './pages/Auth/AuthLandingPage/AuthLandingPage'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -44,16 +51,34 @@ function App() {
           <Routes>
             <Route exact path='/' element={<PrivateRoute />}>
               <Route exact path='/' element={<Dashboard />} />
+              <Route
+                path='/workout'
+                element={
+                  <>
+                    <Workout />
+                    <NavbarContainer />
+                  </>
+                }
+              />
+              <Route
+                path='/create-workout'
+                element={
+                  <>
+                    <CreateWorkoutContainer />
+                    <NavbarContainer />
+                  </>
+                }
+              />
+              <Route
+                path='/past-workouts'
+                element={
+                  <>
+                    <PastWorkouts />
+                    <NavbarContainer />
+                  </>
+                }
+              />
             </Route>
-            <Route
-              path='/past-workouts'
-              element={
-                <>
-                  <PastWorkouts />
-                  <NavbarContainer />
-                </>
-              }
-            />
             <Route path='/account' element={<PrivateRoute />}>
               <Route exact path='/account' element={<Account />} />
               <Route
@@ -104,34 +129,20 @@ function App() {
               />
             </Route>
             <Route path='/signup' element={<Signup />}>
-              <Route path='account-info' element={<SignupAccountContainer />} />
-              <Route
-                path='personal-info'
-                element={<SignupPersonalContainer />}
-              />
+              <Route path='gender' element={<Gender />} />
+              <Route path='birthday' element={<Birthday />} />
+              <Route path='height' element={<Height />} />
+              <Route path='weight' element={<Weight />} />
+              <Route path='barbell-weight' element={<BarbellWeight />} />
+              <Route path='username' element={<Username />} />
+              <Route path='signup-selection' element={<SignupSelection />} />
+              <Route path='email-signup' element={<EmailSignup />} />
             </Route>
+            <Route path='/auth' element={<AuthLandingPage />} />
             <Route path='/login' element={<Login />} />
             <Route
               path='/forgot-password'
               element={<ForgotPasswordContainer />}
-            />
-            <Route
-              path='/workout'
-              element={
-                <>
-                  <Workout />
-                  <NavbarContainer />
-                </>
-              }
-            />
-            <Route
-              path='/create-workout'
-              element={
-                <>
-                  <CreateWorkoutContainer />
-                  <NavbarContainer />
-                </>
-              }
             />
           </Routes>
         </Router>

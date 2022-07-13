@@ -31,6 +31,10 @@ button {
   width: 100%;
   border-radius: toRem(5);
   color: $primary;
+
+  &:focus {
+    outline: 2px solid $outline !important;
+  }
 }
 
 input {
@@ -232,4 +236,68 @@ input[type='date']::-webkit-inner-spin-button,
 input[type='date']::-webkit-calendar-picker-indicator {
   display: none;
   -webkit-appearance: none;
+}
+
+// Sign up
+
+.signup-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
+  .back-button {
+    top: 1.5rem !important;
+    left: 1.5rem !important;
+  }
+  .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+  }
+  .description {
+    width: 80%;
+    text-align: center;
+    color: $secondary-text;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+  }
+  .signup-next-btn {
+    position: absolute;
+    bottom: 2rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $secondary;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 80%;
+    height: fit-content;
+    padding: 1rem 0;
+    border-radius: $border-radius;
+  }
+
+  .error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 5px;
+    font-size: toRem(14);
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    width: 80%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    background: $error-red;
+    .icon {
+      flex-shrink: 0;
+    }
+  }
 }

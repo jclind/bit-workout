@@ -29,6 +29,8 @@ import {
   createUserWithEmailAndPassword,
   updatePassword,
   sendPasswordResetEmail,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from 'firebase/auth'
 import { fetchCharacterData, updateCoins } from '../character/character'
 
@@ -90,39 +92,59 @@ export const setWorkout = (weight, gender, uid) => async dispatch => {
     runningWorkout: {},
   })
 }
-export const signup = (email, password, userData) => async dispatch => {
-  await createUserWithEmailAndPassword(auth, email, password).then(cred => {
+export const signup = (uid, userData) => async dispatch => {
+  const username = userData.username
+
+  const weight = userData.weight
+  const gender = userData.gender
+
+  addNewUsername(username, uid)
+  dispatch(setUserAccountData(uid, userData))
+  dispatch(setWorkout(weight, gender, uid)) // Set workout data on initial signup
+}
+export const signupWithEmail =
+  (email, password, userData) => async dispatch => {
+    await createUserWithEmailAndPassword(auth, email, password).then(cred => {
+      const uid = cred.user.uid
+      return dispatch(signup(uid, userData))
+    })
+  }
+export const signupWithGoogle = userData => async dispatch => {
+  const provider = new GoogleAuthProvider()
+
+  await signInWithPopup(auth, provider).then(cred => {
     const uid = cred.user.uid
-    const username = userData.usernameVal
+    const name = cred.user.displayName
+    const email = cred.user.email
+    const newUserData = { ...userData, name, email }
 
-    const weight = userData.weightVal
-    const gender = userData.genderVal
-
-    addNewUsername(username, uid)
-    dispatch(setUserAccountData(uid, userData))
-    dispatch(setWorkout(weight, gender, uid)) // Set workout data on initial signup
+    return dispatch(signup(uid, newUserData))
   })
 }
 
 export const setUserAccountData = (uid, userData) => async () => {
   const {
-    usernameVal,
-    fullNameVal,
-    genderVal,
-    birthdayVal,
-    heightVal,
-    weightVal,
-    emailVal,
+    email,
+    name,
+    birthday,
+    gender,
+    height,
+    username,
+    weight,
+    barbellWeight,
   } = userData
 
+  console.log(userData)
+
   setDoc(doc(db, 'users', uid), {
-    username: usernameVal,
-    name: fullNameVal,
-    gender: genderVal,
-    birthday: birthdayVal,
-    height: heightVal,
-    weight: [{ weight: weightVal, date: new Date().getTime() }],
-    email: emailVal,
+    username,
+    name,
+    gender,
+    birthday,
+    height,
+    weight: [{ weight, date: new Date().getTime() }],
+    email,
+    barbellWeight,
   })
 }
 export const updateUserAccountData = data => async (dispatch, getState) => {
@@ -181,6 +203,38 @@ export const login = (email, password) => async () => {
   })
   return error
 }
+
+export const demoLogin = () => async dispatch => {
+  let error = null
+
+  const generatedString = Math.random().toString(36).slice(2)
+  const email = `demo-${generatedString}@bitworkout.com`
+  const password = generatedString
+
+  const userData = {
+    email,
+    name: 'Demo User',
+    birthday: '2000-01-01',
+    gender: 'male',
+    height: { feet: '5', inches: '9' },
+    username: generatedString,
+    weight: 160,
+    barbellWeight: 45,
+  }
+
+  await createUserWithEmailAndPassword(auth, email, password)
+    .then(cred => {
+      const uid = cred.user.uid
+      return dispatch(signup(uid, userData))
+    })
+    .catch(err => {
+      console.log(err)
+      error = err
+    })
+
+  return error
+}
+
 export const logout = () => async () => {
   await auth.signOut()
 }

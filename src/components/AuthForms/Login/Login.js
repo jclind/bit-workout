@@ -24,15 +24,17 @@ const Login = ({
           alt='login background'
           className='login-background'
         />
-        <h1 className='title'>Log In</h1>
+        <div className='title' data-testid='title'>
+          Log In
+        </div>
         <div className='form-container'>
           {error && (
-            <div className='error'>
+            <div className='error' data-testid='error'>
               <AiOutlineWarning className='icon' />
               {error}
             </div>
           )}
-          <form className='login-form' onSubmit={handleSubmit}>
+          <form className='login-form'>
             <div className='inputs'>
               <FormInput
                 placeholder='email'
@@ -54,27 +56,40 @@ const Login = ({
                 showPasswordBtn={true}
               />
             </div>
+
             <Link to='/forgot-password' className='forgot-password'>
-              Forgot password?
+              <button className='forgot-password-btn'>Forgot password?</button>
             </Link>
-            <button className='submit-btn'>
-              {loading ? (
-                <TailSpin
-                  height='30'
-                  width='30'
-                  color='white'
-                  arialLabel='loading'
-                  className='spinner'
-                />
-              ) : (
-                'Log In'
-              )}
-            </button>
-            <div className='dont-have-account'>
-              Don't have an account?
-              <Link to='/signup' className='dont-have-account-btn'>
-                Sign Up
-              </Link>
+            <div className='buttons'>
+              <button
+                className='submit-btn'
+                type='submit'
+                onClick={handleSubmit}
+                data-testid='login-btn'
+                disabled={loading}
+              >
+                {loading ? (
+                  <TailSpin
+                    height='30'
+                    width='30'
+                    color='white'
+                    arialLabel='loading'
+                    className='spinner'
+                  />
+                ) : (
+                  'Log In'
+                )}
+              </button>
+              <div className='dont-have-account'>
+                Don't have an account?
+                <Link
+                  to='/signup'
+                  className='dont-have-account-btn'
+                  data-testid='sign-up-btn'
+                >
+                  Sign Up
+                </Link>
+              </div>
             </div>
           </form>
         </div>
