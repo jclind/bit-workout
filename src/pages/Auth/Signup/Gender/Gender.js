@@ -44,7 +44,6 @@ const Gender = () => {
       <h3 className='title'>Gender</h3>
       {error && (
         <div className='error' data-testid='error'>
-          ``
           <AiOutlineWarning className='icon' />
           {error}
         </div>
