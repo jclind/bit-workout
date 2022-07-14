@@ -16,7 +16,14 @@ const ConfirmSetFailedModal = ({
   currWorkout,
   currIdx,
 }) => {
-  const [weightCount, setWeightCount] = useState(10)
+  const [weightCount, setWeightCount] = useState(() => {
+    if (currWeight === 5) {
+      return 0
+    } else if (currWeight === 10) {
+      return 5
+    }
+    return 10
+  })
   const [repCount, setRepCount] = useState(0)
   const modalContent = useClickOutside(() => {
     onClose()
@@ -64,21 +71,23 @@ const ConfirmSetFailedModal = ({
       <div className='confirm-set-failed-modal overlay'>
         <div className='modal-content' ref={modalContent}>
           <div className='title'>Confirm Failed Set:</div>
-          <div className='counter'>
-            <div className='counter-label'>Decrease weight by: </div>
-            <div className='decrease-weight-counter'>
-              <button className='decrease' onClick={decrementWeightCount}>
-                -5
-              </button>
-              <div className='count'>{weightCount} lbs</div>
-              <button className='increase' onClick={incrementWeightCount}>
-                +5
-              </button>
+          {currWeight > 5 && (
+            <div className='counter'>
+              <div className='counter-label'>Decrease weight by: </div>
+              <div className='decrease-weight-counter'>
+                <button className='decrease' onClick={decrementWeightCount}>
+                  -5
+                </button>
+                <div className='count'>{weightCount} lbs</div>
+                <button className='increase' onClick={incrementWeightCount}>
+                  +5
+                </button>
+              </div>
+              <div className='new-exercise-weight'>
+                (New Weight: <strong>{newWeight}</strong>)
+              </div>
             </div>
-            <div className='new-exercise-weight'>
-              (New Weight: <strong>{newWeight}</strong>)
-            </div>
-          </div>
+          )}
           <div className='reps-completed-container'>
             <div className='counter-label'>Number of completed reps: </div>
             <div className='reps-completed-counter'>
