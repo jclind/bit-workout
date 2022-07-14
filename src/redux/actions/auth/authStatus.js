@@ -29,9 +29,9 @@ import {
   createUserWithEmailAndPassword,
   updatePassword,
   sendPasswordResetEmail,
-  GoogleAuthProvider,
-  signInWithPopup,
-  getAdditionalUserInfo,
+  // GoogleAuthProvider,
+  // signInWithPopup,
+  // getAdditionalUserInfo,
 } from 'firebase/auth'
 import { fetchCharacterData, updateCoins } from '../character/character'
 
@@ -149,8 +149,6 @@ export const setUserAccountData = (uid, userData) => async () => {
     weight,
     barbellWeight,
   } = userData
-
-  console.log(userData)
 
   setDoc(doc(db, 'users', uid), {
     username,

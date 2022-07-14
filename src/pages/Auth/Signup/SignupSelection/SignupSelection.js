@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PageIndicator from '../PageIndicator/PageIndicator'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
 // import { FcGoogle } from 'react-icons/fc'
-import { AiOutlineWarning } from 'react-icons/ai'
+// import { AiOutlineWarning } from 'react-icons/ai'
 import './SignupSelection.scss'
 import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 const SignupSelection = ({ signupWithGoogle }) => {
   const navigate = useNavigate()
 
-  const [error, setError] = useState('')
+  // const [error, setError] = useState('')
 
   // const handleGoogleSignup = async () => {
   //   setError('')
@@ -47,12 +47,12 @@ const SignupSelection = ({ signupWithGoogle }) => {
       <p className='description'>
         Sign up to save your data and start your new exercise journey!
       </p>
-      {error && (
+      {/* {error && (
         <div className='error'>
           <AiOutlineWarning className='icon' />
           {error}
         </div>
-      )}
+      )} */}
       <div className='signup-options'>
         {/* <button className='google-signup' onClick={handleGoogleSignup}>
           <FcGoogle className='icon' /> Continue With Google
