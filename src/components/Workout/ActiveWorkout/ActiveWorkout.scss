@@ -2,7 +2,7 @@
 
 .stop-workout-btn {
   position: absolute;
-  top: 0;
+  top: 0.5rem;
   right: 0;
   padding: 0;
   background: none;
@@ -23,72 +23,103 @@
   flex-direction: column;
   margin: 0;
   text-align: center;
+  height: calc(100vh - #{$navbar-height});
+  max-height: -webkit-fill-available;
+  margin: 0;
 
-  .current-workout-text {
-    font-size: toRem(12);
-    color: $secondary-text;
-    font-weight: 500;
-    margin: 0 auto;
-    margin-bottom: toRem(15);
-  }
+  // .current-workout-text {
+  //   font-size: toRem(12);
+  //   color: $secondary-text;
+  //   font-weight: 500;
+  //   margin: 0 auto;
+  //   margin-bottom: toRem(15);
+  // }
   .exercise-title {
-    font-size: toRem(36);
+    font-size: 2rem;
     font-weight: 500;
+    max-width: 80%;
+    margin: 0 auto;
     text-transform: capitalize;
-    margin-bottom: toRem(10);
+    margin-bottom: 0.75rem;
   }
   .rep-set-text {
-    font-size: toRem(18);
+    font-size: 1.1rem;
     font-weight: 400;
   }
-  .exercise-img {
-    height: toRem(150);
-    margin-top: toRem(10);
-  }
-  .view-workout-path {
-    display: flex;
-    align-items: center;
-    background: none;
-    font-size: 0.9rem;
-    height: fit-content;
-    width: fit-content;
+  .workout-data {
+    position: absolute;
+    top: calc(50% - #{$navbar-height} - 1rem);
+    transform: translateY(-50%);
+    left: 0;
+    right: 0;
     margin: 0 auto;
-    color: $secondary;
-  }
-  .exercise-weight {
-    position: relative;
-    background: $secondary-background;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 5px;
-    font-size: toRem(20);
-    font-weight: 600;
-    margin: 0 auto;
-    margin-top: toRem(50);
-    padding: 0.5rem 1.25rem;
-    border-radius: $border-radius;
-    .icon {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      height: 20px;
+    flex-direction: column;
+
+    .exercise-weight {
+      position: relative;
+      background: $secondary-background;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 5px;
+      font-size: toRem(20);
+      font-weight: 600;
+      margin: 0 auto;
+      padding: 0.5rem 1.25rem;
+      border-radius: $border-radius;
+      .icon {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        height: 20px;
+      }
+    }
+    .exercise-img-container {
+      margin: 1rem auto;
+      width: 55%;
+      .exercise-img {
+        object-fit: contain;
+        width: 55%;
+      }
+    }
+    .view-workout-path {
+      display: flex;
+      align-items: center;
+      background: none;
+      font-size: 0.9rem;
+      height: fit-content;
+      width: fit-content;
+      margin: 0 auto;
+      padding: 0;
+      color: $secondary;
     }
   }
-  .submit-btn {
-    height: 50px;
-    width: fit-content;
-    padding: 0 2.5rem;
+
+  .options {
+    position: absolute;
+    bottom: calc(#{$navbar-height} + 4rem);
+    left: 0;
+    right: 0;
     margin: 0 auto;
-    margin-top: toRem(100);
-  }
-  .set-failed-btn {
-    background: none;
-    width: fit-content;
-    height: fit-content;
-    margin: 0.5rem auto;
-    padding: 0.25rem 0.5rem;
-    color: $error-red;
-    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+
+    .submit-btn {
+      height: 50px;
+      width: fit-content;
+      padding: 0 2.5rem;
+      margin: 0 auto;
+      margin-top: toRem(100);
+    }
+    .set-failed-btn {
+      background: none;
+      width: fit-content;
+      height: fit-content;
+      margin: 0.5rem auto;
+      padding: 0.25rem 0.5rem;
+      color: $error-red;
+      font-weight: 500;
+    }
   }
 }
