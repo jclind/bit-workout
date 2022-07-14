@@ -6,6 +6,9 @@ import emailIcon from '../../../assets/images/icons/email.svg'
 import passwordIcon from '../../../assets/images/icons/password.svg'
 import { TailSpin } from 'react-loader-spinner'
 import { AiOutlineWarning } from 'react-icons/ai'
+import { FcGoogle } from 'react-icons/fc'
+import { connect } from 'react-redux'
+import { signupWithGoogle } from '../../../redux/actions/auth/authStatus'
 
 const Login = ({
   handleSubmit,
@@ -15,6 +18,7 @@ const Login = ({
   setEmailVal,
   passwordVal,
   setPasswordVal,
+  signupWithGoogle,
 }) => {
   return (
     <>
@@ -80,6 +84,13 @@ const Login = ({
                   'Log In'
                 )}
               </button>
+              <button
+                className='google-signup'
+                type='button'
+                onClick={signupWithGoogle}
+              >
+                <FcGoogle className='icon' /> Continue With Google
+              </button>
               <div className='dont-have-account'>
                 Don't have an account?
                 <Link
@@ -98,4 +109,10 @@ const Login = ({
   )
 }
 
-export default Login
+const mapDispatchToProps = dispatch => {
+  return {
+    signupWithGoogle: userData => dispatch(signupWithGoogle(userData)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Login)
