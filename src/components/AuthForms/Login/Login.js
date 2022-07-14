@@ -62,7 +62,9 @@ const Login = ({
             </div>
 
             <Link to='/forgot-password' className='forgot-password'>
-              <button className='forgot-password-btn'>Forgot password?</button>
+              <button className='forgot-password-btn' type='button'>
+                Forgot password?
+              </button>
             </Link>
             <div className='buttons'>
               <button

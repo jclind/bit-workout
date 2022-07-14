@@ -20,8 +20,10 @@ const PastWorkoutsLinkContainer = ({ queryPastWorkoutData }) => {
         res.isResponse === false
       ) {
         setIsResponse(false)
+        setPastWorkoutData(null)
+      } else {
+        setPastWorkoutData(res.data[0])
       }
-      setPastWorkoutData(res.data[0])
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
