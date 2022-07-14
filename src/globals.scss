@@ -31,6 +31,7 @@ button {
   width: 100%;
   border-radius: toRem(5);
   color: $primary;
+  background: $secondary;
 
   &:focus {
     outline: 2px solid $outline !important;
