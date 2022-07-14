@@ -169,7 +169,8 @@ export const completeSet =
     )
     // If user doesn't have recorded weight for current exercise, set to 45
     let currExerciseWeight
-    if (!currExerciseWeightObj && !currExerciseWeightObj.weight) {
+    console.log(currExerciseWeightObj)
+    if (!currExerciseWeightObj || !currExerciseWeightObj.weight) {
       currExerciseWeight = 45
       addNewExerciseWeight(45, exerciseID)
     } else {
@@ -261,11 +262,14 @@ export const failSet =
     const weights = getState().workout.workoutData.weights
 
     const modWeights = weights.map(weight => {
+      console.log(weight)
       if (weight.exerciseID === exerciseID) {
+        console.log('here')
         return { ...weight, weight: newWeight }
       }
       return weight
     })
+    console.log(modWeights)
     await dispatch(completeSet(currSetTotal, completedReps, true))
     await dispatch(
       updateWorkout({
