@@ -22,15 +22,15 @@ describe('SignupSelection', () => {
   it('Should render signup selection page correctly', () => {
     render(<MockSignupSelection />)
     const pageTitle = screen.getByText(/Last Step!/i)
-    const googleBtn = screen.getByRole('button', {
-      name: /Continue With Google/i,
-    })
+    // const googleBtn = screen.getByRole('button', {
+    //   name: /Continue With Google/i,
+    // })
     const emailBtn = screen.getByRole('button', {
       name: /Continue With Email/i,
     })
 
     expect(pageTitle).toBeInTheDocument()
-    expect(googleBtn).toBeInTheDocument()
+    // expect(googleBtn).toBeInTheDocument()
     expect(emailBtn).toBeInTheDocument()
   })
 })
