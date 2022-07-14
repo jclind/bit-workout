@@ -118,7 +118,9 @@ export const signupWithGoogle = userData => async dispatch => {
     const email = cred.user.email
     const newUserData = { ...userData, name, email }
 
-    return dispatch(signup(uid, newUserData))
+    console.log(cred)
+
+    // return dispatch(signup(uid, newUserData))
   })
 }
 
