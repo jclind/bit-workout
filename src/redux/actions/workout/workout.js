@@ -164,17 +164,9 @@ export const completeSet =
     const currWorkoutPathLength = runningWorkout.currWorkout.path.length
     const elapsedTime = new Date().getTime() - timeLastUpdated
 
-    const currExerciseWeightObj = getState().workout.workoutData.weights.find(
+    const currExerciseWeight = getState().workout.workoutData.weights.find(
       ex => ex.exerciseID === exerciseID
-    )
-    // If user doesn't have recorded weight for current exercise, set to 45
-    let currExerciseWeight
-    if (!currExerciseWeightObj && !currExerciseWeightObj.weight) {
-      currExerciseWeight = 45
-      addNewExerciseWeight(45, exerciseID)
-    } else {
-      currExerciseWeight = currExerciseWeightObj.weight
-    }
+    ).weight
 
     let updatedPath = [...runningWorkout.currWorkout.path]
     const currSetPath = updatedPath[currIdx].setPath || []
