@@ -48,36 +48,40 @@ const ActiveWorkout = ({
 
   return (
     <div className='active-workout'>
-      <div className='current-workout-text'>Current Workout</div>
       <div className='exercise-title'>{name}</div>
       <div className='rep-set-text'>{`${currRepTotal} Reps, Set ${currSet} of ${currSetTotal}`}</div>
-      <div
-        className='exercise-weight'
-        onClick={() => setIsPlatesModalOpen(true)}
-      >
-        <span>{exerciseWeight} lbs</span> <AiFillInfoCircle className='icon' />
+      <div className='workout-data'>
+        <div
+          className='exercise-weight'
+          onClick={() => setIsPlatesModalOpen(true)}
+        >
+          <span>{exerciseWeight} lbs</span>{' '}
+          <AiFillInfoCircle className='icon' />
+        </div>
+        <div className='exercise-img-container'>
+          <img src={imageURL} alt={name} className='exercise-img' />
+        </div>
+        <button
+          className='view-workout-path'
+          onClick={() => setIsWorkoutPathModalOpen(true)}
+        >
+          Workout Path <AiOutlineRight className='icon' />
+        </button>
       </div>
-      <div className='exercise-img-container'>
-        <img src={imageURL} alt={name} className='exercise-img' />
+      <div className='options'>
+        <button
+          className='submit-btn'
+          onClick={() => completeSet(currSetTotal, currRepTotal, exerciseID)}
+        >
+          Completed
+        </button>
+        <button
+          className='set-failed-btn'
+          onClick={() => setIsSetFailedModalOpen(true)}
+        >
+          Failed
+        </button>
       </div>
-      <button
-        className='view-workout-path'
-        onClick={() => setIsWorkoutPathModalOpen(true)}
-      >
-        Workout Path <AiOutlineRight className='icon' />
-      </button>
-      <button
-        className='submit-btn'
-        onClick={() => completeSet(currSetTotal, currRepTotal, exerciseID)}
-      >
-        Completed
-      </button>
-      <button
-        className='set-failed-btn'
-        onClick={() => setIsSetFailedModalOpen(true)}
-      >
-        Failed
-      </button>
 
       <button
         type='button'

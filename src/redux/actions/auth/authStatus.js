@@ -29,8 +29,9 @@ import {
   createUserWithEmailAndPassword,
   updatePassword,
   sendPasswordResetEmail,
-  GoogleAuthProvider,
-  signInWithPopup,
+  // GoogleAuthProvider,
+  // signInWithPopup,
+  // getAdditionalUserInfo,
 } from 'firebase/auth'
 import { fetchCharacterData, updateCoins } from '../character/character'
 
@@ -109,18 +110,33 @@ export const signupWithEmail =
       return dispatch(signup(uid, userData))
     })
   }
-export const signupWithGoogle = userData => async dispatch => {
-  const provider = new GoogleAuthProvider()
+// export const signupWithGoogle = userData => async dispatch => {
+//   const provider = new GoogleAuthProvider()
 
-  await signInWithPopup(auth, provider).then(cred => {
-    const uid = cred.user.uid
-    const name = cred.user.displayName
-    const email = cred.user.email
-    const newUserData = { ...userData, name, email }
+//   await signInWithPopup(auth, provider).then(cred => {
+//     const isNewUser = getAdditionalUserInfo(cred).isNewUser
 
-    return dispatch(signup(uid, newUserData))
-  })
-}
+//     // if (isNewUser) {
+//     // console.log('Logging out')
+//     // await setUserStatusSignedOut()
+//     // console.log('isNewUser:', isNewUser)
+//     // dispatch({ type: SET_USER_ACCOUNT_DATA, payload: { isNewUser: true } })
+//     // window.location = '/signup'
+//     // } else if (!userData) {
+//     //   signInAndFetchUserAccountData(cred.user)
+//     // } else {
+//     //   const uid = cred.user.uid
+//     //   const name = cred.user.displayName
+//     //   const email = cred.user.email
+//     //   const newUserData = { ...userData, name, email }
+//     // }
+//   })
+// .then(cred => {
+
+//   return dispatch({ type: SET_USER_ACCOUNT_DATA, payload: { isNewUser: true } })
+//   // return dispatch(signup(uid, newUserData))
+//   // })
+// }
 
 export const setUserAccountData = (uid, userData) => async () => {
   const {
@@ -133,8 +149,6 @@ export const setUserAccountData = (uid, userData) => async () => {
     weight,
     barbellWeight,
   } = userData
-
-  console.log(userData)
 
   setDoc(doc(db, 'users', uid), {
     username,
