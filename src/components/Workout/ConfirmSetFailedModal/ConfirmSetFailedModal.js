@@ -13,8 +13,6 @@ const ConfirmSetFailedModal = ({
   weightExerciseId,
   currSetTotal,
   currRepTotal,
-  currWorkout,
-  currIdx,
 }) => {
   const [weightCount, setWeightCount] = useState(() => {
     if (currWeight === 5) {
@@ -33,6 +31,7 @@ const ConfirmSetFailedModal = ({
     if (currWeight - weightCount >= 5) {
       setNewWeight(currWeight - weightCount)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weightCount])
 
   const incrementWeightCount = () => {
