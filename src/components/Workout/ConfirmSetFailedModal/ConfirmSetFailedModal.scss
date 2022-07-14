@@ -9,13 +9,13 @@
     width: calc(#{$max-width} * 0.9);
     .counter-label {
       font-size: 0.8rem;
-      padding-bottom: 0.25rem;
+      padding-bottom: 0.75rem;
       color: $secondary-text;
     }
     .new-exercise-weight {
       font-size: 0.6rem;
       color: $tertiary-text;
-      padding-bottom: 0.75rem;
+      padding-top: 0.15rem;
       strong {
         color: $secondary-text;
       }

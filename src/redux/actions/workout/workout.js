@@ -29,7 +29,7 @@ export const fetchWorkoutData = uid => async dispatch => {
     dispatch({ type: FETCH_WORKOUT_DATA, payload: workoutData })
     const timeLastUpdated = workoutData.runningWorkout.timeLastUpdated
     if (!timeLastUpdated || timeLastUpdated < new Date().getTime() - 1800000) {
-      dispatch(updateWorkout({ isWorkoutRunning: false }))
+      dispatch(stopWorkout())
     }
   })
 }
@@ -164,9 +164,17 @@ export const completeSet =
     const currWorkoutPathLength = runningWorkout.currWorkout.path.length
     const elapsedTime = new Date().getTime() - timeLastUpdated
 
-    const currExerciseWeight = getState().workout.workoutData.weights.find(
+    const currExerciseWeightObj = getState().workout.workoutData.weights.find(
       ex => ex.exerciseID === exerciseID
-    ).weight
+    )
+    // If user doesn't have recorded weight for current exercise, set to 45
+    let currExerciseWeight
+    if (!currExerciseWeightObj || !currExerciseWeightObj.weight) {
+      currExerciseWeight = 45
+      addNewExerciseWeight(45, exerciseID)
+    } else {
+      currExerciseWeight = currExerciseWeightObj.weight
+    }
 
     let updatedPath = [...runningWorkout.currWorkout.path]
     const currSetPath = updatedPath[currIdx].setPath || []
