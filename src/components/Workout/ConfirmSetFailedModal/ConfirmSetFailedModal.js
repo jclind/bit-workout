@@ -4,6 +4,7 @@ import useClickOutside from '../../../util/useClickOutside'
 import './ConfirmSetFailedModal.scss'
 import { failSet } from '../../../redux/actions/workout/workout'
 import { connect } from 'react-redux'
+import { useEffect } from 'react'
 
 const ConfirmSetFailedModal = ({
   onClose,
@@ -20,9 +21,17 @@ const ConfirmSetFailedModal = ({
   const modalContent = useClickOutside(() => {
     onClose()
   })
+  const [newWeight, setNewWeight] = useState(currWeight - weightCount)
+  useEffect(() => {
+    if (currWeight - weightCount >= 5) {
+      setNewWeight(currWeight - weightCount)
+    }
+  }, [weightCount])
 
   const incrementWeightCount = () => {
-    setWeightCount(weightCount + 5)
+    if (newWeight > 5) {
+      setWeightCount(weightCount + 5)
+    }
   }
   const decrementWeightCount = () => {
     if (weightCount > 0) {
@@ -31,7 +40,7 @@ const ConfirmSetFailedModal = ({
   }
 
   const incrementRepCount = () => {
-    if (repCount < currRepTotal) {
+    if (repCount < currRepTotal - 1) {
       setRepCount(repCount + 1)
     }
   }
@@ -58,7 +67,7 @@ const ConfirmSetFailedModal = ({
           <div className='counter'>
             <div className='counter-label'>Decrease weight by: </div>
             <div className='new-exercise-weight'>
-              (New Weight: <strong>{currWeight - weightCount}</strong>)
+              (New Weight: <strong>{newWeight}</strong>)
             </div>
             <div className='decrease-weight-counter'>
               <button className='decrease' onClick={decrementWeightCount}>
