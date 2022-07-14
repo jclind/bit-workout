@@ -66,17 +66,17 @@ const ConfirmSetFailedModal = ({
           <div className='title'>Confirm Failed Set:</div>
           <div className='counter'>
             <div className='counter-label'>Decrease weight by: </div>
-            <div className='new-exercise-weight'>
-              (New Weight: <strong>{newWeight}</strong>)
-            </div>
             <div className='decrease-weight-counter'>
               <button className='decrease' onClick={decrementWeightCount}>
                 -5
               </button>
-              <div className='count'>{weightCount}lbs</div>
+              <div className='count'>{weightCount} lbs</div>
               <button className='increase' onClick={incrementWeightCount}>
                 +5
               </button>
+            </div>
+            <div className='new-exercise-weight'>
+              (New Weight: <strong>{newWeight}</strong>)
             </div>
           </div>
           <div className='reps-completed-container'>
