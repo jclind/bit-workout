@@ -17,7 +17,6 @@ import SecurityContainer from './pages/Settings/Security/SecurityContainer'
 import NavbarContainer from './components/Navbar/Navbar'
 import WeightDataContainer from './pages/Account/WeightData/WeightDataContainer'
 import AddWeightInputContainer from './pages/Account/WeightData/AddWeightInput/AddWeightInputContainer'
-import CreateWorkoutContainer from './pages/CreateWorkout/CreateWorkoutContainer'
 import Auth from './Auth'
 import AppLoadingScreen from './components/AppLoadingScreen/AppLoadingScreen'
 import FeedbackContainer from './pages/Settings/Feedback/FeedbackContainer'
@@ -31,6 +30,9 @@ import Username from './pages/Auth/Signup/Username/Username'
 import SignupSelection from './pages/Auth/Signup/SignupSelection/SignupSelection'
 import EmailSignup from './pages/Auth/Signup/EmailSignup/EmailSignup'
 import AuthLandingPage from './pages/Auth/AuthLandingPage/AuthLandingPage'
+import CreateWorkout from './pages/CreateWorkout/CreateWorkout'
+import WorkoutTypeSelection from './pages/CreateWorkout/WorkoutTypeSelection/WorkoutTypeSelection'
+import AddExercises from './pages/CreateWorkout/AddExercises/AddExercises'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -64,11 +66,14 @@ function App() {
                 path='/create-workout'
                 element={
                   <>
-                    <CreateWorkoutContainer />
+                    <CreateWorkout />
                     <NavbarContainer />
                   </>
                 }
-              />
+              >
+                <Route path='add-exercises' element={<AddExercises />} />
+                <Route path='selection' element={<WorkoutTypeSelection />} />
+              </Route>
               <Route
                 path='/past-workouts'
                 element={

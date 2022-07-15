@@ -1,0 +1,36 @@
+@import '../../../helpers.scss';
+
+.create-workout-page.add-exercises {
+  .added-exercises-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+
+    .exercise-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      border: 1px solid $secondary-background;
+      border-radius: $border-radius;
+      padding: 1rem;
+      box-sizing: border-box;
+      width: 100%;
+      flex: 1;
+    }
+  }
+
+  .add-exercise-btn {
+    display: flex;
+    align-items: center;
+    background: none;
+    gap: 1rem;
+    margin: 0 auto;
+    width: fit-content;
+
+    .icon {
+      height: 30px;
+      width: 30px;
+    }
+  }
+}

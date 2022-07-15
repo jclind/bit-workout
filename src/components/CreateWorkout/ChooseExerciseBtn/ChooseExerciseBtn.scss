@@ -1,0 +1,76 @@
+@import '../../../helpers.scss';
+
+.select-exercise.btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  // background: $tag-select-background;
+  border-radius: $border-radius;
+  padding: 0 0.5rem !important;
+  box-sizing: border-box;
+  width: 100% !important;
+  text-transform: capitalize;
+  // border: 1px solid $tag-select-border;
+
+  background: $secondary-background !important;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  // background: $tag-select-background;
+  border-radius: $border-radius;
+  padding: 0 0.5rem !important;
+  box-sizing: border-box;
+  width: 100% !important;
+  text-transform: capitalize;
+  // border: 1px solid $tag-select-border;
+
+  background: $secondary-background !important;
+  &:focus {
+    outline: 1px solid $outline;
+  }
+
+  .selector-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    height: 100%;
+    background: inherit;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    width: 100%;
+    color: $primary;
+    text-align: center;
+    font-weight: 500;
+
+    .img-container {
+      height: 40px;
+      width: 40px;
+      img {
+        object-fit: contain;
+        height: 40px;
+        width: 40px;
+      }
+    }
+    .name {
+      .weights {
+        font-size: 0.8rem;
+        color: $secondary-text;
+      }
+    }
+
+    .tag-icon {
+      height: 18px;
+      width: 18px;
+    }
+    .icon {
+      height: 18px !important;
+      width: 18px !important;
+    }
+  }
+}
