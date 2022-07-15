@@ -1,11 +1,9 @@
 @import '../../helpers.scss';
 
 .workout-timer {
-  // position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  // justify-content: center;
   text-align: center;
 
   height: calc(100vh - #{$navbar-height});
