@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ChooseExerciseBtn from '../ChooseExerciseBtn/ChooseExerciseBtn'
 import ExerciseDropdown from '../ExerciseDropdown/ExerciseDropdown'
 import useClickOutside from '../../../util/useClickOutside'
@@ -13,12 +13,12 @@ const ExerciseSelectorDropdown = ({
 
   const handleSetSelectedExercise = exercise => {
     setSelectedExercise(exercise)
-    toggleDropdown()
+    setIsDropdown(false)
   }
 
   const [exerciseSearchVal, setExerciseSearchVal] = useState('')
 
-  const exerciseContainer = useClickOutside(() => toggleDropdown())
+  const exerciseContainer = useClickOutside(() => setIsDropdown(false))
 
   return (
     <div className='select-exercise-container' ref={exerciseContainer}>
