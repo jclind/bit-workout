@@ -28,7 +28,11 @@ export const fetchWorkoutData = uid => async dispatch => {
     const workoutData = document.data()
     dispatch({ type: FETCH_WORKOUT_DATA, payload: workoutData })
     const timeLastUpdated = workoutData.runningWorkout.timeLastUpdated
-    if (!timeLastUpdated || timeLastUpdated < new Date().getTime() - 1800000) {
+    const isWorkoutRunning = workoutData.isWorkoutRunning
+    if (
+      isWorkoutRunning &&
+      (!timeLastUpdated || timeLastUpdated < new Date().getTime() - 1800000)
+    ) {
       dispatch(stopWorkout())
     }
   })
@@ -50,7 +54,7 @@ export const updateWorkout = data => async (dispatch, getState) => {
       // !ERROR
     })
 }
-export const setWorkoutFinished = isFinished => {
+export const setWorkoutFinished = isFinished => async (dispatch, getState) => {
   return {
     type: SET_WORKOUT_FINISHED,
     payload: isFinished,
@@ -408,8 +412,9 @@ export const stopWorkout = () => async (dispatch, getState) => {
   }
 
   await dispatch(updateWorkout({ isWorkoutRunning: false }))
-  dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
   dispatch(setWorkoutFinished(true))
+
+  dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
   dispatch(addWorkoutToPastWorkouts(finishedWorkoutData))
 }
 
