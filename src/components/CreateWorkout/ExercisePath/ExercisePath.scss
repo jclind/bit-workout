@@ -1,0 +1,70 @@
+@import '../../../helpers.scss';
+
+.exercise-path {
+  width: 100%;
+  margin-top: 1rem;
+  background: $secondary-background;
+  border-radius: $border-radius;
+
+  .path-item {
+    width: 90%;
+    height: 50px;
+    margin: 0 auto;
+    padding: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    label.set-label {
+      display: flex;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .reps,
+    .weight {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      height: 100%;
+      input {
+        width: 4ch;
+        font-size: 1.3rem !important;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        color: $primary;
+
+        &::placeholder {
+          font-size: 1.3rem;
+        }
+        // background: $;
+      }
+      label {
+        font-size: 0.8rem;
+        color: $tertiary-text;
+      }
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type='number'] {
+      -moz-appearance: textfield;
+    }
+  }
+
+  .options {
+    margin: 0 auto;
+    margin-top: 2rem;
+    text-align: center;
+    button {
+      width: 50%;
+    }
+  }
+}

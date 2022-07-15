@@ -1,4 +1,5 @@
 import React from 'react'
+import ExercisePath from '../../../components/CreateWorkout/ExercisePath/ExercisePath'
 import ExerciseSelectorDropdown from '../../../components/CreateWorkout/ExerciseSelectorDropdown/ExerciseSelectorDropdown'
 
 const ExerciseItem = ({ exerciseData, setExerciseData }) => {
@@ -24,6 +25,7 @@ const ExerciseItem = ({ exerciseData, setExerciseData }) => {
         selectedExercise={exercise}
         setSelectedExercise={setSelectedExercise}
       />
+      <ExercisePath />
     </div>
   )
 }
