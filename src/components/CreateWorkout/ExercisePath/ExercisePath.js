@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import ExerciseTypeDropdown from '../ExerciseTypeDropdown/ExerciseTypeDropdown'
 import './ExercisePath.scss'
 
 const PathItem = ({ path, set, idx, setPathData }) => {
@@ -77,6 +78,9 @@ const ExercisePath = () => {
 
   return (
     <div className='exercise-path'>
+      <div className='exercise-type-selector'>
+        <ExerciseTypeDropdown />
+      </div>
       <div className='list'>
         {path.map((set, idx) => {
           return (

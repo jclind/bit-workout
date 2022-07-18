@@ -25,6 +25,7 @@ const ExerciseItem = ({ exerciseData, setExerciseData }) => {
         selectedExercise={exercise}
         setSelectedExercise={setSelectedExercise}
       />
+
       <ExercisePath />
     </div>
   )
