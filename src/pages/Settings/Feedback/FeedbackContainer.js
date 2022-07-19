@@ -21,6 +21,7 @@ const customStyles = {
     boxShadow: state.isFocused ? null : null,
     outline: 'none',
     border: state.isFocused ? '1px solid #548ca8' : '1px solid #d6d6d6',
+    borderRadius: '10px',
     ':hover': {
       border: '1px solid #548ca8',
     },
