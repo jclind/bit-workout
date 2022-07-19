@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 
 import ExerciseTypeDropdown from '../ExerciseTypeDropdown/ExerciseTypeDropdown'
+import DropSet from './DropSet/DropSet'
 import './ExercisePath.scss'
 import StraightSet from './StraightSet/StraightSet'
+import TimerSet from './TimerSet/TimerSet'
 
 const options = [
   { value: 'straight', label: 'Straight Sets' },
@@ -24,7 +26,9 @@ const ExercisePath = () => {
     if (type.value === 'straight') {
       return <StraightSet />
     } else if (type.value === 'drop') {
+      return <DropSet />
     } else if (type.value === 'timer') {
+      return <TimerSet />
     }
     return null
   }
