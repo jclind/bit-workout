@@ -8,7 +8,15 @@ const options = [
 ]
 
 const ExerciseTypeDropdown = () => {
-  return <div></div>
+  return (
+    <div className='exercise-type-dropdown-container'>
+      <Select
+        options={options}
+        placeholder='Exercise Type'
+        className='select'
+      />
+    </div>
+  )
 }
 
 export default ExerciseTypeDropdown
