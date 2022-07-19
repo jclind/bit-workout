@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid'
 import StraightSetPathItem from './StraightSetPathItem'
 
 const StraightSet = () => {
-  console.log('here')
   const [path, setPath] = useState([
     {
       weight: null,

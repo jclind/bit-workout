@@ -31,15 +31,16 @@ const StraightSetPathItem = ({ path, set, idx, setPathData }) => {
         <label className='reps-label'>Reps</label>
       </div>
 
-      <div className='weight'>
+      {/* <div className='weight'>
         <input
           className='weight-input'
           value={set.weight || ''}
           placeholder='45'
           type='number'
+          onChange={setWeight}
         />
         <label className='weight-label'>Lbs</label>
-      </div>
+      </div> */}
     </div>
   )
 }
