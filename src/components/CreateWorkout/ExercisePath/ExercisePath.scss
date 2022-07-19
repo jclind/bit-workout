@@ -3,6 +3,8 @@
 .exercise-path {
   width: 100%;
   margin-top: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
   background: $secondary-background;
   border-radius: $border-radius;
 
@@ -65,6 +67,15 @@
     text-align: center;
     button {
       width: 50%;
+    }
+  }
+
+  .exercise-type-dropdown-container {
+    margin: 0 auto;
+    .select {
+      input {
+        background: $secondary-background-card;
+      }
     }
   }
 }
