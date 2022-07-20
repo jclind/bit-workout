@@ -3,14 +3,19 @@ import TimerSetItem from './TimerSetItem'
 import { v4 as uuidv4 } from 'uuid'
 import './TimerSet.scss'
 
-const TimerSet = ({ setExercisePath, setError }) => {
-  const [path, setPath] = useState([
-    {
-      weight: null,
-      time: { minutes: null, seconds: null },
-      id: uuidv4(),
-    },
-  ])
+const TimerSet = ({ exercisePath, setExercisePath, setError }) => {
+  const pathTemplate = {
+    id: uuidv4(),
+    time: { minutes: null, seconds: null },
+    weight: null,
+  }
+  const [path, setPath] = useState(
+    exercisePath || [
+      {
+        ...pathTemplate,
+      },
+    ]
+  )
   const handleAddSet = () => {
     const prevSet = path[path.length - 1]
     const minutes =
@@ -22,9 +27,9 @@ const TimerSet = ({ setExercisePath, setError }) => {
     setPath([
       ...path,
       {
-        weight,
+        ...pathTemplate,
         time: { minutes, seconds },
-        id: uuidv4(),
+        weight,
       },
     ])
   }
@@ -66,8 +71,8 @@ const TimerSet = ({ setExercisePath, setError }) => {
       setError(error)
     } else {
       setError('')
-      setExercisePath(path)
     }
+    setExercisePath(path)
   }, [path])
 
   return (

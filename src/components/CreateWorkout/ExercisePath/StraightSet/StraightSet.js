@@ -2,22 +2,23 @@ import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import StraightSetPathItem from './StraightSetPathItem'
 
-const StraightSet = ({ setExercisePath, setError }) => {
-  const [path, setPath] = useState([
-    {
-      reps: null,
-      id: uuidv4(),
-    },
-  ])
+const StraightSet = ({ exercisePath, setExercisePath, setError }) => {
+  const pathTemplate = { reps: null, id: uuidv4() }
+  const [path, setPath] = useState(
+    exercisePath || [
+      {
+        ...pathTemplate,
+      },
+    ]
+  )
 
   const handleAddSet = () => {
     const prevSet = path[path.length - 1]
-    const reps = prevSet && prevSet.reps ? prevSet.reps : null
     setPath([
       ...path,
       {
-        reps,
-        id: uuidv4(),
+        ...pathTemplate,
+        reps: prevSet && prevSet.reps ? prevSet.reps : null,
       },
     ])
   }
@@ -54,8 +55,8 @@ const StraightSet = ({ setExercisePath, setError }) => {
       setError(error)
     } else {
       setError('')
-      setExercisePath(path)
     }
+    setExercisePath(path)
   }, [path])
 
   return (

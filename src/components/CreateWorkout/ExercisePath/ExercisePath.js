@@ -13,9 +13,9 @@ const options = [
   { value: 'timed', label: 'Timed Sets' },
 ]
 
-const ExercisePath = ({ setSelectedType, setPath, setError }) => {
-  const [exerciseType, setExerciseType] = useState(null)
-  const [exercisePath, setExercisePath] = useState([])
+const ExercisePath = ({ setSelectedType, path, type, setPath, setError }) => {
+  const [exerciseType, setExerciseType] = useState(type || null)
+  const [exercisePath, setExercisePath] = useState(path || [])
 
   useEffect(() => {
     setSelectedType(exerciseType)
@@ -31,12 +31,28 @@ const ExercisePath = ({ setSelectedType, setPath, setError }) => {
 
     if (type === 'straight') {
       return (
-        <StraightSet setExercisePath={setExercisePath} setError={setError} />
+        <StraightSet
+          exercisePath={exercisePath}
+          setExercisePath={setExercisePath}
+          setError={setError}
+        />
       )
     } else if (type === 'drop') {
-      return <DropSet setExercisePath={setExercisePath} setError={setError} />
+      return (
+        <DropSet
+          exercisePath={exercisePath}
+          setExercisePath={setExercisePath}
+          setError={setError}
+        />
+      )
     } else if (type === 'timed') {
-      return <TimerSet setExercisePath={setExercisePath} setError={setError} />
+      return (
+        <TimerSet
+          exercisePath={exercisePath}
+          setExercisePath={setExercisePath}
+          setError={setError}
+        />
+      )
     }
     return null
   }

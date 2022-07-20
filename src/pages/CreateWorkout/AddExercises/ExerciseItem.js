@@ -8,7 +8,7 @@ const ExerciseItem = ({
   deleteExercise,
   showErrors,
 }) => {
-  const { exercise, description, error, id } = exerciseData
+  const { exercise, path, type, description, error, id } = exerciseData
 
   const [isDescription, setIsDescription] = useState(() => {
     if (description) return true
@@ -46,7 +46,9 @@ const ExerciseItem = ({
       />
 
       <ExercisePath
+        path={path}
         setPath={setPath}
+        type={type}
         setError={setError}
         setSelectedType={setSelectedType}
       />
