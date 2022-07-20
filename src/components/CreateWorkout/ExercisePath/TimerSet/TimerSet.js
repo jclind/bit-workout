@@ -3,7 +3,7 @@ import TimerSetItem from './TimerSetItem'
 import { v4 as uuidv4 } from 'uuid'
 import './TimerSet.scss'
 
-const TimerSet = ({ setExercisePath }) => {
+const TimerSet = ({ setExercisePath, setError }) => {
   const [path, setPath] = useState([
     {
       weight: null,
@@ -31,12 +31,12 @@ const TimerSet = ({ setExercisePath }) => {
   const removeSet = id => {
     setPath(path.filter(set => set.id !== id))
   }
+
   const setPathData = (prop, val, idx) => {
     const updatedPath = [...path]
     updatedPath[idx][prop] = val
     setPath(updatedPath)
   }
-
   const checkForError = path => {
     const response = { error: '' }
 
@@ -63,9 +63,10 @@ const TimerSet = ({ setExercisePath }) => {
     const { error } = checkForError(path)
 
     if (error) {
-      console.log(error)
+      setError(error)
     } else {
-      console.log(path)
+      setError('')
+      setExercisePath(path)
     }
   }, [path])
 
