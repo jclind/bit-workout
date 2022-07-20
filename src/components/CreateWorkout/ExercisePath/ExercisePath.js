@@ -18,6 +18,7 @@ const ExercisePath = ({ setSelectedType, path, type, setPath, setError }) => {
   const [exercisePath, setExercisePath] = useState(path || [])
 
   useEffect(() => {
+    setExercisePath([]) // Important for clearing path when type changes to avoid errors
     setSelectedType(exerciseType)
   }, [exerciseType])
   useEffect(() => {

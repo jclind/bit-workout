@@ -10,11 +10,13 @@ const TimerSet = ({ exercisePath, setExercisePath, setError }) => {
     weight: null,
   }
   const [path, setPath] = useState(
-    exercisePath || [
-      {
-        ...pathTemplate,
-      },
-    ]
+    exercisePath.length > 0
+      ? exercisePath
+      : [
+          {
+            ...pathTemplate,
+          },
+        ]
   )
   const handleAddSet = () => {
     const prevSet = path[path.length - 1]

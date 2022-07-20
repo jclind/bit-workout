@@ -5,11 +5,13 @@ import StraightSetPathItem from './StraightSetPathItem'
 const StraightSet = ({ exercisePath, setExercisePath, setError }) => {
   const pathTemplate = { reps: null, id: uuidv4() }
   const [path, setPath] = useState(
-    exercisePath || [
-      {
-        ...pathTemplate,
-      },
-    ]
+    exercisePath.length > 0
+      ? exercisePath
+      : [
+          {
+            ...pathTemplate,
+          },
+        ]
   )
 
   const handleAddSet = () => {

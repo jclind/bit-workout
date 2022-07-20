@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 
 const TimerSetItem = ({ set, idx, setPathData, removeSet }) => {
+  console.log(set)
   const [minutes, setMinutes] = useState(() => {
     return set && set.time.minutes ? set.time.minutes : ''
   })

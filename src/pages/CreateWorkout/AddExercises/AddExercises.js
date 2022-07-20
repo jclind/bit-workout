@@ -79,6 +79,7 @@ const AddExercises = () => {
 
   const handleNextClick = () => {
     let isError = false
+    setShowErrors(false)
     setAddExerciseError('')
 
     if (addedExercises.length <= 0) {
