@@ -58,7 +58,6 @@ const AddExercises = () => {
   }
 
   const saveAddedExercises = arr => {
-    console.log(arr)
     if (arr.length <= 0) {
       localStorage.removeItem('addedExercises')
     } else {
@@ -90,7 +89,6 @@ const AddExercises = () => {
     }
 
     const addedExercisesError = addedExercises.map(ex => {
-      console.log(!!ex.exercise)
       if (!ex.exercise) {
         isError = true
         return { ...ex, error: 'Please Select Exercise' }
@@ -112,8 +110,7 @@ const AddExercises = () => {
 
       return titleRef.current.scrollIntoView()
     }
-    // navigate('/create-workout/selection')
-    console.log('IM HERE NOW')
+    navigate('/create-workout/selection')
   }
   return (
     <div className='create-workout-page add-exercises'>
