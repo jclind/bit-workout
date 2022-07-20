@@ -9,6 +9,7 @@ import BackButton from '../../../components/SettingsComponents/BackButton/BackBu
 import { v4 as uuidv4 } from 'uuid'
 import './AddExercises.scss'
 import ExerciseItem from './ExerciseItem'
+import { useNavigate } from 'react-router-dom'
 
 const AddExercises = () => {
   const exerciseItemTemplate = {
@@ -37,6 +38,7 @@ const AddExercises = () => {
   const [addExerciseError, setAddExerciseError] = useState('')
 
   const titleRef = useRef()
+  const navigate = useNavigate()
 
   const addExercise = () => {
     if (addedExercises.length >= 15) {
@@ -88,6 +90,7 @@ const AddExercises = () => {
     }
 
     const addedExercisesError = addedExercises.map(ex => {
+      console.log(!!ex.exercise)
       if (!ex.exercise) {
         isError = true
         return { ...ex, error: 'Please Select Exercise' }
@@ -109,7 +112,8 @@ const AddExercises = () => {
 
       return titleRef.current.scrollIntoView()
     }
-    return console.log(addedExercises)
+    // navigate('/create-workout/selection')
+    console.log('IM HERE NOW')
   }
   return (
     <div className='create-workout-page add-exercises'>

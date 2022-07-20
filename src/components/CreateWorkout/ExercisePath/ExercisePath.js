@@ -17,8 +17,18 @@ const ExercisePath = ({ setSelectedType, path, type, setPath, setError }) => {
   const [exerciseType, setExerciseType] = useState(type || null)
   const [exercisePath, setExercisePath] = useState(path || [])
 
+  const handleSetExerciseType = e => {
+    const type = e.value
+    setExerciseType(prevType => {
+      if (prevType) {
+        setExercisePath([])
+      }
+      console.log(type)
+      return type
+    })
+  }
+
   useEffect(() => {
-    setExercisePath([]) // Important for clearing path when type changes to avoid errors
     setSelectedType(exerciseType)
   }, [exerciseType])
   useEffect(() => {
@@ -64,7 +74,7 @@ const ExercisePath = ({ setSelectedType, path, type, setPath, setError }) => {
         <ExerciseTypeDropdown
           options={options}
           exerciseType={exerciseType}
-          setExerciseType={setExerciseType}
+          handleSetExerciseType={handleSetExerciseType}
         />
       </div>
       {exerciseTypeElement(exerciseType)}
