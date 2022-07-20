@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { AiOutlineClose } from 'react-icons/ai'
 
-const TimerSetItem = ({ path, set, idx, setPathData }) => {
+const TimerSetItem = ({ path, set, idx, setPathData, removeSet }) => {
   const [minutes, setMinutes] = useState(() => {
     return set && set.time.minutes ? set.time.minutes : ''
   })
@@ -110,6 +111,9 @@ const TimerSetItem = ({ path, set, idx, setPathData }) => {
           />
           <label className='weight-label'>Lbs</label>
         </div>
+        <button className='delete-item-btn' onClick={() => removeSet(set.id)}>
+          <AiOutlineClose className='icon' />
+        </button>
       </div>
     </div>
   )

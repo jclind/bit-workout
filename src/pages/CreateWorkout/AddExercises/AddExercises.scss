@@ -1,6 +1,8 @@
 @import '../../../helpers.scss';
 
 .create-workout-page.add-exercises {
+  height: fit-content;
+  padding-bottom: 6rem;
   .added-exercises-container {
     display: flex;
     flex-direction: column;
@@ -25,7 +27,7 @@
     align-items: center;
     background: none;
     gap: 1rem;
-    margin: 0 auto;
+    margin: 2rem auto;
     width: fit-content;
 
     .icon {
