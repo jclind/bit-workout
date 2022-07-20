@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import './DropSet.scss'
 
-const DropSet = () => {
+const DropSet = ({ setExercisePath }) => {
   const [startWeight, setStartWeight] = useState('')
   const [endWeight, setEndWeight] = useState('')
   const [weightDecrease, setWeightDecrease] = useState('')
 
-  const isValid = val => {
+  const isInputValid = val => {
     const response = { error: '' }
 
     if (val === '') return response
@@ -16,10 +17,9 @@ const DropSet = () => {
     else if (val % 1 !== 0) response.error = 'Value must be a whole number'
     return response
   }
-
   const handleWeightInput = (e, setVal) => {
     const newVal = e.target.value
-    let { error } = isValid(newVal)
+    let { error } = isInputValid(newVal)
     if (error) return
 
     setVal(newVal)
@@ -29,16 +29,17 @@ const DropSet = () => {
     const path = []
 
     let counter = start
-
     while (counter > end) {
       path.push({
         weight: counter,
+        id: uuidv4(),
       })
       counter -= decrease
     }
 
     path.push({
       weight: end,
+      id: uuidv4(),
     })
 
     return path

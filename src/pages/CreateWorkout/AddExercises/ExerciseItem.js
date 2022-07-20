@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import { useEffect } from 'react'
 import ExercisePath from '../../../components/CreateWorkout/ExercisePath/ExercisePath'
 import ExerciseSelectorDropdown from '../../../components/CreateWorkout/ExerciseSelectorDropdown/ExerciseSelectorDropdown'
 
-const ExerciseItem = ({ exerciseData, setExerciseData }) => {
+const ExerciseItem = ({ exerciseData, setExerciseData, showErrors }) => {
   const [isDescription, setIsDescription] = useState(false)
 
-  const { exercise, description, path, id } = exerciseData
+  const { exercise, description, error, id } = exerciseData
 
   const setPath = val => {
     const prop = 'path'
@@ -19,15 +20,20 @@ const ExerciseItem = ({ exerciseData, setExerciseData }) => {
     const prop = 'description'
     setExerciseData(prop, val, id)
   }
+  const setError = err => {
+    const prop = 'error'
+    setExerciseData(prop, err, id)
+  }
 
   return (
     <div className='exercise-item'>
+      {error && showErrors ? <div className='error'>{error}</div> : null}
       <ExerciseSelectorDropdown
         selectedExercise={exercise}
         setSelectedExercise={setSelectedExercise}
       />
 
-      <ExercisePath setPath={setPath} />
+      <ExercisePath setPath={setPath} setError={setError} />
 
       <div className='description-container'>
         {isDescription && (

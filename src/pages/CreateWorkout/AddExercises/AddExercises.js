@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import {
   AiOutlinePlusCircle,
@@ -17,9 +17,10 @@ const AddExercises = () => {
       description: null,
       path: null,
       id: uuidv4(),
+      error: '',
     },
   ])
-  const [error, setError] = useState('')
+  const [showErrors, setShowErrors] = useState(false) // Only show errors on next button click
 
   const addExercise = () => {
     setAddedExercises([
@@ -29,17 +30,28 @@ const AddExercises = () => {
         description: null,
         path: null,
         id: uuidv4(),
+        error: '',
       },
     ])
   }
   const setExerciseData = (prop, val, id) => {
+    setShowErrors(false)
     const updatedAddedExercises = [...addedExercises]
     const exerciseIdx = addedExercises.findIndex(ex => ex.id === id)
     updatedAddedExercises[exerciseIdx][prop] = val
     setAddedExercises(updatedAddedExercises)
   }
 
-  const handleNextClick = () => {}
+  const handleNextClick = () => {
+    setShowErrors(true)
+    setAddedExercises(
+      addedExercises.map(ex => {
+        if (!ex.exercise) {
+          return { ...ex, error: 'Please Select Exercise' }
+        }
+      })
+    )
+  }
   return (
     <div className='create-workout-page add-exercises'>
       <BackButton />
@@ -52,6 +64,7 @@ const AddExercises = () => {
               key={ex.id}
               exerciseData={ex}
               setExerciseData={setExerciseData}
+              showErrors={showErrors}
             />
           )
         })}

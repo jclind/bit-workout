@@ -1,9 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TimerSetItem from './TimerSetItem'
 import { v4 as uuidv4 } from 'uuid'
 import './TimerSet.scss'
 
-const TimerSet = ({ path, setPath }) => {
+const TimerSet = ({ setExercisePath }) => {
+  const [path, setPath] = useState([
+    {
+      weight: null,
+      time: { minutes: null, seconds: null },
+      id: uuidv4(),
+    },
+  ])
   const handleAddSet = () => {
     const prevSet = path[path.length - 1]
     const minutes =
@@ -29,6 +36,38 @@ const TimerSet = ({ path, setPath }) => {
     updatedPath[idx][prop] = val
     setPath(updatedPath)
   }
+
+  const checkForError = path => {
+    const response = { error: '' }
+
+    if (path.length <= 0) {
+      response.error = 'Please Enter At Least One Set'
+    }
+
+    path.every(set => {
+      if (!set.time.minutes && !set.time.seconds)
+        response.error = 'Please Enter Minutes Or Seconds'
+      else if (!set.weight) response.error = 'Please Enter Weight'
+      else if (Number(set.weight) % 5 !== 0)
+        response.error = 'Weight Must Be A Multiple Of 5'
+
+      if (response.error) return false
+
+      return true
+    })
+
+    return response
+  }
+
+  useEffect(() => {
+    const { error } = checkForError(path)
+
+    if (error) {
+      console.log(error)
+    } else {
+      console.log(path)
+    }
+  }, [path])
 
   return (
     <div className='timer-set list'>

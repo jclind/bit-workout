@@ -1,16 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import StraightSetPathItem from './StraightSetPathItem'
 
-const StraightSet = ({ path, setPath }) => {
+const StraightSet = ({ setExercisePath, setError }) => {
+  const [path, setPath] = useState([
+    {
+      reps: null,
+      id: uuidv4(),
+    },
+  ])
+
   const handleAddSet = () => {
     const prevSet = path[path.length - 1]
     const reps = prevSet && prevSet.reps ? prevSet.reps : null
-    const weight = prevSet && prevSet.weight ? prevSet.weight : null
     setPath([
       ...path,
       {
-        weight,
         reps,
         id: uuidv4(),
       },
@@ -24,6 +29,35 @@ const StraightSet = ({ path, setPath }) => {
     updatedPath[idx][prop] = val
     setPath(updatedPath)
   }
+
+  const checkForError = path => {
+    const response = { error: '' }
+
+    if (path.length <= 0) {
+      response.error = 'Please Enter At Least One Set'
+    }
+
+    path.every(set => {
+      if (!set.reps) response.error = 'Please Enter Number Of Reps'
+
+      if (response.error) return false
+
+      return true
+    })
+
+    return response
+  }
+  useEffect(() => {
+    const { error } = checkForError(path)
+
+    if (error) {
+      setError(error)
+    } else {
+      setError('')
+      setExercisePath(path)
+    }
+  }, [path])
+
   return (
     <>
       <div className='list'>
