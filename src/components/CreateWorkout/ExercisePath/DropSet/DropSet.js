@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import './DropSet.scss'
 
-const DropSet = ({
-  startWeight,
-  setStartWeight,
-  endWeight,
-  setEndWeight,
-  weightDecrease,
-  setWeightDecrease,
-}) => {
-  console.log('here 1')
+const DropSet = () => {
+  const [startWeight, setStartWeight] = useState('')
+  const [endWeight, setEndWeight] = useState('')
+  const [weightDecrease, setWeightDecrease] = useState('')
+
   const isValid = val => {
-    console.log('here 2')
     const response = { error: '' }
 
     if (val === '') return response
@@ -27,8 +22,34 @@ const DropSet = ({
     let { error } = isValid(newVal)
     if (error) return
 
-    setVal(newVal)
+    setVal(Number(newVal))
   }
+
+  const checkForError = (start, end, decrease) => {
+    const response = { error: '' }
+
+    const startEndDifference = start - end
+
+    console.log(startEndDifference, start, end, decrease)
+
+    if (!start) response.error = 'No Start Weight Given'
+    else if (!end) response.error = 'No End Weight Given'
+    else if (!decrease) response.error = 'No Decreased Weight Given'
+    else if (start % 5 !== 0 || end % 5 !== 0 || decrease % 5 !== 0)
+      response.error = 'All Weight Values Must Be Multiples Of 5'
+    else if (startEndDifference <= 0)
+      response.error = 'Start Weight Must Be Greater Than End Weight'
+    else if (startEndDifference < decrease)
+      response.error =
+        'Weight Decrease Cannot Be Less Than Start And End Weight Difference'
+
+    return response
+  }
+  useEffect(() => {
+    const { error } = checkForError(startWeight, endWeight, weightDecrease)
+
+    if (error) console.log(error)
+  }, [startWeight, endWeight, weightDecrease])
 
   return (
     <div className='drop-set'>

@@ -11,16 +11,21 @@ import './AddExercises.scss'
 import ExerciseItem from './ExerciseItem'
 
 const AddExercises = () => {
-  const [addedExercises, setAddedExercises] = useState([])
+  const [addedExercises, setAddedExercises] = useState([
+    {
+      exercise: null,
+      description: null,
+      path: null,
+      id: uuidv4(),
+    },
+  ])
+  const [error, setError] = useState('')
+
   const addExercise = () => {
     setAddedExercises([
       ...addedExercises,
       {
         exercise: null,
-        reps: null,
-        sets: null,
-        restTime: null,
-        failedRestTime: null,
         description: null,
         path: null,
         id: uuidv4(),
@@ -33,6 +38,8 @@ const AddExercises = () => {
     updatedAddedExercises[exerciseIdx][prop] = val
     setAddedExercises(updatedAddedExercises)
   }
+
+  const handleNextClick = () => {}
   return (
     <div className='create-workout-page add-exercises'>
       <BackButton />
@@ -51,6 +58,9 @@ const AddExercises = () => {
       </div>
       <button type='button' className='add-exercise-btn' onClick={addExercise}>
         <AiOutlinePlusCircle className='icon' /> <span>Add Exercise</span>
+      </button>
+      <button className='next-btn' onClick={handleNextClick}>
+        NEXT
       </button>
     </div>
   )
