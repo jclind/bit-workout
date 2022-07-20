@@ -27,7 +27,7 @@ const ExercisePath = () => {
       return <StraightSet />
     } else if (type.value === 'drop') {
       return <DropSet />
-    } else if (type.value === 'timer') {
+    } else if (type.value === 'timed') {
       return <TimerSet />
     }
     return null
