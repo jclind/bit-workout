@@ -16,23 +16,19 @@ const options = [
 
 const ExercisePath = () => {
   const [exerciseType, setExerciseType] = useState(null)
+  const [exercisePath, setExercisePath] = useState([])
 
-  useEffect(() => {
-    console.log(exerciseType)
-  }, [exerciseType])
+  const [error, setError] = useState('')
 
-  const [straightSetPath, setStraightSetPath] = useState([
-    {
-      weight: null,
-      reps: null,
-      id: uuidv4(),
-    },
-  ])
+  // const [straightSetPath, setStraightSetPath] = useState([
+  //   {
+  //     weight: null,
+  //     reps: null,
+  //     id: uuidv4(),
+  //   },
+  // ])
 
   // Drop Set values
-  const [startWeight, setStartWeight] = useState('')
-  const [endWeight, setEndWeight] = useState('')
-  const [weightDecrease, setWeightDecrease] = useState('')
 
   const [timerSetPath, setTimerSetPath] = useState([
     {
@@ -46,18 +42,9 @@ const ExercisePath = () => {
     if (!type) return null
 
     if (type.value === 'straight') {
-      return <StraightSet path={straightSetPath} setPath={setStraightSetPath} />
+      return <StraightSet path={exercisePath} setPath={setExercisePath} />
     } else if (type.value === 'drop') {
-      return (
-        <DropSet
-          startWeight={startWeight}
-          setStartWeight={setStartWeight}
-          endWeight={endWeight}
-          setEndWeight={setEndWeight}
-          weightDecrease={weightDecrease}
-          setWeightDecrease={setWeightDecrease}
-        />
-      )
+      return <DropSet />
     } else if (type.value === 'timed') {
       return <TimerSet path={timerSetPath} setPath={setTimerSetPath} />
     }
