@@ -14,39 +14,23 @@ const options = [
   { value: 'timed', label: 'Timed Sets' },
 ]
 
-const ExercisePath = () => {
+const ExercisePath = ({ setError }) => {
   const [exerciseType, setExerciseType] = useState(null)
   const [exercisePath, setExercisePath] = useState([])
 
-  const [error, setError] = useState('')
-
-  // const [straightSetPath, setStraightSetPath] = useState([
-  //   {
-  //     weight: null,
-  //     reps: null,
-  //     id: uuidv4(),
-  //   },
-  // ])
-
   // Drop Set values
-
-  const [timerSetPath, setTimerSetPath] = useState([
-    {
-      weight: null,
-      time: { minutes: null, seconds: null },
-      id: uuidv4(),
-    },
-  ])
 
   const exerciseTypeElement = type => {
     if (!type) return null
 
     if (type.value === 'straight') {
-      return <StraightSet path={exercisePath} setPath={setExercisePath} />
+      return (
+        <StraightSet setExercisePath={setExercisePath} setError={setError} />
+      )
     } else if (type.value === 'drop') {
-      return <DropSet />
+      return <DropSet setExercisePath={setExercisePath} setError={setError} />
     } else if (type.value === 'timed') {
-      return <TimerSet path={timerSetPath} setPath={setTimerSetPath} />
+      return <TimerSet setExercisePath={setExercisePath} setError={setError} />
     }
     return null
   }
