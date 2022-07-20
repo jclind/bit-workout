@@ -16,7 +16,13 @@ const TimerSetItem = ({ path, set, idx, setPathData }) => {
       setPathData('time', { minutes, seconds }, idx)
     }
   }, [minutes, seconds])
+  useEffect(() => {
+    if (weight) {
+      setPathData('weight', weight, idx)
+    }
+  }, [weight])
 
+  const minutesRef = useRef()
   const secondsRef = useRef()
   const weightRef = useRef()
 
@@ -70,17 +76,18 @@ const TimerSetItem = ({ path, set, idx, setPathData }) => {
       <label className='set-label'>Set {idx + 1}</label>
       <div className='data'>
         <div className='time'>
-          <div className='minutes'>
+          <div className='minutes' onClick={() => minutesRef.current.focus()}>
             <input
               type='number'
               className='minutes-input'
               placeholder='1'
               value={minutes}
               onChange={handleSetMinutes}
+              ref={minutesRef}
             />
             <label className='minutes-label'>Mins.</label>
           </div>
-          <div className='seconds'>
+          <div className='seconds' onClick={() => secondsRef.current.focus()}>
             <input
               type='number'
               className='seconds-input'
@@ -92,7 +99,7 @@ const TimerSetItem = ({ path, set, idx, setPathData }) => {
             <label className='seconds-label'>Secs.</label>
           </div>
         </div>
-        <div className='weight'>
+        <div className='weight' onClick={() => weightRef.current.select()}>
           <input
             className='weight-input'
             placeholder='45'
