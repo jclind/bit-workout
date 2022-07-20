@@ -69,8 +69,8 @@ const ExerciseTypeDropdown = ({ options, exerciseType, setExerciseType }) => {
       <Select
         options={options}
         styles={customStyles}
-        value={exerciseType}
-        onChange={e => setExerciseType(e)}
+        value={options.find(o => o.value === exerciseType)}
+        onChange={e => setExerciseType(e.value)}
         placeholder='Exercise Type'
         className='select'
       />
