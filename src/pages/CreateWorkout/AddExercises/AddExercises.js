@@ -56,6 +56,7 @@ const AddExercises = () => {
   }
 
   const saveAddedExercises = arr => {
+    console.log(arr)
     if (arr.length <= 0) {
       localStorage.removeItem('addedExercises')
     } else {
