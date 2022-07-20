@@ -63,14 +63,18 @@ const customStyles = {
   }),
 }
 
-const ExerciseTypeDropdown = ({ options, exerciseType, setExerciseType }) => {
+const ExerciseTypeDropdown = ({
+  options,
+  exerciseType,
+  handleSetExerciseType,
+}) => {
   return (
     <div className='exercise-type-dropdown-container'>
       <Select
         options={options}
         styles={customStyles}
         value={options.find(o => o.value === exerciseType)}
-        onChange={e => setExerciseType(e.value)}
+        onChange={handleSetExerciseType}
         placeholder='Exercise Type'
         className='select'
       />
