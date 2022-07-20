@@ -11,16 +11,27 @@ import './AddExercises.scss'
 import ExerciseItem from './ExerciseItem'
 
 const AddExercises = () => {
-  const [addedExercises, setAddedExercises] = useState([
-    {
-      exercise: null,
-      description: null,
-      path: null,
-      type: null,
-      id: uuidv4(),
-      error: '',
-    },
-  ])
+  const exerciseItemTemplate = {
+    exercise: null,
+    description: '',
+    path: null,
+    type: null,
+    id: uuidv4(),
+    error: '',
+  }
+  const [addedExercises, setAddedExercises] = useState(() => {
+    const localData = JSON.parse(localStorage.getItem('addedExercises'))
+    if (localData) {
+      return localData
+    }
+
+    return [
+      {
+        ...exerciseItemTemplate,
+      },
+    ]
+  })
+
   const [showErrors, setShowErrors] = useState(false) // Only show errors on next button click
 
   const [addExerciseError, setAddExerciseError] = useState('')
@@ -36,18 +47,25 @@ const AddExercises = () => {
     setAddedExercises([
       ...addedExercises,
       {
-        exercise: null,
-        description: null,
-        path: null,
-        type: null,
-        id: uuidv4(),
-        error: '',
+        ...exerciseItemTemplate,
       },
     ])
   }
   const deleteExercise = id => {
     setAddedExercises(addedExercises.filter(ex => ex.id !== id))
   }
+
+  const saveAddedExercises = arr => {
+    if (arr.length <= 0) {
+      localStorage.removeItem('addedExercises')
+    } else {
+      localStorage.setItem('addedExercises', JSON.stringify(arr))
+    }
+  }
+
+  useEffect(() => {
+    saveAddedExercises(addedExercises)
+  }, [addedExercises])
 
   const setExerciseData = (prop, val, id) => {
     setShowErrors(false)

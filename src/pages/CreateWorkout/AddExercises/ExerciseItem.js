@@ -8,9 +8,13 @@ const ExerciseItem = ({
   deleteExercise,
   showErrors,
 }) => {
-  const [isDescription, setIsDescription] = useState(false)
-
   const { exercise, description, error, id } = exerciseData
+
+  const [isDescription, setIsDescription] = useState(() => {
+    if (description) return true
+
+    return false
+  })
 
   const setPath = val => {
     const prop = 'path'

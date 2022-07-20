@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 
 import ExerciseTypeDropdown from '../ExerciseTypeDropdown/ExerciseTypeDropdown'
 import DropSet from './DropSet/DropSet'
@@ -30,13 +29,13 @@ const ExercisePath = ({ setSelectedType, setPath, setError }) => {
   const exerciseTypeElement = type => {
     if (!type) return null
 
-    if (type.value === 'straight') {
+    if (type === 'straight') {
       return (
         <StraightSet setExercisePath={setExercisePath} setError={setError} />
       )
-    } else if (type.value === 'drop') {
+    } else if (type === 'drop') {
       return <DropSet setExercisePath={setExercisePath} setError={setError} />
-    } else if (type.value === 'timed') {
+    } else if (type === 'timed') {
       return <TimerSet setExercisePath={setExercisePath} setError={setError} />
     }
     return null
