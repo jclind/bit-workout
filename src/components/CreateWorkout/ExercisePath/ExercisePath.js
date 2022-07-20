@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import ExerciseTypeDropdown from '../ExerciseTypeDropdown/ExerciseTypeDropdown'
 import DropSet from './DropSet/DropSet'
@@ -20,15 +21,45 @@ const ExercisePath = () => {
     console.log(exerciseType)
   }, [exerciseType])
 
-  const ExerciseTypeElement = ({ type }) => {
+  const [straightSetPath, setStraightSetPath] = useState([
+    {
+      weight: null,
+      reps: null,
+      id: uuidv4(),
+    },
+  ])
+
+  // Drop Set values
+  const [startWeight, setStartWeight] = useState('')
+  const [endWeight, setEndWeight] = useState('')
+  const [weightDecrease, setWeightDecrease] = useState('')
+
+  const [timerSetPath, setTimerSetPath] = useState([
+    {
+      weight: null,
+      time: { minutes: null, seconds: null },
+      id: uuidv4(),
+    },
+  ])
+
+  const exerciseTypeElement = type => {
     if (!type) return null
 
     if (type.value === 'straight') {
-      return <StraightSet />
+      return <StraightSet path={straightSetPath} setPath={setStraightSetPath} />
     } else if (type.value === 'drop') {
-      return <DropSet />
+      return (
+        <DropSet
+          startWeight={startWeight}
+          setStartWeight={setStartWeight}
+          endWeight={endWeight}
+          setEndWeight={setEndWeight}
+          weightDecrease={weightDecrease}
+          setWeightDecrease={setWeightDecrease}
+        />
+      )
     } else if (type.value === 'timed') {
-      return <TimerSet />
+      return <TimerSet path={timerSetPath} setPath={setTimerSetPath} />
     }
     return null
   }
@@ -42,7 +73,7 @@ const ExercisePath = () => {
           setExerciseType={setExerciseType}
         />
       </div>
-      <ExerciseTypeElement type={exerciseType} />
+      {exerciseTypeElement(exerciseType)}
     </div>
   )
 }

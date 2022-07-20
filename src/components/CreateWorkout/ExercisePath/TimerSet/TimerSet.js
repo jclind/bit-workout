@@ -1,17 +1,9 @@
 import React, { useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 import TimerSetItem from './TimerSetItem'
+import { v4 as uuidv4 } from 'uuid'
 import './TimerSet.scss'
 
-const TimerSet = () => {
-  const [path, setPath] = useState([
-    {
-      weight: null,
-      time: { minutes: null, seconds: null },
-      id: uuidv4(),
-    },
-  ])
-
+const TimerSet = ({ path, setPath }) => {
   const handleAddSet = () => {
     const prevSet = path[path.length - 1]
     const minutes =
@@ -44,7 +36,6 @@ const TimerSet = () => {
         return (
           <TimerSetItem
             key={set.id}
-            path={path}
             idx={idx}
             set={set}
             setPathData={setPathData}

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 
-const StraightSetPathItem = ({ path, set, idx, setPathData, removeSet }) => {
+const StraightSetPathItem = ({ set, idx, setPathData, removeSet }) => {
   const repsRef = useRef()
 
   const setReps = e => {
