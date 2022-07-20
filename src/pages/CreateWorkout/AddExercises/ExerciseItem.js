@@ -1,15 +1,23 @@
 import React, { useState } from 'react'
-import { useEffect } from 'react'
 import ExercisePath from '../../../components/CreateWorkout/ExercisePath/ExercisePath'
 import ExerciseSelectorDropdown from '../../../components/CreateWorkout/ExerciseSelectorDropdown/ExerciseSelectorDropdown'
 
-const ExerciseItem = ({ exerciseData, setExerciseData, showErrors }) => {
+const ExerciseItem = ({
+  exerciseData,
+  setExerciseData,
+  deleteExercise,
+  showErrors,
+}) => {
   const [isDescription, setIsDescription] = useState(false)
 
   const { exercise, description, error, id } = exerciseData
 
   const setPath = val => {
     const prop = 'path'
+    setExerciseData(prop, val, id)
+  }
+  const setSelectedType = val => {
+    const prop = 'type'
     setExerciseData(prop, val, id)
   }
   const setSelectedExercise = val => {
@@ -33,7 +41,11 @@ const ExerciseItem = ({ exerciseData, setExerciseData, showErrors }) => {
         setSelectedExercise={setSelectedExercise}
       />
 
-      <ExercisePath setPath={setPath} setError={setError} />
+      <ExercisePath
+        setPath={setPath}
+        setError={setError}
+        setSelectedType={setSelectedType}
+      />
 
       <div className='description-container'>
         {isDescription && (
@@ -52,6 +64,13 @@ const ExerciseItem = ({ exerciseData, setExerciseData, showErrors }) => {
           {isDescription ? '- Remove Description' : '+ Add Description'}
         </button>
       </div>
+      <button
+        type='button'
+        className='remove-exercise-btn btn'
+        onClick={() => deleteExercise(id)}
+      >
+        Remove From List
+      </button>
     </div>
   )
 }

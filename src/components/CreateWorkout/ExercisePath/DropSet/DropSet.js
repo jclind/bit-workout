@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import './DropSet.scss'
 
-const DropSet = ({ setExercisePath }) => {
+const DropSet = ({ setExercisePath, setError }) => {
   const [startWeight, setStartWeight] = useState('')
   const [endWeight, setEndWeight] = useState('')
   const [weightDecrease, setWeightDecrease] = useState('')
@@ -70,9 +70,10 @@ const DropSet = ({ setExercisePath }) => {
     )
 
     if (error) {
-      console.log(error)
+      setError(error)
     } else {
-      console.log(
+      setError('')
+      setExercisePath(
         createDropSetPath(
           Number(startWeight),
           Number(endWeight),

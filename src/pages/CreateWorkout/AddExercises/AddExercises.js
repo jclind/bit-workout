@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import {
   AiOutlinePlusCircle,
@@ -16,26 +16,42 @@ const AddExercises = () => {
       exercise: null,
       description: null,
       path: null,
+      type: null,
       id: uuidv4(),
       error: '',
     },
   ])
   const [showErrors, setShowErrors] = useState(false) // Only show errors on next button click
 
+  const [addExerciseError, setAddExerciseError] = useState('')
+
+  const titleRef = useRef()
+
   const addExercise = () => {
+    if (addedExercises.length >= 15) {
+      setShowErrors(true)
+      setAddExerciseError('Only 15 Exercises Are Allowed Per Workout')
+      return titleRef.current.scrollIntoView()
+    }
     setAddedExercises([
       ...addedExercises,
       {
         exercise: null,
         description: null,
         path: null,
+        type: null,
         id: uuidv4(),
         error: '',
       },
     ])
   }
+  const deleteExercise = id => {
+    setAddedExercises(addedExercises.filter(ex => ex.id !== id))
+  }
+
   const setExerciseData = (prop, val, id) => {
     setShowErrors(false)
+    setAddExerciseError('')
     const updatedAddedExercises = [...addedExercises]
     const exerciseIdx = addedExercises.findIndex(ex => ex.id === id)
     updatedAddedExercises[exerciseIdx][prop] = val
@@ -43,19 +59,46 @@ const AddExercises = () => {
   }
 
   const handleNextClick = () => {
-    setShowErrors(true)
-    setAddedExercises(
-      addedExercises.map(ex => {
-        if (!ex.exercise) {
-          return { ...ex, error: 'Please Select Exercise' }
-        }
-      })
-    )
+    let isError = false
+    setAddExerciseError('')
+
+    if (addedExercises.length <= 0) {
+      isError = true
+      setAddExerciseError('Please Add At Least One Exercise')
+    }
+
+    const addedExercisesError = addedExercises.map(ex => {
+      if (!ex.exercise) {
+        isError = true
+        return { ...ex, error: 'Please Select Exercise' }
+      } else if (!ex.type) {
+        isError = true
+        return { ...ex, error: 'Please Select Exercise Type' }
+      }
+      return ex
+    })
+    addedExercisesError.forEach(ex => {
+      if (ex.error) {
+        isError = true
+      }
+    })
+    if (isError) {
+      setShowErrors(true)
+
+      setAddedExercises(addedExercisesError)
+
+      return titleRef.current.scrollIntoView()
+    }
+    return console.log(addedExercises)
   }
   return (
     <div className='create-workout-page add-exercises'>
       <BackButton />
-      <div className='title'>Add Exercises</div>
+      <div className='title' ref={titleRef}>
+        Add Exercises
+      </div>
+
+      {addExerciseError && <div className='error'>{addExerciseError}</div>}
 
       <div className='added-exercises-container'>
         {addedExercises.map(ex => {
@@ -65,6 +108,7 @@ const AddExercises = () => {
               exerciseData={ex}
               setExerciseData={setExerciseData}
               showErrors={showErrors}
+              deleteExercise={deleteExercise}
             />
           )
         })}
