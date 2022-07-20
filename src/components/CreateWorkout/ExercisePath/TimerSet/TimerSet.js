@@ -29,6 +29,9 @@ const TimerSet = () => {
       },
     ])
   }
+  const removeSet = id => {
+    setPath(path.filter(set => set.id !== id))
+  }
   const setPathData = (prop, val, idx) => {
     const updatedPath = [...path]
     updatedPath[idx][prop] = val
@@ -45,6 +48,7 @@ const TimerSet = () => {
             idx={idx}
             set={set}
             setPathData={setPathData}
+            removeSet={removeSet}
           />
         )
       })}

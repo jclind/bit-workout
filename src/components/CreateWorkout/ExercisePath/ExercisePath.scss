@@ -12,17 +12,18 @@
     padding-top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
   }
 
   .path-item {
+    position: relative;
     width: 90%;
     height: 50px;
     margin: 0 auto;
     padding: 0.5rem 0;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: row;
+    align-items: center !important;
+    gap: 2rem;
 
     label.set-label {
       display: flex;
@@ -75,6 +76,25 @@
     width: 100%;
     button {
       width: 50%;
+    }
+  }
+
+  .delete-item-btn {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -1rem;
+    margin: auto 0;
+
+    width: fit-content;
+    height: fit-content;
+    padding: 0.25rem;
+    background: none;
+
+    .icon {
+      height: 20px;
+      width: 20px;
+      color: $error-red;
     }
   }
 

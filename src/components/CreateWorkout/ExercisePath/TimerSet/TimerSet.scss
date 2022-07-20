@@ -1,19 +1,26 @@
 @import '../../../../helpers.scss';
 
-.path-item {
+.timer-set .path-item {
   display: flex;
   flex-direction: column;
   align-items: flex-start !important;
-  margin: 0;
+  margin: 0 auto;
   gap: 0.5rem;
+  padding: 1rem 0;
+  // padding-right: 1rem;
+
   label.set-label {
     text-align: start;
     margin: 0;
   }
   .data {
+    position: relative;
     display: flex;
     justify-content: space-between;
     width: 100%;
+    .delete-item-btn {
+      bottom: auto;
+    }
   }
   .time {
     display: flex;
