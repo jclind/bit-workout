@@ -22,15 +22,31 @@ const DropSet = () => {
     let { error } = isValid(newVal)
     if (error) return
 
-    setVal(Number(newVal))
+    setVal(newVal)
   }
 
+  const createDropSetPath = (start, end, decrease) => {
+    const path = []
+
+    let counter = start
+
+    while (counter > end) {
+      path.push({
+        weight: counter,
+      })
+      counter -= decrease
+    }
+
+    path.push({
+      weight: end,
+    })
+
+    return path
+  }
   const checkForError = (start, end, decrease) => {
     const response = { error: '' }
 
     const startEndDifference = start - end
-
-    console.log(startEndDifference, start, end, decrease)
 
     if (!start) response.error = 'No Start Weight Given'
     else if (!end) response.error = 'No End Weight Given'
@@ -46,9 +62,23 @@ const DropSet = () => {
     return response
   }
   useEffect(() => {
-    const { error } = checkForError(startWeight, endWeight, weightDecrease)
+    const { error } = checkForError(
+      Number(startWeight),
+      Number(endWeight),
+      Number(weightDecrease)
+    )
 
-    if (error) console.log(error)
+    if (error) {
+      console.log(error)
+    } else {
+      console.log(
+        createDropSetPath(
+          Number(startWeight),
+          Number(endWeight),
+          Number(weightDecrease)
+        )
+      )
+    }
   }, [startWeight, endWeight, weightDecrease])
 
   return (
