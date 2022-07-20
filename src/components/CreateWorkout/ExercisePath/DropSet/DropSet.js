@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './DropSet.scss'
 
-const DropSet = () => {
-  const [startWeight, setStartWeight] = useState('')
-  const [endWeight, setEndWeight] = useState('')
-  const [weightDecrease, setWeightDecrease] = useState('')
-
+const DropSet = ({
+  startWeight,
+  setStartWeight,
+  endWeight,
+  setEndWeight,
+  weightDecrease,
+  setWeightDecrease,
+}) => {
+  console.log('here 1')
   const isValid = val => {
+    console.log('here 2')
     const response = { error: '' }
 
     if (val === '') return response
