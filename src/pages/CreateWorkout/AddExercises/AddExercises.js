@@ -56,6 +56,13 @@ const AddExercises = () => {
   const deleteExercise = id => {
     setAddedExercises(addedExercises.filter(ex => ex.id !== id))
   }
+  const clearExercises = () => {
+    setAddedExercises([
+      {
+        ...exerciseItemTemplate,
+      },
+    ])
+  }
 
   const saveAddedExercises = arr => {
     if (arr.length <= 0) {
@@ -133,6 +140,13 @@ const AddExercises = () => {
             />
           )
         })}
+      </div>
+      <div className='clear-exercises-container'>
+        {addedExercises.length > 0 && (
+          <button className='clear-exercises-btn' onClick={clearExercises}>
+            Clear All
+          </button>
+        )}
       </div>
       <button type='button' className='add-exercise-btn' onClick={addExercise}>
         <AiOutlinePlusCircle className='icon' /> <span>Add Exercise</span>

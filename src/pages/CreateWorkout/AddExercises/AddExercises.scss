@@ -2,7 +2,6 @@
 
 .create-workout-page.add-exercises {
   height: fit-content;
-  min-height: calc(100% - #{$navbar-height} - 2rem);
   padding-bottom: 6rem;
   .added-exercises-container {
     display: flex;
@@ -103,6 +102,25 @@
       width: 15px;
       padding: 0 !important;
       margin: 0 !important;
+    }
+  }
+
+  .clear-exercises-container {
+    width: 90%;
+    padding-top: 0.5rem;
+
+    .clear-exercises-btn {
+      height: fit-content;
+      width: fit-content;
+      margin: 0;
+      padding: 0.25rem;
+      background: none;
+      font-size: 0.8rem;
+      color: $tertiary-text;
+
+      &:hover {
+        color: $secondary-text;
+      }
     }
   }
 
