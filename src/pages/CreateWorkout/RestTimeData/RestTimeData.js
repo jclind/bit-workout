@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import BackButton from '../../../components/SettingsComponents/BackButton/BackButton'
 import { AiOutlineWarning } from 'react-icons/ai'
 import './RestTimeData.scss'
+import { useNavigate } from 'react-router-dom'
 
 const RestTimeData = () => {
   const createWorkoutData = JSON.parse(
@@ -26,6 +27,8 @@ const RestTimeData = () => {
   const failedRestTimeMinutesRef = useRef()
   const failedRestTimeSecondsRef = useRef()
   const nextBtnRef = useRef()
+
+  const navigate = useNavigate()
 
   const [error, setError] = useState('')
 
@@ -73,6 +76,8 @@ const RestTimeData = () => {
       'createWorkoutData',
       JSON.stringify({ ...updatedCreateWorkoutData })
     )
+
+    navigate('/create-workout/selection')
   }
 
   return (

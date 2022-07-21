@@ -3,34 +3,56 @@ import BackButton from '../../../components/SettingsComponents/BackButton/BackBu
 import { AiOutlineWarning } from 'react-icons/ai'
 import { v4 as uuidv4 } from 'uuid'
 import './WorkoutTypeSelection.scss'
+import {
+  createWorkout,
+  startWorkout,
+} from '../../../redux/actions/workout/workout'
+import { connect } from 'react-redux'
+import { timeToMS } from '../../../util/timeToMS'
+import { useNavigate } from 'react-router-dom'
 
-const WorkoutTypeSelection = () => {
+const WorkoutTypeSelection = ({ startWorkout }) => {
   const [workoutType, setWorkoutType] = useState('')
 
   const [error, setError] = useState('')
+
+  const navigate = useNavigate()
 
   const handleNextClick = () => {
     if (!workoutType) return setError('Please Select A Workout Type')
 
     if (workoutType === 'temp') {
-      const workoutPath = JSON.parse(localStorage.getItem('addedExercises'))
-      if (!workoutPath || workoutPath.length < 0) {
+      const createWorkoutData = JSON.parse(
+        localStorage.getItem('createWorkoutData')
+      )
+      if (
+        !createWorkoutData ||
+        createWorkoutData.addedExercises.length <= 0 ||
+        !createWorkoutData.restTimeData
+      ) {
         // ! Add more validation in the future
 
         return setError('Please Enter / Re-enter Workout Data On Previous Page')
       }
-      const newWorkout = {
+
+      const workoutPath = createWorkoutData.addedExercises
+      const { restTime, failedRestTime } = createWorkoutData.restTimeData
+      const workoutData = {
         id: uuidv4(),
-        restTime: null,
-        failSetRestTime: null,
-        authorUID: null,
-        dateCreated: null,
-        lastSetFailed: null,
+        restTime: timeToMS(restTime.minutes, restTime.seconds),
+        failSetRestTime: timeToMS(
+          failedRestTime.minutes,
+          failedRestTime.seconds
+        ),
+        dateCreated: new Date().getTime(),
+        lastSetFailed: false,
         name: null,
         path: workoutPath,
       }
 
-      // startSingleUseWorkout()
+      startWorkout(workoutData).then(() => {
+        navigate('/workout')
+      })
     } else if (workoutType === 'saved') {
       // const newWorkout = {
       //   id: uuidv4(),
@@ -96,4 +118,10 @@ const WorkoutTypeSelection = () => {
   )
 }
 
-export default WorkoutTypeSelection
+const mapDispatchToProps = dispatch => {
+  return {
+    startWorkout: workoutData => dispatch(startWorkout(workoutData)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(WorkoutTypeSelection)
