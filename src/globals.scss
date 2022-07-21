@@ -332,4 +332,17 @@ input[type='date']::-webkit-calendar-picker-indicator {
     margin: 0 auto;
     margin-bottom: 2rem;
   }
+  .next-btn {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $secondary;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 80%;
+    height: fit-content;
+    padding: 1rem 0;
+    border-radius: $border-radius;
+  }
 }

@@ -21,9 +21,11 @@ const AddExercises = () => {
     error: '',
   }
   const [addedExercises, setAddedExercises] = useState(() => {
-    const localData = JSON.parse(localStorage.getItem('addedExercises'))
-    if (localData) {
-      return localData
+    const createWorkoutData = JSON.parse(
+      localStorage.getItem('createWorkoutData')
+    )
+    if (createWorkoutData && createWorkoutData.addedExercises) {
+      return createWorkoutData.addedExercises
     }
 
     return [
@@ -65,10 +67,19 @@ const AddExercises = () => {
   }
 
   const saveAddedExercises = arr => {
+    const createWorkoutData = JSON.parse(
+      localStorage.getItem('createWorkoutData')
+    )
     if (arr.length <= 0) {
-      localStorage.removeItem('addedExercises')
+      localStorage.setItem(
+        'createWorkoutData',
+        JSON.stringify({ ...createWorkoutData, addedExercises: [] })
+      )
     } else {
-      localStorage.setItem('addedExercises', JSON.stringify(arr))
+      localStorage.setItem(
+        'createWorkoutData',
+        JSON.stringify({ ...createWorkoutData, addedExercises: arr })
+      )
     }
   }
 
@@ -117,7 +128,7 @@ const AddExercises = () => {
 
       return titleRef.current.scrollIntoView()
     }
-    navigate('/create-workout/selection')
+    navigate('/create-workout/rest-time')
   }
   return (
     <div className='create-workout-page add-exercises'>
