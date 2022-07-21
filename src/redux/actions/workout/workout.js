@@ -83,14 +83,14 @@ export const getSingleWorkout = id => (dispatch, getState) => {
     currWorkoutData,
   }
 }
-export const startWorkout = exercise => async (dispatch, getState) => {
+export const startWorkout = workoutData => async (dispatch, getState) => {
   const data = {
     isWorkoutRunning: true,
     runningWorkout: {
       workoutStartTime: new Date().getTime(),
       timeLastUpdated: new Date().getTime(),
       remainingWorkout: { currIdx: 0, currSet: 1 },
-      currWorkout: exercise,
+      currWorkout: workoutData,
       timer: {
         isTimer: false,
         timerStart: null,

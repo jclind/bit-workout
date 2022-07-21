@@ -33,6 +33,7 @@ import AuthLandingPage from './pages/Auth/AuthLandingPage/AuthLandingPage'
 import CreateWorkout from './pages/CreateWorkout/CreateWorkout'
 import WorkoutTypeSelection from './pages/CreateWorkout/WorkoutTypeSelection/WorkoutTypeSelection'
 import AddExercises from './pages/CreateWorkout/AddExercises/AddExercises'
+import RestTimeData from './pages/CreateWorkout/RestTimeData/RestTimeData'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -72,6 +73,7 @@ function App() {
                 }
               >
                 <Route path='add-exercises' element={<AddExercises />} />
+                <Route path='rest-time' element={<RestTimeData />} />
                 <Route path='selection' element={<WorkoutTypeSelection />} />
               </Route>
               <Route
