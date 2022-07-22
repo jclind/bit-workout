@@ -15,7 +15,7 @@ const AddExercises = () => {
   const exerciseItemTemplate = {
     exercise: null,
     description: '',
-    path: null,
+    sets: null,
     type: null,
     id: uuidv4(),
     error: '',

@@ -11,10 +11,11 @@ import {
   getSingleWorkout,
   stopWorkout,
 } from '../../../redux/actions/workout/workout'
+import StraightSetExercise from './StraightSetExercise'
 
 const ActiveWorkout = ({
   getSingleWorkout,
-  currSet,
+  currSetIdx,
   currIdx,
   currWorkout,
   completeSet,
@@ -26,73 +27,34 @@ const ActiveWorkout = ({
   const [isSetFailedModalOpen, setIsSetFailedModalOpen] = useState(false)
   const [isStopModalOpen, setIsStopModalOpen] = useState(false)
 
-  const currExerciseID = currWorkout.path[currIdx].exerciseID
-  const currExercise = getSingleWorkout(currExerciseID)
+  console.log(currWorkout)
 
-  const {
-    id: exerciseID,
-    name,
-    imageURL,
-    currWorkoutData: { sets: currSetTotal, reps: currRepTotal },
-  } = currExercise
+  const currExercise = currWorkout.path[currIdx]
+  const exerciseType = currExercise.type
 
-  const exerciseWeightData = weights.find(w => w.exerciseID === exerciseID)
-  let exerciseWeight
-  if (!exerciseWeightData) {
-    exerciseWeight = 45
-  } else {
-    exerciseWeight = exerciseWeightData.weight
+  const exerciseName = currExercise.exercise.name
+
+  // console.log(currExercise, currSet)
+
+  const exerciseTypeOptions = type => {
+    if (type === 'straight') {
+      return (
+        <StraightSetExercise
+          currExercise={currExercise}
+          weights={weights}
+          currSetIdx={currSetIdx}
+        />
+      )
+    }
   }
-
-  const plateWeights = calculatePlates(45, exerciseWeight)
 
   return (
     <div className='active-workout'>
-      <div className='exercise-title'>{name}</div>
-      <div className='rep-set-text'>{`${currRepTotal} Reps, Set ${currSet} of ${currSetTotal}`}</div>
-      <div className='workout-data'>
-        <div
-          className='exercise-weight'
-          onClick={() => setIsPlatesModalOpen(true)}
-        >
-          <span>{exerciseWeight} lbs</span>{' '}
-          <AiFillInfoCircle className='icon' />
-        </div>
-        <div className='exercise-img-container'>
-          <img src={imageURL} alt={name} className='exercise-img' />
-        </div>
-        <button
-          className='view-workout-path'
-          onClick={() => setIsWorkoutPathModalOpen(true)}
-        >
-          Workout Path <AiOutlineRight className='icon' />
-        </button>
-      </div>
-      <div className='options'>
-        <button
-          className='submit-btn'
-          onClick={() => completeSet(currSetTotal, currRepTotal, exerciseID)}
-        >
-          Completed
-        </button>
-        <button
-          className='set-failed-btn'
-          onClick={() => setIsSetFailedModalOpen(true)}
-        >
-          Failed
-        </button>
-      </div>
+      <div className='exercise-title'>{exerciseName}</div>
+      <div className='exercise-type'>Exercise type: {exerciseType}</div>
+      {exerciseTypeOptions(exerciseType)}
 
-      <button
-        type='button'
-        className='stop-workout-btn'
-        aria-label='Stop Workout Button'
-        onClick={() => setIsStopModalOpen(true)}
-      >
-        <AiOutlineClose className='icon' />
-      </button>
-
-      {isPlatesModalOpen ? (
+      {/* {isPlatesModalOpen ? (
         <PlatesModal
           weights={plateWeights}
           onClose={() => {
@@ -122,7 +84,7 @@ const ActiveWorkout = ({
           }}
           stopWorkout={stopWorkout}
         />
-      ) : null}
+      ) : null} */}
     </div>
   )
 }
@@ -131,7 +93,7 @@ const mapStateTopProps = state => {
   const runningWorkout = state.workout.workoutData.runningWorkout
 
   return {
-    currSet: runningWorkout.remainingWorkout.currSet,
+    currSetIdx: runningWorkout.remainingWorkout.currSet,
     currIdx: runningWorkout.remainingWorkout.currIdx,
     currWorkout: runningWorkout.currWorkout,
     weights: state.workout.workoutData.weights,

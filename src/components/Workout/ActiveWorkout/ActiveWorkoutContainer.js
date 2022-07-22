@@ -32,16 +32,16 @@ const WorkoutContainer = ({
           setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
         />
       ) : (
-        <ActiveWorkout setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen} />
+        <ActiveWorkout
+          setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
+          currWorkout={currWorkout}
+        />
       )}
       {isWorkoutPathModalOpen ? (
         <WorkoutPathModal
           onClose={() => {
             setIsWorkoutPathModalOpen(false)
           }}
-          currIdx={currIdx}
-          currSet={currSet}
-          workout={currWorkout}
         />
       ) : null}
     </>
@@ -51,10 +51,12 @@ const WorkoutContainer = ({
 const mapStateToProps = state => {
   const runningWorkout = state.workout.workoutData.runningWorkout
   const timer = runningWorkout.timer
+  console.log(state.workout.workoutData.runningWorkout)
+  console.log(state.workout.workoutData.runningWorkout.currWorkout.path)
   return {
     isTimer: timer.isTimer,
     timerStart: timer.timerStart,
-    currSet: runningWorkout.remainingWorkout.currSet,
+    currSetIdx: runningWorkout.remainingWorkout.currSet,
     currIdx: runningWorkout.remainingWorkout.currIdx,
     currWorkout: runningWorkout.currWorkout,
   }
