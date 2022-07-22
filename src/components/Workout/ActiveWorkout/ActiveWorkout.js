@@ -6,13 +6,13 @@ import { AiOutlineRight } from 'react-icons/ai'
 import { connect } from 'react-redux'
 import {
   completeSet,
-  getSingleWorkout,
+  getSingleExercise,
   stopWorkout,
 } from '../../../redux/actions/workout/workout'
 import StraightSetExercise from './StraightSetExercise'
 
 const ActiveWorkout = ({
-  getSingleWorkout,
+  getSingleExercise,
   currSetIdx,
   currExerciseIdx,
   currWorkout,
@@ -23,10 +23,12 @@ const ActiveWorkout = ({
 }) => {
   console.log(currWorkout)
 
-  const currExercise = currWorkout.path[currExerciseIdx]
-  const exerciseType = currExercise.type
+  const currActiveWorkoutExercise = currWorkout.path[currExerciseIdx]
+  const exerciseType = currActiveWorkoutExercise.type
 
-  const exerciseName = currExercise.exercise.name
+  const exerciseID = currActiveWorkoutExercise.exerciseID
+  const currExercise = getSingleExercise(exerciseID)
+  const exerciseName = currExercise.name
 
   // console.log(currExercise, currSet)
 
@@ -34,6 +36,7 @@ const ActiveWorkout = ({
     if (type === 'straight') {
       return (
         <StraightSetExercise
+          currActiveWorkoutExercise={currActiveWorkoutExercise}
           currExercise={currExercise}
           weights={weights}
           currSetIdx={currSetIdx}
@@ -66,10 +69,11 @@ const mapStateTopProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    getSingleWorkout: id => dispatch(getSingleWorkout(id)),
+    getSingleWorkout: exerciseID => dispatch(getSingleExercise(exerciseID)),
     completeSet: (currSetTotal, numReps, exerciseID, lastSetFailed) =>
       dispatch(completeSet(currSetTotal, numReps, exerciseID, lastSetFailed)),
     stopWorkout: (coins, exp) => dispatch(stopWorkout(coins, exp)),
+    getSingleExercise: exerciseID => dispatch(getSingleExercise(exerciseID)),
   }
 }
 

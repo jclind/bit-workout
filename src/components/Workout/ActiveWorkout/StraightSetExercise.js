@@ -10,6 +10,7 @@ import ConfirmSetFailedModal from '../ConfirmSetFailedModal/ConfirmSetFailedModa
 import StopWorkoutModal from '../StopWorkoutModal/StopWorkoutModal'
 
 const StraightSetExercise = ({
+  currActiveWorkoutExercise,
   currExercise,
   weights,
   stopWorkout,
@@ -21,14 +22,13 @@ const StraightSetExercise = ({
   const [isSetFailedModalOpen, setIsSetFailedModalOpen] = useState(false)
   const [isStopModalOpen, setIsStopModalOpen] = useState(false)
 
-  const currSet = currExercise.sets[currSetIdx - 1]
+  const sets = currActiveWorkoutExercise.sets
 
-  const numSets = currExercise.sets.length
+  const currSet = sets[currSetIdx - 1]
+  const numSets = sets.length
   const numReps = currSet.reps
 
-  const { name: exerciseName, imageURL } = currExercise.exercise
-
-  const exerciseID = currExercise.exercise.id
+  const { name: exerciseName, imageURL, exerciseID } = currExercise
 
   const exerciseWeightData = weights.find(w => w.exerciseID === exerciseID)
   let exerciseWeight
