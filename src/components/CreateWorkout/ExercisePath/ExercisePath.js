@@ -13,9 +13,9 @@ const options = [
   { value: 'timed', label: 'Timed Sets' },
 ]
 
-const ExercisePath = ({ setSelectedType, path, type, setSets, setError }) => {
+const ExercisePath = ({ setSelectedType, sets, type, setSets, setError }) => {
   const [exerciseType, setExerciseType] = useState(type || null)
-  const [exercisePath, setExercisePath] = useState(path || [])
+  const [exercisePath, setExercisePath] = useState(sets || [])
 
   const handleSetExerciseType = e => {
     const type = e.value
