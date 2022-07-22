@@ -8,7 +8,7 @@ const ExerciseItem = ({
   deleteExercise,
   showErrors,
 }) => {
-  const { exercise, sets, type, description, error, id } = exerciseData
+  const { exerciseID, sets, type, description, error, id } = exerciseData
 
   const [isDescription, setIsDescription] = useState(() => {
     if (description) return true
@@ -24,9 +24,9 @@ const ExerciseItem = ({
     const prop = 'type'
     setExerciseData(prop, val, id)
   }
-  const setSelectedExercise = val => {
-    const prop = 'exercise'
-    setExerciseData(prop, val, id)
+  const setSelectedExerciseID = exerciseID => {
+    const prop = 'exerciseID'
+    setExerciseData(prop, exerciseID, id)
   }
   const setDescription = val => {
     const prop = 'description'
@@ -41,8 +41,8 @@ const ExerciseItem = ({
     <div className='exercise-item'>
       {error && showErrors ? <div className='error'>{error}</div> : null}
       <ExerciseSelectorDropdown
-        selectedExercise={exercise}
-        setSelectedExercise={setSelectedExercise}
+        selectedExerciseID={exerciseID}
+        setSelectedExerciseID={setSelectedExerciseID}
       />
 
       <ExercisePath

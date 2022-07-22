@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom'
 
 const AddExercises = () => {
   const exerciseItemTemplate = {
-    exercise: null,
+    exerciseID: null,
     description: '',
     sets: null,
     type: null,
@@ -107,7 +107,7 @@ const AddExercises = () => {
     }
 
     const addedExercisesError = addedExercises.map(ex => {
-      if (!ex.exercise) {
+      if (!ex.exerciseID) {
         isError = true
         return { ...ex, error: 'Please Select Exercise' }
       } else if (!ex.type) {
