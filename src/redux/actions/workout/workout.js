@@ -61,6 +61,23 @@ export const setWorkoutFinished = isFinished => async (dispatch, getState) => {
   }
 }
 
+export const getSingleExercise = exerciseID => async (dispatch, getState) => {
+  const weights = getState().workout.workoutData.weights
+
+  const exercise = exerciseList.find(ex => ex.id === exerciseID)
+
+  const exerciseWeightData = weights.find(w => w.exerciseID === exerciseID)
+  let exerciseWeight
+  if (!exerciseWeightData) {
+    exerciseWeight = 45+
+    
+  } else {
+    exerciseWeight = exerciseWeightData.weight
+  }
+
+  return {...exercise, weights} || null
+}
+
 export const getSingleWorkout = id => (dispatch, getState) => {
   const weights = getState().workout.workoutData.weights
   const workoutData = getState().workout.workoutData
