@@ -16,8 +16,8 @@ const ExerciseItem = ({
     return false
   })
 
-  const setPath = val => {
-    const prop = 'path'
+  const setSets = val => {
+    const prop = 'sets'
     setExerciseData(prop, val, id)
   }
   const setSelectedType = val => {
@@ -47,7 +47,7 @@ const ExerciseItem = ({
 
       <ExercisePath
         path={path}
-        setPath={setPath}
+        setSets={setSets}
         type={type}
         setError={setError}
         setSelectedType={setSelectedType}

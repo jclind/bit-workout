@@ -13,7 +13,7 @@ const options = [
   { value: 'timed', label: 'Timed Sets' },
 ]
 
-const ExercisePath = ({ setSelectedType, path, type, setPath, setError }) => {
+const ExercisePath = ({ setSelectedType, path, type, setSets, setError }) => {
   const [exerciseType, setExerciseType] = useState(type || null)
   const [exercisePath, setExercisePath] = useState(path || [])
 
@@ -32,7 +32,7 @@ const ExercisePath = ({ setSelectedType, path, type, setPath, setError }) => {
     setSelectedType(exerciseType)
   }, [exerciseType])
   useEffect(() => {
-    setPath(exercisePath)
+    setSets(exercisePath)
   }, [exercisePath])
 
   // Drop Set values

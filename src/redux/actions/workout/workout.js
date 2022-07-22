@@ -74,7 +74,7 @@ export const getSingleWorkout = id => (dispatch, getState) => {
     exerciseWeight = exerciseWeightData.weight
   }
   const currWorkoutData = workoutData.runningWorkout.currWorkout.path.find(
-    ex => ex.exerciseID === id
+    ex => ex.exercise.id === id
   )
 
   return {
@@ -374,6 +374,9 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
   dispatch(addWorkoutToPastWorkouts(finishedWorkoutData))
 }
 export const stopWorkout = () => async (dispatch, getState) => {
+  await dispatch(updateWorkout({ isWorkoutRunning: false }))
+  return dispatch(setWorkoutFinished(true))
+
   const workoutData = getState().workout.workoutData
   const runningWorkout = workoutData.runningWorkout
   const currWorkout = runningWorkout.currWorkout
