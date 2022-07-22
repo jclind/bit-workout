@@ -15,7 +15,8 @@ const SKELETON_HIGHLIGHT_COLOR = '#548ca8'
 const PastWorkoutsItem = ({ workout, loading }) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
 
-  const name = workout && workout.workoutName
+  const name =
+    workout && workout.workoutName ? workout.workoutName : 'Temp Workout'
   const workoutTime = workout && formatTimeToObject(workout.totalWorkoutTime)
   const date = workout && formatDate(workout.workoutStartTime)
   const startTime = workout && formatAMPM(workout.workoutStartTime)
@@ -124,9 +125,9 @@ const PastWorkoutsItem = ({ workout, loading }) => {
               <div className='label'>Exercises:</div>
               <div className='data'>
                 {workout.path.map(currExercise => {
-                  const exerciseData = exerciseList.find(
-                    obj => obj.id === currExercise.exerciseID
-                  )
+                  const exerciseData = currExercise.exercise
+
+                  console.log(currExercise)
 
                   const name = exerciseData.name
                   const imageURL = exerciseData.imageURL

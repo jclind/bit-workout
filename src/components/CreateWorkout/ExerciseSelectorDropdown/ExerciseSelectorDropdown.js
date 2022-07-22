@@ -5,14 +5,14 @@ import useClickOutside from '../../../util/useClickOutside'
 import './ExerciseSelectorDropdown.scss'
 
 const ExerciseSelectorDropdown = ({
-  selectedExercise,
-  setSelectedExercise,
+  selectedExerciseID,
+  setSelectedExerciseID,
 }) => {
   const [isDropdown, setIsDropdown] = useState(false)
   const toggleDropdown = () => setIsDropdown(!isDropdown)
 
   const handleSetSelectedExercise = exercise => {
-    setSelectedExercise(exercise)
+    setSelectedExerciseID(exercise.id)
     setIsDropdown(false)
   }
 
@@ -24,7 +24,7 @@ const ExerciseSelectorDropdown = ({
     <div className='select-exercise-container' ref={exerciseContainer}>
       <ChooseExerciseBtn
         toggleDropdown={toggleDropdown}
-        selectedExercise={selectedExercise}
+        selectedExerciseID={selectedExerciseID}
       />
       <ExerciseDropdown
         isDropdown={isDropdown}

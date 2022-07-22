@@ -7,13 +7,7 @@ import './ActiveWorkout.scss'
 import { connect } from 'react-redux'
 import WorkoutPathModal from '../WorkoutPathModal/WorkoutPathModal'
 
-const WorkoutContainer = ({
-  isTimer,
-  timerStart,
-  currIdx,
-  currSet,
-  currWorkout,
-}) => {
+const WorkoutContainer = ({ isTimer, timerStart, currWorkout }) => {
   const [isWorkoutPathModalOpen, setIsWorkoutPathModalOpen] = useState(false)
 
   const [play] = useSound(timerFinishedSound)
@@ -51,13 +45,9 @@ const WorkoutContainer = ({
 const mapStateToProps = state => {
   const runningWorkout = state.workout.workoutData.runningWorkout
   const timer = runningWorkout.timer
-  console.log(state.workout.workoutData.runningWorkout)
-  console.log(state.workout.workoutData.runningWorkout.currWorkout.path)
   return {
     isTimer: timer.isTimer,
     timerStart: timer.timerStart,
-    currSetIdx: runningWorkout.remainingWorkout.currSet,
-    currIdx: runningWorkout.remainingWorkout.currIdx,
     currWorkout: runningWorkout.currWorkout,
   }
 }

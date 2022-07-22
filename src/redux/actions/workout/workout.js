@@ -324,7 +324,7 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
   const path = currWorkout.path
   // Get path data with weights included for pastWorkoutData stats
   const pathData = path.map(ex => {
-    const exerciseID = ex.exerciseID
+    const exerciseID = ex.exercise.id
     const imageURL = exerciseList.find(ex => ex.id === exerciseID).imageURL
     let currWeight = null
     weights.forEach(w => {
@@ -360,7 +360,7 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
   const workoutStartTime = runningWorkout.workoutStartTime
   const totalWorkoutTime = new Date() - workoutStartTime
   const finishedWorkoutData = {
-    workoutName: currWorkout.name,
+    workoutName: currWorkout.name || 'Temp Workout',
     workoutRestTime: currWorkout.restTime,
     workoutStartTime,
     totalWorkoutTime,
@@ -373,10 +373,8 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
   dispatch(setWorkoutFinished(true))
   dispatch(addWorkoutToPastWorkouts(finishedWorkoutData))
 }
-export const stopWorkout = () => async (dispatch, getState) => {
-  await dispatch(updateWorkout({ isWorkoutRunning: false }))
-  return dispatch(setWorkoutFinished(true))
 
+export const stopWorkout = () => async (dispatch, getState) => {
   const workoutData = getState().workout.workoutData
   const runningWorkout = workoutData.runningWorkout
   const currWorkout = runningWorkout.currWorkout

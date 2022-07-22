@@ -1,8 +1,10 @@
 import React from 'react'
 import { FiChevronDown } from 'react-icons/fi'
+import { exerciseList } from '../../../assets/data/exerciseList'
 import './ChooseExerciseBtn.scss'
 
-const ChooseExerciseBtn = ({ toggleDropdown, selectedExercise }) => {
+const ChooseExerciseBtn = ({ toggleDropdown, selectedExerciseID }) => {
+  const selectedExercise = exerciseList.find(ex => ex.id === selectedExerciseID)
   return (
     <button
       type='button'
