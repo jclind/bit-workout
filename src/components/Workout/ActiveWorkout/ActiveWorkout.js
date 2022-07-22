@@ -43,6 +43,7 @@ const ActiveWorkout = ({
           currExercise={currExercise}
           weights={weights}
           currSetIdx={currSetIdx}
+          completeSet={completeSet}
         />
       )
     }
@@ -55,6 +56,19 @@ const ActiveWorkout = ({
       {exerciseTypeOptions(exerciseType)}
 
       {/* {isPlatesModalOpen ? (
+        {isSetFailedModalOpen ? (
+          <ConfirmSetFailedModal
+            onClose={() => {
+              setIsSetFailedModalOpen(false)
+            }}
+            currWeight={exerciseWeight}
+            weightExerciseId={exerciseID}
+            currSetTotal={currSetTotal}
+            currRepTotal={currRepTotal}
+            currWorkout={currWorkout}
+            currIdx={currIdx}
+          />
+        ) : null}
         <PlatesModal
           weights={plateWeights}
           onClose={() => {
@@ -62,19 +76,6 @@ const ActiveWorkout = ({
           }}
           currExercise={currExercise}
           exerciseWeight={exerciseWeight}
-        />
-      ) : null}
-      {isSetFailedModalOpen ? (
-        <ConfirmSetFailedModal
-          onClose={() => {
-            setIsSetFailedModalOpen(false)
-          }}
-          currWeight={exerciseWeight}
-          weightExerciseId={exerciseID}
-          currSetTotal={currSetTotal}
-          currRepTotal={currRepTotal}
-          currWorkout={currWorkout}
-          currIdx={currIdx}
         />
       ) : null}
       {isStopModalOpen ? (

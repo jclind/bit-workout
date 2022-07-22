@@ -6,7 +6,12 @@ import {
   AiOutlineClose,
 } from 'react-icons/ai'
 
-const StraightSetExercise = ({ currExercise, weights, currSetIdx }) => {
+const StraightSetExercise = ({
+  currExercise,
+  weights,
+  currSetIdx,
+  completeSet,
+}) => {
   const currSet = currExercise.sets[currSetIdx - 1]
 
   const numSets = currExercise.sets.length
@@ -49,7 +54,7 @@ const StraightSetExercise = ({ currExercise, weights, currSetIdx }) => {
       <div className='options'>
         <button
           className='submit-btn'
-          // onClick={() => completeSet(currSetTotal, currRepTotal, exerciseID)}
+          onClick={() => completeSet(numSets, numReps, exerciseID)}
         >
           Completed
         </button>

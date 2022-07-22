@@ -8,7 +8,7 @@ const ExerciseItem = ({
   deleteExercise,
   showErrors,
 }) => {
-  const { exercise, path, type, description, error, id } = exerciseData
+  const { exercise, sets, type, description, error, id } = exerciseData
 
   const [isDescription, setIsDescription] = useState(() => {
     if (description) return true
@@ -46,7 +46,7 @@ const ExerciseItem = ({
       />
 
       <ExercisePath
-        path={path}
+        sets={sets}
         setSets={setSets}
         type={type}
         setError={setError}
