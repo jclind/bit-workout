@@ -52,6 +52,7 @@ const DropSetExercise = ({
           Completed
         </button>
       </div>
+
       {isRepInputModalOpen ? (
         <RepInputModal
           onClose={() => {

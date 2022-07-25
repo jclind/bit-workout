@@ -11,6 +11,7 @@ import {
 } from '../../../redux/actions/workout/workout'
 import StraightSetExercise from './SetTypes/StraightSetExercise'
 import DropSetExercise from './SetTypes/DropSetExercise'
+import StopWorkoutModal from '../StopWorkoutModal/StopWorkoutModal'
 
 const ActiveWorkout = ({
   getSingleExercise,
@@ -22,7 +23,7 @@ const ActiveWorkout = ({
   stopWorkout,
   setIsWorkoutPathModalOpen,
 }) => {
-  console.log(currWorkout)
+  const [isStopModalOpen, setIsStopModalOpen] = useState(false)
 
   const currActiveWorkoutExercise = currWorkout.path[currExerciseIdx]
   const exerciseType = currActiveWorkoutExercise.type
@@ -42,7 +43,6 @@ const ActiveWorkout = ({
           weights={weights}
           currSetIdx={currSetIdx}
           completeSet={completeSet}
-          stopWorkout={stopWorkout}
           setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
         />
       )
@@ -64,6 +64,22 @@ const ActiveWorkout = ({
       <div className='exercise-title'>{exerciseName}</div>
       <div className='exercise-type'>({exerciseType} Sets)</div>
       {exerciseTypeOptions(exerciseType)}
+      <button
+        type='button'
+        className='stop-workout-btn'
+        aria-label='Stop Workout Button'
+        onClick={() => setIsStopModalOpen(true)}
+      >
+        <AiOutlineClose className='icon' />
+      </button>
+      {isStopModalOpen ? (
+        <StopWorkoutModal
+          onClose={() => {
+            setIsStopModalOpen(false)
+          }}
+          stopWorkout={stopWorkout}
+        />
+      ) : null}
     </div>
   )
 }
