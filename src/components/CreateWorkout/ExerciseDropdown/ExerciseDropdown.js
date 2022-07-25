@@ -7,6 +7,7 @@ const ExerciseDropdown = ({
   exerciseSearchVal,
   setExerciseSearchVal,
   selectExercise,
+  searchInputRef,
 }) => {
   return (
     <div className={isDropdown ? 'dropdown visible' : 'dropdown'}>
@@ -17,6 +18,7 @@ const ExerciseDropdown = ({
           placeholder='Find Exercise'
           value={exerciseSearchVal}
           onChange={e => setExerciseSearchVal(e.target.value)}
+          ref={searchInputRef}
         />
       </div>
       <div className='exercise-cells'>
