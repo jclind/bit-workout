@@ -107,11 +107,9 @@ const AddExercises = () => {
     }
 
     const addedExercisesError = addedExercises.map(ex => {
-      if (!ex.exerciseID) {
-        isError = true
+      if (ex.exerciseID !== 0 && !ex.exerciseID) {
         return { ...ex, error: 'Please Select Exercise' }
       } else if (!ex.type) {
-        isError = true
         return { ...ex, error: 'Please Select Exercise Type' }
       }
       return ex

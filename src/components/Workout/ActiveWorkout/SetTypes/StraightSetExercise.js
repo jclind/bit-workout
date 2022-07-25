@@ -7,19 +7,16 @@ import {
 } from 'react-icons/ai'
 import PlatesModal from '../../PlatesModal/PlatesModal'
 import ConfirmSetFailedModal from '../../ConfirmSetFailedModal/ConfirmSetFailedModal'
-import StopWorkoutModal from '../../StopWorkoutModal/StopWorkoutModal'
 
 const StraightSetExercise = ({
   currActiveWorkoutExercise,
   currExercise,
-  stopWorkout,
   currSetIdx,
   completeSet,
   setIsWorkoutPathModalOpen,
 }) => {
   const [isPlatesModalOpen, setIsPlatesModalOpen] = useState(false)
   const [isSetFailedModalOpen, setIsSetFailedModalOpen] = useState(false)
-  const [isStopModalOpen, setIsStopModalOpen] = useState(false)
 
   const sets = currActiveWorkoutExercise.sets
   const currSet = sets[currSetIdx - 1]
@@ -69,14 +66,6 @@ const StraightSetExercise = ({
           Failed
         </button>
       </div>
-      <button
-        type='button'
-        className='stop-workout-btn'
-        aria-label='Stop Workout Button'
-        onClick={() => setIsStopModalOpen(true)}
-      >
-        <AiOutlineClose className='icon' />
-      </button>
 
       {isSetFailedModalOpen ? (
         <ConfirmSetFailedModal
@@ -97,14 +86,6 @@ const StraightSetExercise = ({
           }}
           currExercise={currExercise}
           exerciseWeight={exerciseWeight}
-        />
-      ) : null}
-      {isStopModalOpen ? (
-        <StopWorkoutModal
-          onClose={() => {
-            setIsStopModalOpen(false)
-          }}
-          stopWorkout={stopWorkout}
         />
       ) : null}
     </>
