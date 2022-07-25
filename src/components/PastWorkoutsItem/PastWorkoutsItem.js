@@ -125,15 +125,12 @@ const PastWorkoutsItem = ({ workout, loading }) => {
               <div className='label'>Exercises:</div>
               <div className='data'>
                 {workout.path.map(currExercise => {
-                  const exerciseData = currExercise.exercise
-
-                  console.log(currExercise)
-
-                  const name = exerciseData.name
-                  const imageURL = exerciseData.imageURL
+                  const name = currExercise.name
+                  const imageURL = currExercise.imageURL
                   const weight = currExercise.weight
                   const reps = currExercise.reps
                   const sets = currExercise.sets
+                  const numSets = sets.length
 
                   return (
                     <div className='workout-path-exercise'>
@@ -144,7 +141,7 @@ const PastWorkoutsItem = ({ workout, loading }) => {
                         <div className='name'>{name}</div>
                         <div className='reps-sets'>
                           <div className='sets'>
-                            Sets: <span>{sets}</span>
+                            Sets: <span>{numSets}</span>
                           </div>
                           <div className='reps'>
                             Reps: <span>{reps}</span>

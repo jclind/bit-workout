@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
-import { calculatePlates } from '../../../util/calculatePlates'
+import { calculatePlates } from '../../../../util/calculatePlates'
 import {
   AiFillInfoCircle,
   AiOutlineRight,
   AiOutlineClose,
 } from 'react-icons/ai'
-import PlatesModal from '../PlatesModal/PlatesModal'
-import ConfirmSetFailedModal from '../ConfirmSetFailedModal/ConfirmSetFailedModal'
-import StopWorkoutModal from '../StopWorkoutModal/StopWorkoutModal'
+import PlatesModal from '../../PlatesModal/PlatesModal'
+import ConfirmSetFailedModal from '../../ConfirmSetFailedModal/ConfirmSetFailedModal'
+import StopWorkoutModal from '../../StopWorkoutModal/StopWorkoutModal'
 
 const StraightSetExercise = ({
   currActiveWorkoutExercise,
   currExercise,
-  weights,
   stopWorkout,
   currSetIdx,
   completeSet,
@@ -23,7 +22,6 @@ const StraightSetExercise = ({
   const [isStopModalOpen, setIsStopModalOpen] = useState(false)
 
   const sets = currActiveWorkoutExercise.sets
-
   const currSet = sets[currSetIdx - 1]
   const numSets = sets.length
   const numReps = currSet.reps
