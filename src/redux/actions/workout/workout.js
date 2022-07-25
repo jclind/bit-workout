@@ -61,7 +61,7 @@ export const setWorkoutFinished = isFinished => async (dispatch, getState) => {
   }
 }
 
-export const getSingleExercise = exerciseID => async (dispatch, getState) => {
+export const getSingleExercise = exerciseID => (dispatch, getState) => {
   const weights = getState().workout.workoutData.weights
 
   const exercise = exerciseList.find(ex => ex.id === exerciseID)
@@ -290,7 +290,6 @@ export const failSet =
     await dispatch(
       updateWorkout({
         weights: modWeights,
-        // 'runningWorkout.currWorkout.path'
       })
     )
   }
@@ -340,7 +339,7 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
   const path = currWorkout.path
   // Get path data with weights included for pastWorkoutData stats
   const pathData = path.map(ex => {
-    const exerciseID = ex.exercise.id
+    const exerciseID = ex.exerciseID
     const imageURL = exerciseList.find(ex => ex.id === exerciseID).imageURL
     let currWeight = null
     weights.forEach(w => {

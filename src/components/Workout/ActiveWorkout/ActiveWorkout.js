@@ -9,7 +9,8 @@ import {
   getSingleExercise,
   stopWorkout,
 } from '../../../redux/actions/workout/workout'
-import StraightSetExercise from './StraightSetExercise'
+import StraightSetExercise from './SetTypes/StraightSetExercise'
+import DropSetExercise from './SetTypes/DropSetExercise'
 
 const ActiveWorkout = ({
   getSingleExercise,
@@ -45,13 +46,23 @@ const ActiveWorkout = ({
           setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
         />
       )
+    } else if (type === 'drop') {
+      return (
+        <DropSetExercise
+          currActiveWorkoutExercise={currActiveWorkoutExercise}
+          currExercise={currExercise}
+          currSetIdx={currSetIdx}
+          setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
+          completeSet={completeSet}
+        />
+      )
     }
   }
 
   return (
     <div className='active-workout'>
       <div className='exercise-title'>{exerciseName}</div>
-      <div className='exercise-type'>Exercise type: {exerciseType}</div>
+      <div className='exercise-type'>({exerciseType} Sets)</div>
       {exerciseTypeOptions(exerciseType)}
     </div>
   )

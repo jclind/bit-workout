@@ -1,0 +1,87 @@
+@import '../../../../helpers.scss';
+
+.rep-input-modal {
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    width: calc(#{$max-width} * 0.9);
+
+    .input-container {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      margin: 0 !important;
+      padding: 0.5rem 0.25rem;
+      background: $secondary-background-card;
+      border-radius: $border-radius;
+
+      button {
+        background: none;
+        width: fit-content;
+        height: 100%;
+        font-size: 1.2rem;
+        font-weight: 700;
+        padding: 0 1rem;
+        border-radius: 0;
+      }
+
+      button.decrement {
+        border-right: 1px solid $tertiary-text;
+      }
+      button.increment {
+        border-left: 1px solid $tertiary-text;
+      }
+
+      input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 4ch;
+        height: 100%;
+        font-size: 1.2rem !important;
+        border-radius: $border-radius;
+        color: $primary;
+
+        &::placeholder {
+          font-size: 1.2rem;
+        }
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type='number'] {
+        -moz-appearance: textfield;
+      }
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      .cancel-btn {
+        width: fit-content;
+        height: 40px;
+        padding: 0.5rem 1rem;
+        background: $gray-background;
+        color: $secondary-text;
+        cursor: pointer;
+        &:hover {
+          color: $primary;
+        }
+      }
+      .confirm-btn {
+        width: fit-content;
+        height: 40px;
+        padding: 0.5rem 1rem;
+        background: $secondary;
+      }
+    }
+  }
+}
