@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import ChooseExerciseBtn from '../ChooseExerciseBtn/ChooseExerciseBtn'
 import ExerciseDropdown from '../ExerciseDropdown/ExerciseDropdown'
 import useClickOutside from '../../../util/useClickOutside'
 import './ExerciseSelectorDropdown.scss'
+import { useEffect } from 'react'
 
 const ExerciseSelectorDropdown = ({
   selectedExerciseID,
@@ -20,6 +21,14 @@ const ExerciseSelectorDropdown = ({
 
   const exerciseContainer = useClickOutside(() => setIsDropdown(false))
 
+  const searchInputRef = useRef('')
+
+  useEffect(() => {
+    if (isDropdown && searchInputRef.current) {
+      searchInputRef.current.focus()
+    }
+  }, [isDropdown])
+
   return (
     <div className='select-exercise-container' ref={exerciseContainer}>
       <ChooseExerciseBtn
@@ -31,6 +40,7 @@ const ExerciseSelectorDropdown = ({
         exerciseSearchVal={exerciseSearchVal}
         setExerciseSearchVal={setExerciseSearchVal}
         selectExercise={handleSetSelectedExercise}
+        searchInputRef={searchInputRef}
       />
     </div>
   )

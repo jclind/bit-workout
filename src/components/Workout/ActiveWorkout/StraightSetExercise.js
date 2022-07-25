@@ -28,17 +28,14 @@ const StraightSetExercise = ({
   const numSets = sets.length
   const numReps = currSet.reps
 
-  const { name: exerciseName, imageURL, exerciseID } = currExercise
-
-  const exerciseWeightData = weights.find(w => w.exerciseID === exerciseID)
-  let exerciseWeight
-  if (!exerciseWeightData) {
-    exerciseWeight = 45
-  } else {
-    exerciseWeight = exerciseWeightData.weight
-  }
-
+  const {
+    name: exerciseName,
+    imageURL,
+    exerciseID,
+    exerciseWeight,
+  } = currExercise
   const plateWeights = calculatePlates(45, exerciseWeight)
+
   return (
     <>
       <div className='rep-set-text'>{`${numReps} Reps, Set ${currSetIdx} of ${numSets}`}</div>

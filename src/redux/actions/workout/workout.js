@@ -69,13 +69,12 @@ export const getSingleExercise = exerciseID => async (dispatch, getState) => {
   const exerciseWeightData = weights.find(w => w.exerciseID === exerciseID)
   let exerciseWeight
   if (!exerciseWeightData) {
-    exerciseWeight = 45+
-    
+    exerciseWeight = 45
   } else {
     exerciseWeight = exerciseWeightData.weight
   }
 
-  return {...exercise, weights} || null
+  return { ...exercise, exerciseWeight } || null
 }
 
 export const getSingleWorkout = id => (dispatch, getState) => {
