@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { calculatePlates } from '../../../../util/calculatePlates'
-import { AiOutlineRight } from 'react-icons/ai'
+import { AiOutlineRight, AiFillInfoCircle } from 'react-icons/ai'
 import RepInputModal from '../RepInputModal/RepInputModal'
 
 const DropSetExercise = ({
@@ -15,19 +15,25 @@ const DropSetExercise = ({
   const sets = currActiveWorkoutExercise.sets
   const currSet = sets[currSetIdx - 1]
   const numSets = sets.length
+  const currSetWeight = currSet.weight
 
-  const {
-    name: exerciseName,
-    imageURL,
-    exerciseID,
-    exerciseWeight,
-  } = currExercise
-  const plateWeights = calculatePlates(45, exerciseWeight)
+  const { name: exerciseName, imageURL, exerciseID } = currExercise
+
+  const plateWeights = calculatePlates(45, currSetWeight)
+
+  console.log(currActiveWorkoutExercise)
 
   return (
     <>
       <div className='rep-set-text'>{`Set ${currSetIdx} of ${numSets}, Reps to failure`}</div>
       <div className='workout-data'>
+        <div
+          className='exercise-weight'
+          // onClick={() => setIsPlatesModalOpen(true)}
+        >
+          <span>{currSetWeight} lbs</span>
+          {/* <AiFillInfoCircle className='icon' /> */}
+        </div>
         <div className='exercise-img-container'>
           <img src={imageURL} alt={exerciseName} className='exercise-img' />
         </div>
