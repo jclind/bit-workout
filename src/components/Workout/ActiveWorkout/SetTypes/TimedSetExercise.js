@@ -158,6 +158,7 @@ const TimedSetExercise = ({
           completeSet={completeSet}
           numSets={numSets}
           exerciseID={exerciseID}
+          weight={currSetWeight}
         />
       ) : null}
     </>

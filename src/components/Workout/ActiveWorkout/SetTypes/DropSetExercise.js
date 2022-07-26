@@ -61,6 +61,7 @@ const DropSetExercise = ({
           completeSet={completeSet}
           numSets={numSets}
           exerciseID={exerciseID}
+          weight={currSetWeight}
         />
       ) : null}
     </>

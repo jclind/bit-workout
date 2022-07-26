@@ -55,7 +55,9 @@ const StraightSetExercise = ({
       <div className='options'>
         <button
           className='submit-btn'
-          onClick={() => completeSet(numSets, numReps, exerciseID)}
+          onClick={() =>
+            completeSet(numSets, numReps, exerciseID, exerciseWeight)
+          }
         >
           Completed
         </button>

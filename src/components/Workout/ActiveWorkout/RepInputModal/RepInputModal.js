@@ -3,7 +3,13 @@ import ReactDom from 'react-dom'
 import useClickOutside from '../../../../util/useClickOutside'
 import './RepInputModal.scss'
 
-const RepInputModal = ({ onClose, completeSet, numSets, exerciseID }) => {
+const RepInputModal = ({
+  onClose,
+  completeSet,
+  numSets,
+  exerciseID,
+  weight,
+}) => {
   const [numReps, setNumReps] = useState(5)
 
   const modalContent = useClickOutside(() => {
@@ -124,7 +130,9 @@ const RepInputModal = ({ onClose, completeSet, numSets, exerciseID }) => {
             </button>
             <button
               className='confirm-btn'
-              onClick={() => completeSet(numSets, Number(numReps), exerciseID)}
+              onClick={() =>
+                completeSet(numSets, Number(numReps), exerciseID, weight)
+              }
             >
               Confirm
             </button>
