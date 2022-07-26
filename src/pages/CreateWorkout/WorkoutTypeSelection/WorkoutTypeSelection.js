@@ -51,6 +51,7 @@ const WorkoutTypeSelection = ({ startWorkout }) => {
       }
 
       startWorkout(workoutData).then(() => {
+        localStorage.removeItem('createWorkoutData')
         navigate('/workout')
       })
     } else if (workoutType === 'saved') {
