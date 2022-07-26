@@ -130,7 +130,7 @@ const AddExercises = () => {
   }
   return (
     <div className='create-workout-page add-exercises'>
-      <BackButton />
+      <BackButton link='/workout' />
       <div className='title' ref={titleRef}>
         Add Exercises
       </div>
