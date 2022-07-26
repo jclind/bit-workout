@@ -13,7 +13,14 @@ const options = [
   { value: 'timed', label: 'Timed Sets' },
 ]
 
-const ExercisePath = ({ setSelectedType, sets, type, setSets, setError }) => {
+const ExercisePath = ({
+  setSelectedType,
+  sets,
+  type,
+  setSets,
+  setError,
+  idx,
+}) => {
   const [exerciseType, setExerciseType] = useState(type || null)
   const [exercisePath, setExercisePath] = useState(sets || [])
 
@@ -54,6 +61,7 @@ const ExercisePath = ({ setSelectedType, sets, type, setSets, setError }) => {
           exercisePath={exercisePath}
           setExercisePath={setExercisePath}
           setError={setError}
+          idx={idx}
         />
       )
     } else if (type === 'timed') {
