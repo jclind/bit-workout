@@ -12,6 +12,7 @@ import {
 import StraightSetExercise from './SetTypes/StraightSetExercise'
 import DropSetExercise from './SetTypes/DropSetExercise'
 import StopWorkoutModal from '../StopWorkoutModal/StopWorkoutModal'
+import TimedSetExercise from './SetTypes/TimedSetExercise'
 
 const ActiveWorkout = ({
   getSingleExercise,
@@ -54,6 +55,15 @@ const ActiveWorkout = ({
           currSetIdx={currSetIdx}
           setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
           completeSet={completeSet}
+        />
+      )
+    } else if (type === 'timed') {
+      return (
+        <TimedSetExercise
+          currActiveWorkoutExercise={currActiveWorkoutExercise}
+          currExercise={currExercise}
+          currSetIdx={currSetIdx}
+          setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
         />
       )
     }
