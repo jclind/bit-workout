@@ -108,8 +108,10 @@ const mapStateTopProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSingleWorkout: exerciseID => dispatch(getSingleExercise(exerciseID)),
-    completeSet: (currSetTotal, numReps, exerciseID, lastSetFailed) =>
-      dispatch(completeSet(currSetTotal, numReps, exerciseID, lastSetFailed)),
+    completeSet: (currSetTotal, numReps, exerciseID, weight, lastSetFailed) =>
+      dispatch(
+        completeSet(currSetTotal, numReps, exerciseID, weight, lastSetFailed)
+      ),
     stopWorkout: (coins, exp) => dispatch(stopWorkout(coins, exp)),
     getSingleExercise: exerciseID => dispatch(getSingleExercise(exerciseID)),
   }

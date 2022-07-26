@@ -176,7 +176,7 @@ const incCurrWorkoutStats = (
 }
 
 export const completeSet =
-  (currSetTotal, completedReps, exerciseID, lastSetFailed) =>
+  (currSetTotal, completedReps, exerciseID, weight, lastSetFailed) =>
   async (dispatch, getState) => {
     const runningWorkout = getState().workout.workoutData.runningWorkout
     const timeLastUpdated = runningWorkout.timeLastUpdated
@@ -185,18 +185,14 @@ export const completeSet =
     const currWorkoutPathLength = runningWorkout.currWorkout.path.length
     const elapsedTime = new Date().getTime() - timeLastUpdated
 
-    const currExerciseWeightObj = getState().workout.workoutData.weights.find(
-      ex => ex.exerciseID === exerciseID
-    )
     // If user doesn't have recorded weight for current exercise, set to 45
     let currExerciseWeight
-    if (!currExerciseWeightObj || !currExerciseWeightObj.weight) {
+    if (!weight) {
       currExerciseWeight = 45
       addNewExerciseWeight(45, exerciseID)
     } else {
-      currExerciseWeight = currExerciseWeightObj.weight
+      currExerciseWeight = weight
     }
-
     let updatedPath = [...runningWorkout.currWorkout.path]
     const currSetPath = updatedPath[currIdx].setPath || []
     updatedPath[currIdx].setPath = [
@@ -277,7 +273,7 @@ export const completeSet =
   }
 
 export const failSet =
-  (newWeight, exerciseID, currSetTotal, completedReps) =>
+  (newWeight, exerciseID, currSetTotal, completedReps, currWeight) =>
   async (dispatch, getState) => {
     const weights = getState().workout.workoutData.weights
 
@@ -287,7 +283,9 @@ export const failSet =
       }
       return weight
     })
-    await dispatch(completeSet(currSetTotal, completedReps, true))
+    await dispatch(
+      completeSet(currSetTotal, completedReps, exerciseID, currWeight, true)
+    )
     await dispatch(
       updateWorkout({
         weights: modWeights,
@@ -301,7 +299,7 @@ const updateWeights = (weights, currWorkoutPath) => {
     const exerciseID = ex.exerciseID
 
     modWeights.forEach(w => {
-      if (w.exerciseID === exerciseID) {
+      if (w.exerciseID === exerciseID && ex.type === 'straight') {
         w.weight += 5
       }
     })
@@ -344,7 +342,9 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
     const imageURL = exerciseList.find(ex => ex.id === exerciseID).imageURL
     let currWeight = null
     weights.forEach(w => {
+      // Only update weight if the set type is straight
       if (w.exerciseID === exerciseID) {
+        console.log(path, ex, w)
         currWeight = w.weight
       }
     })

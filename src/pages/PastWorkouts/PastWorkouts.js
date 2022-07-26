@@ -219,7 +219,7 @@ const PastWorkouts = ({ queryPastWorkoutData, getSingleExercise }) => {
         ) : isNoData ? (
           <NoPastWorkoutData />
         ) : (
-          pastWorkoutData.slice(0, 1).map((workout, idx) => {
+          pastWorkoutData.map((workout, idx) => {
             const id = workout.id
             return (
               <PastWorkoutsItem

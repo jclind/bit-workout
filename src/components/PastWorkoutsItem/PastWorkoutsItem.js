@@ -21,11 +21,11 @@ const ExerciseItem = ({ currActiveWorkoutExercise, getSingleExercise }) => {
   const numSets = setPath.length
   const type = currActiveWorkoutExercise.type
 
-  console.log(sets)
-
   const exerciseID = currActiveWorkoutExercise.exerciseID
   const currExercise = getSingleExercise(exerciseID)
   const { name, imageURL } = currExercise
+
+  console.log(currActiveWorkoutExercise)
 
   return (
     <div className='workout-path-exercise'>
@@ -60,8 +60,10 @@ const ExerciseItem = ({ currActiveWorkoutExercise, getSingleExercise }) => {
       <div className={isCollapsed ? 'collapse' : 'collapse show'}>
         <div className='set-path-data'>
           {setPath.map((set, idx) => {
+            const weight = set.weight || sets[idx].weight
+
             return (
-              <div className='set'>
+              <div className='set' key={idx}>
                 <div className='set-num'>Set {idx + 1}:</div>
                 <div className='num-reps'>
                   <label>Reps:</label> {set.completedReps}
@@ -76,7 +78,7 @@ const ExerciseItem = ({ currActiveWorkoutExercise, getSingleExercise }) => {
                 )}
                 <div className='weight'>
                   <label>Weight:</label>
-                  {sets[idx].weight}
+                  {weight}
                 </div>
               </div>
             )
@@ -204,6 +206,7 @@ const PastWorkoutsItem = ({ workout, getSingleExercise, loading }) => {
                     <ExerciseItem
                       currActiveWorkoutExercise={currActiveWorkoutExercise}
                       getSingleExercise={getSingleExercise}
+                      key={currActiveWorkoutExercise.id}
                     />
                   )
                 })}

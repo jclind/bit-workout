@@ -56,7 +56,13 @@ const ConfirmSetFailedModal = ({
     }
   }
   const handleFailSet = () => {
-    failSet(currWeight - weightCount, weightExerciseId, numSets, repCount)
+    failSet(
+      currWeight - weightCount,
+      weightExerciseId,
+      numSets,
+      repCount,
+      currWeight
+    )
       .then(() => {
         onClose()
       })
@@ -116,8 +122,10 @@ const ConfirmSetFailedModal = ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    failSet: (newWeight, exerciseID, currSetTotal, completedReps) =>
-      dispatch(failSet(newWeight, exerciseID, currSetTotal, completedReps)),
+    failSet: (newWeight, exerciseID, currSetTotal, completedReps, currWeight) =>
+      dispatch(
+        failSet(newWeight, exerciseID, currSetTotal, completedReps, currWeight)
+      ),
   }
 }
 
