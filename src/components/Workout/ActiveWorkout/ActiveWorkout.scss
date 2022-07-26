@@ -103,12 +103,24 @@
     display: flex;
     flex-direction: column;
 
+    .timer {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 3rem;
+      .text {
+        color: $secondary-text;
+      }
+      .time {
+        margin-top: 0.5rem;
+        font-size: 2rem;
+      }
+    }
+
     .submit-btn {
       height: 50px;
       width: fit-content;
       padding: 0 2.5rem;
       margin: 0 auto;
-      margin-top: toRem(100);
     }
     .submit-btn.grayed {
       background: $gray-background;

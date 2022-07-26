@@ -62,11 +62,12 @@ export const setWorkoutFinished = isFinished => async (dispatch, getState) => {
 }
 
 export const getSingleExercise = exerciseID => (dispatch, getState) => {
-  const weights = getState().workout.workoutData.weights
+  const weights = getState().workout?.workoutData?.weights
 
   const exercise = exerciseList.find(ex => ex.id === exerciseID)
 
-  const exerciseWeightData = weights.find(w => w.exerciseID === exerciseID)
+  const exerciseWeightData =
+    weights && weights.find(w => w.exerciseID === exerciseID)
   let exerciseWeight
   if (!exerciseWeightData) {
     exerciseWeight = 45

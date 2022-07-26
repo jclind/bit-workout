@@ -51,7 +51,7 @@ const TimedSetExercise = ({
         if (timeLeft < 0) {
           timeLeft = 0
         }
-        setTimerVal(Math.round(timeLeft / 1000))
+        setTimerVal(formatTime(timeLeft))
         if (timeLeft <= 0) {
           clearInterval(exerciseTimer.current)
           setIsTimerRunning(false)
@@ -61,7 +61,6 @@ const TimedSetExercise = ({
       }, 100)
     }
 
-    console.log(isTimerRunning, countDownTimer.current)
     if (!isTimerRunning && !countDownTimer.current) {
       setIsCountDown(true)
       setIsTimerRunning(true)
@@ -126,12 +125,14 @@ const TimedSetExercise = ({
         >
           Workout Path <AiOutlineRight className='icon' />
         </button>
-        <div className='timer'>
-          <div className='text'>{isCountDown && 'Get Ready:'}</div>
-          <div className='time'>{timerVal}</div>
-        </div>
       </div>
       <div className='options'>
+        <div className='timer'>
+          <div className='text'>
+            {isCountDown ? 'Get Ready:' : 'Exercise Time:'}
+          </div>
+          <div className='time'>{timerVal}</div>
+        </div>
         {isTimerRunning ? (
           <button className='submit-btn grayed' onClick={handleSkipTimer}>
             Skip Timer
