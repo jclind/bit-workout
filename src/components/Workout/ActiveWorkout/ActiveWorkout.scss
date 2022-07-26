@@ -110,6 +110,9 @@
       margin: 0 auto;
       margin-top: toRem(100);
     }
+    .submit-btn.grayed {
+      background: $gray-background;
+    }
     .set-failed-btn {
       background: none;
       width: fit-content;

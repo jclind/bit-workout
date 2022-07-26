@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { calculatePlates } from '../../../../util/calculatePlates'
 import { AiOutlineRight } from 'react-icons/ai'
 import { timeToMS } from '../../../../util/timeToMS'
 import { formatTime } from '../../../../util/formatTime'
+import RepInputModal from '../RepInputModal/RepInputModal'
 
 const TimedSetExercise = ({
   currActiveWorkoutExercise,
   currExercise,
   currSetIdx,
   setIsWorkoutPathModalOpen,
+  completeSet,
 }) => {
+  const [isRepInputModalOpen, setIsRepInputModalOpen] = useState(false)
+
   const sets = currActiveWorkoutExercise.sets
   const currSet = sets[currSetIdx - 1]
   const numSets = sets.length
@@ -25,14 +29,17 @@ const TimedSetExercise = ({
   const [isCountDown, setIsCountDown] = useState(false)
   const [timerVal, setTimerVal] = useState(formatTime(timeMS))
   const [isTimerRunning, setIsTimerRunning] = useState(false)
+  const [isTimerFinished, setIsTimerFinished] = useState(false)
 
-  let countDownTimer
-  let exerciseTimer
-  const handleTimerStartStop = () => {
+  let countDownTimer = useRef(null)
+  let exerciseTimer = useRef(null)
+  const handleStartTimer = () => {
     const startExerciseTimer = () => {
+      if (exerciseTimer.current) return
+
       let timerStart = new Date().getTime()
 
-      exerciseTimer = setInterval(() => {
+      exerciseTimer.current = setInterval(() => {
         // Get current time and subtract start time to get total elapsed time
         const elapsed = new Date().getTime() - timerStart
 
@@ -44,23 +51,24 @@ const TimedSetExercise = ({
         if (timeLeft < 0) {
           timeLeft = 0
         }
-
         setTimerVal(Math.round(timeLeft / 1000))
         if (timeLeft <= 0) {
-          clearInterval(exerciseTimer)
+          clearInterval(exerciseTimer.current)
           setIsTimerRunning(false)
+          setIsRepInputModalOpen(true)
+          setIsTimerFinished(true)
         }
       }, 100)
     }
 
-    if (!isTimerRunning) {
-      console.log('I"M HERE')
+    console.log(isTimerRunning, countDownTimer.current)
+    if (!isTimerRunning && !countDownTimer.current) {
       setIsCountDown(true)
       setIsTimerRunning(true)
 
       let timerStart = new Date().getTime()
 
-      countDownTimer = setInterval(() => {
+      countDownTimer.current = setInterval(() => {
         // Get current time and subtract start time to get total elapsed time
         const elapsed = new Date().getTime() - timerStart
 
@@ -75,19 +83,27 @@ const TimedSetExercise = ({
 
         setTimerVal(Math.round(timeLeft / 1000))
         if (timeLeft <= 0) {
-          clearInterval(countDownTimer)
+          clearInterval(countDownTimer.current)
           setIsCountDown(false)
           startExerciseTimer()
         }
       }, 100)
-    } else {
-      console.log(countDownTimer, exerciseTimer)
-      clearInterval(countDownTimer)
-      clearInterval(exerciseTimer)
-      setTimerVal('0:00')
-      setIsTimerRunning(false)
-      setIsCountDown(false)
     }
+  }
+  const handleSkipTimer = () => {
+    if (countDownTimer.current) {
+      clearInterval(countDownTimer.current)
+    }
+    countDownTimer.current = null
+    if (exerciseTimer.current) {
+      clearInterval(exerciseTimer.current)
+    }
+    exerciseTimer.current = null
+
+    setIsCountDown(false)
+    setIsTimerRunning(false)
+    setTimerVal(formatTime(timeMS))
+    setIsRepInputModalOpen(true)
   }
 
   return (
@@ -116,10 +132,33 @@ const TimedSetExercise = ({
         </div>
       </div>
       <div className='options'>
-        <button className='submit-btn' onClick={handleTimerStartStop}>
-          {isTimerRunning ? 'Skip Timer' : 'Start Timer'}
-        </button>
+        {isTimerRunning ? (
+          <button className='submit-btn grayed' onClick={handleSkipTimer}>
+            Skip Timer
+          </button>
+        ) : !isTimerFinished ? (
+          <button className='submit-btn' onClick={handleStartTimer}>
+            Start Timer
+          </button>
+        ) : (
+          <button
+            className='submit-btn'
+            onClick={() => setIsRepInputModalOpen(true)}
+          >
+            Enter Completed Reps
+          </button>
+        )}
       </div>
+      {isRepInputModalOpen ? (
+        <RepInputModal
+          onClose={() => {
+            setIsRepInputModalOpen(false)
+          }}
+          completeSet={completeSet}
+          numSets={numSets}
+          exerciseID={exerciseID}
+        />
+      ) : null}
     </>
   )
 }
