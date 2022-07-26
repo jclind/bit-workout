@@ -8,6 +8,7 @@
     align-items: center;
     gap: 2rem;
     width: calc(#{$max-width} * 0.9);
+    max-width: 90%;
 
     .input-container {
       display: flex;
@@ -26,6 +27,8 @@
         font-weight: 700;
         padding: 0 1rem;
         border-radius: 0;
+        -webkit-touch-callout: none;
+        user-select: none;
       }
 
       button.decrement {

@@ -2,7 +2,10 @@ import React, { useState, useEffect, useRef } from 'react'
 import BackButton from '../../components/SettingsComponents/BackButton/BackButton'
 import { connect } from 'react-redux'
 import PastWorkoutsItem from '../../components/PastWorkoutsItem/PastWorkoutsItem'
-import { queryPastWorkoutData } from '../../redux/actions/workout/workout'
+import {
+  getSingleExercise,
+  queryPastWorkoutData,
+} from '../../redux/actions/workout/workout'
 import noDataImage from '../../assets/images/no-past-workout-data.svg'
 import { BsSortDown } from 'react-icons/bs'
 import './PastWorkouts.scss'
@@ -89,7 +92,7 @@ const sortSelectStyles = {
   }),
 }
 
-const PastWorkouts = ({ queryPastWorkoutData }) => {
+const PastWorkouts = ({ queryPastWorkoutData, getSingleExercise }) => {
   const limit = 10
 
   const [pastWorkoutData, setPastWorkoutData] = useState(null)
@@ -216,9 +219,15 @@ const PastWorkouts = ({ queryPastWorkoutData }) => {
         ) : isNoData ? (
           <NoPastWorkoutData />
         ) : (
-          pastWorkoutData.map((workout, idx) => {
+          pastWorkoutData.slice(0, 1).map((workout, idx) => {
             const id = workout.id
-            return <PastWorkoutsItem key={id || idx} workout={workout} />
+            return (
+              <PastWorkoutsItem
+                key={id || idx}
+                workout={workout}
+                getSingleExercise={getSingleExercise}
+              />
+            )
           })
         )}
       </div>
@@ -231,6 +240,7 @@ const mapPropsToDispatch = dispatch => {
   return {
     queryPastWorkoutData: (order, limit, pageNum, descending) =>
       dispatch(queryPastWorkoutData(order, limit, pageNum, descending)),
+    getSingleExercise: exerciseID => dispatch(getSingleExercise(exerciseID)),
   }
 }
 

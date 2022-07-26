@@ -9,6 +9,7 @@ const RepInputModal = ({ onClose, completeSet, numSets, exerciseID }) => {
   const modalContent = useClickOutside(() => {
     onClose()
   })
+  const repInputRef = useRef()
 
   const validateNumInput = num => {
     console.log(num)
@@ -105,6 +106,8 @@ const RepInputModal = ({ onClose, completeSet, numSets, exerciseID }) => {
               className='rep-input'
               value={numReps}
               onChange={e => handleRepChange(e.target.value)}
+              ref={repInputRef}
+              onClick={() => repInputRef.current.select()}
             />
             <button
               className='increment'

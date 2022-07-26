@@ -12,7 +12,7 @@ import { exerciseList } from '../../assets/data/exerciseList'
 const SKELETON_BASE_COLOR = '#546d80'
 const SKELETON_HIGHLIGHT_COLOR = '#548ca8'
 
-const PastWorkoutsItem = ({ workout, loading }) => {
+const PastWorkoutsItem = ({ workout, getSingleExercise, loading }) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
 
   const name =
@@ -124,13 +124,23 @@ const PastWorkoutsItem = ({ workout, loading }) => {
             <div className='workout-path item'>
               <div className='label'>Exercises:</div>
               <div className='data'>
-                {workout.path.map(currExercise => {
-                  const name = currExercise.name
-                  const imageURL = currExercise.imageURL
-                  const weight = currExercise.weight
-                  const reps = currExercise.reps
-                  const sets = currExercise.sets
-                  const numSets = sets.length
+                {workout.path.map(currActiveWorkoutExercise => {
+                  console.log(currActiveWorkoutExercise)
+                  const setPath = currActiveWorkoutExercise.setPath
+                  const numSets = setPath.length
+                  const reps = setPath.reduce(
+                    (prev, curr) => prev + Number(curr.completedReps),
+                    0
+                  )
+
+                  const exerciseID = currActiveWorkoutExercise.exerciseID
+                  const currExercise = getSingleExercise(exerciseID)
+                  console.log(currExercise)
+                  const { name, imageURL } = currExercise
+
+                  // const reps = currExercise.reps
+                  // const sets = currExercise.sets
+                  // const numSets = sets.length
 
                   return (
                     <div className='workout-path-exercise'>
@@ -149,7 +159,7 @@ const PastWorkoutsItem = ({ workout, loading }) => {
                         </div>
                       </div>
                       <div className='weight'>
-                        {weight}
+                        {/* {weight} */}
                         <span>lbs</span>
                       </div>
                     </div>
