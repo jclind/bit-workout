@@ -43,7 +43,7 @@ const RepInputModal = ({ onClose, completeSet, numSets, exerciseID }) => {
           return prevReps
         }
       })
-    }, 100)
+    }, 200)
   }
   const endDecrement = () => {
     if (decrementCounter.current) {
@@ -74,7 +74,7 @@ const RepInputModal = ({ onClose, completeSet, numSets, exerciseID }) => {
           return prevReps
         }
       })
-    }, 100)
+    }, 200)
   }
   const endIncrement = () => {
     if (incrementCounter.current) {

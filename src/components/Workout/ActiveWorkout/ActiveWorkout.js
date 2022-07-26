@@ -64,6 +64,7 @@ const ActiveWorkout = ({
           currExercise={currExercise}
           currSetIdx={currSetIdx}
           setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
+          completeSet={completeSet}
         />
       )
     }
