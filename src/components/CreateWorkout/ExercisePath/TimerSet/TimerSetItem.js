@@ -56,7 +56,7 @@ const TimerSetItem = ({ set, idx, setPathData, removeSet }) => {
     if (error) return
 
     if (newVal >= 60 || newVal.length >= 3) return
-    if (newVal >= 6) {
+    if (newVal >= 6 || newVal.length === 2) {
       setSeconds(newVal)
       weightRef.current.focus()
     }
@@ -77,7 +77,7 @@ const TimerSetItem = ({ set, idx, setPathData, removeSet }) => {
       <label className='set-label'>Set {idx + 1}</label>
       <div className='data'>
         <div className='time'>
-          <div className='minutes' onClick={() => minutesRef.current.focus()}>
+          <div className='minutes' onClick={() => minutesRef.current.select()}>
             <input
               type='number'
               className='minutes-input'
@@ -88,7 +88,7 @@ const TimerSetItem = ({ set, idx, setPathData, removeSet }) => {
             />
             <label className='minutes-label'>Mins.</label>
           </div>
-          <div className='seconds' onClick={() => secondsRef.current.focus()}>
+          <div className='seconds' onClick={() => secondsRef.current.select()}>
             <input
               type='number'
               className='seconds-input'
