@@ -7,6 +7,7 @@ const ExerciseItem = ({
   setExerciseData,
   deleteExercise,
   showErrors,
+  idx,
 }) => {
   const { exerciseID, sets, type, description, error, id } = exerciseData
 
@@ -51,6 +52,7 @@ const ExerciseItem = ({
         type={type}
         setError={setError}
         setSelectedType={setSelectedType}
+        idx={idx}
       />
 
       <div className='description-container'>

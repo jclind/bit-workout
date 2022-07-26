@@ -2,10 +2,30 @@ import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import './DropSet.scss'
 
-const DropSet = ({ setExercisePath, setError }) => {
-  const [startWeight, setStartWeight] = useState('')
-  const [endWeight, setEndWeight] = useState('')
-  const [weightDecrease, setWeightDecrease] = useState('')
+const DropSet = ({ setExercisePath, setError, idx }) => {
+  const localData = JSON.parse(localStorage.getItem('createWorkoutData'))
+    ?.addedExercises[idx]
+  const localSetData = localData?.sets
+  const [startWeight, setStartWeight] = useState(() => {
+    if (localSetData && localSetData.length > 0) {
+      return localSetData[0].weight
+    }
+    return ''
+  })
+  const [endWeight, setEndWeight] = useState(() => {
+    if (localSetData && localSetData.length > 0) {
+      return localSetData[localSetData.length - 1].weight
+    }
+    return ''
+  })
+  const [weightDecrease, setWeightDecrease] = useState(() => {
+    if (localSetData && localSetData.length > 1) {
+      const difference = localSetData[0].weight - localSetData[1].weight
+      return difference
+    }
+    return ''
+  })
+  console.log(localData, localSetData)
 
   const isInputValid = val => {
     const response = { error: '' }

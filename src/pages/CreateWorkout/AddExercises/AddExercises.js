@@ -138,7 +138,7 @@ const AddExercises = () => {
       {addExerciseError && <div className='error'>{addExerciseError}</div>}
 
       <div className='added-exercises-container'>
-        {addedExercises.map(ex => {
+        {addedExercises.map((ex, idx) => {
           return (
             <ExerciseItem
               key={ex.id}
@@ -146,6 +146,7 @@ const AddExercises = () => {
               setExerciseData={setExerciseData}
               showErrors={showErrors}
               deleteExercise={deleteExercise}
+              idx={idx}
             />
           )
         })}
