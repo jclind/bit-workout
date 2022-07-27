@@ -504,7 +504,7 @@ export const createWorkout = workoutData => async (dispatch, getState) => {
 
   const workoutId = workoutData.id
 
-  addDoc(userCreatedWorkoutsRef, { ...workoutData }).catch(err => {
+  addDoc(userCreatedWorkoutsRef, { id: workoutId, dateCreated }).catch(err => {
     console.log('workout not added to data:', err)
     // !ERROR
   })
@@ -531,3 +531,36 @@ export const getWorkouts = (queryString, order, limit) => async () => {
 
   return arr
 }
+export const getUserWorkouts =
+  (querySring, order, numResults = 3) =>
+  async (dispatch, getState) => {
+    const uid = getState().auth.userAuth.uid
+    const userWorkoutDataRef = doc(db, 'workoutData', uid)
+    const userCreatedWorkoutsRef = collection(
+      userWorkoutDataRef,
+      'createdWorkouts'
+    )
+
+    const userCreatedWorkoutQuery = query(
+      userCreatedWorkoutsRef,
+      orderBy('dateCreated'),
+      limit(numResults)
+    )
+    const userCreatedWorkoutIdsSnapshot = await getDocs(userCreatedWorkoutQuery)
+
+    const userCreatedWorkoutIds = []
+    userCreatedWorkoutIdsSnapshot.forEach(doc => {
+      userCreatedWorkoutIds.push(doc.data().id)
+    })
+    console.log(userCreatedWorkoutIds, userCreatedWorkoutIds[0])
+    const promises = []
+    userCreatedWorkoutIds.forEach(id => {
+      const workoutRef = doc(db, 'workouts', userCreatedWorkoutIds[0])
+
+      promises.push(getDoc(workoutRef))
+    })
+
+    const results = await Promise.allSettled([...promises])
+    const workouts = results.map(el => el.value.data())
+    return workouts
+  }
