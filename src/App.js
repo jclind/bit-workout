@@ -34,6 +34,8 @@ import CreateWorkout from './pages/CreateWorkout/CreateWorkout'
 import WorkoutTypeSelection from './pages/CreateWorkout/WorkoutTypeSelection/WorkoutTypeSelection'
 import AddExercises from './pages/CreateWorkout/AddExercises/AddExercises'
 import RestTimeData from './pages/CreateWorkout/RestTimeData/RestTimeData'
+import TrendingWorkouts from './components/Workout/WorkoutSelection/TrendingWorkouts'
+import UserWorkouts from './components/Workout/WorkoutSelection/UserWorkouts'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -62,7 +64,13 @@ function App() {
                     <NavbarContainer />
                   </>
                 }
-              />
+              >
+                <Route
+                  path='trending-workouts'
+                  element={<TrendingWorkouts />}
+                />
+                <Route path='user-workouts' element={<UserWorkouts />} />
+              </Route>
               <Route
                 path='/create-workout'
                 element={

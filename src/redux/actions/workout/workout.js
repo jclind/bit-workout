@@ -492,14 +492,28 @@ export const queryPastWorkoutData =
 
 // CREATE NEW WORKOUT
 
-export const createWorkout = data => async (dispatch, getState) => {
+export const createWorkout = workoutData => async (dispatch, getState) => {
   const uid = getState().auth.userAuth.uid
   const dateCreated = new Date().getTime()
 
-  await setDoc(doc(db, 'workouts', data.id), {
-    ...data,
+  const userWorkoutDataRef = doc(db, 'workoutData', uid)
+  const userCreatedWorkoutsRef = collection(
+    userWorkoutDataRef,
+    'createdWorkouts'
+  )
+
+  const workoutId = workoutData.id
+
+  addDoc(userCreatedWorkoutsRef, { ...workoutData }).catch(err => {
+    console.log('workout not added to data:', err)
+    // !ERROR
+  })
+
+  await setDoc(doc(db, 'workouts', workoutId), {
+    ...workoutData,
     authorUID: uid,
     dateCreated,
+    likes: 0,
   })
 }
 
