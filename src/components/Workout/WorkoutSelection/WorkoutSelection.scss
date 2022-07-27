@@ -7,6 +7,40 @@
   padding-bottom: 2rem;
   width: 100%;
 
+  .selector {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid $secondary-background;
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+    padding: 0.25rem 0.25rem;
+    border-radius: $border-radius;
+    height: fit-content;
+    gap: 0.5rem;
+
+    .selection-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: none;
+      width: 48%;
+      white-space: nowrap;
+      height: fit-content;
+      padding: 0.35rem 2rem;
+      border-radius: $border-radius;
+      font-size: 0.7rem;
+      color: $secondary-text;
+      font-weight: 500;
+    }
+    .selection-btn.selected {
+      // background: $secondary;
+      background: $secondary-background;
+      color: $primary;
+    }
+  }
   .create-workout-link {
     margin: 0.5rem auto;
     text-decoration: none;
