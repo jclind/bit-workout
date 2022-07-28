@@ -35,17 +35,18 @@ const SingleWorkoutExercise = ({ exercise, workoutData }) => {
   )
 }
 
-const SingleWorkout = ({ exercise, workoutData, startWorkout }) => {
-  const estTime = msToTime(estimateTime(exercise))
+const SingleWorkout = ({ workout, workoutData, startWorkout }) => {
+  console.log(workout)
+  const estTime = msToTime(estimateTime(workout))
 
   return (
     <div className='single-workout'>
       <div className='title-container'>
-        <div className='title'>{exercise.name}</div>
+        <div className='title'>{workout.name}</div>
         <div className='est-time'>Time: ≈{estTime}</div>
       </div>
       <div className='exercises-container'>
-        {exercise.path.map((ex, idx) => {
+        {workout.path.map((ex, idx) => {
           return (
             <SingleWorkoutExercise
               key={idx}
@@ -55,7 +56,7 @@ const SingleWorkout = ({ exercise, workoutData, startWorkout }) => {
           )
         })}
       </div>
-      <button className='start-button' onClick={() => startWorkout(exercise)}>
+      <button className='start-button' onClick={() => startWorkout(workout)}>
         Start Workout
       </button>
     </div>
