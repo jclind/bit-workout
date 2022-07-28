@@ -77,7 +77,7 @@ const RestTimeData = () => {
       JSON.stringify({ ...updatedCreateWorkoutData })
     )
 
-    navigate('/create-workout/selection')
+    navigate('/create-workout/workout-info')
   }
 
   return (

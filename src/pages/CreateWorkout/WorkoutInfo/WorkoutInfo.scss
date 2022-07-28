@@ -1,0 +1,36 @@
+@import '../../../helpers.scss';
+
+.create-workout-page.workout-info-page {
+  .description {
+    width: 80%;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+  }
+  .inputs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 80%;
+    margin-top: 3rem;
+    input,
+    textarea {
+      font-size: 1.2rem !important;
+      border: 1px solid $secondary-text;
+      border-radius: $border-radius;
+      padding: 0.75rem 0.5rem;
+      color: $primary;
+      width: 100%;
+      box-sizing: border-box;
+      background: none;
+      resize: vertical;
+      outline: none;
+
+      &:focus {
+        border: 2px solid $secondary;
+        margin: -1px;
+      }
+    }
+  }
+}
