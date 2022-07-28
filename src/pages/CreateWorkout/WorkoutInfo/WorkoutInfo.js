@@ -4,7 +4,8 @@ import { AiOutlineWarning } from 'react-icons/ai'
 import './WorkoutInfo.scss'
 import { connect } from 'react-redux'
 import { getSingleExercise } from '../../../redux/actions/workout/workout'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const WorkoutData = ({ getSingleExercise }) => {
   const [title, setTitle] = useState('')
@@ -13,6 +14,14 @@ const WorkoutData = ({ getSingleExercise }) => {
   const [error, setError] = useState('')
 
   const navigate = useNavigate()
+  const location = useLocation()
+
+  // If the user is not routing from previous create workout page, re-route to first create workout page
+  useEffect(() => {
+    if (location?.state?.prev !== 'rest-time') {
+      navigate('/create-workout')
+    }
+  }, [])
 
   const handleNextClick = () => {
     const createWorkoutData = JSON.parse(
@@ -37,7 +46,7 @@ const WorkoutData = ({ getSingleExercise }) => {
       'createWorkoutData',
       JSON.stringify({ ...createWorkoutData, title: finalTitle, description })
     )
-    navigate('/create-workout/selection')
+    navigate('/create-workout/selection', { state: { prev: 'workout-info' } })
   }
   return (
     <div className='create-workout-page workout-info-page'>

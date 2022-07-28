@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import BackButton from '../../../components/SettingsComponents/BackButton/BackButton'
 import { AiOutlineWarning } from 'react-icons/ai'
 import './RestTimeData.scss'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const RestTimeData = () => {
   const createWorkoutData = JSON.parse(
@@ -29,6 +29,15 @@ const RestTimeData = () => {
   const nextBtnRef = useRef()
 
   const navigate = useNavigate()
+
+  const location = useLocation()
+
+  // If the user is not routing from previous create workout page, re-route to first create workout page
+  useEffect(() => {
+    if (location?.state?.prev !== 'add-exercises') {
+      navigate('/create-workout')
+    }
+  }, [])
 
   const [error, setError] = useState('')
 
@@ -77,7 +86,7 @@ const RestTimeData = () => {
       JSON.stringify({ ...updatedCreateWorkoutData })
     )
 
-    navigate('/create-workout/workout-info')
+    navigate('/create-workout/workout-info', { state: { prev: 'rest-time' } })
   }
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BackButton from '../../../components/SettingsComponents/BackButton/BackButton'
 import { AiOutlineWarning } from 'react-icons/ai'
 import { v4 as uuidv4 } from 'uuid'
@@ -9,7 +9,7 @@ import {
 } from '../../../redux/actions/workout/workout'
 import { connect } from 'react-redux'
 import { timeToMS } from '../../../util/timeToMS'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const WorkoutTypeSelection = ({ startWorkout, createWorkout }) => {
   const [workoutType, setWorkoutType] = useState('')
@@ -17,6 +17,14 @@ const WorkoutTypeSelection = ({ startWorkout, createWorkout }) => {
   const [error, setError] = useState('')
 
   const navigate = useNavigate()
+  const location = useLocation()
+
+  // If the user is not routing from previous create workout page, re-route to first create workout page
+  useEffect(() => {
+    if (location?.state?.prev !== 'workout-info') {
+      navigate('/create-workout')
+    }
+  }, [])
 
   const handleNextClick = () => {
     if (!workoutType) return setError('Please Select A Workout Type')
