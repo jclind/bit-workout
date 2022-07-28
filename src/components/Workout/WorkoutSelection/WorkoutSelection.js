@@ -77,7 +77,6 @@ const WorkoutSelection = ({ getWorkouts }) => {
       <Link to='/create-workout' className='create-workout-link'>
         <button>
           <AiOutlinePlusCircle className='icon' />
-          Create workout
         </button>
       </Link>
     </div>
