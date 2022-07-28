@@ -126,7 +126,7 @@ const AddExercises = () => {
 
       return titleRef.current.scrollIntoView()
     }
-    navigate('/create-workout/rest-time')
+    navigate('/create-workout/rest-time', { state: { prev: 'add-exercises' } })
   }
   return (
     <div className='create-workout-page add-exercises'>
