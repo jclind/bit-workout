@@ -8,8 +8,35 @@ import {
   addNewExerciseWeight,
   startWorkout,
 } from '../../../redux/actions/workout/workout'
+import Skeleton from 'react-loading-skeleton'
 
-const SingleWorkoutExercise = ({ exercise, workoutData }) => {
+const SKELETON_BASE_COLOR = '#546d80'
+const SKELETON_HIGHLIGHT_COLOR = '#548ca8'
+
+const SingleWorkoutExercise = ({ exercise, workoutData, loading }) => {
+  if (loading) {
+    return (
+      <div className='single-workout-exercise-loading'>
+        <Skeleton
+          baseColor={SKELETON_BASE_COLOR}
+          highlightColor={SKELETON_HIGHLIGHT_COLOR}
+          height='50px'
+          width='50px'
+        />
+        <Skeleton
+          baseColor={SKELETON_BASE_COLOR}
+          highlightColor={SKELETON_HIGHLIGHT_COLOR}
+          height='14px'
+        />
+        <Skeleton
+          baseColor={SKELETON_BASE_COLOR}
+          highlightColor={SKELETON_HIGHLIGHT_COLOR}
+          height='14px'
+        />
+      </div>
+    )
+  }
+
   const currExercise = exerciseList.find(obj => obj.id === exercise.exerciseID)
   const exerciseID = currExercise.id
   const currWeightData = workoutData.weights.find(
@@ -35,30 +62,68 @@ const SingleWorkoutExercise = ({ exercise, workoutData }) => {
   )
 }
 
-const SingleWorkout = ({ workout, workoutData, startWorkout }) => {
-  console.log(workout)
-  const estTime = msToTime(estimateTime(workout))
+const SingleWorkout = ({ workout, workoutData, startWorkout, loading }) => {
+  const estTime = !loading && msToTime(estimateTime(workout))
 
   return (
     <div className='single-workout'>
       <div className='title-container'>
-        <div className='title'>{workout.name}</div>
-        <div className='est-time'>Time: ≈{estTime}</div>
+        <div className='title'>
+          {loading ? (
+            <Skeleton
+              className='workout-title-skeleton'
+              baseColor={SKELETON_BASE_COLOR}
+              highlightColor={SKELETON_HIGHLIGHT_COLOR}
+              width='22ch'
+            />
+          ) : (
+            `${workout.name || 'Unnamed Workout'}`
+          )}
+        </div>
+        <div className='est-time'>
+          {loading ? (
+            <Skeleton
+              className='workout-est-time-skeleton'
+              baseColor={SKELETON_BASE_COLOR}
+              highlightColor={SKELETON_HIGHLIGHT_COLOR}
+              width='10ch'
+            />
+          ) : (
+            `Time: ≈${estTime}`
+          )}
+        </div>
       </div>
       <div className='exercises-container'>
-        {workout.path.map((ex, idx) => {
-          return (
-            <SingleWorkoutExercise
-              key={idx}
-              exercise={ex}
-              workoutData={workoutData}
-            />
-          )
-        })}
+        {loading ? (
+          <>
+            <SingleWorkoutExercise loading={loading} />
+            <SingleWorkoutExercise loading={loading} />
+            <SingleWorkoutExercise loading={loading} />
+          </>
+        ) : (
+          workout.path.map((ex, idx) => {
+            return (
+              <SingleWorkoutExercise
+                key={idx}
+                exercise={ex}
+                workoutData={workoutData}
+              />
+            )
+          })
+        )}
       </div>
-      <button className='start-button' onClick={() => startWorkout(workout)}>
-        Start Workout
-      </button>
+      {loading ? (
+        <Skeleton
+          className='start-button-loading'
+          baseColor={SKELETON_BASE_COLOR}
+          highlightColor={SKELETON_HIGHLIGHT_COLOR}
+          width='13ch'
+        />
+      ) : (
+        <button className='start-button' onClick={() => startWorkout(workout)}>
+          Start Workout
+        </button>
+      )}
     </div>
   )
 }
