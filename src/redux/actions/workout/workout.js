@@ -18,6 +18,7 @@ import {
   limit,
   getDocs,
   startAfter,
+  deleteDoc,
 } from 'firebase/firestore'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import { calcCoins, calcExp, logWorkout } from '../character/character'
@@ -552,15 +553,62 @@ export const getUserWorkouts =
     userCreatedWorkoutIdsSnapshot.forEach(doc => {
       userCreatedWorkoutIds.push(doc.data().id)
     })
-    console.log(userCreatedWorkoutIds, userCreatedWorkoutIds[0])
     const promises = []
     userCreatedWorkoutIds.forEach(id => {
-      const workoutRef = doc(db, 'workouts', userCreatedWorkoutIds[0])
-
+      const workoutRef = doc(db, 'workouts', id)
       promises.push(getDoc(workoutRef))
     })
 
     const results = await Promise.allSettled([...promises])
     const workouts = results.map(el => el.value.data())
     return workouts
+  }
+
+export const isWorkoutLiked = workoutID => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
+
+  const workoutLikesColl = collection(db, 'workoutLikes')
+  const workoutLikesQuery = query(
+    workoutLikesColl,
+    where('userID', '==', uid),
+    where('workoutID', '==', workoutID)
+  )
+  console.log(uid, workoutID)
+  const workoutLikesSnapshot = await getDocs(workoutLikesQuery)
+
+  workoutLikesSnapshot.forEach(doc => {
+    console.log(doc.data())
+  })
+
+  return !workoutLikesSnapshot.empty
+}
+
+export const toggleLikeWorkout =
+  (workoutID, isLiked) => async (dispatch, getState) => {
+    const uid = getState().auth.userAuth.uid
+
+    if (isLiked) {
+      const workoutLikesColl = collection(db, 'workoutLikes')
+      const workoutLikesQuery = query(
+        workoutLikesColl,
+        where('userID', '==', uid),
+        where('workoutID', '==', workoutID)
+      )
+      const workoutLikesSnapshot = await getDocs(workoutLikesQuery)
+      workoutLikesSnapshot.forEach(doc => {
+        deleteDoc(doc)
+      })
+    } else {
+      const likeID = uuidv4()
+
+      const workoutLikesRef = doc(db, 'workoutLikes', likeID)
+
+      await setDoc(workoutLikesRef, {
+        id: likeID,
+        userID: uid,
+        workoutID: workoutID,
+        date: new Date().getTime(),
+      })
+    }
+    return !isLiked
   }

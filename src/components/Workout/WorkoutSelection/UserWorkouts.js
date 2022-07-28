@@ -12,6 +12,7 @@ const UserWorkouts = ({ getUserWorkouts }) => {
 
   useEffect(() => {
     getUserWorkouts().then(res => {
+      console.log(res)
       setWorkouts(res)
       setLoading(false)
     })
