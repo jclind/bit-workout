@@ -595,9 +595,13 @@ export const toggleLikeWorkout =
         where('workoutID', '==', workoutID)
       )
       const workoutLikesSnapshot = await getDocs(workoutLikesQuery)
-      workoutLikesSnapshot.forEach(doc => {
-        deleteDoc(doc)
-      })
+
+      // workoutLikesSnapshot.forEach(doc => {
+      //   deletedDoc = doc
+      // })
+      console.log(workoutLikesSnapshot.docs[0])
+
+      await deleteDoc(workoutLikesSnapshot.docs[0])
     } else {
       const likeID = uuidv4()
 
