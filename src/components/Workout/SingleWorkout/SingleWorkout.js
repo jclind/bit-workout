@@ -93,10 +93,10 @@ const SingleWorkout = ({
   }, [])
 
   const handleLike = () => {
-    // setIsLiked(!isLiked)
+    setIsLiked(!isLiked)
 
     toggleLikeWorkout(workout.id, isLiked).then(res => {
-      console.log(res)
+      setIsLiked(res)
     })
   }
 
