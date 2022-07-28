@@ -34,6 +34,7 @@ import CreateWorkout from './pages/CreateWorkout/CreateWorkout'
 import WorkoutTypeSelection from './pages/CreateWorkout/WorkoutTypeSelection/WorkoutTypeSelection'
 import AddExercises from './pages/CreateWorkout/AddExercises/AddExercises'
 import RestTimeData from './pages/CreateWorkout/RestTimeData/RestTimeData'
+import WorkoutInfo from './pages/CreateWorkout/WorkoutInfo/WorkoutInfo'
 import TrendingWorkouts from './components/Workout/WorkoutSelection/TrendingWorkouts'
 import UserWorkouts from './components/Workout/WorkoutSelection/UserWorkouts'
 
@@ -82,6 +83,7 @@ function App() {
               >
                 <Route path='add-exercises' element={<AddExercises />} />
                 <Route path='rest-time' element={<RestTimeData />} />
+                <Route path='workout-info' element={<WorkoutInfo />} />
                 <Route path='selection' element={<WorkoutTypeSelection />} />
               </Route>
               <Route

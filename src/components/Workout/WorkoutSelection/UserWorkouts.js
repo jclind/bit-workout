@@ -12,7 +12,7 @@ const UserWorkouts = ({ getUserWorkouts }) => {
 
   useEffect(() => {
     getUserWorkouts().then(res => {
-      setWorkouts([])
+      setWorkouts(res)
       setLoading(false)
     })
   }, [])

@@ -35,40 +35,27 @@ const WorkoutTypeSelection = ({ startWorkout, createWorkout }) => {
     }
     const workoutPath = createWorkoutData.addedExercises
     const { restTime, failedRestTime } = createWorkoutData.restTimeData
+    const { title, description } = createWorkoutData
     const workoutData = {
       id: uuidv4(),
       restTime: timeToMS(restTime.minutes, restTime.seconds),
       failSetRestTime: timeToMS(failedRestTime.minutes, failedRestTime.seconds),
       dateCreated: new Date().getTime(),
       lastSetFailed: false,
-      name: null,
+      name: title,
+      description,
       path: workoutPath,
     }
     if (workoutType === 'temp') {
-      startWorkout(workoutData).then(() => {
+      return startWorkout(workoutData).then(() => {
         localStorage.removeItem('createWorkoutData')
         navigate('/workout')
       })
     } else if (workoutType === 'saved') {
-      createWorkout(workoutData).then(() => {
+      return createWorkout(workoutData).then(() => {
         localStorage.removeItem('createWorkoutData')
         navigate('/workout')
       })
-      // const newWorkout = {
-      //   id: uuidv4(),
-      //   // name: workoutName,
-      //   // restTime: restTimeMS > 0 ? restTimeMS : 90000,
-      //   // failSetRestTime: failedRestTimeMS > 0 ? failedRestTimeMS : 300000,
-      //   lastSetFailed: false,
-      //   // path: addedExercises.map(ex => {
-      //   //   return {
-      //   //     id: uuidv4(),
-      //   //     exerciseID: ex.exercise.id,
-      //   //     reps: ex.reps,
-      //   //     sets: ex.sets,
-      //   //   }
-      //   // }),
-      // }
     }
     return setError(
       'Something went wrong, try refreshing or re-entering workout data.'
