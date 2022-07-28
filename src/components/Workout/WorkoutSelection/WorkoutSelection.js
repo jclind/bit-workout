@@ -50,30 +50,6 @@ const WorkoutSelection = ({ getWorkouts }) => {
         </button>
       </div>
       {outlet}
-      {/* <div className='search-workouts-container'>
-        <AiOutlineSearch className='icon' />
-        <input
-          type='text'
-          className='search-workouts'
-          placeholder='Search Workouts'
-          value={workoutSearchVal}
-          onChange={e => setWorkoutSearchVal(e.target.value)}
-        />
-      </div> */}
-      {/* {workouts &&
-        workouts.slice(0, 8).map(workout => {
-          const workoutMatchesSearchVal = workout.name
-            .toLowerCase()
-            .includes(workoutSearchVal.toLowerCase())
-          if (workoutSearchVal && !workoutMatchesSearchVal) {
-            return null
-          }
-          return (
-            <React.Fragment key={workout.id}>
-              <SingleWorkout exercise={workout} />
-            </React.Fragment>
-          )
-        })} */}
       <Link to='/create-workout' className='create-workout-link'>
         <button>
           <AiOutlinePlusCircle className='icon' />

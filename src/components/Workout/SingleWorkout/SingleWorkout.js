@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './SingleWorkout.scss'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import { estimateTime } from '../../../util/estimateTime'
@@ -6,9 +6,18 @@ import { msToTime } from '../../../util/msToTime'
 import { connect } from 'react-redux'
 import {
   addNewExerciseWeight,
+  isWorkoutLiked,
   startWorkout,
+  toggleLikeWorkout,
 } from '../../../redux/actions/workout/workout'
 import Skeleton from 'react-loading-skeleton'
+import {
+  AiOutlineDelete,
+  AiOutlineEdit,
+  AiOutlineHeart,
+  AiFillHeart,
+} from 'react-icons/ai'
+import { useEffect } from 'react'
 
 const SKELETON_BASE_COLOR = '#546d80'
 const SKELETON_HIGHLIGHT_COLOR = '#548ca8'
@@ -62,8 +71,34 @@ const SingleWorkoutExercise = ({ exercise, workoutData, loading }) => {
   )
 }
 
-const SingleWorkout = ({ workout, workoutData, startWorkout, loading }) => {
+const SingleWorkout = ({
+  workout,
+  workoutData,
+  startWorkout,
+  uid,
+  loading,
+  isWorkoutLiked,
+  toggleLikeWorkout,
+}) => {
   const estTime = !loading && msToTime(estimateTime(workout))
+  const [isLiked, setIsLiked] = useState(null)
+
+  useEffect(() => {
+    if (!loading) {
+      isWorkoutLiked(workout.id).then(res => {
+        console.log(res)
+        setIsLiked(res)
+      })
+    }
+  }, [])
+
+  const handleLike = () => {
+    // setIsLiked(!isLiked)
+
+    toggleLikeWorkout(workout.id, isLiked).then(res => {
+      console.log(res)
+    })
+  }
 
   return (
     <div className='single-workout'>
@@ -124,6 +159,29 @@ const SingleWorkout = ({ workout, workoutData, startWorkout, loading }) => {
           Start Workout
         </button>
       )}
+      {!loading && uid === workout.authorUID ? (
+        <div className='options'>
+          <button
+            className='like'
+            disabled={isLiked === null}
+            onClick={handleLike}
+          >
+            {isLiked ? (
+              <AiFillHeart className='icon liked' />
+            ) : (
+              <AiOutlineHeart className='icon' />
+            )}
+          </button>
+          <div className='user-actions'>
+            <button className='edit'>
+              <AiOutlineEdit className='icon' />
+            </button>
+            <button className='delete'>
+              <AiOutlineDelete className='icon' />
+            </button>
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 }
@@ -131,11 +189,15 @@ const SingleWorkout = ({ workout, workoutData, startWorkout, loading }) => {
 const mapStateToProps = state => {
   return {
     workoutData: state.workout.workoutData,
+    uid: state.auth.userAuth.uid,
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     startWorkout: exercise => dispatch(startWorkout(exercise)),
+    isWorkoutLiked: workoutID => dispatch(isWorkoutLiked(workoutID)),
+    toggleLikeWorkout: (workoutID, isLiked) =>
+      dispatch(toggleLikeWorkout(workoutID, isLiked)),
   }
 }
 
