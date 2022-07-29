@@ -16,7 +16,7 @@ const UserWorkouts = ({ getUserWorkouts, appContainerRef }) => {
 
   const isData = workouts.length > 0 || loading
 
-  const limit = 3
+  const limit = 5
 
   useEffect(() => {
     setLoading(true)
@@ -46,8 +46,6 @@ const UserWorkouts = ({ getUserWorkouts, appContainerRef }) => {
   }, [workouts])
 
   const getMoreWorkoutData = () => {
-    console.log(workouts)
-    console.log('test')
     getUserWorkouts('', null, limit, latestDoc).then(res => {
       if (!res.data || res.data.length === 0) {
         setIsMoreData(false)
