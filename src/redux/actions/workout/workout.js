@@ -19,6 +19,7 @@ import {
   getDocs,
   startAfter,
   deleteDoc,
+  increment,
 } from 'firebase/firestore'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import { calcCoins, calcExp, logWorkout } from '../character/character'
@@ -596,12 +597,12 @@ export const toggleLikeWorkout =
       )
       const workoutLikesSnapshot = await getDocs(workoutLikesQuery)
 
-      // workoutLikesSnapshot.forEach(doc => {
-      //   deletedDoc = doc
-      // })
-      console.log(workoutLikesSnapshot.docs[0])
+      let deletedDoc
+      workoutLikesSnapshot.forEach(doc => {
+        deletedDoc = doc.ref
+      })
 
-      await deleteDoc(workoutLikesSnapshot.docs[0])
+      await deleteDoc(deletedDoc)
     } else {
       const likeID = uuidv4()
 
@@ -614,5 +615,16 @@ export const toggleLikeWorkout =
         date: new Date().getTime(),
       })
     }
+
+    // const workoutDoc = doc(db, 'workouts', workoutID)
+    // if (isLiked) {
+    //   await updateDoc(workoutDoc, {
+    //     // likes: increment(1),
+    //   })
+    // } else {
+    //   await updateDoc(workoutDoc, {
+    //     // likes: increment(-1),
+    //   })
+    // }
     return !isLiked
   }
