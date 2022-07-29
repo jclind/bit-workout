@@ -346,7 +346,6 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
     weights.forEach(w => {
       // Only update weight if the set type is straight
       if (w.exerciseID === exerciseID) {
-        console.log(path, ex, w)
         currWeight = w.weight
       }
     })
@@ -534,20 +533,30 @@ export const getWorkouts = (queryString, order, limit) => async () => {
   return arr
 }
 export const getUserWorkouts =
-  (querySring, order, numResults = 3) =>
-  async (dispatch, getState) => {
+  (queryString, order, numResults, latestDoc) => async (dispatch, getState) => {
+    console.log(numResults)
     const uid = getState().auth.userAuth.uid
     const userWorkoutDataRef = doc(db, 'workoutData', uid)
     const userCreatedWorkoutsRef = collection(
       userWorkoutDataRef,
       'createdWorkouts'
     )
+    let userCreatedWorkoutQuery
+    if (latestDoc) {
+      userCreatedWorkoutQuery = query(
+        userCreatedWorkoutsRef,
+        orderBy('dateCreated'),
+        startAfter(latestDoc),
+        limit(numResults)
+      )
+    } else {
+      userCreatedWorkoutQuery = query(
+        userCreatedWorkoutsRef,
+        orderBy('dateCreated'),
+        limit(numResults)
+      )
+    }
 
-    const userCreatedWorkoutQuery = query(
-      userCreatedWorkoutsRef,
-      orderBy('dateCreated'),
-      limit(numResults)
-    )
     const userCreatedWorkoutIdsSnapshot = await getDocs(userCreatedWorkoutQuery)
 
     const userCreatedWorkoutIds = []
@@ -560,9 +569,14 @@ export const getUserWorkouts =
       promises.push(getDoc(workoutRef))
     })
 
+    const newLatestDoc =
+      userCreatedWorkoutIdsSnapshot.docs[
+        userCreatedWorkoutIdsSnapshot.docs.length - 1
+      ]
+
     const results = await Promise.allSettled([...promises])
     const workouts = results.map(el => el.value.data())
-    return workouts
+    return { data: workouts, latestDoc: newLatestDoc }
   }
 
 export const isWorkoutLiked = workoutID => async (dispatch, getState) => {
@@ -574,12 +588,7 @@ export const isWorkoutLiked = workoutID => async (dispatch, getState) => {
     where('userID', '==', uid),
     where('workoutID', '==', workoutID)
   )
-  console.log(uid, workoutID)
   const workoutLikesSnapshot = await getDocs(workoutLikesQuery)
-
-  workoutLikesSnapshot.forEach(doc => {
-    console.log(doc.data())
-  })
 
   return !workoutLikesSnapshot.empty
 }
@@ -616,15 +625,15 @@ export const toggleLikeWorkout =
       })
     }
 
-    // const workoutDoc = doc(db, 'workouts', workoutID)
-    // if (isLiked) {
-    //   await updateDoc(workoutDoc, {
-    //     // likes: increment(1),
-    //   })
-    // } else {
-    //   await updateDoc(workoutDoc, {
-    //     // likes: increment(-1),
-    //   })
-    // }
+    const workoutDoc = doc(db, 'workouts', workoutID)
+    if (isLiked) {
+      await updateDoc(workoutDoc, {
+        likes: increment(-1),
+      })
+    } else {
+      await updateDoc(workoutDoc, {
+        likes: increment(1),
+      })
+    }
     return !isLiked
   }

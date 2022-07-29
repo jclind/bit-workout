@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import Account from './pages/Account/Account'
@@ -41,8 +41,10 @@ import UserWorkouts from './components/Workout/WorkoutSelection/UserWorkouts'
 function App() {
   const [loading, setLoading] = useState(true)
 
+  const appContainerRef = useRef()
+
   return (
-    <div className='app-container'>
+    <div className='app-container' ref={appContainerRef}>
       <Helmet>
         <meta
           name='viewport'
@@ -70,7 +72,10 @@ function App() {
                   path='trending-workouts'
                   element={<TrendingWorkouts />}
                 />
-                <Route path='user-workouts' element={<UserWorkouts />} />
+                <Route
+                  path='user-workouts'
+                  element={<UserWorkouts appContainerRef={appContainerRef} />}
+                />
               </Route>
               <Route
                 path='/create-workout'

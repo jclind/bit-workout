@@ -86,7 +86,6 @@ const SingleWorkout = ({
   useEffect(() => {
     if (!loading) {
       isWorkoutLiked(workout.id).then(res => {
-        console.log(res)
         setIsLiked(res)
       })
     }
