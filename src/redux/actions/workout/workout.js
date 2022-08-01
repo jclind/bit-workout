@@ -534,7 +534,6 @@ export const getWorkouts = (queryString, order, limit) => async () => {
 }
 export const getUserWorkouts =
   (queryString, order, numResults, latestDoc) => async (dispatch, getState) => {
-    console.log(numResults)
     const uid = getState().auth.userAuth.uid
     const userWorkoutDataRef = doc(db, 'workoutData', uid)
     const userCreatedWorkoutsRef = collection(
@@ -545,14 +544,14 @@ export const getUserWorkouts =
     if (latestDoc) {
       userCreatedWorkoutQuery = query(
         userCreatedWorkoutsRef,
-        orderBy('dateCreated'),
+        orderBy('dateCreated', 'desc'),
         startAfter(latestDoc),
         limit(numResults)
       )
     } else {
       userCreatedWorkoutQuery = query(
         userCreatedWorkoutsRef,
-        orderBy('dateCreated'),
+        orderBy('dateCreated', 'desc'),
         limit(numResults)
       )
     }
@@ -565,8 +564,8 @@ export const getUserWorkouts =
     })
     const promises = []
     userCreatedWorkoutIds.forEach(id => {
-      const workoutRef = doc(db, 'workouts', id)
-      promises.push(getDoc(workoutRef))
+      const workoutsRef = doc(db, 'workouts', id)
+      promises.push(getDoc(workoutsRef))
     })
 
     const newLatestDoc =
@@ -576,6 +575,36 @@ export const getUserWorkouts =
 
     const results = await Promise.allSettled([...promises])
     const workouts = results.map(el => el.value.data())
+    return { data: workouts, latestDoc: newLatestDoc }
+  }
+
+export const getTrendingWorkouts =
+  (queryString, order, numResults, latestDoc) => async () => {
+    const workoutsCollection = collection(db, 'workouts')
+    let workoutsQuery
+    if (latestDoc) {
+      workoutsQuery = query(
+        workoutsCollection,
+        orderBy('likes', 'desc'),
+        startAfter(latestDoc),
+        limit(numResults)
+      )
+    } else {
+      workoutsQuery = query(
+        workoutsCollection,
+        orderBy('likes', 'desc'),
+        limit(numResults)
+      )
+    }
+
+    const workoutsSnapshot = await getDocs(workoutsQuery)
+
+    const workouts = []
+    workoutsSnapshot.forEach(doc => {
+      workouts.push(doc.data())
+    })
+
+    const newLatestDoc = workoutsSnapshot.docs[workoutsSnapshot.docs.length - 1]
     return { data: workouts, latestDoc: newLatestDoc }
   }
 
