@@ -37,6 +37,7 @@ import RestTimeData from './pages/CreateWorkout/RestTimeData/RestTimeData'
 import WorkoutInfo from './pages/CreateWorkout/WorkoutInfo/WorkoutInfo'
 import TrendingWorkouts from './components/Workout/WorkoutSelection/TrendingWorkouts'
 import UserWorkouts from './components/Workout/WorkoutSelection/UserWorkouts'
+import LikedWorkouts from './components/Workout/WorkoutSelection/LikedWorkouts'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -75,6 +76,10 @@ function App() {
                 <Route
                   path='user-workouts'
                   element={<UserWorkouts appContainerRef={appContainerRef} />}
+                />
+                <Route
+                  path='liked-workouts'
+                  element={<LikedWorkouts appContainerRef={appContainerRef} />}
                 />
               </Route>
               <Route
