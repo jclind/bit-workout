@@ -608,6 +608,55 @@ export const getTrendingWorkouts =
     return { data: workouts, latestDoc: newLatestDoc }
   }
 
+export const getUserLikedWorkouts =
+  (queryString, order, numResults, latestDoc) => async (dispatch, getState) => {
+    const uid = getState().auth.userAuth.uid
+
+    const workoutLikesCollection = collection(db, 'workoutLikes')
+
+    console.log(uid)
+
+    let likesQuery
+    if (latestDoc) {
+      likesQuery = query(
+        workoutLikesCollection,
+        where('userID', '==', uid),
+        orderBy('date', 'desc'),
+        startAfter(latestDoc),
+        limit(numResults)
+      )
+    } else {
+      likesQuery = query(
+        workoutLikesCollection,
+        where('userID', '==', uid),
+        orderBy('date', 'desc'),
+        limit(numResults)
+      )
+    }
+
+    const likedWorkoutsSnapshot = await getDocs(likesQuery)
+
+    const userLikedWorkoutIDs = []
+    likedWorkoutsSnapshot.forEach(doc => {
+      console.log('test')
+      userLikedWorkoutIDs.push(doc.data().workoutID)
+    })
+    console.log(userLikedWorkoutIDs)
+
+    const promises = []
+    userLikedWorkoutIDs.forEach(workoutID => {
+      const workoutRef = doc(db, 'workouts', workoutID)
+      promises.push(getDoc(workoutRef))
+    })
+
+    const newLatestDoc =
+      likedWorkoutsSnapshot.docs[likedWorkoutsSnapshot.docs.length - 1]
+
+    const results = await Promise.allSettled([...promises])
+    const workouts = results.map(el => el.value.data())
+    return { data: workouts, latestDoc: newLatestDoc }
+  }
+
 export const isWorkoutLiked = workoutID => async (dispatch, getState) => {
   const uid = getState().auth.userAuth.uid
 

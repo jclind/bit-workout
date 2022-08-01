@@ -46,7 +46,17 @@ const WorkoutSelection = ({ getWorkouts }) => {
           }
           onClick={() => setSelectedList('user')}
         >
-          Your Workouts
+          Created
+        </button>
+        <button
+          className={
+            selectedList === 'liked'
+              ? 'selection-btn selected'
+              : 'selection-btn'
+          }
+          onClick={() => setSelectedList('liked')}
+        >
+          Liked
         </button>
       </div>
       {outlet}
