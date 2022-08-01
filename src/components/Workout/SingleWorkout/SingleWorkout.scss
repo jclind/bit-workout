@@ -80,6 +80,10 @@
       height: fit-content;
     }
     button.like {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
       padding: 0.25rem;
       .icon {
         height: 25px;

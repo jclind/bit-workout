@@ -82,6 +82,11 @@ const SingleWorkout = ({
 }) => {
   const estTime = !loading && msToTime(estimateTime(workout))
   const [isLiked, setIsLiked] = useState(null)
+  const [numLikes, setNumLikes] = useState(() => {
+    if (!loading) {
+      return workout.likes
+    }
+  })
 
   useEffect(() => {
     if (!loading) {
@@ -92,7 +97,12 @@ const SingleWorkout = ({
   }, [])
 
   const handleLike = () => {
-    setIsLiked(!isLiked)
+    if (!isLiked) {
+      setNumLikes(prev => prev + 1)
+    } else {
+      setNumLikes(prev => prev - 1)
+    }
+    setIsLiked(prev => !prev)
 
     toggleLikeWorkout(workout.id, isLiked).then(res => {
       setIsLiked(res)
@@ -158,7 +168,7 @@ const SingleWorkout = ({
           Start Workout
         </button>
       )}
-      {!loading && uid === workout.authorUID ? (
+      {!loading ? (
         <div className='options'>
           <button
             className='like'
@@ -170,15 +180,18 @@ const SingleWorkout = ({
             ) : (
               <AiOutlineHeart className='icon' />
             )}
+            {numLikes || ''}
           </button>
-          <div className='user-actions'>
-            <button className='edit'>
-              <AiOutlineEdit className='icon' />
-            </button>
-            <button className='delete'>
-              <AiOutlineDelete className='icon' />
-            </button>
-          </div>
+          {uid === workout.authorUID && (
+            <div className='user-actions'>
+              <button className='edit'>
+                <AiOutlineEdit className='icon' />
+              </button>
+              <button className='delete'>
+                <AiOutlineDelete className='icon' />
+              </button>
+            </div>
+          )}
         </div>
       ) : null}
     </div>
