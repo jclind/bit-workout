@@ -574,7 +574,13 @@ export const getUserWorkouts =
       ]
 
     const results = await Promise.allSettled([...promises])
-    const workouts = results.map(el => el.value.data())
+    const workouts = []
+    results.forEach(el => {
+      const data = el.value.data()
+      if (data) {
+        workouts.push(el.value.data())
+      }
+    })
     return { data: workouts, latestDoc: newLatestDoc }
   }
 
@@ -601,7 +607,10 @@ export const getTrendingWorkouts =
 
     const workouts = []
     workoutsSnapshot.forEach(doc => {
-      workouts.push(doc.data())
+      const data = doc.data()
+      if (data) {
+        workouts.push(doc.data())
+      }
     })
 
     const newLatestDoc = workoutsSnapshot.docs[workoutsSnapshot.docs.length - 1]
@@ -653,9 +662,83 @@ export const getUserLikedWorkouts =
       likedWorkoutsSnapshot.docs[likedWorkoutsSnapshot.docs.length - 1]
 
     const results = await Promise.allSettled([...promises])
-    const workouts = results.map(el => el.value.data())
+    const workouts = []
+    results.forEach(el => {
+      const data = el.value.data()
+      if (data) {
+        workouts.push(data)
+      }
+    })
     return { data: workouts, latestDoc: newLatestDoc }
   }
+
+const deleteUserWorkoutID = async (uid, workoutID) => {
+  const userWorkoutData = doc(db, 'workoutData', uid)
+  const createdWorkoutsCollection = collection(
+    userWorkoutData,
+    'createdWorkouts'
+  )
+
+  const workoutIDQuery = query(
+    createdWorkoutsCollection,
+    where('id', '==', workoutID)
+  )
+  const workoutIDSnapshot = await getDocs(workoutIDQuery)
+  let deletedDoc
+  workoutIDSnapshot.forEach(doc => {
+    deletedDoc = doc.ref
+  })
+
+  if (deletedDoc) {
+    return await deleteDoc(deletedDoc)
+  }
+}
+const deleteWorkoutLikes = async workoutID => {
+  const workoutLikesCollection = collection(db, 'workoutLikes')
+  const likesQuery = query(
+    workoutLikesCollection,
+    where('workoutID', '==', workoutID)
+  )
+  const likesSnapshot = await getDocs(likesQuery)
+  const promises = []
+  likesSnapshot.forEach(doc => {
+    promises.push(deleteDoc(doc.ref))
+  })
+
+  if (promises.length > 0) {
+    return await Promise.allSettled([...promises])
+  }
+}
+export const deleteWorkout = workoutID => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
+
+  const workoutCollection = collection(db, 'workouts')
+
+  const workoutQuery = query(
+    workoutCollection,
+    where('id', '==', workoutID),
+    where('authorUID', '==', uid)
+  )
+
+  const workoutSnapshot = await getDocs(workoutQuery)
+
+  let workoutDoc
+  workoutSnapshot.forEach(doc => {
+    console.log(doc.data())
+    workoutDoc = doc.ref
+  })
+
+  try {
+    await deleteWorkoutLikes(workoutID)
+    await deleteUserWorkoutID(uid, workoutID)
+    await deleteDoc(workoutDoc)
+
+    return { status: 'success' }
+  } catch (err) {
+    console.error(err)
+    return { err }
+  }
+}
 
 export const isWorkoutLiked = workoutID => async (dispatch, getState) => {
   const uid = getState().auth.userAuth.uid
