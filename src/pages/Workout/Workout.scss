@@ -1,6 +1,4 @@
 @import '../../helpers.scss';
 .workout-page {
-  // max-height: calc(100% - #{$navbar-height}) !important;
-  overflow-y: hidden;
   height: calc(100% - #{$navbar-height} - 3rem);
 }

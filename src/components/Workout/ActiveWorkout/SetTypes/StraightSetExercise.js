@@ -88,6 +88,7 @@ const StraightSetExercise = ({
           }}
           currExercise={currExercise}
           exerciseWeight={exerciseWeight}
+          weightIsChangeable={true}
         />
       ) : null}
     </>

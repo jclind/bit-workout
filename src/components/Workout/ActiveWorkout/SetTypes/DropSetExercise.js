@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { calculatePlates } from '../../../../util/calculatePlates'
 import { AiOutlineRight, AiFillInfoCircle } from 'react-icons/ai'
 import RepInputModal from '../RepInputModal/RepInputModal'
+import PlatesModal from '../../PlatesModal/PlatesModal'
 
 const DropSetExercise = ({
   currActiveWorkoutExercise,
@@ -11,6 +12,7 @@ const DropSetExercise = ({
   completeSet,
 }) => {
   const [isRepInputModalOpen, setIsRepInputModalOpen] = useState(false)
+  const [isPlatesModalOpen, setIsPlatesModalOpen] = useState(false)
 
   const sets = currActiveWorkoutExercise.sets
   const currSet = sets[currSetIdx - 1]
@@ -19,7 +21,7 @@ const DropSetExercise = ({
 
   const { name: exerciseName, imageURL, exerciseID } = currExercise
 
-  // const plateWeights = calculatePlates(45, currSetWeight)
+  const plateWeights = calculatePlates(45, currSetWeight)
 
   return (
     <>
@@ -27,10 +29,10 @@ const DropSetExercise = ({
       <div className='workout-data'>
         <div
           className='exercise-weight'
-          // onClick={() => setIsPlatesModalOpen(true)}
+          onClick={() => setIsPlatesModalOpen(true)}
         >
           <span>{currSetWeight} lbs</span>
-          {/* <AiFillInfoCircle className='icon' /> */}
+          <AiFillInfoCircle className='icon' />
         </div>
         <div className='exercise-img-container'>
           <img src={imageURL} alt={exerciseName} className='exercise-img' />
@@ -60,6 +62,17 @@ const DropSetExercise = ({
           numSets={numSets}
           exerciseID={exerciseID}
           weight={currSetWeight}
+        />
+      ) : null}
+      {isPlatesModalOpen ? (
+        <PlatesModal
+          weights={plateWeights}
+          onClose={() => {
+            setIsPlatesModalOpen(false)
+          }}
+          currExercise={currExercise}
+          exerciseWeight={currSetWeight}
+          weightIsChangeable={false}
         />
       ) : null}
     </>
