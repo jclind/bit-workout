@@ -59,6 +59,7 @@ const StraightSet = ({ exercisePath, setExercisePath, setError }) => {
       setError('')
     }
     setExercisePath(path)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path])
 
   return (

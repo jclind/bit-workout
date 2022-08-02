@@ -1,8 +1,5 @@
 import React, { useState } from 'react'
-import { AiFillInfoCircle, AiOutlineClose } from 'react-icons/ai'
-import { calculatePlates } from '../../../util/calculatePlates'
-
-import { AiOutlineRight } from 'react-icons/ai'
+import { AiOutlineClose } from 'react-icons/ai'
 import { connect } from 'react-redux'
 import {
   completeSet,

@@ -37,9 +37,11 @@ const ExercisePath = ({
 
   useEffect(() => {
     setSelectedType(exerciseType)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [exerciseType])
   useEffect(() => {
     setSets(exercisePath)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [exercisePath])
 
   // Drop Set values
