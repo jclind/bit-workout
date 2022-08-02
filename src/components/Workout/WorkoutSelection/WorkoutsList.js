@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import SingleWorkout from '../SingleWorkout/SingleWorkout'
 import { Link } from 'react-router-dom'
-import { AiOutlinePlusCircle, AiOutlineSearch } from 'react-icons/ai'
+import { AiOutlinePlusCircle } from 'react-icons/ai'
 import ConfirmDeleteWorkoutModal from './ConfirmDeleteWorkoutModal'
 import { connect } from 'react-redux'
 import { deleteWorkout } from '../../../redux/actions/workout/workout'
@@ -31,7 +31,6 @@ const WorkoutsList = ({ getWorkouts, appContainerRef, deleteWorkout }) => {
   useEffect(() => {
     setLoading(true)
     getWorkouts(null, null, limit).then(res => {
-      console.log(res)
       if (!res.data || res.data.length === 0) {
         setWorkouts([])
         setLoading(false)
@@ -47,13 +46,15 @@ const WorkoutsList = ({ getWorkouts, appContainerRef, deleteWorkout }) => {
   }, [])
 
   useEffect(() => {
-    if (appContainerRef && appContainerRef.current) {
+    const appContainerCurrent = appContainerRef?.current
+    if (appContainerRef && appContainerCurrent) {
       appContainerRef.current.addEventListener('scroll', handleScroll)
 
       return () => {
-        appContainerRef.current.removeEventListener('scroll', handleScroll)
+        appContainerCurrent.removeEventListener('scroll', handleScroll)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workouts])
 
   const getMoreWorkoutData = () => {
@@ -68,7 +69,6 @@ const WorkoutsList = ({ getWorkouts, appContainerRef, deleteWorkout }) => {
     })
   }
   const handleScroll = () => {
-    // console.log(workouts, isPaginationLoading)
     if (!isMoreData) {
       return
     }

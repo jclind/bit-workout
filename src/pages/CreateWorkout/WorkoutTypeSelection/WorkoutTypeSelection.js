@@ -24,6 +24,7 @@ const WorkoutTypeSelection = ({ startWorkout, createWorkout }) => {
     if (location?.state?.prev !== 'workout-info') {
       navigate('/create-workout')
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleNextClick = () => {

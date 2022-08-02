@@ -30,8 +30,6 @@ const ActiveWorkout = ({
   const currExercise = getSingleExercise(exerciseID)
   const exerciseName = currExercise.name
 
-  // console.log(currExercise, currSet)
-
   const exerciseTypeOptions = type => {
     if (type === 'straight') {
       return (

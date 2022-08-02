@@ -21,6 +21,7 @@ const WorkoutData = ({ getSingleExercise }) => {
     if (location?.state?.prev !== 'rest-time') {
       navigate('/create-workout')
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleNextClick = () => {
@@ -32,7 +33,12 @@ const WorkoutData = ({ getSingleExercise }) => {
     let finalTitle = ''
     if (!title) {
       exercises.slice(0, 3).forEach((ex, idx, currArr) => {
-        const exerciseName = getSingleExercise(ex.exerciseID).name
+        let exerciseName
+        try {
+          exerciseName = getSingleExercise(ex.exerciseID).name
+        } catch (err) {
+          return setError(err)
+        }
         finalTitle += exerciseName
         if (idx !== currArr.length - 1) {
           finalTitle += ', '

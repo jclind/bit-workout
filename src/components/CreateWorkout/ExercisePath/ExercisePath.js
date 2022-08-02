@@ -30,7 +30,6 @@ const ExercisePath = ({
       if (prevType) {
         setExercisePath([])
       }
-      console.log(type)
       return type
     })
   }

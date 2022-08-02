@@ -1,10 +1,6 @@
 import React, { useState } from 'react'
 import { calculatePlates } from '../../../../util/calculatePlates'
-import {
-  AiFillInfoCircle,
-  AiOutlineRight,
-  AiOutlineClose,
-} from 'react-icons/ai'
+import { AiFillInfoCircle, AiOutlineRight } from 'react-icons/ai'
 import PlatesModal from '../../PlatesModal/PlatesModal'
 import ConfirmSetFailedModal from '../../ConfirmSetFailedModal/ConfirmSetFailedModal'
 

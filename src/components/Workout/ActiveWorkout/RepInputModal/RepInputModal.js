@@ -18,7 +18,6 @@ const RepInputModal = ({
   const repInputRef = useRef()
 
   const validateNumInput = num => {
-    console.log(num)
     if (num === '') return true
 
     if (isNaN(num) || num < 0 || num % 1 !== 0) return false

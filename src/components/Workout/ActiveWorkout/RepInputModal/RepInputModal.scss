@@ -84,6 +84,9 @@
         height: 40px;
         padding: 0.5rem 1rem;
         background: $secondary;
+        &:hover {
+          background: $secondary;
+        }
       }
     }
   }
