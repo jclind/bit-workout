@@ -1,29 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import SingleWorkout from '../SingleWorkout/SingleWorkout'
-import { AiOutlineSearch, AiOutlinePlusCircle } from 'react-icons/ai'
-import {
-  Link,
-  Navigate,
-  useLocation,
-  useNavigate,
-  useOutlet,
-} from 'react-router-dom'
-import { connect } from 'react-redux'
+import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { Link, useNavigate, useOutlet } from 'react-router-dom'
 import './WorkoutSelection.scss'
-import { getWorkouts } from '../../../redux/actions/workout/workout'
 
-const WorkoutSelection = ({ getWorkouts }) => {
-  const location = useLocation()
+const WorkoutSelection = () => {
   const navigate = useNavigate()
   const outlet = useOutlet()
 
-  const [workoutSearchVal, setWorkoutSearchVal] = useState('')
   const [selectedList, setSelectedList] = useState('trending')
   useEffect(() => {
     navigate(`/workout/${selectedList}-workouts`)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedList])
-
-  const [workouts, setWorkouts] = useState(null)
 
   return (
     <div className='workout-selection'>
@@ -69,11 +57,4 @@ const WorkoutSelection = ({ getWorkouts }) => {
   )
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getWorkouts: (queryString, order, limit) =>
-      dispatch(getWorkouts(queryString, order, limit)),
-  }
-}
-
-export default connect(null, mapDispatchToProps)(WorkoutSelection)
+export default WorkoutSelection

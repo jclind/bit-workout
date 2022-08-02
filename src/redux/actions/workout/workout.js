@@ -623,8 +623,6 @@ export const getUserLikedWorkouts =
 
     const workoutLikesCollection = collection(db, 'workoutLikes')
 
-    console.log(uid)
-
     let likesQuery
     if (latestDoc) {
       likesQuery = query(
@@ -647,10 +645,8 @@ export const getUserLikedWorkouts =
 
     const userLikedWorkoutIDs = []
     likedWorkoutsSnapshot.forEach(doc => {
-      console.log('test')
       userLikedWorkoutIDs.push(doc.data().workoutID)
     })
-    console.log(userLikedWorkoutIDs)
 
     const promises = []
     userLikedWorkoutIDs.forEach(workoutID => {
@@ -724,7 +720,6 @@ export const deleteWorkout = workoutID => async (dispatch, getState) => {
 
   let workoutDoc
   workoutSnapshot.forEach(doc => {
-    console.log(doc.data())
     workoutDoc = doc.ref
   })
 

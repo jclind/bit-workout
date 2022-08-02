@@ -25,7 +25,6 @@ const DropSet = ({ setExercisePath, setError, idx }) => {
     }
     return ''
   })
-  console.log(localData, localSetData)
 
   const isInputValid = val => {
     const response = { error: '' }

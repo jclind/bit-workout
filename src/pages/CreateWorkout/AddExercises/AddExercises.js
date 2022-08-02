@@ -1,10 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import {
-  AiOutlinePlusCircle,
-  AiOutlineMenu,
-  AiOutlineWarning,
-} from 'react-icons/ai'
+import { AiOutlinePlusCircle } from 'react-icons/ai'
 import BackButton from '../../../components/SettingsComponents/BackButton/BackButton'
 import { v4 as uuidv4 } from 'uuid'
 import './AddExercises.scss'

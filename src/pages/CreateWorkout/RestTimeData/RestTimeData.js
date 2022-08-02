@@ -37,6 +37,7 @@ const RestTimeData = () => {
     if (location?.state?.prev !== 'add-exercises') {
       navigate('/create-workout')
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const [error, setError] = useState('')

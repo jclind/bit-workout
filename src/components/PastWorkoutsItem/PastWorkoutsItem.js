@@ -24,8 +24,6 @@ const ExerciseItem = ({ currActiveWorkoutExercise, getSingleExercise }) => {
   const currExercise = getSingleExercise(exerciseID)
   const { name, imageURL } = currExercise
 
-  console.log(currActiveWorkoutExercise)
-
   return (
     <div className='workout-path-exercise'>
       <div

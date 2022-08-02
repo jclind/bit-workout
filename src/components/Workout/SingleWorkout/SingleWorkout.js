@@ -11,12 +11,7 @@ import {
   toggleLikeWorkout,
 } from '../../../redux/actions/workout/workout'
 import Skeleton from 'react-loading-skeleton'
-import {
-  AiOutlineDelete,
-  AiOutlineEdit,
-  AiOutlineHeart,
-  AiFillHeart,
-} from 'react-icons/ai'
+import { AiOutlineDelete, AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { useEffect } from 'react'
 
 const SKELETON_BASE_COLOR = '#546d80'
@@ -95,6 +90,7 @@ const SingleWorkout = ({
         setIsLiked(res)
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleLike = () => {
