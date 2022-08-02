@@ -101,6 +101,7 @@ const DropSet = ({ setExercisePath, setError, idx }) => {
         )
       )
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startWeight, endWeight, weightDecrease])
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import { calculatePlates } from '../../../../util/calculatePlates'
 import { AiOutlineRight } from 'react-icons/ai'
 import { timeToMS } from '../../../../util/timeToMS'

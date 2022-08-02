@@ -19,9 +19,7 @@ const DropSetExercise = ({
 
   const { name: exerciseName, imageURL, exerciseID } = currExercise
 
-  const plateWeights = calculatePlates(45, currSetWeight)
-
-  console.log(currActiveWorkoutExercise)
+  // const plateWeights = calculatePlates(45, currSetWeight)
 
   return (
     <>

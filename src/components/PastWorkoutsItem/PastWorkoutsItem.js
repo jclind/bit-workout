@@ -7,7 +7,6 @@ import Skeleton from 'react-loading-skeleton'
 
 import './PastWorkoutsItem.scss'
 import WorkoutTime from '../WorkoutTime/WorkoutTime'
-import { exerciseList } from '../../assets/data/exerciseList'
 import { timeToMS } from '../../util/timeToMS'
 
 const SKELETON_BASE_COLOR = '#546d80'

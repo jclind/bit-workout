@@ -16,11 +16,13 @@ const TimerSetItem = ({ set, idx, setPathData, removeSet }) => {
     if (minutes || seconds) {
       setPathData('time', { minutes, seconds }, idx)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [minutes, seconds])
   useEffect(() => {
     if (weight) {
       setPathData('weight', weight, idx)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weight])
 
   const minutesRef = useRef()
