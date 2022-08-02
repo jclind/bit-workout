@@ -4,6 +4,7 @@ import { AiOutlineRight } from 'react-icons/ai'
 import { timeToMS } from '../../../../util/timeToMS'
 import { formatTime } from '../../../../util/formatTime'
 import RepInputModal from '../RepInputModal/RepInputModal'
+import PlatesModal from '../../PlatesModal/PlatesModal'
 
 const TimedSetExercise = ({
   currActiveWorkoutExercise,
@@ -13,6 +14,7 @@ const TimedSetExercise = ({
   completeSet,
 }) => {
   const [isRepInputModalOpen, setIsRepInputModalOpen] = useState(false)
+  const [isPlatesModalOpen, setIsPlatesModalOpen] = useState(false)
 
   const sets = currActiveWorkoutExercise.sets
   const currSet = sets[currSetIdx - 1]
@@ -159,6 +161,17 @@ const TimedSetExercise = ({
           numSets={numSets}
           exerciseID={exerciseID}
           weight={currSetWeight}
+        />
+      ) : null}
+      {isPlatesModalOpen ? (
+        <PlatesModal
+          weights={plateWeights}
+          onClose={() => {
+            setIsPlatesModalOpen(false)
+          }}
+          currExercise={currExercise}
+          exerciseWeight={currSetWeight}
+          weightIsChangeable={false}
         />
       ) : null}
     </>

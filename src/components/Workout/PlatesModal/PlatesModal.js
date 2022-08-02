@@ -5,7 +5,13 @@ import useClickOutside from '../../../util/useClickOutside'
 import ChangeWeightModal from '../ChangeWeightModal/ChangeWeightModal'
 import { BiEdit } from 'react-icons/bi'
 
-const PlatesModal = ({ weights, onClose, currExercise, exerciseWeight }) => {
+const PlatesModal = ({
+  weights,
+  onClose,
+  currExercise,
+  exerciseWeight,
+  weightIsChangeable,
+}) => {
   const [isChangeWeightModalOpen, setIsChangeWeightModalOpen] = useState(false)
 
   const modalContent = useClickOutside(() => {
@@ -21,9 +27,15 @@ const PlatesModal = ({ weights, onClose, currExercise, exerciseWeight }) => {
           <div className='title'>Total Weight:</div>
           <div
             className='total-weight'
-            onClick={() => setIsChangeWeightModalOpen(true)}
+            onClick={() => {
+              // If the current set type allows for weight value to be modified, set change weight modal to open
+              if (weightIsChangeable) {
+                setIsChangeWeightModalOpen(true)
+              }
+            }}
           >
-            {exerciseWeight} lbs <BiEdit className='edit-icon' />
+            {exerciseWeight} lbs{' '}
+            {weightIsChangeable && <BiEdit className='edit-icon' />}
           </div>
 
           <div className='title'>Plates:</div>
@@ -44,7 +56,7 @@ const PlatesModal = ({ weights, onClose, currExercise, exerciseWeight }) => {
           </div>
         </div>
       </div>
-      {isChangeWeightModalOpen ? (
+      {isChangeWeightModalOpen && !isChangeWeightModalOpen ? (
         <ChangeWeightModal
           exerciseID={currExercise.id}
           onClose={() => {
