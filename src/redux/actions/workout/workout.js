@@ -56,7 +56,7 @@ export const updateWorkout = data => async (dispatch, getState) => {
       // !ERROR
     })
 }
-export const setWorkoutFinished = isFinished => async (dispatch, getState) => {
+export const setWorkoutFinished = isFinished => {
   return {
     type: SET_WORKOUT_FINISHED,
     payload: isFinished,
@@ -385,6 +385,7 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
     expEarned: exp,
     path: pathData,
   }
+  console.log('IN finishWorkout FUNCTION')
   dispatch(updateWorkout(updatedData))
   dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
   dispatch(setWorkoutFinished(true))
