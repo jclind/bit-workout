@@ -189,9 +189,9 @@ const SingleWorkout = ({
             </button>
             {uid === workout.authorUID && (
               <div className='user-actions'>
-                <button className='edit'>
+                {/* <button className='edit'>
                   <AiOutlineEdit className='icon' />
-                </button>
+                </button> */}
                 <button
                   className='delete'
                   onClick={() => handleDeleteWorkout(workout.id)}
