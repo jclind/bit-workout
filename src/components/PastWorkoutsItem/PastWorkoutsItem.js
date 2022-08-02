@@ -1,21 +1,96 @@
 import React, { useState } from 'react'
 import { formatAMPM, formatDate } from '../../util/formatDate'
-import { formatTimeToObject } from '../../util/formatTime'
+import { formatTime, formatTimeToObject } from '../../util/formatTime'
 import { AiOutlineStar, AiOutlineRight, AiOutlineDown } from 'react-icons/ai'
 import { RiCopperCoinLine } from 'react-icons/ri'
 import Skeleton from 'react-loading-skeleton'
 
 import './PastWorkoutsItem.scss'
 import WorkoutTime from '../WorkoutTime/WorkoutTime'
-import { exerciseList } from '../../assets/data/exerciseList'
+import { timeToMS } from '../../util/timeToMS'
 
 const SKELETON_BASE_COLOR = '#546d80'
 const SKELETON_HIGHLIGHT_COLOR = '#548ca8'
 
-const PastWorkoutsItem = ({ workout, loading }) => {
+const ExerciseItem = ({ currActiveWorkoutExercise, getSingleExercise }) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
 
-  const name = workout && workout.workoutName
+  const setPath = currActiveWorkoutExercise.setPath
+  const sets = currActiveWorkoutExercise.sets
+  const numSets = setPath.length
+  const type = currActiveWorkoutExercise.type
+
+  const exerciseID = currActiveWorkoutExercise.exerciseID
+  const currExercise = getSingleExercise(exerciseID)
+  const { name, imageURL } = currExercise
+
+  return (
+    <div className='workout-path-exercise'>
+      <div
+        className='head'
+        onClick={() => {
+          setIsCollapsed(prev => !prev)
+        }}
+      >
+        <div className='image'>
+          <img src={imageURL} alt={name} />
+        </div>
+        <div className='exercise-data'>
+          <div className='name'>{name}</div>
+          <div className='reps-sets'>
+            <div className='sets'>
+              {type} Sets: <span>{numSets}</span>
+            </div>
+          </div>
+        </div>
+        <div className='collapse-indicator-container'>
+          <div className='set-path-label'>Set Path</div>
+          <div className='collapse-indicator'>
+            {isCollapsed ? (
+              <AiOutlineRight className='icon ' />
+            ) : (
+              <AiOutlineDown className='icon' />
+            )}
+          </div>
+        </div>
+      </div>
+      <div className={isCollapsed ? 'collapse' : 'collapse show'}>
+        <div className='set-path-data'>
+          {setPath.map((set, idx) => {
+            const weight = set.weight || sets[idx].weight
+
+            return (
+              <div className='set' key={idx}>
+                <div className='set-num'>Set {idx + 1}:</div>
+                <div className='num-reps'>
+                  <label>Reps:</label> {set.completedReps}
+                </div>
+                {type === 'timed' && (
+                  <div className='time'>
+                    <label>Time: </label>
+                    {formatTime(
+                      timeToMS(sets[idx].time.minutes, sets[idx].time.seconds)
+                    )}
+                  </div>
+                )}
+                <div className='weight'>
+                  <label>Weight:</label>
+                  {weight}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const PastWorkoutsItem = ({ workout, getSingleExercise, loading }) => {
+  const [isCollapsed, setIsCollapsed] = useState(true)
+
+  const name =
+    workout && workout.workoutName ? workout.workoutName : 'Temp Workout'
   const workoutTime = workout && formatTimeToObject(workout.totalWorkoutTime)
   const date = workout && formatDate(workout.workoutStartTime)
   const startTime = workout && formatAMPM(workout.workoutStartTime)
@@ -123,38 +198,13 @@ const PastWorkoutsItem = ({ workout, loading }) => {
             <div className='workout-path item'>
               <div className='label'>Exercises:</div>
               <div className='data'>
-                {workout.path.map(currExercise => {
-                  const exerciseData = exerciseList.find(
-                    obj => obj.id === currExercise.exerciseID
-                  )
-
-                  const name = exerciseData.name
-                  const imageURL = exerciseData.imageURL
-                  const weight = currExercise.weight
-                  const reps = currExercise.reps
-                  const sets = currExercise.sets
-
+                {workout.path.map(currActiveWorkoutExercise => {
                   return (
-                    <div className='workout-path-exercise'>
-                      <div className='image'>
-                        <img src={imageURL} alt={name} />
-                      </div>
-                      <div className='exercise-data'>
-                        <div className='name'>{name}</div>
-                        <div className='reps-sets'>
-                          <div className='sets'>
-                            Sets: <span>{sets}</span>
-                          </div>
-                          <div className='reps'>
-                            Reps: <span>{reps}</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className='weight'>
-                        {weight}
-                        <span>lbs</span>
-                      </div>
-                    </div>
+                    <ExerciseItem
+                      currActiveWorkoutExercise={currActiveWorkoutExercise}
+                      getSingleExercise={getSingleExercise}
+                      key={currActiveWorkoutExercise.id}
+                    />
                   )
                 })}
               </div>

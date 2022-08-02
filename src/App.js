@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import Account from './pages/Account/Account'
@@ -17,7 +17,6 @@ import SecurityContainer from './pages/Settings/Security/SecurityContainer'
 import NavbarContainer from './components/Navbar/Navbar'
 import WeightDataContainer from './pages/Account/WeightData/WeightDataContainer'
 import AddWeightInputContainer from './pages/Account/WeightData/AddWeightInput/AddWeightInputContainer'
-import CreateWorkoutContainer from './pages/CreateWorkout/CreateWorkoutContainer'
 import Auth from './Auth'
 import AppLoadingScreen from './components/AppLoadingScreen/AppLoadingScreen'
 import FeedbackContainer from './pages/Settings/Feedback/FeedbackContainer'
@@ -31,12 +30,22 @@ import Username from './pages/Auth/Signup/Username/Username'
 import SignupSelection from './pages/Auth/Signup/SignupSelection/SignupSelection'
 import EmailSignup from './pages/Auth/Signup/EmailSignup/EmailSignup'
 import AuthLandingPage from './pages/Auth/AuthLandingPage/AuthLandingPage'
+import CreateWorkout from './pages/CreateWorkout/CreateWorkout'
+import WorkoutTypeSelection from './pages/CreateWorkout/WorkoutTypeSelection/WorkoutTypeSelection'
+import AddExercises from './pages/CreateWorkout/AddExercises/AddExercises'
+import RestTimeData from './pages/CreateWorkout/RestTimeData/RestTimeData'
+import WorkoutInfo from './pages/CreateWorkout/WorkoutInfo/WorkoutInfo'
+import TrendingWorkouts from './components/Workout/WorkoutSelection/TrendingWorkouts'
+import UserWorkouts from './components/Workout/WorkoutSelection/UserWorkouts'
+import LikedWorkouts from './components/Workout/WorkoutSelection/LikedWorkouts'
 
 function App() {
   const [loading, setLoading] = useState(true)
 
+  const appContainerRef = useRef()
+
   return (
-    <div className='app-container'>
+    <div className='app-container' ref={appContainerRef}>
       <Helmet>
         <meta
           name='viewport'
@@ -59,16 +68,34 @@ function App() {
                     <NavbarContainer />
                   </>
                 }
-              />
+              >
+                <Route
+                  path='trending-workouts'
+                  element={<TrendingWorkouts />}
+                />
+                <Route
+                  path='user-workouts'
+                  element={<UserWorkouts appContainerRef={appContainerRef} />}
+                />
+                <Route
+                  path='liked-workouts'
+                  element={<LikedWorkouts appContainerRef={appContainerRef} />}
+                />
+              </Route>
               <Route
                 path='/create-workout'
                 element={
                   <>
-                    <CreateWorkoutContainer />
+                    <CreateWorkout />
                     <NavbarContainer />
                   </>
                 }
-              />
+              >
+                <Route path='add-exercises' element={<AddExercises />} />
+                <Route path='rest-time' element={<RestTimeData />} />
+                <Route path='workout-info' element={<WorkoutInfo />} />
+                <Route path='selection' element={<WorkoutTypeSelection />} />
+              </Route>
               <Route
                 path='/past-workouts'
                 element={

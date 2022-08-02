@@ -8,9 +8,11 @@ import helpIcon from '../../assets/images/icons/help.svg'
 import feedbackIcon from '../../assets/images/icons/feedback.svg'
 import BackButton from '../../components/SettingsComponents/BackButton/BackButton'
 import { connect } from 'react-redux'
+import { AiOutlineRight } from 'react-icons/ai'
 
 import './Settings.scss'
 import { logout } from '../../redux/actions/auth/authStatus'
+import { Link } from 'react-router-dom'
 
 const Settings = ({ logout }) => {
   const [error, setError] = useState(false)
@@ -55,6 +57,9 @@ const Settings = ({ logout }) => {
         />
       </section>
       <BackButton />
+      <Link to='/' className='version'>
+        Version v0.3.0-alpha <AiOutlineRight />
+      </Link>
     </div>
   )
 }

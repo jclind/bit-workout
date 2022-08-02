@@ -1,0 +1,63 @@
+@import '../../../../helpers.scss';
+
+.drop-set {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 0;
+  label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $secondary-text;
+  }
+  input {
+    background: $secondary-background-card;
+    box-sizing: border-box;
+    font-size: 1.3rem !important;
+    text-align: center;
+    color: $primary;
+    border-radius: $border-radius;
+    padding: 0.35rem 0;
+    &::placeholder {
+      font-size: 1.3rem;
+    }
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+  .weight-inputs {
+    display: flex;
+    justify-content: space-around;
+
+    .start-weight,
+    .end-weight {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    input {
+      width: 7ch;
+    }
+  }
+  .weight-decrease {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+
+    label {
+      text-align: center;
+    }
+
+    input {
+      width: 6ch;
+      margin: 0 auto;
+    }
+  }
+}

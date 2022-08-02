@@ -1,82 +1,14 @@
-@import '../../helpers.scss';
-
-.create-workout {
-  .form-error {
-    width: 100%;
-    box-sizing: border-box;
-  }
-  .create-workout-form {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    margin-bottom: calc(#{$navbar-height} + 4rem);
-    .label {
-      font-size: 0.8rem;
-      font-weight: 500;
-    }
-
-    .rest-time,
-    .fail-set-rest-time {
-      .inputs-container {
-        display: flex;
-        gap: 1rem;
-        width: 100%;
-      }
-    }
-
-    button.select-exercise {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      background: none;
-      margin: 0 auto;
-      width: fit-content;
-      padding: 0 2rem;
-      .icon {
-        height: 30px;
-        width: 30px;
-      }
-    }
-    .workout-path {
-      .title {
-        margin: 1rem 0;
-        text-align: center;
-        font-weight: 500;
-        font-size: 1rem;
-      }
-      .added-exercises-container {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        padding-bottom: 2rem;
-        border-radius: $border-radius;
-        padding: 1rem 0;
-        .add-exercise-drag-container {
-          width: 100%;
-          display: flex;
-          align-items: center;
-
-          .handle-icon-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 50px;
-            padding: 0 0.5rem;
-          }
-        }
-      }
-      .added-exercises-container.dragging {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.05) 0 0);
-      }
-    }
-
-    button.submit-btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 4rem;
-      overflow: hidden;
-      height: 50px;
-    }
-  }
+.signup-background {
+  z-index: 1;
+  width: 100%;
+  height: 25vh;
+  object-fit: fill;
+}
+.signup-title {
+  position: absolute;
+  top: calc(30vh * 0.15);
+  margin: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
 }
