@@ -2,8 +2,20 @@ import React, { useState, useEffect, useRef } from 'react'
 import SingleWorkout from '../SingleWorkout/SingleWorkout'
 import { Link } from 'react-router-dom'
 import { AiOutlinePlusCircle, AiOutlineSearch } from 'react-icons/ai'
+import ConfirmDeleteWorkoutModal from './ConfirmDeleteWorkoutModal'
+import { connect } from 'react-redux'
+import { deleteWorkout } from '../../../redux/actions/workout/workout'
 
-const WorkoutsList = ({ getWorkouts, appContainerRef }) => {
+const WorkoutsList = ({ getWorkouts, appContainerRef, deleteWorkout }) => {
+  const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
+    useState(false)
+  const [deletedWorkoutID, setDeletedWorkoutID] = useState(null)
+
+  const handleDeleteWorkout = workoutID => {
+    setDeletedWorkoutID(workoutID)
+    setIsConfirmDeleteModalOpen(true)
+  }
+
   const [workouts, setWorkouts] = useState([])
   // const [workoutSearchVal, setWorkoutSearchVal] = useState('')
   const [isMoreData, setIsMoreData] = useState(true)
@@ -19,6 +31,7 @@ const WorkoutsList = ({ getWorkouts, appContainerRef }) => {
   useEffect(() => {
     setLoading(true)
     getWorkouts(null, null, limit).then(res => {
+      console.log(res)
       if (!res.data || res.data.length === 0) {
         setWorkouts([])
         setLoading(false)
@@ -68,6 +81,10 @@ const WorkoutsList = ({ getWorkouts, appContainerRef }) => {
     }
   }
 
+  const removeWorkout = workoutID => {
+    setWorkouts(prevWorkouts => prevWorkouts.filter(w => w.id !== workoutID))
+  }
+
   const listInnerRef = useRef()
   return (
     <div
@@ -111,13 +128,29 @@ const WorkoutsList = ({ getWorkouts, appContainerRef }) => {
         workouts.map(workout => {
           return (
             <React.Fragment key={workout.id}>
-              <SingleWorkout workout={workout} />
+              <SingleWorkout
+                workout={workout}
+                handleDeleteWorkout={handleDeleteWorkout}
+              />
             </React.Fragment>
           )
         })
       )}
+      {isConfirmDeleteModalOpen ? (
+        <ConfirmDeleteWorkoutModal
+          onClose={() => setIsConfirmDeleteModalOpen(prev => !prev)}
+          deleteWorkout={deleteWorkout}
+          removeWorkout={removeWorkout}
+          workoutID={deletedWorkoutID}
+        />
+      ) : null}
     </div>
   )
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteWorkout: workoutID => dispatch(deleteWorkout(workoutID)),
+  }
+}
 
-export default WorkoutsList
+export default connect(null, mapDispatchToProps)(WorkoutsList)

@@ -79,6 +79,7 @@ const SingleWorkout = ({
   loading,
   isWorkoutLiked,
   toggleLikeWorkout,
+  handleDeleteWorkout,
 }) => {
   const estTime = !loading && msToTime(estimateTime(workout))
   const [isLiked, setIsLiked] = useState(null)
@@ -110,91 +111,99 @@ const SingleWorkout = ({
   }
 
   return (
-    <div className='single-workout'>
-      <div className='title-container'>
-        <div className='title'>
-          {loading ? (
-            <Skeleton
-              className='workout-title-skeleton'
-              baseColor={SKELETON_BASE_COLOR}
-              highlightColor={SKELETON_HIGHLIGHT_COLOR}
-              width='22ch'
-            />
-          ) : (
-            `${workout.name || 'Unnamed Workout'}`
-          )}
-        </div>
-        <div className='est-time'>
-          {loading ? (
-            <Skeleton
-              className='workout-est-time-skeleton'
-              baseColor={SKELETON_BASE_COLOR}
-              highlightColor={SKELETON_HIGHLIGHT_COLOR}
-              width='10ch'
-            />
-          ) : (
-            `Time: ≈${estTime}`
-          )}
-        </div>
-      </div>
-      <div className='exercises-container'>
-        {loading ? (
-          <>
-            <SingleWorkoutExercise loading={loading} />
-            <SingleWorkoutExercise loading={loading} />
-            <SingleWorkoutExercise loading={loading} />
-          </>
-        ) : (
-          workout.path.map((ex, idx) => {
-            return (
-              <SingleWorkoutExercise
-                key={idx}
-                exercise={ex}
-                workoutData={workoutData}
+    <>
+      <div className='single-workout'>
+        <div className='title-container'>
+          <div className='title'>
+            {loading ? (
+              <Skeleton
+                className='workout-title-skeleton'
+                baseColor={SKELETON_BASE_COLOR}
+                highlightColor={SKELETON_HIGHLIGHT_COLOR}
+                width='22ch'
               />
-            )
-          })
-        )}
-      </div>
-      {loading ? (
-        <Skeleton
-          className='start-button-loading'
-          baseColor={SKELETON_BASE_COLOR}
-          highlightColor={SKELETON_HIGHLIGHT_COLOR}
-          width='13ch'
-        />
-      ) : (
-        <button className='start-button' onClick={() => startWorkout(workout)}>
-          Start Workout
-        </button>
-      )}
-      {!loading ? (
-        <div className='options'>
-          <button
-            className='like'
-            disabled={isLiked === null}
-            onClick={handleLike}
-          >
-            {isLiked ? (
-              <AiFillHeart className='icon liked' />
             ) : (
-              <AiOutlineHeart className='icon' />
+              `${workout.name || 'Unnamed Workout'}`
             )}
-            {numLikes || ''}
-          </button>
-          {uid === workout.authorUID && (
-            <div className='user-actions'>
-              <button className='edit'>
-                <AiOutlineEdit className='icon' />
-              </button>
-              <button className='delete'>
-                <AiOutlineDelete className='icon' />
-              </button>
-            </div>
+          </div>
+          <div className='est-time'>
+            {loading ? (
+              <Skeleton
+                className='workout-est-time-skeleton'
+                baseColor={SKELETON_BASE_COLOR}
+                highlightColor={SKELETON_HIGHLIGHT_COLOR}
+                width='10ch'
+              />
+            ) : (
+              `Time: ≈${estTime}`
+            )}
+          </div>
+        </div>
+        <div className='exercises-container'>
+          {loading ? (
+            <>
+              <SingleWorkoutExercise loading={loading} />
+              <SingleWorkoutExercise loading={loading} />
+              <SingleWorkoutExercise loading={loading} />
+            </>
+          ) : (
+            workout.path.map((ex, idx) => {
+              return (
+                <SingleWorkoutExercise
+                  key={idx}
+                  exercise={ex}
+                  workoutData={workoutData}
+                />
+              )
+            })
           )}
         </div>
-      ) : null}
-    </div>
+        {loading ? (
+          <Skeleton
+            className='start-button-loading'
+            baseColor={SKELETON_BASE_COLOR}
+            highlightColor={SKELETON_HIGHLIGHT_COLOR}
+            width='13ch'
+          />
+        ) : (
+          <button
+            className='start-button'
+            onClick={() => startWorkout(workout)}
+          >
+            Start Workout
+          </button>
+        )}
+        {!loading ? (
+          <div className='options'>
+            <button
+              className='like'
+              disabled={isLiked === null}
+              onClick={handleLike}
+            >
+              {isLiked ? (
+                <AiFillHeart className='icon liked' />
+              ) : (
+                <AiOutlineHeart className='icon' />
+              )}
+              {numLikes || ''}
+            </button>
+            {uid === workout.authorUID && (
+              <div className='user-actions'>
+                <button className='edit'>
+                  <AiOutlineEdit className='icon' />
+                </button>
+                <button
+                  className='delete'
+                  onClick={() => handleDeleteWorkout(workout.id)}
+                >
+                  <AiOutlineDelete className='icon' />
+                </button>
+              </div>
+            )}
+          </div>
+        ) : null}
+      </div>
+    </>
   )
 }
 
