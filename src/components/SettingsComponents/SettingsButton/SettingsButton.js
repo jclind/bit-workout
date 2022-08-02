@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import './SettingsButton.scss'
-import rightIcon from '../../../assets/images/icons/right.svg'
+import { AiOutlineRight } from 'react-icons/ai'
 
 const SettingsButton = ({ title, input, icon, link, action }) => {
   const navigate = useNavigate()
@@ -23,9 +23,7 @@ const SettingsButton = ({ title, input, icon, link, action }) => {
         {title}
       </div>
       {input && <div className='input-text'>{input}</div>}
-      {link && (
-        <img src={rightIcon} alt='right arrow' className='right-icon icon' />
-      )}
+      {link && <AiOutlineRight className='right-icon icon' />}
     </div>
   )
 }

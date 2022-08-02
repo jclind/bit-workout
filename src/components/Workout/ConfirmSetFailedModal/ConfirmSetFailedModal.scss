@@ -6,7 +6,6 @@
     flex-direction: column;
     justify-content: space-between;
     height: 350px;
-    width: calc(#{$max-width} * 0.9);
     .counter-label {
       font-size: 0.8rem;
       padding-bottom: 0.75rem;
@@ -73,31 +72,6 @@
           height: 100%;
           width: 75px;
           font-size: 1.25rem;
-        }
-      }
-    }
-    .actions {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      .cancel-btn {
-        width: fit-content;
-        height: 40px;
-        padding: 0.5rem 1rem;
-        background: $gray-background;
-        color: $secondary-text;
-        cursor: pointer;
-        &:hover {
-          color: $primary;
-        }
-      }
-      .confirm-btn {
-        width: fit-content;
-        height: 40px;
-        padding: 0.5rem 1rem;
-        background: $error-red;
-        &:hover {
-          background: $error-red-hover;
         }
       }
     }

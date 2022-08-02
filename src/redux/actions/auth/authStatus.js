@@ -117,9 +117,7 @@ export const signupWithEmail =
 //     const isNewUser = getAdditionalUserInfo(cred).isNewUser
 
 //     // if (isNewUser) {
-//     // console.log('Logging out')
 //     // await setUserStatusSignedOut()
-//     // console.log('isNewUser:', isNewUser)
 //     // dispatch({ type: SET_USER_ACCOUNT_DATA, payload: { isNewUser: true } })
 //     // window.location = '/signup'
 //     // } else if (!userData) {

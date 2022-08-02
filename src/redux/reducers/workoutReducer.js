@@ -33,6 +33,7 @@ const workoutReducer = (state = INITIAL_STATE, action) => {
         workoutData: { ...newState },
       }
     case SET_WORKOUT_FINISHED:
+      console.log(state, action.payload)
       return { ...state, isWorkoutFinished: action.payload }
     case SET_COMPLETED_WORKOUT_DATA:
       return { ...state, completedWorkoutData: { ...action.payload } }

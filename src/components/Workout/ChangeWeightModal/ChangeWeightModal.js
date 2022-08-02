@@ -26,7 +26,7 @@ const ChangeWeightModal = ({
         if (newWeight % 5 === 0) {
           const weightsArray = workoutData.weights
           const currWeightIdx = weightsArray.findIndex(
-            w => w.exerciseID === currExercise.id
+            w => w.exerciseID === currExercise.exercise.id
           )
           if (currWeightIdx !== -1) {
             weightsArray[currWeightIdx].weight = Math.round(newWeight)
