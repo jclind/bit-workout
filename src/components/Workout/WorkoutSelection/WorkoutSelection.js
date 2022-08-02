@@ -1,66 +1,60 @@
 import React, { useState, useEffect } from 'react'
-import SingleWorkout from '../SingleWorkout/SingleWorkout'
-import { AiOutlineSearch, AiOutlinePlusCircle } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { Link, useNavigate, useOutlet } from 'react-router-dom'
 import './WorkoutSelection.scss'
-import { getWorkouts } from '../../../redux/actions/workout/workout'
 
-const WorkoutSelection = ({ getWorkouts }) => {
-  const [workoutSearchVal, setWorkoutSearchVal] = useState('')
+const WorkoutSelection = () => {
+  const navigate = useNavigate()
+  const outlet = useOutlet()
 
-  const [workouts, setWorkouts] = useState(null)
-
+  const [selectedList, setSelectedList] = useState('trending')
   useEffect(() => {
-    getWorkouts('').then(res => {
-      setWorkouts(res)
-    })
+    navigate(`/workout/${selectedList}-workouts`)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [selectedList])
 
   return (
     <div className='workout-selection'>
       <div className='settings-title'>Workout Selection</div>
 
-      <div className='search-workouts-container'>
-        <AiOutlineSearch className='icon' />
-        <input
-          type='text'
-          className='search-workouts'
-          placeholder='Search Workouts'
-          value={workoutSearchVal}
-          onChange={e => setWorkoutSearchVal(e.target.value)}
-        />
-      </div>
-      {workouts &&
-        workouts.slice(0, 8).map(workout => {
-          const workoutMatchesSearchVal = workout.name
-            .toLowerCase()
-            .includes(workoutSearchVal.toLowerCase())
-          if (workoutSearchVal && !workoutMatchesSearchVal) {
-            return null
+      <div className='selector'>
+        <button
+          className={
+            selectedList === 'trending'
+              ? 'selection-btn selected'
+              : 'selection-btn'
           }
-          return (
-            <React.Fragment key={workout.id}>
-              <SingleWorkout exercise={workout} />
-            </React.Fragment>
-          )
-        })}
+          onClick={() => setSelectedList('trending')}
+        >
+          Trending
+        </button>
+        <button
+          className={
+            selectedList === 'user' ? 'selection-btn selected' : 'selection-btn'
+          }
+          onClick={() => setSelectedList('user')}
+        >
+          Created
+        </button>
+        <button
+          className={
+            selectedList === 'liked'
+              ? 'selection-btn selected'
+              : 'selection-btn'
+          }
+          onClick={() => setSelectedList('liked')}
+        >
+          Liked
+        </button>
+      </div>
+      {outlet}
       <Link to='/create-workout' className='create-workout-link'>
         <button>
           <AiOutlinePlusCircle className='icon' />
-          Create workout
         </button>
       </Link>
     </div>
   )
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getWorkouts: (queryString, order, limit) =>
-      dispatch(getWorkouts(queryString, order, limit)),
-  }
-}
-
-export default connect(null, mapDispatchToProps)(WorkoutSelection)
+export default WorkoutSelection

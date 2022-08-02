@@ -7,7 +7,7 @@ export const msToTime = duration => {
   } else {
     hours = null
   }
-  minutes = minutes < 10 ? '0' + minutes : minutes
+  minutes = minutes < 10 && hours ? '0' + minutes : minutes
 
-  return (hours && hours + 'hr, ') + minutes + 'min'
+  return (hours ? hours + 'hr, ' : '') + minutes + 'min'
 }

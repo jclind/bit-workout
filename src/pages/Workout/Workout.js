@@ -4,6 +4,7 @@ import ActiveWorkoutContainer from '../../components/Workout/ActiveWorkout/Activ
 import WorkoutComplete from '../../components/Workout/WorkoutComplete/WorkoutComplete'
 import { connect } from 'react-redux'
 import { fetchWorkoutData } from '../../redux/actions/workout/workout'
+import './Workout.scss'
 
 const Workout = ({ uid, fetchWorkoutData, isWorkoutFinished, workoutData }) => {
   useEffect(() => {
@@ -21,7 +22,7 @@ const Workout = ({ uid, fetchWorkoutData, isWorkoutFinished, workoutData }) => {
 
   return (
     <>
-      <div className='page'>
+      <div className='workout-page page'>
         {isWorkoutFinished ? (
           <WorkoutComplete />
         ) : isWorkoutRunning ? (

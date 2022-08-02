@@ -18,6 +18,8 @@ import {
   limit,
   getDocs,
   startAfter,
+  deleteDoc,
+  increment,
 } from 'firebase/firestore'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import { calcCoins, calcExp, logWorkout } from '../character/character'
@@ -28,7 +30,11 @@ export const fetchWorkoutData = uid => async dispatch => {
     const workoutData = document.data()
     dispatch({ type: FETCH_WORKOUT_DATA, payload: workoutData })
     const timeLastUpdated = workoutData.runningWorkout.timeLastUpdated
-    if (!timeLastUpdated || timeLastUpdated < new Date().getTime() - 1800000) {
+    const isWorkoutRunning = workoutData.isWorkoutRunning
+    if (
+      isWorkoutRunning &&
+      (!timeLastUpdated || timeLastUpdated < new Date().getTime() - 1800000)
+    ) {
       dispatch(stopWorkout())
     }
   })
@@ -57,6 +63,23 @@ export const setWorkoutFinished = isFinished => {
   }
 }
 
+export const getSingleExercise = exerciseID => (dispatch, getState) => {
+  const weights = getState().workout?.workoutData?.weights
+
+  const exercise = exerciseList.find(ex => ex.id === exerciseID)
+
+  const exerciseWeightData =
+    weights && weights.find(w => w.exerciseID === exerciseID)
+  let exerciseWeight
+  if (!exerciseWeightData) {
+    exerciseWeight = 45
+  } else {
+    exerciseWeight = exerciseWeightData.weight
+  }
+
+  return { ...exercise, exerciseWeight } || null
+}
+
 export const getSingleWorkout = id => (dispatch, getState) => {
   const weights = getState().workout.workoutData.weights
   const workoutData = getState().workout.workoutData
@@ -70,7 +93,7 @@ export const getSingleWorkout = id => (dispatch, getState) => {
     exerciseWeight = exerciseWeightData.weight
   }
   const currWorkoutData = workoutData.runningWorkout.currWorkout.path.find(
-    ex => ex.exerciseID === id
+    ex => ex.exercise.id === id
   )
 
   return {
@@ -79,14 +102,14 @@ export const getSingleWorkout = id => (dispatch, getState) => {
     currWorkoutData,
   }
 }
-export const startWorkout = exercise => async (dispatch, getState) => {
+export const startWorkout = workoutData => async (dispatch, getState) => {
   const data = {
     isWorkoutRunning: true,
     runningWorkout: {
       workoutStartTime: new Date().getTime(),
       timeLastUpdated: new Date().getTime(),
       remainingWorkout: { currIdx: 0, currSet: 1 },
-      currWorkout: exercise,
+      currWorkout: workoutData,
       timer: {
         isTimer: false,
         timerStart: null,
@@ -155,7 +178,7 @@ const incCurrWorkoutStats = (
 }
 
 export const completeSet =
-  (currSetTotal, completedReps, exerciseID, lastSetFailed) =>
+  (currSetTotal, completedReps, exerciseID, weight, lastSetFailed) =>
   async (dispatch, getState) => {
     const runningWorkout = getState().workout.workoutData.runningWorkout
     const timeLastUpdated = runningWorkout.timeLastUpdated
@@ -164,18 +187,14 @@ export const completeSet =
     const currWorkoutPathLength = runningWorkout.currWorkout.path.length
     const elapsedTime = new Date().getTime() - timeLastUpdated
 
-    const currExerciseWeightObj = getState().workout.workoutData.weights.find(
-      ex => ex.exerciseID === exerciseID
-    )
     // If user doesn't have recorded weight for current exercise, set to 45
     let currExerciseWeight
-    if (!currExerciseWeightObj || !currExerciseWeightObj.weight) {
+    if (!weight) {
       currExerciseWeight = 45
       addNewExerciseWeight(45, exerciseID)
     } else {
-      currExerciseWeight = currExerciseWeightObj.weight
+      currExerciseWeight = weight
     }
-
     let updatedPath = [...runningWorkout.currWorkout.path]
     const currSetPath = updatedPath[currIdx].setPath || []
     updatedPath[currIdx].setPath = [
@@ -256,7 +275,7 @@ export const completeSet =
   }
 
 export const failSet =
-  (newWeight, exerciseID, currSetTotal, completedReps) =>
+  (newWeight, exerciseID, currSetTotal, completedReps, currWeight) =>
   async (dispatch, getState) => {
     const weights = getState().workout.workoutData.weights
 
@@ -266,11 +285,12 @@ export const failSet =
       }
       return weight
     })
-    await dispatch(completeSet(currSetTotal, completedReps, true))
+    await dispatch(
+      completeSet(currSetTotal, completedReps, exerciseID, currWeight, true)
+    )
     await dispatch(
       updateWorkout({
         weights: modWeights,
-        // 'runningWorkout.currWorkout.path'
       })
     )
   }
@@ -281,7 +301,7 @@ const updateWeights = (weights, currWorkoutPath) => {
     const exerciseID = ex.exerciseID
 
     modWeights.forEach(w => {
-      if (w.exerciseID === exerciseID) {
+      if (w.exerciseID === exerciseID && ex.type === 'straight') {
         w.weight += 5
       }
     })
@@ -324,6 +344,7 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
     const imageURL = exerciseList.find(ex => ex.id === exerciseID).imageURL
     let currWeight = null
     weights.forEach(w => {
+      // Only update weight if the set type is straight
       if (w.exerciseID === exerciseID) {
         currWeight = w.weight
       }
@@ -356,7 +377,7 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
   const workoutStartTime = runningWorkout.workoutStartTime
   const totalWorkoutTime = new Date() - workoutStartTime
   const finishedWorkoutData = {
-    workoutName: currWorkout.name,
+    workoutName: currWorkout.name || 'Temp Workout',
     workoutRestTime: currWorkout.restTime,
     workoutStartTime,
     totalWorkoutTime,
@@ -364,11 +385,13 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
     expEarned: exp,
     path: pathData,
   }
+  console.log('IN finishWorkout FUNCTION')
   dispatch(updateWorkout(updatedData))
   dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
   dispatch(setWorkoutFinished(true))
   dispatch(addWorkoutToPastWorkouts(finishedWorkoutData))
 }
+
 export const stopWorkout = () => async (dispatch, getState) => {
   const workoutData = getState().workout.workoutData
   const runningWorkout = workoutData.runningWorkout
@@ -408,8 +431,9 @@ export const stopWorkout = () => async (dispatch, getState) => {
   }
 
   await dispatch(updateWorkout({ isWorkoutRunning: false }))
-  dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
   dispatch(setWorkoutFinished(true))
+
+  dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
   dispatch(addWorkoutToPastWorkouts(finishedWorkoutData))
 }
 
@@ -470,14 +494,28 @@ export const queryPastWorkoutData =
 
 // CREATE NEW WORKOUT
 
-export const createWorkout = data => async (dispatch, getState) => {
+export const createWorkout = workoutData => async (dispatch, getState) => {
   const uid = getState().auth.userAuth.uid
   const dateCreated = new Date().getTime()
 
-  await setDoc(doc(db, 'workouts', data.id), {
-    ...data,
+  const userWorkoutDataRef = doc(db, 'workoutData', uid)
+  const userCreatedWorkoutsRef = collection(
+    userWorkoutDataRef,
+    'createdWorkouts'
+  )
+
+  const workoutId = workoutData.id
+
+  addDoc(userCreatedWorkoutsRef, { id: workoutId, dateCreated }).catch(err => {
+    console.log('workout not added to data:', err)
+    // !ERROR
+  })
+
+  await setDoc(doc(db, 'workouts', workoutId), {
+    ...workoutData,
     authorUID: uid,
     dateCreated,
+    likes: 0,
   })
 }
 
@@ -495,3 +533,264 @@ export const getWorkouts = (queryString, order, limit) => async () => {
 
   return arr
 }
+export const getUserWorkouts =
+  (queryString, order, numResults, latestDoc) => async (dispatch, getState) => {
+    const uid = getState().auth.userAuth.uid
+    const userWorkoutDataRef = doc(db, 'workoutData', uid)
+    const userCreatedWorkoutsRef = collection(
+      userWorkoutDataRef,
+      'createdWorkouts'
+    )
+    let userCreatedWorkoutQuery
+    if (latestDoc) {
+      userCreatedWorkoutQuery = query(
+        userCreatedWorkoutsRef,
+        orderBy('dateCreated', 'desc'),
+        startAfter(latestDoc),
+        limit(numResults)
+      )
+    } else {
+      userCreatedWorkoutQuery = query(
+        userCreatedWorkoutsRef,
+        orderBy('dateCreated', 'desc'),
+        limit(numResults)
+      )
+    }
+
+    const userCreatedWorkoutIdsSnapshot = await getDocs(userCreatedWorkoutQuery)
+
+    const userCreatedWorkoutIds = []
+    userCreatedWorkoutIdsSnapshot.forEach(doc => {
+      userCreatedWorkoutIds.push(doc.data().id)
+    })
+    const promises = []
+    userCreatedWorkoutIds.forEach(id => {
+      const workoutsRef = doc(db, 'workouts', id)
+      promises.push(getDoc(workoutsRef))
+    })
+
+    const newLatestDoc =
+      userCreatedWorkoutIdsSnapshot.docs[
+        userCreatedWorkoutIdsSnapshot.docs.length - 1
+      ]
+
+    const results = await Promise.allSettled([...promises])
+    const workouts = []
+    results.forEach(el => {
+      const data = el.value.data()
+      if (data) {
+        workouts.push(el.value.data())
+      }
+    })
+    return { data: workouts, latestDoc: newLatestDoc }
+  }
+
+export const getTrendingWorkouts =
+  (queryString, order, numResults, latestDoc) => async () => {
+    const workoutsCollection = collection(db, 'workouts')
+    let workoutsQuery
+    if (latestDoc) {
+      workoutsQuery = query(
+        workoutsCollection,
+        orderBy('likes', 'desc'),
+        startAfter(latestDoc),
+        limit(numResults)
+      )
+    } else {
+      workoutsQuery = query(
+        workoutsCollection,
+        orderBy('likes', 'desc'),
+        limit(numResults)
+      )
+    }
+
+    const workoutsSnapshot = await getDocs(workoutsQuery)
+
+    const workouts = []
+    workoutsSnapshot.forEach(doc => {
+      const data = doc.data()
+      if (data) {
+        workouts.push(doc.data())
+      }
+    })
+
+    const newLatestDoc = workoutsSnapshot.docs[workoutsSnapshot.docs.length - 1]
+    return { data: workouts, latestDoc: newLatestDoc }
+  }
+
+export const getUserLikedWorkouts =
+  (queryString, order, numResults, latestDoc) => async (dispatch, getState) => {
+    const uid = getState().auth.userAuth.uid
+
+    const workoutLikesCollection = collection(db, 'workoutLikes')
+
+    let likesQuery
+    if (latestDoc) {
+      likesQuery = query(
+        workoutLikesCollection,
+        where('userID', '==', uid),
+        orderBy('date', 'desc'),
+        startAfter(latestDoc),
+        limit(numResults)
+      )
+    } else {
+      likesQuery = query(
+        workoutLikesCollection,
+        where('userID', '==', uid),
+        orderBy('date', 'desc'),
+        limit(numResults)
+      )
+    }
+
+    const likedWorkoutsSnapshot = await getDocs(likesQuery)
+
+    const userLikedWorkoutIDs = []
+    likedWorkoutsSnapshot.forEach(doc => {
+      userLikedWorkoutIDs.push(doc.data().workoutID)
+    })
+
+    const promises = []
+    userLikedWorkoutIDs.forEach(workoutID => {
+      const workoutRef = doc(db, 'workouts', workoutID)
+      promises.push(getDoc(workoutRef))
+    })
+
+    const newLatestDoc =
+      likedWorkoutsSnapshot.docs[likedWorkoutsSnapshot.docs.length - 1]
+
+    const results = await Promise.allSettled([...promises])
+    const workouts = []
+    results.forEach(el => {
+      const data = el.value.data()
+      if (data) {
+        workouts.push(data)
+      }
+    })
+    return { data: workouts, latestDoc: newLatestDoc }
+  }
+
+const deleteUserWorkoutID = async (uid, workoutID) => {
+  const userWorkoutData = doc(db, 'workoutData', uid)
+  const createdWorkoutsCollection = collection(
+    userWorkoutData,
+    'createdWorkouts'
+  )
+
+  const workoutIDQuery = query(
+    createdWorkoutsCollection,
+    where('id', '==', workoutID)
+  )
+  const workoutIDSnapshot = await getDocs(workoutIDQuery)
+  let deletedDoc
+  workoutIDSnapshot.forEach(doc => {
+    deletedDoc = doc.ref
+  })
+
+  if (deletedDoc) {
+    return await deleteDoc(deletedDoc)
+  }
+}
+const deleteWorkoutLikes = async workoutID => {
+  const workoutLikesCollection = collection(db, 'workoutLikes')
+  const likesQuery = query(
+    workoutLikesCollection,
+    where('workoutID', '==', workoutID)
+  )
+  const likesSnapshot = await getDocs(likesQuery)
+  const promises = []
+  likesSnapshot.forEach(doc => {
+    promises.push(deleteDoc(doc.ref))
+  })
+
+  if (promises.length > 0) {
+    return await Promise.allSettled([...promises])
+  }
+}
+export const deleteWorkout = workoutID => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
+
+  const workoutCollection = collection(db, 'workouts')
+
+  const workoutQuery = query(
+    workoutCollection,
+    where('id', '==', workoutID),
+    where('authorUID', '==', uid)
+  )
+
+  const workoutSnapshot = await getDocs(workoutQuery)
+
+  let workoutDoc
+  workoutSnapshot.forEach(doc => {
+    workoutDoc = doc.ref
+  })
+
+  try {
+    await deleteWorkoutLikes(workoutID)
+    await deleteUserWorkoutID(uid, workoutID)
+    await deleteDoc(workoutDoc)
+
+    return { status: 'success' }
+  } catch (err) {
+    console.error(err)
+    return { err }
+  }
+}
+
+export const isWorkoutLiked = workoutID => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
+
+  const workoutLikesColl = collection(db, 'workoutLikes')
+  const workoutLikesQuery = query(
+    workoutLikesColl,
+    where('userID', '==', uid),
+    where('workoutID', '==', workoutID)
+  )
+  const workoutLikesSnapshot = await getDocs(workoutLikesQuery)
+
+  return !workoutLikesSnapshot.empty
+}
+
+export const toggleLikeWorkout =
+  (workoutID, isLiked) => async (dispatch, getState) => {
+    const uid = getState().auth.userAuth.uid
+
+    if (isLiked) {
+      const workoutLikesColl = collection(db, 'workoutLikes')
+      const workoutLikesQuery = query(
+        workoutLikesColl,
+        where('userID', '==', uid),
+        where('workoutID', '==', workoutID)
+      )
+      const workoutLikesSnapshot = await getDocs(workoutLikesQuery)
+
+      let deletedDoc
+      workoutLikesSnapshot.forEach(doc => {
+        deletedDoc = doc.ref
+      })
+
+      await deleteDoc(deletedDoc)
+    } else {
+      const likeID = uuidv4()
+
+      const workoutLikesRef = doc(db, 'workoutLikes', likeID)
+
+      await setDoc(workoutLikesRef, {
+        id: likeID,
+        userID: uid,
+        workoutID: workoutID,
+        date: new Date().getTime(),
+      })
+    }
+
+    const workoutDoc = doc(db, 'workouts', workoutID)
+    if (isLiked) {
+      await updateDoc(workoutDoc, {
+        likes: increment(-1),
+      })
+    } else {
+      await updateDoc(workoutDoc, {
+        likes: increment(1),
+      })
+    }
+    return !isLiked
+  }
