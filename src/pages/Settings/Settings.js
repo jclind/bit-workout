@@ -51,7 +51,7 @@ const Settings = ({ logout }) => {
         <SettingsButton
           title={'Workout Settings'}
           icon={<AiOutlineSetting className='settings-button-icon icon' />}
-          link={'/'}
+          link={'/account/settings/workout-settings'}
         />
       </section>
       <section className='support-section settings-section'>
