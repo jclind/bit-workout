@@ -7,13 +7,13 @@ import './ActiveWorkout.scss'
 import { connect } from 'react-redux'
 import WorkoutPathModal from '../WorkoutPathModal/WorkoutPathModal'
 
-const WorkoutContainer = ({ isTimer, timerStart, currWorkout }) => {
+const WorkoutContainer = ({ isTimer, timerStart, currWorkout, isChime }) => {
   const [isWorkoutPathModalOpen, setIsWorkoutPathModalOpen] = useState(false)
 
   const [play] = useSound(timerFinishedSound)
 
   useEffect(() => {
-    if (!isTimer) {
+    if (!isTimer && isChime) {
       play()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,10 +45,13 @@ const WorkoutContainer = ({ isTimer, timerStart, currWorkout }) => {
 const mapStateToProps = state => {
   const runningWorkout = state.workout.workoutData.runningWorkout
   const timer = runningWorkout.timer
+  const workoutSettings = state.auth.userAccountData?.settings?.workout
+  const isChime = workoutSettings ? workoutSettings.isChime : true
   return {
     isTimer: timer.isTimer,
     timerStart: timer.timerStart,
     currWorkout: runningWorkout.currWorkout,
+    isChime,
   }
 }
 
