@@ -56,6 +56,11 @@ const WeightDataContainer = ({ weightData }) => {
           selectedTimeSpan.value === 'week' || chartData.length <= 3 ? 3 : 0,
       },
     },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
     responsive: true,
     maintainAspectRatio: false,
   }
