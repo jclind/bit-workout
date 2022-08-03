@@ -38,6 +38,7 @@ import WorkoutInfo from './pages/CreateWorkout/WorkoutInfo/WorkoutInfo'
 import TrendingWorkouts from './components/Workout/WorkoutSelection/TrendingWorkouts'
 import UserWorkouts from './components/Workout/WorkoutSelection/UserWorkouts'
 import LikedWorkouts from './components/Workout/WorkoutSelection/LikedWorkouts'
+import WorkoutSettings from './pages/Settings/Workout/WorkoutSettings'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -148,6 +149,10 @@ function App() {
                 exact
                 path='/account/settings/security'
                 element={<SecurityContainer />}
+              />
+              <Route
+                path='/account/settings/workout-settings'
+                element={<WorkoutSettings />}
               />
               <Route
                 exact
