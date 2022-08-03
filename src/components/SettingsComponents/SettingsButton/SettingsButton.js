@@ -16,9 +16,7 @@ const SettingsButton = ({ title, input, icon, link, action }) => {
 
   return (
     <div className='settings-button' onClick={handleClick}>
-      {icon && (
-        <img src={icon} alt={title} className='settings-button-icon icon' />
-      )}
+      {icon && icon}
       <div className={icon ? 'setting-title active-icon' : 'setting-title'}>
         {title}
       </div>
