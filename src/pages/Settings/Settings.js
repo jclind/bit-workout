@@ -78,7 +78,7 @@ const Settings = ({ logout }) => {
         />
       </section>
       <BackButton />
-      <Link to='/' className='version'>
+      <Link to='/account/settings/release-notes' className='version'>
         Version v0.3.0-alpha <AiOutlineRight />
       </Link>
     </div>
