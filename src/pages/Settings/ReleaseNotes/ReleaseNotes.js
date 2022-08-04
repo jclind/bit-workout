@@ -3,6 +3,7 @@ import { releaseNotes } from '../../../assets/data/releaseNotes'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { BiWrench } from 'react-icons/bi'
 import { BsPencil } from 'react-icons/bs'
+import BackButton from '../../../components/SettingsComponents/BackButton/BackButton'
 import './ReleaseNotes.scss'
 
 const ReleaseNotes = () => {
@@ -78,6 +79,7 @@ const ReleaseNotes = () => {
       >
         View All Release Notes
       </a>
+      <BackButton />
     </div>
   )
 }
