@@ -26,8 +26,9 @@ export const releaseNotes = [
     fixes: [
       'Fix multiple visual bugs and workout related bugs.',
       'Fix workout path modal functionality. Modal previously threw multiple errors due to incorrect data retrieval.',
-      'Stopping workout before completion no longer throws errors, and workout data is now saved correctly',
+      'Stopping workout before completion no longer throws errors, and workout data is now saved correctly.',
+      'Drop sets no longer have rest time after set completion.',
     ],
-    improvements: ['Add ability to toggle workout chime in settings'],
+    improvements: ['Add ability to toggle workout chime in settings.'],
   },
 ]

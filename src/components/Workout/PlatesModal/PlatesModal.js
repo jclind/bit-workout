@@ -20,8 +20,6 @@ const PlatesModal = ({
     }
   })
 
-  console.log(currExercise)
-
   return ReactDom.createPortal(
     <>
       <div className='plates-modal overlay'>
