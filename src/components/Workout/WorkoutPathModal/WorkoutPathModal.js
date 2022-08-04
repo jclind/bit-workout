@@ -9,6 +9,7 @@ const WorkoutPathModal = ({
   currExerciseIdx,
   currSetIdx,
   workout,
+  weights,
 }) => {
   const modalContent = useClickOutside(() => {
     onClose()
@@ -20,7 +21,6 @@ const WorkoutPathModal = ({
           <div className='settings-title'>Workout Path</div>
           <div className='path'>
             {workout.path.map((ex, idx) => {
-              console.log(ex, currExerciseIdx, currSetIdx)
               const currExercise = exerciseList.find(
                 exercise => exercise.id === ex.exerciseID
               )
@@ -28,8 +28,29 @@ const WorkoutPathModal = ({
               const imageURL = currExercise.imageURL
               const name = currExercise.name
               const sets = ex.sets
+              const setType = ex.type
 
               const numSets = sets.length
+
+              let currExerciseWeight
+              if (setType === 'straight') {
+                let weightObj = weights.find(
+                  weight => weight.exerciseID === ex.exerciseID
+                )
+                currExerciseWeight = weightObj.weight || 45
+              } else if (setType === 'drop' || setType === 'timed') {
+                const maxWeight = Math.max.apply(
+                  Math,
+                  sets.map(o => Number(o.weight))
+                )
+                const minWeight = Math.min.apply(
+                  Math,
+                  sets.map(o => Number(o.weight))
+                )
+
+                currExerciseWeight =
+                  maxWeight + (minWeight < maxWeight && `-${minWeight}`)
+              }
               // const reps = Number(ex.reps)
               // const sets = Number(ex.sets)
 
@@ -59,7 +80,7 @@ const WorkoutPathModal = ({
                     <div className='name'>{name}</div>
                     <div className='reps-sets'>
                       <div className='sets'>
-                        Sets:{' '}
+                        {setType} Sets:{' '}
                         <span>
                           <span className='curr-set'>{completedSets}</span>/
                           {numSets}
@@ -70,6 +91,9 @@ const WorkoutPathModal = ({
                       </div> */}
                     </div>
                   </div>
+                  {currExerciseWeight && (
+                    <div className='weight'>{currExerciseWeight}lbs</div>
+                  )}
                 </div>
               )
             })}
