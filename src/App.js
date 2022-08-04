@@ -38,6 +38,8 @@ import WorkoutInfo from './pages/CreateWorkout/WorkoutInfo/WorkoutInfo'
 import TrendingWorkouts from './components/Workout/WorkoutSelection/TrendingWorkouts'
 import UserWorkouts from './components/Workout/WorkoutSelection/UserWorkouts'
 import LikedWorkouts from './components/Workout/WorkoutSelection/LikedWorkouts'
+import WorkoutSettings from './pages/Settings/Workout/WorkoutSettings'
+import ReleaseNotes from './pages/Settings/ReleaseNotes/ReleaseNotes'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -150,9 +152,17 @@ function App() {
                 element={<SecurityContainer />}
               />
               <Route
+                path='/account/settings/workout-settings'
+                element={<WorkoutSettings />}
+              />
+              <Route
                 exact
                 path='/account/settings/feedback'
                 element={<FeedbackContainer />}
+              />
+              <Route
+                path='/account/settings/release-notes'
+                element={<ReleaseNotes />}
               />
             </Route>
             <Route path='/signup' element={<Signup />}>

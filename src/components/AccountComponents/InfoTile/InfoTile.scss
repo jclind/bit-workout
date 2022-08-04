@@ -6,10 +6,11 @@
   flex-direction: column;
   justify-content: space-evenly;
   height: 130px;
-  width: 130px;
+  width: 150px;
   background: $secondary-background;
   border-radius: 10px;
   padding: 0 toRem(20);
+  cursor: pointer;
 
   .info-tile-title {
     font-size: toRem(14);
