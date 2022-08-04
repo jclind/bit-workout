@@ -51,8 +51,6 @@ const WorkoutPathModal = ({
                 currExerciseWeight =
                   maxWeight + (minWeight < maxWeight && `-${minWeight}`)
               }
-              // const reps = Number(ex.reps)
-              // const sets = Number(ex.sets)
 
               const exerciseState =
                 currExerciseIdx > idx
@@ -86,9 +84,6 @@ const WorkoutPathModal = ({
                           {numSets}
                         </span>
                       </div>
-                      {/* <div className='reps'>
-                        Reps: <span>{reps}</span>
-                      </div> */}
                     </div>
                   </div>
                   {currExerciseWeight && (

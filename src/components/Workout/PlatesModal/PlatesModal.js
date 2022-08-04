@@ -20,6 +20,8 @@ const PlatesModal = ({
     }
   })
 
+  console.log(currExercise)
+
   return ReactDom.createPortal(
     <>
       <div className='plates-modal overlay'>
@@ -56,9 +58,8 @@ const PlatesModal = ({
           </div>
         </div>
       </div>
-      {isChangeWeightModalOpen && !isChangeWeightModalOpen ? (
+      {isChangeWeightModalOpen && weightIsChangeable ? (
         <ChangeWeightModal
-          exerciseID={currExercise.id}
           onClose={() => {
             setIsChangeWeightModalOpen(false)
           }}
