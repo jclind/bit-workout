@@ -4,7 +4,12 @@ import { exerciseList } from '../../../assets/data/exerciseList'
 import useClickOutside from '../../../util/useClickOutside'
 import './WorkoutPathModal.scss'
 
-const WorkoutPathModal = ({ onClose, currIdx, currSet, workout }) => {
+const WorkoutPathModal = ({
+  onClose,
+  currExerciseIdx,
+  currSetIdx,
+  workout,
+}) => {
   const modalContent = useClickOutside(() => {
     onClose()
   })
@@ -15,19 +20,23 @@ const WorkoutPathModal = ({ onClose, currIdx, currSet, workout }) => {
           <div className='settings-title'>Workout Path</div>
           <div className='path'>
             {workout.path.map((ex, idx) => {
+              console.log(ex, currExerciseIdx, currSetIdx)
               const currExercise = exerciseList.find(
                 exercise => exercise.id === ex.exerciseID
               )
 
               const imageURL = currExercise.imageURL
               const name = currExercise.name
-              const reps = Number(ex.reps)
-              const sets = Number(ex.sets)
+              const sets = ex.sets
+
+              const numSets = sets.length
+              // const reps = Number(ex.reps)
+              // const sets = Number(ex.sets)
 
               const exerciseState =
-                currIdx > idx
+                currExerciseIdx > idx
                   ? 'COMPLETED'
-                  : currIdx === idx
+                  : currExerciseIdx === idx
                   ? 'ACTIVE'
                   : 'UPCOMING'
 
@@ -35,8 +44,8 @@ const WorkoutPathModal = ({ onClose, currIdx, currSet, workout }) => {
               // If exercise is active, completed sets will equal the current workout set minus one (to get number of completed sets)
               // If exercise is upcoming, 0 sets will have been completed
               let completedSets = 0
-              if (exerciseState === 'COMPLETED') completedSets = sets
-              if (exerciseState === 'ACTIVE') completedSets = currSet - 1
+              if (exerciseState === 'COMPLETED') completedSets = numSets
+              if (exerciseState === 'ACTIVE') completedSets = currSetIdx - 1
 
               return (
                 <div
@@ -53,12 +62,12 @@ const WorkoutPathModal = ({ onClose, currIdx, currSet, workout }) => {
                         Sets:{' '}
                         <span>
                           <span className='curr-set'>{completedSets}</span>/
-                          {sets}
+                          {numSets}
                         </span>
                       </div>
-                      <div className='reps'>
+                      {/* <div className='reps'>
                         Reps: <span>{reps}</span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
