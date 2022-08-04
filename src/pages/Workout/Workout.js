@@ -4,6 +4,7 @@ import ActiveWorkoutContainer from '../../components/Workout/ActiveWorkout/Activ
 import WorkoutComplete from '../../components/Workout/WorkoutComplete/WorkoutComplete'
 import { connect } from 'react-redux'
 import { fetchWorkoutData } from '../../redux/actions/workout/workout'
+import FadeLoader from 'react-spinners/FadeLoader'
 import './Workout.scss'
 
 const Workout = ({ uid, fetchWorkoutData, isWorkoutFinished, workoutData }) => {
@@ -17,7 +18,21 @@ const Workout = ({ uid, fetchWorkoutData, isWorkoutFinished, workoutData }) => {
   const isWorkoutRunning = workoutData ? workoutData.isWorkoutRunning : null
 
   if (!workoutData) {
-    return 'loading workout'
+    return (
+      <div className='workout-loading'>
+        <div className='spinner-container'>
+          <FadeLoader
+            color={'#548ca8'}
+            className='spinner'
+            height={8}
+            width={3}
+            radius={10}
+            margin={-8}
+          />
+        </div>
+        <div className='text'>loading...</div>
+      </div>
+    )
   }
 
   return (

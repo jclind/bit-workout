@@ -4,10 +4,13 @@
   .modal-content {
     width: calc(#{$max-width} * 0.9);
     max-width: 90%;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
     .path {
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      width: 100%;
 
       .workout-path-exercise {
         display: flex;
@@ -51,10 +54,15 @@
             gap: 1rem;
             font-size: 0.75rem;
             color: $secondary-text;
+            text-transform: capitalize;
             span {
               color: $primary;
             }
           }
+        }
+        .weight {
+          display: flex;
+          align-items: center;
         }
       }
       .workout-path-exercise.COMPLETED {

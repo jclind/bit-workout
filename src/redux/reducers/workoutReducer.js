@@ -24,6 +24,7 @@ const workoutReducer = (state = INITIAL_STATE, action) => {
       return { ...state, workoutData: action.payload }
     case SET_WORKOUT_DATA:
       const newState = JSON.parse(JSON.stringify(state.workoutData))
+      // Destructure dot passed dot object notation properties into a useable object
       Object.keys(action.payload).map(key => {
         const currVal = action.payload[key]
         return setToValue(newState, key, currVal)
@@ -33,7 +34,6 @@ const workoutReducer = (state = INITIAL_STATE, action) => {
         workoutData: { ...newState },
       }
     case SET_WORKOUT_FINISHED:
-      console.log(state, action.payload)
       return { ...state, isWorkoutFinished: action.payload }
     case SET_COMPLETED_WORKOUT_DATA:
       return { ...state, completedWorkoutData: { ...action.payload } }
