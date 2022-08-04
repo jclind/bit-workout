@@ -1,4 +1,8 @@
 export const calculatePlates = (barWeight, totalWeight) => {
+  if (barWeight > totalWeight) {
+    barWeight = 5
+  }
+
   // Get weight that will be on each side of the bar (hence '/ 2')
   const remTotWeight = (totalWeight - barWeight) / 2
 

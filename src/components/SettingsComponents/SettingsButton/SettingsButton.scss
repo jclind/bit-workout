@@ -8,10 +8,12 @@
   justify-content: flex-start;
   text-decoration: none;
   margin: 0;
+  cursor: pointer;
 
   .icon {
     position: absolute;
-    height: 18px;
+    height: 22px;
+    width: 22px;
   }
   .right-icon {
     height: 16px;

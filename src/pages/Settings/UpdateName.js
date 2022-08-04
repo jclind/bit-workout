@@ -28,7 +28,7 @@ const UpdateName = ({ updateUserAccountData, userAccountData }) => {
   return (
     <div className='update-name-page page'>
       <div className='settings-title'>Name</div>
-      <div className='error'>{error}</div>
+      {error && <div className='error'>{error}</div>}
       <UpdateUserInputContainer
         placeholder={'Enter Updated Name'}
         val={userName}
