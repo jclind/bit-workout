@@ -26,9 +26,11 @@ const WorkoutContainer = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTimer])
+
+  const currExerciseType = currWorkout?.path[currExerciseIdx].type
   return (
     <>
-      {isTimer && timerStart ? (
+      {isTimer && timerStart && currExerciseType !== 'drop' ? (
         <TimerContainer
           timerStart={timerStart}
           setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}

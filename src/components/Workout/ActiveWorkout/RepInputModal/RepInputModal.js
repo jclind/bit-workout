@@ -130,7 +130,11 @@ const RepInputModal = ({
             <button
               className='confirm-btn'
               onClick={() =>
-                completeSet(numSets, Number(numReps), exerciseID, weight)
+                completeSet(numSets, Number(numReps), exerciseID, weight).then(
+                  () => {
+                    onClose()
+                  }
+                )
               }
             >
               Confirm

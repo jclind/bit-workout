@@ -22,8 +22,12 @@ export const releaseNotes = [
     date: 'August 2, 2022',
     title: '',
     description: '',
-    features: [],
-    fixes: [],
-    improvements: [],
+    features: ['New Release Notes Page!'],
+    fixes: [
+      'Fix multiple visual bugs and workout related bugs.',
+      'Fix workout path modal functionality. Modal previously threw multiple errors due to incorrect data retrieval.',
+      'Stopping workout before completion no longer throws errors, and workout data is now saved correctly',
+    ],
+    improvements: ['Add ability to toggle workout chime in settings'],
   },
 ]
