@@ -14,6 +14,7 @@ const WorkoutContainer = ({
   isChime,
   currExerciseIdx,
   currSetIdx,
+  weights,
 }) => {
   const [isWorkoutPathModalOpen, setIsWorkoutPathModalOpen] = useState(false)
 
@@ -46,6 +47,7 @@ const WorkoutContainer = ({
           workout={currWorkout}
           currExerciseIdx={currExerciseIdx}
           currSetIdx={currSetIdx}
+          weights={weights}
         />
       ) : null}
     </>
@@ -64,7 +66,8 @@ const mapStateToProps = state => {
     isChime,
     currSetIdx: runningWorkout.remainingWorkout.currSet,
     currExerciseIdx: runningWorkout.remainingWorkout.currIdx,
+    weights: state.workout.workoutData.weights,
   }
 }
 
-export default connect(mapStateToProps, null)(WorkoutContainer)
+export default connect(mapStateToProps)(WorkoutContainer)
