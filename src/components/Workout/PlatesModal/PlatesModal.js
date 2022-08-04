@@ -48,7 +48,7 @@ const PlatesModal = ({
               if (weight.amount > 0) {
                 return (
                   <div className='weight' key={idx}>
-                    <div className='name'>{weight.name} lbs :</div>
+                    <div className='name'>{weight.name} lbs</div>
                     <div className='amount'>x{weight.amount}</div>
                   </div>
                 )
