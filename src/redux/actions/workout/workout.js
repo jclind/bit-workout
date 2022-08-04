@@ -385,7 +385,6 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
     expEarned: exp,
     path: pathData,
   }
-  console.log('IN finishWorkout FUNCTION')
   dispatch(updateWorkout(updatedData))
   dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
   dispatch(setWorkoutFinished(true))
@@ -431,9 +430,9 @@ export const stopWorkout = () => async (dispatch, getState) => {
   }
 
   await dispatch(updateWorkout({ isWorkoutRunning: false }))
-  dispatch(setWorkoutFinished(true))
-
   dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
+
+  dispatch(setWorkoutFinished(true))
   dispatch(addWorkoutToPastWorkouts(finishedWorkoutData))
 }
 
