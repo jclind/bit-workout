@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^14.2.0",
     "chance": "^1.1.8",
     "chart.js": "^3.8.0",
+    "cypress-firebase": "^2.2.2",
     "firebase": "^9.8.2",
     "jquery": "^3.6.0",
     "lottie-web": "^5.9.4",
@@ -63,7 +64,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^13.3.0",
-    "cypress": "^10.3.0",
+    "cypress": "^10.4.0",
     "jest-dom": "^4.0.0",
     "react-test-render": "^1.1.2",
     "redux-mock-store": "^1.5.4"
