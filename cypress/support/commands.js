@@ -48,11 +48,14 @@ Cypress.Commands.add('validateWorkoutPath', length => {
   cy.get('.workout-path-modal.overlay').click(15, 15) // Click out of workout path modal
 })
 
-Cypress.Commands.add('openPlatesModal', () => {
+Cypress.Commands.add('openPlatesModal', shouldClose => {
   // Click plate weights modal
   cy.get('.active-workout .exercise-weight').click()
   cy.get('.plates-modal').should('be.visible')
   cy.get('.plates-modal .total-weight').should('be.visible')
+  if (shouldClose) {
+    cy.get('.overlay').click(15, 15) // Close plates modal by overlay click
+  }
 })
 Cypress.Commands.add('changeExerciseWeightThroughPlatesModal', newWeight => {
   cy.openPlatesModal()

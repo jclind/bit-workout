@@ -1,4 +1,8 @@
 describe('Workout Tests', () => {
+  Cypress.Commands.add('completeTimedSet', skipTimer => {
+    cy.contains('Start Timer').click()
+  })
+
   before(() => {
     cy.callFirestore('update', `workoutData/${Cypress.env('TEST_UID')}`, {
       isWorkoutRunning: false,
@@ -17,10 +21,11 @@ describe('Workout Tests', () => {
     // Validate workout path is correct
     cy.validateWorkoutPath(1)
 
-    cy.openPlatesModal()
+    cy.openPlatesModal(true)
 
     // cy.changeExerciseWeightThroughPlatesModal(80)
     // // Run through workout
+    cy.completeTimedSet(true)
     // cy.completeSetAndSkipRest()
     // cy.completeSetAndSkipRest()
     // cy.completeSetAndSkipRest()
