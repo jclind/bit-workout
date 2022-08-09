@@ -25,11 +25,37 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import 'cypress-wait-until'
 
-Cypress.Commands.add('changeExerciseWeightThroughPlatesModal', newWeight => {
+// Workout Testing Commands
+Cypress.Commands.add('getWorkoutSelectorByText', text => {
+  cy.get("[class='single-workout loading']").should('not.exist')
+  return cy
+    .get('.single-workout')
+    .contains(text)
+    .parent()
+    .parent()
+    .children('.start-button')
+})
+Cypress.Commands.add('validateWorkoutPath', length => {
+  // Validate workout path is correct
+  cy.get('.active-workout button.view-workout-path').click()
+  cy.get('.workout-path-modal').should('be.visible')
+
+  cy.get('.workout-path-modal .workout-path-exercise').should(
+    'have.length',
+    length
+  )
+  cy.get('.workout-path-modal .reps-sets span').contains('0/5')
+  cy.get('.workout-path-modal.overlay').click(15, 15) // Click out of workout path modal
+})
+
+Cypress.Commands.add('openPlatesModal', () => {
   // Click plate weights modal
   cy.get('.active-workout .exercise-weight').click()
   cy.get('.plates-modal').should('be.visible')
   cy.get('.plates-modal .total-weight').should('be.visible')
+})
+Cypress.Commands.add('changeExerciseWeightThroughPlatesModal', newWeight => {
+  cy.openPlatesModal()
 
   // Click total weight/change weight button and change weight to
   cy.get('.plates-modal .total-weight').click()
@@ -43,7 +69,10 @@ Cypress.Commands.add('changeExerciseWeightThroughPlatesModal', newWeight => {
     .should('be.visible')
   cy.get('.overlay').click(15, 15) // Close plates modal by overlay click
 })
-Cypress.Commands.add('completeSetAndSkipRest', () => {
+Cypress.Commands.add('completeSet', () => {
   cy.get('.active-workout button.submit-btn').click()
+})
+Cypress.Commands.add('completeSetAndSkipRest', () => {
+  cy.completeSet()
   cy.get('.workout-timer button.skip-rest-btn').click()
 })
