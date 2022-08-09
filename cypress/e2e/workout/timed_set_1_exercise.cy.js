@@ -12,22 +12,12 @@ describe('Workout Tests', () => {
     cy.get('button.selection-btn').contains('Created').click()
 
     // Start Workout
-    cy.get("[class='single-workout loading']").should('not.exist')
-    cy.get('.single-workout')
-      .contains('Timed Set 1 Exercise')
-      .parent()
-      .get('button.start-button')
-      .click()
+    cy.getWorkoutSelectorByText('Timed Set 1 Exercise').click()
 
     // Validate workout path is correct
-    cy.get('.active-workout button.view-workout-path').click()
-    cy.get('.workout-path-modal').should('be.visible')
-    cy.get('.workout-path-modal .workout-path-exercise').should(
-      'have.length',
-      1
-    )
-    cy.get('.workout-path-modal .reps-sets span').contains('0/5')
-    cy.get('.workout-path-modal.overlay').click(15, 15) // Click out of workout path modal
+    cy.validateWorkoutPath(1)
+
+    cy.openPlatesModal()
 
     // cy.changeExerciseWeightThroughPlatesModal(80)
     // // Run through workout
