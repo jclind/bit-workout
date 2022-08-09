@@ -5,6 +5,7 @@ import { timeToMS } from '../../../../util/timeToMS'
 import { formatTime } from '../../../../util/formatTime'
 import RepInputModal from '../RepInputModal/RepInputModal'
 import PlatesModal from '../../PlatesModal/PlatesModal'
+import { AiFillInfoCircle } from 'react-icons/ai'
 
 const TimedSetExercise = ({
   currActiveWorkoutExercise,
@@ -113,10 +114,10 @@ const TimedSetExercise = ({
       <div className='workout-data'>
         <div
           className='exercise-weight'
-          // onClick={() => setIsPlatesModalOpen(true)}
+          onClick={() => setIsPlatesModalOpen(true)}
         >
           <span>{currSetWeight} lbs</span>
-          {/* <AiFillInfoCircle className='icon' /> */}
+          <AiFillInfoCircle className='icon' />
         </div>
         <div className='exercise-img-container'>
           <img src={imageURL} alt={exerciseName} className='exercise-img' />
