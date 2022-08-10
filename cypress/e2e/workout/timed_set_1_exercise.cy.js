@@ -6,7 +6,7 @@ describe('Workout Tests', () => {
     })
   })
 
-  it('Follow Straight Set 1 Exercise Workout', () => {
+  it('Follow Timed Set 1 Exercise Workout', () => {
     cy.login()
     cy.visit('/workout')
     cy.get('button.selection-btn').contains('Created').click()
