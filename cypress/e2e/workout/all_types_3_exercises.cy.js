@@ -12,15 +12,37 @@ describe('Workout Tests', () => {
     cy.get('button.selection-btn').contains('Created').click()
 
     // Start Workout
-    cy.getWorkoutSelectorByText('Timed Set 1 Exercise').click()
+    cy.getWorkoutSelectorByText('All Types 3 Exercises').click()
 
     // Validate workout path is correct
-    cy.validateWorkoutPath(1)
+    cy.validateWorkoutPath(3)
 
+    // Test First Exercise
     cy.openPlatesModal(true)
 
-    // cy.changeExerciseWeightThroughPlatesModal(80)
     // Run through workout
+    cy.completeSet(true)
+    cy.completeSet(true)
+    cy.completeSet(true)
+    cy.completeSet(true)
+    cy.completeSet()
+
+    cy.contains('(Drop Sets)', { matchCase: false })
+
+    // Test Second Exercise
+    cy.openPlatesModal(true)
+
+    cy.completeDropSet(true)
+    cy.completeDropSet()
+    cy.completeDropSet()
+    cy.completeDropSet()
+    cy.completeDropSet()
+
+    cy.get('button.skip-rest-btn').click()
+    cy.contains('(Timed Sets)', { matchCase: false })
+
+    // Test Third Exercise
+    cy.openPlatesModal(true)
     cy.completeTimedSet(true, true)
     cy.completeTimedSet(true)
     cy.completeTimedSet(true)

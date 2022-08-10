@@ -12,19 +12,19 @@ describe('Workout Tests', () => {
     cy.get('button.selection-btn').contains('Created').click()
 
     // Start Workout
-    cy.getWorkoutSelectorByText('Straight Set 1 Exercise').click()
+    cy.getWorkoutSelectorByText('Drop Set 1 Exercise').click()
 
-    // Validate workout path shows correctly
+    // Validate workout path is correct
     cy.validateWorkoutPath(1)
 
-    cy.changeExerciseWeightThroughPlatesModal(155)
+    cy.openPlatesModal(true)
 
     // Run through workout
-    cy.completeSet(true)
-    cy.completeSet(true)
-    cy.completeSet(true)
-    cy.completeSet(true)
-    cy.completeSet()
+    cy.completeDropSet(true)
+    cy.completeDropSet()
+    cy.completeDropSet()
+    cy.completeDropSet()
+    cy.completeDropSet()
 
     cy.get('.workout-complete.page').should('be.visible')
     cy.get('button.back-home-btn').click()

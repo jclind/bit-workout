@@ -72,10 +72,47 @@ Cypress.Commands.add('changeExerciseWeightThroughPlatesModal', newWeight => {
     .should('be.visible')
   cy.get('.overlay').click(15, 15) // Close plates modal by overlay click
 })
-Cypress.Commands.add('completeSet', () => {
+Cypress.Commands.add('completeSet', skipRest => {
   cy.get('.active-workout button.submit-btn').click()
+  if (skipRest) {
+    cy.get('.workout-timer button.skip-rest-btn').click()
+  }
 })
-Cypress.Commands.add('completeSetAndSkipRest', () => {
-  cy.completeSet()
-  cy.get('.workout-timer button.skip-rest-btn').click()
+
+Cypress.Commands.add('completeDropSet', testRepFunctionality => {
+  cy.get('button.submit-btn').click()
+
+  // Test dec, inc and typing rep number
+  if (testRepFunctionality) {
+    cy.get('.rep-input-modal button.decrement').click()
+    cy.get('.rep-input-modal input.rep-input').should('have.value', 4)
+    cy.get('.rep-input-modal button.increment').click()
+    cy.get('.rep-input-modal input.rep-input').should('have.value', 5)
+
+    cy.get('.rep-input-modal input.rep-input').type(10)
+    cy.get('.rep-input-modal input.rep-input').should('have.value', 10)
+  }
+
+  cy.get('.rep-input-modal button.confirm-btn').click()
+})
+Cypress.Commands.add('completeTimedSet', (skipRest, testRepFunctionality) => {
+  cy.contains('Start Timer').click()
+  cy.contains('Skip Timer').click()
+
+  // Test dec, inc and typing rep number
+  if (testRepFunctionality) {
+    cy.get('.rep-input-modal button.decrement').click()
+    cy.get('.rep-input-modal input.rep-input').should('have.value', 4)
+    cy.get('.rep-input-modal button.increment').click()
+    cy.get('.rep-input-modal input.rep-input').should('have.value', 5)
+
+    cy.get('.rep-input-modal input.rep-input').type(10)
+    cy.get('.rep-input-modal input.rep-input').should('have.value', 10)
+  }
+
+  cy.get('.rep-input-modal button.confirm-btn').click()
+
+  if (skipRest) {
+    cy.get('button.skip-rest-btn').click()
+  }
 })
