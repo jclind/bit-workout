@@ -10,8 +10,10 @@ describe('Workout Tests', () => {
   it('Create Workout Test', () => {
     cy.login()
     cy.visit('/workout')
-    cy.get('.create-workout-link').click()
+    cy.get('.create-workout-link', { timeout: 10000 }).click()
     cy.contains('Add Exercises')
+
+    // Add Exercises Page
 
     // Exercise 1
     cy.get('button.select-exercise').click()
@@ -87,5 +89,32 @@ describe('Workout Tests', () => {
     cy.get('button.next-btn').click()
 
     // Workout Rest Time Page
+    cy.get('.rest-time .minutes input').type(2)
+    cy.get('.rest-time .seconds input').type(0)
+    cy.get('.failed-rest-time .minutes input').type(4)
+    cy.get('.failed-rest-time .seconds input').type(30)
+
+    cy.get('button.next-btn').click()
+
+    // Workout Info Page
+    const workoutName = `Test ${new Date().getTime()}`
+    cy.get('.workout-title input').type(workoutName)
+    cy.get('.workout-description textarea').type(
+      'Description testing: Eiusmod irure pariatur adipisicing proident. Exercitation officia sunt excepteur et labore anim esse excepteur laboris labore id laborum esse.'
+    )
+    cy.get('button.next-btn').click()
+
+    // Workout Type Page
+    cy.get('button.saved').click()
+    cy.get('button.next-btn').click()
+
+    // Delete Just Created Workout
+    cy.get('button.selection-btn').contains('Created').click()
+    cy.getWorkoutSelectionByText(workoutName).within(() => {
+      cy.get('button.delete').click()
+    })
+
+    cy.get('.confirm-delete-workout-modal button.confirm-btn').click()
+    cy.get('.single-workout').contains(workoutName).should('not.exist')
   })
 })

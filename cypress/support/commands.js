@@ -26,14 +26,14 @@
 import 'cypress-wait-until'
 
 // Workout Testing Commands
-Cypress.Commands.add('getWorkoutSelectorByText', text => {
+Cypress.Commands.add('getWorkoutSelectionByText', text => {
   cy.get("[class='single-workout loading']").should('not.exist')
-  return cy
-    .get('.single-workout')
-    .contains(text)
-    .parent()
-    .parent()
-    .children('.start-button')
+  return cy.get('.single-workout').contains(text).parent().parent()
+})
+Cypress.Commands.add('getWorkoutSelectionStartButtonByText', text => {
+  cy.getWorkoutSelectionByText.within(() => {
+    return cy.get('button.start-button')
+  })
 })
 Cypress.Commands.add('validateWorkoutPath', length => {
   // Validate workout path is correct
