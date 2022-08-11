@@ -30,9 +30,9 @@ Cypress.Commands.add('getWorkoutSelectionByText', text => {
   cy.get("[class='single-workout loading']").should('not.exist')
   return cy.get('.single-workout').contains(text).parent().parent()
 })
-Cypress.Commands.add('getWorkoutSelectionStartButtonByText', text => {
-  cy.getWorkoutSelectionByText.within(() => {
-    return cy.get('button.start-button')
+Cypress.Commands.add('clickWorkoutSelectionStartButtonByText', text => {
+  cy.getWorkoutSelectionByText(text).within(() => {
+    cy.get('button.start-button').click()
   })
 })
 Cypress.Commands.add('validateWorkoutPath', length => {
