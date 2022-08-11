@@ -20,9 +20,9 @@ describe('Workout Tests', () => {
     })
     cy.wait(2000)
     cy.reload()
-    cy.get("[class='single-workout loading']", { timeout: 10000 }).should(
-      'not.exist'
-    )
+
+    cy.get('.workout-selection')
+
     cy.getWorkoutSelectionByText('All set types').within(() => {
       cy.get('button.like .liked').should('not.exist')
     })
