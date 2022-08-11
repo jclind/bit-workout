@@ -15,6 +15,8 @@ const SKELETON_HIGHLIGHT_COLOR = '#548ca8'
 const ExerciseItem = ({ currActiveWorkoutExercise, getSingleExercise }) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
 
+  console.log(currActiveWorkoutExercise)
+
   const setPath = currActiveWorkoutExercise.setPath
   const sets = currActiveWorkoutExercise.sets
   const numSets = setPath.length
@@ -87,6 +89,7 @@ const ExerciseItem = ({ currActiveWorkoutExercise, getSingleExercise }) => {
 }
 
 const PastWorkoutsItem = ({ workout, getSingleExercise, loading }) => {
+  console.log(workout)
   const [isCollapsed, setIsCollapsed] = useState(true)
 
   const name =
