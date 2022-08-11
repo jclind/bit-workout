@@ -10,7 +10,9 @@ const cypressConfig = defineConfig({
       cypressFirebasePlugin(on, config, admin)
       // e2e testing node events setup code
     },
+    excludeSpecPattern: process.env.CI ? 'cypress/e2e/all.cy.js' : [],
   },
+  projectId: 'ttvr1j',
 })
 
 export default cypressConfig
