@@ -3,14 +3,14 @@
 .logout-confirm-modal {
   .sub-text {
     margin: 0;
-    margin-top: toRem(20);
-    font-size: toRem(12);
+    margin-top: 1.25rem;
+    font-size: 0.75rem;
     font-weight: 500;
   }
   .btns {
     width: 90%;
     margin: 0 auto;
-    margin-top: toRem(30);
+    margin-top: 1.875rem;
     display: flex;
     justify-content: space-between;
 
@@ -18,7 +18,7 @@
       width: fit-content;
       padding: 0 1rem;
       background: none;
-      font-size: toRem(18);
+      font-size: 1.125rem;
       font-weight: 700;
     }
     .cancel-btn {

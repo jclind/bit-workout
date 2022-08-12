@@ -4,9 +4,9 @@
   .change-password-form {
     display: flex;
     flex-direction: column;
-    gap: toRem(25);
+    gap: 1.55rem;
     .show-passwords-btn {
-      font-size: toRem(12);
+      font-size: 0.75rem;
       color: $secondary-text;
       margin: 0;
     }
@@ -17,7 +17,7 @@
     }
     .error-text {
       color: red;
-      font-size: toRem(12);
+      font-size: 0.75rem;
     }
 
     &:invalid {

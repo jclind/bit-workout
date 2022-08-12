@@ -11,12 +11,12 @@
   margin: 0;
 
   .timer-title {
-    font-size: toRem(18);
+    font-size: 1.125rem;
     font-weight: 500;
   }
   .timer {
     margin-top: 1rem;
-    font-size: toRem(36);
+    font-size: 2.25rem;
     font-weight: 700;
   }
   .rest-img {
@@ -43,7 +43,7 @@
     align-items: center;
     background: $secondary-background;
     width: fit-content;
-    font-size: toRem(18);
+    font-size: 1.125rem;
     font-weight: 700;
     padding: 1.5rem;
     height: 50px;
