@@ -14,4 +14,3 @@ jobs:
           projectId: workout-app-30261
         env:
           CYPRESS_TEST_UID: ${{secrets.CYPRESS_TEST_UID}}
-          
