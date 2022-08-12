@@ -5,27 +5,25 @@
     width: calc(#{$max-width} * 0.9);
     .sub-text {
       margin: 0;
-      margin-top: toRem(10);
-      margin-bottom: toRem(30);
-      font-size: toRem(12);
+      margin-top: 0.625rem;
+      margin-bottom: 1.875rem;
+      font-size: 0.75rem;
       font-weight: 500;
     }
     .buttons {
       display: flex;
       justify-content: space-between;
       margin: 0;
-      margin-top: toRem(50);
+      margin-top: 3.125rem;
       .cancel-btn,
       .save-btn {
-        font-size: toRem(18);
+        font-size: 1.125rem;
         font-weight: 600;
         padding: 0.75rem 0.75rem;
         border-radius: $border-radius;
         margin: 0;
       }
       .cancel-btn {
-        // background: $placeholder-color;
-        // color: $secondary-text;
         border: 1px solid $primary;
       }
       .save-btn {

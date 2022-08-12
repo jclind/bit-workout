@@ -2,7 +2,7 @@
 
 .settings-button {
   position: relative;
-  height: toRem(50);
+  height: 3.125rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -23,7 +23,7 @@
 
   .setting-title,
   .input-text {
-    font-size: toRem(16);
+    font-size: 1rem;
     padding: 0;
     margin: 0;
   }
@@ -33,11 +33,11 @@
     text-transform: capitalize;
   }
   .setting-title.active-icon {
-    margin-left: toRem(35);
+    margin-left: 2.188rem;
   }
   .input-text {
     font-weight: 400;
     color: $secondary-text;
-    margin-right: toRem(35);
+    margin-right: 2.188rem;
   }
 }

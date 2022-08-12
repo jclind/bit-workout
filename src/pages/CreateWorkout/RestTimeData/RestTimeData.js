@@ -93,7 +93,7 @@ const RestTimeData = () => {
   return (
     <div className='create-workout-page rest-time-data'>
       <BackButton />
-      <div className='title'>Workout Type</div>
+      <div className='title'>Workout Rest Times</div>
       {error && (
         <div className='error' data-testid='error'>
           <AiOutlineWarning className='icon' />
