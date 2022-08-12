@@ -2,7 +2,7 @@ name: Cypress Tests
 on: [push]
 jobs:
   cypress-run:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2.4.2
@@ -13,4 +13,5 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BITWORKOUT}}
           projectId: workout-app-30261
         env:
-          CYPRESS_TEST_UID: ${{secrets.CYPRESS_TEST_UID}}
+          CYPRESS_TEST_UID: ${{secrets.TEST_UID}}
+          CYPRESS_PROJECT_ID: ${{ secrets.PROJECT_ID }}
