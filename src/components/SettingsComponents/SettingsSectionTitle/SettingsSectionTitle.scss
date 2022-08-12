@@ -1,11 +1,11 @@
 @import '../../../helpers.scss';
 
 .settings-section-title {
-  font-size: toRem(10);
+  font-size: 0.625rem;
   font-weight: 700;
   text-transform: uppercase;
   padding: 0;
   margin: 0;
-  margin-bottom: toRem(10);
+  margin-bottom: 0.625rem;
   color: $secondary-text;
 }

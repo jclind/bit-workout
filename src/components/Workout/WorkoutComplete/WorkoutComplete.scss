@@ -12,12 +12,12 @@
     text-align: center;
     z-index: 10;
     .title {
-      font-size: toRem(24);
+      font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: toRem(20);
+      margin-bottom: 1.25rem;
     }
     .text {
-      font-size: toRem(18);
+      font-size: 1.125rem;
     }
     .stats {
       display: flex;
@@ -46,7 +46,7 @@
     }
     .back-home-btn {
       background: $secondary;
-      font-size: toRem(18);
+      font-size: 1.125rem;
       font-weight: 700;
     }
   }
