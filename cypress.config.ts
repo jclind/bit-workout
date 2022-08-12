@@ -5,6 +5,7 @@ import { plugin as cypressFirebasePlugin } from 'cypress-firebase'
 const cypressConfig = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
+    projectId: 'workout-app-30261',
     supportFile: 'cypress/support/e2e.js',
     setupNodeEvents(on, config) {
       cypressFirebasePlugin(on, config, admin)
