@@ -1,0 +1,62 @@
+{
+  "likes": 2,
+  "authorUID": "Q2vMum7vaSZ1qdxQj2xiuYXfHch2",
+  "path": [
+    {
+      "sets": [
+        { "id": "b6649e36-b36c-41fc-b7fc-863f1f521336", "reps": "5" },
+        { "id": "cffe8205-84c1-4b87-ad28-de5653c8e596", "reps": "5" },
+        { "reps": "5", "id": "988d35f4-ac10-459a-88c0-25930f910cd3" }
+      ],
+      "description": "",
+      "exerciseID": 0,
+      "type": "straight",
+      "id": "ae039d70-5957-49ff-bd62-34272b21f1ae",
+      "error": ""
+    },
+    {
+      "description": "",
+      "type": "drop",
+      "error": "",
+      "exerciseID": 1,
+      "sets": [
+        { "weight": 80, "id": "d2afee67-c2af-4227-ba87-bc1b209a44ab" },
+        { "id": "17786db8-2ac4-48df-8d84-50de029f8e8f", "weight": 75 },
+        { "id": "52d97cb7-7c57-4133-b52f-3b4a857c5d03", "weight": 70 },
+        { "id": "f7678e72-042e-43da-9a96-5173af7dc3bb", "weight": 65 },
+        { "id": "4815f9cb-1e2d-4d58-a8dd-f28970d5de53", "weight": 60 },
+        { "weight": 55, "id": "3ca11f66-027a-4efa-a3d1-894982950dad" },
+        { "id": "fc748078-9022-4ae1-b710-fab807e8baae", "weight": 50 },
+        { "weight": 45, "id": "89e57a88-fc5a-499c-8195-9c56af3cb466" },
+        { "weight": 40, "id": "281cb863-0294-467a-8457-1041e8dfb80b" }
+      ],
+      "id": "bdd29606-f557-4674-af5f-ec09dad40e8d"
+    },
+    {
+      "id": "2b29d72a-3302-493f-9e15-5e3014a97136",
+      "sets": [
+        {
+          "weight": "45",
+          "time": { "seconds": "00", "minutes": "1" },
+          "id": "7a87fb85-6cf4-487b-899a-67dba75d4723"
+        },
+        {
+          "id": "abbeb3c6-8e64-415f-938f-57df95d450f0",
+          "time": { "minutes": "1", "seconds": "00" },
+          "weight": "45"
+        }
+      ],
+      "error": "",
+      "description": "",
+      "exerciseID": 2,
+      "type": "timed"
+    }
+  ],
+  "description": "",
+  "restTime": 90000,
+  "lastSetFailed": false,
+  "name": "All set types",
+  "id": "6f87fcb4-b987-429d-a990-4dbb4327c95c",
+  "dateCreated": 1659465094014,
+  "failSetRestTime": 300000
+}

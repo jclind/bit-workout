@@ -142,7 +142,11 @@ const PastWorkouts = ({ queryPastWorkoutData, getSingleExercise }) => {
     }
     if (listInnerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current
-      if (scrollTop + clientHeight === scrollHeight && !isPaginationLoading) {
+      console.log(scrollTop + clientHeight, scrollHeight)
+      if (
+        Math.ceil(scrollTop + clientHeight) === scrollHeight &&
+        !isPaginationLoading
+      ) {
         setIsPaginationLoading(true)
         getMoreWorkoutData()
       }

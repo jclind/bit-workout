@@ -108,7 +108,7 @@ const SingleWorkout = ({
 
   return (
     <>
-      <div className='single-workout'>
+      <div className={`single-workout${loading ? ' loading' : ''}`}>
         <div className='title-container'>
           <div className='title'>
             {loading ? (

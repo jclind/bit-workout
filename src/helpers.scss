@@ -1,8 +1,3 @@
-@function toRem($value) {
-  $remValue: $value / 16 + rem;
-  @return $remValue;
-}
-
 $primary: #eeeeee;
 $secondary: #5ba4c9;
 $placeholder-color: #8e8e8e;
@@ -49,10 +44,10 @@ $border-radius: 10px;
 
 $navbar-height: 65px;
 
-$page-margin-top: toRem(30);
+$page-margin-top: 1.875rem;
 
-$form-label-height: toRem(55);
-$form-input-height: toRem(45);
+$form-label-height: 3.45rem;
+$form-input-height: 2.81rem;
 
 // Fonts and font-styles
 $font-family: 'Montserrat', sans-serif;

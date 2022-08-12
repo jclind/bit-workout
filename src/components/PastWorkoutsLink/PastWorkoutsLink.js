@@ -22,6 +22,7 @@ const NoPastWorkout = () => {
 }
 
 const PastWorkoutsLink = ({ pastWorkoutData, isResponse }) => {
+  const loading = pastWorkoutData === null
   const workoutTime = pastWorkoutData
     ? formatTimeToObject(pastWorkoutData.totalWorkoutTime)
     : null
@@ -34,7 +35,7 @@ const PastWorkoutsLink = ({ pastWorkoutData, isResponse }) => {
   const workoutName = pastWorkoutData && pastWorkoutData.workoutName
 
   return (
-    <div className='past-workouts-link'>
+    <div className={`past-workouts-link ${loading ? 'loading' : ''}`}>
       {!isResponse ? (
         <NoPastWorkout />
       ) : (
