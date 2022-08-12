@@ -10,15 +10,8 @@ jobs:
         uses: cypress-io/github-action@v4.2.0
         with:
           start: npm start
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BITWORKOUT}}
+          projectId: workout-app-30261
         env:
           CYPRESS_TEST_UID: ${{secrets.CYPRESS_TEST_UID}}
-          CYPRESS_type: ${{secrets.CYPRESS_TYPE}}
-          CYPRESS_project_id: ${{secrets.CYPRESS_PROJECT_ID}}
-          CYPRESS_private_key_id: ${{secrets.CYPRESS_PRIVATE_KEY_ID}}
-          CYPRESS_private_key: ${{secrets.CYPRESS_PRIVATE_KEY}}
-          CYPRESS_client_email: ${{secrets.CYPRESS_CLIENT_EMAIL}}
-          CYPRESS_client_id: ${{secrets.CYPRESS_CLIENT_ID}}
-          CYPRESS_auth_uri: ${{secrets.CYPRESS_AUTH_URI}}
-          CYPRESS_token_uri: ${{secrets.CYPRESS_TOKEN_URI}}
-          CYPRESS_auth_provider_x509_cert_url: ${{secrets.CYPRESS_AUTH_PROVIDER_X509_CERT_URL}}
-          CYPRESS_client_x509_cert_url: ${{secrets.CYPRESS_CLIENT_X509_CERT_URL}}
+          
