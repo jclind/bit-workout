@@ -6,7 +6,7 @@ const cypressConfig = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
     projectId: 'workout-app-30261',
-    supportFile: 'cypress/support/e2e.js',
+    supportFile: 'cypress/support/index.js',
     setupNodeEvents(on, config) {
       cypressFirebasePlugin(on, config, admin)
       // e2e testing node events setup code

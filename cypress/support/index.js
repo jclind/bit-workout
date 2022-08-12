@@ -14,26 +14,26 @@
 // // ***********************************************************
 
 // // Import commands.js using ES2015 syntax:
-// import './commands'
-// import firebase from 'firebase/compat/app'
-// import 'firebase/compat/auth'
-// import 'firebase/compat/database'
-// import 'firebase/compat/firestore'
-// import { attachCustomCommands } from 'cypress-firebase'
+import './commands'
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/auth'
+import 'firebase/compat/database'
+import 'firebase/compat/firestore'
+import { attachCustomCommands } from 'cypress-firebase'
 
-// const fbConfig = {
-//   apiKey: 'AIzaSyBd6q8SnjOSvT6ZB7ANUm68s5OcrifcQy4',
-//   authDomain: 'workout-app-30261.firebaseapp.com',
-//   // projectId: 'workout-app-30261',
-//   storageBucket: 'workout-app-30261.appspot.com',
-//   messagingSenderId: '656690318764',
-//   appId: '1:656690318764:web:848b6e82f5ec93f348fe09',
-//   measurementId: 'G-ZEE8NWY6J2',
-// }
+const fbConfig = {
+  apiKey: 'AIzaSyBd6q8SnjOSvT6ZB7ANUm68s5OcrifcQy4',
+  authDomain: 'workout-app-30261.firebaseapp.com',
+  projectId: 'workout-app-30261',
+  storageBucket: 'workout-app-30261.appspot.com',
+  messagingSenderId: '656690318764',
+  appId: '1:656690318764:web:848b6e82f5ec93f348fe09',
+  measurementId: 'G-ZEE8NWY6J2',
+}
 
-// firebase.initializeApp(fbConfig)
+firebase.initializeApp(fbConfig)
 
-// attachCustomCommands({ Cypress, cy, firebase })
+attachCustomCommands({ Cypress, cy, firebase })
 
 // // Alternatively you can use CommonJS syntax:
 // // require('./commands')
