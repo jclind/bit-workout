@@ -5,7 +5,7 @@ import { plugin as cypressFirebasePlugin } from 'cypress-firebase'
 const cypressConfig = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
-    supportFile: 'cypress/support/index.js',
+    supportFile: 'cypress/support/e2e/index.js',
     setupNodeEvents(on, config) {
       cypressFirebasePlugin(on, config, admin)
       // e2e testing node events setup code
