@@ -12,5 +12,5 @@ jobs:
         with:
           start: npm start
           record: true
-          config-file: cypress.config.js
+          config-file: cypress.config.ts
         
