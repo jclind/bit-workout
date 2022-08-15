@@ -16,7 +16,7 @@ jobs:
           config-file: cypress.config.ts
         env:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
-          TEST_UID: ${{ secrets.TEST_UID }}
+          CYPRESS_TEST_UID: ${{ secrets.CYPRESS_TEST_UID }}
           FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
