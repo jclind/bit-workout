@@ -3,7 +3,6 @@ import { defineConfig } from 'cypress'
 import { plugin as cypressFirebasePlugin } from 'cypress-firebase'
 
 const cypressConfig = defineConfig({
-  projectId: 'ttvr1j',
   e2e: {
     baseUrl: 'http://localhost:3000',
     supportFile: 'cypress/support/e2e/index.js',
