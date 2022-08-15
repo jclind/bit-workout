@@ -9,11 +9,6 @@ jobs:
         uses: actions/checkout@v2.4.2
       - name: Cypress.io
         uses: cypress-io/github-action@v4.2.0
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           start: npm start
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BITWORKOUT}}
-          projectId: ttvr1j
         
