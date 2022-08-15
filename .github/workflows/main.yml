@@ -11,6 +11,7 @@ jobs:
         uses: cypress-io/github-action@v4.2.0
         with:
           start: npm start
+          wait-on: "http://localhost:3000"
           record: true
           config-file: cypress.config.ts
         env:
