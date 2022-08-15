@@ -10,8 +10,8 @@ jobs:
       - name: Cypress.io
         uses: cypress-io/github-action@v4.2.0
         env:
-          CYPRESS_TEST_UID: ${{secrets.TEST_UID}}
-          
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           start: npm start
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BITWORKOUT}}
