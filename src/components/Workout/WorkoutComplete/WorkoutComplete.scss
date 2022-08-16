@@ -1,0 +1,53 @@
+@import '../../../helpers.scss';
+
+.workout-complete {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - #{$navbar-height});
+  max-height: -webkit-fill-available;
+  overflow: hidden;
+  .content {
+    text-align: center;
+    z-index: 10;
+    .title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+    .text {
+      font-size: 1.125rem;
+    }
+    .stats {
+      display: flex;
+      gap: 1.5rem;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 0;
+      .stat {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 auto;
+        width: 80%;
+        .label {
+          color: $secondary-text;
+          font-size: 0.9rem;
+        }
+        .data {
+          display: flex;
+          font-size: 1.1rem;
+        }
+        .data.time {
+          gap: 0.5rem;
+        }
+      }
+    }
+    .back-home-btn {
+      background: $secondary;
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+  }
+}

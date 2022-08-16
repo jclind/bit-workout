@@ -1,0 +1,18 @@
+@import '../../helpers.scss';
+
+.workout-time {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.9rem;
+  color: $secondary-text;
+  display: flex;
+  .time-type {
+    display: flex;
+    gap: 0.2rem;
+    color: $secondary-text;
+    .time-indicator {
+      color: $tertiary-text;
+    }
+  }
+}

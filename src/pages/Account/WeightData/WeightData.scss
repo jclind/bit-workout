@@ -1,0 +1,28 @@
+.weight-data {
+  position: relative;
+  height: fit-content;
+  .add-weight {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    width: fit-content;
+    background: none;
+    .icon {
+      height: 22px;
+      width: 22px;
+    }
+  }
+  .settings-title {
+    padding-bottom: 2rem;
+    margin: 0;
+  }
+  .chart-container {
+    canvas {
+      height: 325px;
+    }
+  }
+}

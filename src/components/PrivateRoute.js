@@ -1,11 +1,15 @@
 import React from 'react'
 import { Outlet, Navigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
+import { connect } from 'react-redux'
 
-const PrivateRoute = () => {
-  const { currentUser, currUserData } = useAuth()
-  console.log(currentUser, currUserData)
-  return currentUser ? <Outlet /> : <Navigate to='/login' />
+const PrivateRoute = ({ userAuth }) => {
+  return userAuth ? <Outlet /> : <Navigate to='/auth' />
 }
 
-export default PrivateRoute
+const mapStateToProps = state => {
+  return {
+    userAuth: state.auth.userAuth,
+  }
+}
+
+export default connect(mapStateToProps)(PrivateRoute)

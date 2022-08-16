@@ -1,0 +1,142 @@
+@import '../../../helpers.scss';
+
+.workout-selection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $navbar-height;
+  padding-bottom: 4rem;
+  width: 100%;
+
+  .selector {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid $secondary-background;
+    width: 95%;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+    padding: 0.25rem 0.25rem;
+    border-radius: $border-radius;
+    height: fit-content;
+    gap: 0.25rem;
+
+    .selection-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: none;
+      width: 33%;
+      white-space: nowrap;
+      height: fit-content;
+      padding: 0.35rem 2rem;
+      border-radius: $border-radius;
+      font-size: 0.7rem;
+      color: $secondary-text;
+      font-weight: 500;
+    }
+    .selection-btn.selected {
+      // background: $secondary;
+      background: $secondary-background;
+      color: $primary;
+    }
+  }
+  .create-workout-link {
+    position: absolute;
+    margin: 0 auto;
+    padding: 0.5rem;
+
+    top: -0.5rem;
+    right: -0.5rem;
+    text-decoration: none;
+    button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      background: none;
+      width: fit-content;
+      height: fit-content;
+      color: $primary;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0;
+      .icon {
+        height: 25px;
+        width: 25px;
+      }
+    }
+  }
+  .no-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    background: $secondary-background;
+    padding: 1.875rem 1.25rem;
+    gap: 0.75rem;
+    border-radius: $border-radius;
+
+    h3,
+    p {
+      padding: 0;
+      margin: 0;
+      text-align: center;
+    }
+
+    p {
+      font-size: 0.85rem;
+      font-weight: 500;
+      max-width: 90%;
+      color: $secondary-text;
+    }
+
+    .create-first-workout {
+      text-decoration: none;
+      button {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        width: fit-content;
+        height: fit-content;
+        color: $primary;
+        background: $secondary;
+        font-weight: 600;
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        margin-top: 1rem;
+
+        .icon {
+          height: 25px;
+          width: 25px;
+        }
+      }
+    }
+  }
+
+  .search-workouts-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 35px;
+    margin-bottom: 1rem;
+    .icon {
+      position: absolute;
+      left: 0;
+      padding: 0 0.5rem;
+      height: 18px;
+      width: 18px;
+    }
+    input {
+      background: $tertiary-background;
+      width: 100%;
+      height: 100%;
+      padding-left: 2rem;
+      color: $primary;
+      border-radius: $border-radius;
+    }
+  }
+}

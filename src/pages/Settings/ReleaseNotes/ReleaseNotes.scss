@@ -1,0 +1,73 @@
+@import '../../../helpers.scss';
+
+.release-notes-page {
+  padding-bottom: 4rem;
+  .releases {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 4rem;
+    .single-release {
+      .heading-info {
+        display: flex;
+        flex-direction: column;
+
+        // align-items: center;
+        width: 100%;
+        gap: 0.5rem;
+        // justify-content: space-between;
+
+        .version {
+          font-size: 1.3rem;
+          font-weight: 600;
+          color: $secondary;
+        }
+        .date {
+          color: $tertiary-text;
+          font-size: 0.9rem;
+        }
+      }
+      .bullet-point {
+        display: flex;
+        flex-direction: column;
+        h5 {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 1rem;
+          margin-bottom: 0.5rem;
+          .icon {
+            height: 18px;
+            width: 18px;
+          }
+        }
+        ul {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          padding: 0;
+          margin: 0;
+          margin-top: 0.5rem;
+          padding-left: 2rem;
+
+          li {
+            font-size: 0.9rem;
+            font-weight: 500;
+            line-height: 1.5;
+          }
+        }
+      }
+    }
+  }
+  .view-all-btn {
+    margin-top: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: $secondary;
+    text-decoration: none;
+    color: $primary;
+    font-weight: 500;
+    border-radius: $border-radius;
+  }
+}

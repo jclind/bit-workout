@@ -1,0 +1,117 @@
+@import '../../../helpers.scss';
+
+.single-workout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  padding: 1.875rem 1.25rem 1rem 1.25rem;
+  text-align: center;
+  background: $secondary-background;
+  border-radius: $border-radius;
+  margin-bottom: 1rem;
+
+  .title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 0;
+  }
+  .est-time {
+    font-size: 0.875rem;
+    color: $secondary-text;
+    margin: 0;
+    margin-top: 0.313rem;
+  }
+  .exercises-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    // align-items: center;
+    width: 100%;
+    margin-top: 2rem;
+    .exercise-img {
+      display: flex;
+      flex-direction: column;
+
+      height: 60px;
+      margin: 0;
+      width: 100%;
+    }
+    .exercise-title {
+      font-size: 0.75rem;
+      margin: 0;
+    }
+    .exercise-weight {
+      font-size: 0.75rem;
+      margin: 0;
+      color: $secondary-text;
+      font-weight: 700;
+      margin-top: 0.313rem;
+    }
+  }
+  .single-workout-exercise-loading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .start-button {
+    background: $secondary;
+    font-size: 1.1rem;
+    width: fit-content;
+    padding: 0.25rem 1rem;
+    margin-top: 2rem;
+  }
+  .start-button-loading {
+    padding: 0.75rem 1rem;
+    margin-top: 2rem;
+    border-radius: $border-radius;
+  }
+
+  .options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 1.5rem;
+
+    button {
+      background: none;
+      width: fit-content;
+      height: fit-content;
+    }
+    button.like {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.25rem;
+      .icon {
+        height: 25px;
+        width: 25px;
+      }
+    }
+    button {
+      .icon.liked {
+        color: $like-red !important;
+      }
+    }
+    .user-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      button {
+        padding: 0.25rem;
+        .icon {
+          height: 20px;
+          width: 20px;
+        }
+      }
+      button.edit .icon {
+        color: $secondary-text;
+      }
+      button.delete .icon {
+        color: $error-red;
+      }
+    }
+  }
+}

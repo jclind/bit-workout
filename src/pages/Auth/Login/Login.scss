@@ -1,0 +1,112 @@
+@import '../../../helpers.scss';
+
+.login-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  .login-background {
+    z-index: 1;
+    width: 100%;
+    height: 35vh;
+    object-fit: fill;
+  }
+  .title {
+    position: absolute;
+    font-size: 1.5rem;
+    font-weight: 600;
+    top: 2rem;
+    margin: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+    padding: 0 1.25rem;
+    padding-top: 1.55rem;
+    padding-bottom: 2rem;
+    margin: 0;
+
+    .error {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 5px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.5rem;
+      margin: 0 auto;
+      background: $error-red;
+      .icon {
+        flex-shrink: 0;
+      }
+    }
+
+    form {
+      width: 100%;
+      .inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+      .forgot-password {
+        button {
+          background: none;
+          height: fit-content;
+          width: fit-content;
+          font-size: 0.75rem;
+          font-weight: 500;
+          text-decoration: underline;
+          color: $secondary;
+          padding: 0;
+          margin: 0;
+          margin-top: 1rem;
+          cursor: pointer;
+        }
+      }
+      .buttons {
+        position: absolute;
+        bottom: 2rem;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+
+        // width: 90%;
+        .submit-btn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: $secondary;
+          font-size: 1rem;
+          font-weight: 600;
+          height: fit-content;
+          padding: 1rem 0;
+          border-radius: $border-radius;
+        }
+      }
+      .dont-have-account {
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        margin-top: 1.55rem;
+        font-size: 0.75rem;
+        gap: 1ch;
+        font-weight: 700;
+        color: $secondary-text;
+
+        .dont-have-account-btn {
+          color: $secondary;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+@import '../../../helpers.scss';
+
+.confirm-set-failed-modal {
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 350px;
+    .counter-label {
+      font-size: 0.8rem;
+      padding-bottom: 0.75rem;
+      color: $secondary-text;
+    }
+    .new-exercise-weight {
+      font-size: 0.6rem;
+      color: $tertiary-text;
+      padding-top: 0.15rem;
+      strong {
+        color: $secondary-text;
+      }
+    }
+
+    .decrease-weight-counter,
+    .reps-completed-container {
+      button {
+        width: fit-content;
+        height: fit-content;
+        // outline:
+        // background: $tertiary-background;
+        background: none;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0px;
+        width: 40px;
+        border: 1px solid $secondary-text;
+        height: 100%;
+      }
+    }
+    .decrease-weight-counter {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 0 auto;
+      height: 35px;
+      padding-bottom: 0.5rem;
+
+      .count {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 75px;
+        font-size: 1.25rem;
+      }
+    }
+    .reps-completed-container {
+      .counter-label {
+        padding-bottom: 0.75rem;
+      }
+
+      .reps-completed-counter {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin: 0 auto;
+        height: 35px;
+        padding-bottom: 0.5rem;
+        .count {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          white-space: nowrap;
+          height: 100%;
+          width: 75px;
+          font-size: 1.25rem;
+        }
+      }
+    }
+  }
+}

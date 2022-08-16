@@ -1,0 +1,61 @@
+@import '../../helpers.scss';
+
+.form-input-label {
+  height: fit-content !important;
+  // width: 100%;
+  input {
+    height: $form-input-height;
+    width: 100%;
+    text-align: left !important;
+    display: flex;
+    justify-self: flex-start;
+    border-radius: none;
+    margin-right: 3.125rem;
+    // background: $primary-background;
+    color: $primary !important;
+    caret-color: $secondary;
+  }
+  input.active-icon {
+    padding-left: 1rem;
+  }
+  textarea {
+    width: 100%;
+    height: 6rem !important;
+    text-align: left !important;
+    display: flex;
+    justify-self: flex-start;
+    background: none;
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 0.5rem 0;
+    color: $primary;
+  }
+  .icons {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    right: 0;
+    .show-password-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .icon {
+        width: 20px;
+      }
+    }
+  }
+  .icon,
+  .delete-icon {
+    color: $primary;
+  }
+
+  .icon {
+    height: 18px;
+  }
+
+  // .eye-icon {
+  //
+  // }
+}

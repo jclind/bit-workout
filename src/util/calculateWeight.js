@@ -108,7 +108,7 @@ export const calculateWeight = (exerciseID, bodyWeight, gender) => {
       break
 
     default:
-      console.log('help me! there is no case in that switch statement for me!')
+      returnWeight = 45
   }
 
   return returnWeight

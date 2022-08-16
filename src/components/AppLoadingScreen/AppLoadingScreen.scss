@@ -1,0 +1,33 @@
+@import '../../helpers.scss';
+
+.app-loading-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
+  .icon-container {
+    height: 100px;
+    width: 125px;
+    img {
+      object-fit: fill;
+      height: 100px;
+      width: 125px;
+    }
+  }
+  .title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    padding-top: 0.5rem;
+  }
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+  }
+}

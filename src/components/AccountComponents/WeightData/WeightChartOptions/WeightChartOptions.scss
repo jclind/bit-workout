@@ -1,0 +1,33 @@
+@import '../../../../helpers.scss';
+
+.weight-chart-options {
+  margin-bottom: 0.5rem;
+
+  .time-span-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background: $secondary-background;
+    // background: $secondary;
+    border: 1px solid $secondary-background;
+    // border-bottom: 1px solid $tertiary-background;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0.25rem 0.25rem;
+    border-radius: 5px;
+    height: fit-content;
+    gap: 0.25rem;
+    .time-span-btn {
+      background: none;
+      width: fit-content;
+      height: fit-content;
+      padding: 0.35rem 1.25rem;
+      border-radius: 5px;
+      font-size: 0.75rem;
+    }
+    .time-span-btn.selected {
+      // background: $secondary;
+      background: $secondary-background;
+    }
+  }
+}

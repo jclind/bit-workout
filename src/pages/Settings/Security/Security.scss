@@ -1,0 +1,30 @@
+@import '../../../helpers.scss';
+
+.security-page {
+  .change-password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.55rem;
+    .show-passwords-btn {
+      font-size: 0.75rem;
+      color: $secondary-text;
+      margin: 0;
+    }
+    .submit-btn {
+      margin: 0;
+      width: 30%;
+      padding: 0.75rem 0.25rem;
+    }
+    .error-text {
+      color: red;
+      font-size: 0.75rem;
+    }
+
+    &:invalid {
+      .submit-btn {
+        background: $secondary-background;
+        color: $placeholder-color;
+      }
+    }
+  }
+}

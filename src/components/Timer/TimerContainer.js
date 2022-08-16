@@ -1,28 +1,32 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { formatTime } from '../../util/formatTime'
 import Timer from './Timer'
-import '../../assets/styles/components/workout/workout-timer.scss'
-import { useWorkout } from '../../contexts/WorkoutContext'
+import './Timer.scss'
+import { connect } from 'react-redux'
+import { updateWorkout } from '../../redux/actions/workout/workout'
 
-const TimerContainer = ({ timerStart, restTime, setIsTimer }) => {
+const TimerContainer = ({
+  timerStart,
+  restTime,
+  failSetRestTime,
+  lastSetFailed,
+  updateWorkout,
+  setIsWorkoutPathModalOpen,
+}) => {
   const [timerVal, setTimerVal] = useState()
-
-  const { updateWorkout } = useWorkout()
 
   const skipRestBtn = useRef()
 
   useEffect(() => {
     const clearTimer = timer => {
       clearInterval(timer)
-      setIsTimer(false)
       updateWorkout({
         'runningWorkout.timer.isTimer': false,
       })
     }
 
     const skipTimer = (ref, timer) => {
-      const handler = e => {
-        console.log('IM HERE POELE')
+      const handler = () => {
         if (timer) {
           clearTimer(timer)
         }
@@ -35,13 +39,18 @@ const TimerContainer = ({ timerStart, restTime, setIsTimer }) => {
     }
 
     let timer = setInterval(() => {
-      // Get current time and subtrack start time to get total elapsed time
+      // Get current time and subtract start time to get total elapsed time
       const elapsed = new Date().getTime() - timerStart
 
       // Format elapsed time to milliseconds
       const elapsedMS = Math.round(elapsed / 1000) * 1000
       // Get time left on timer
-      const timeLeft = restTime - elapsedMS
+      let timeLeft = lastSetFailed
+        ? failSetRestTime - elapsedMS
+        : restTime - elapsedMS
+      if (timeLeft < 0) {
+        timeLeft = 0
+      }
 
       setTimerVal(formatTime(timeLeft))
       if (timeLeft <= 0) {
@@ -49,9 +58,32 @@ const TimerContainer = ({ timerStart, restTime, setIsTimer }) => {
       }
     }, 100)
     skipTimer(skipRestBtn, timer)
-  }, [timerStart, restTime, setIsTimer, updateWorkout])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timerStart, restTime, updateWorkout])
 
-  return <Timer timerVal={timerVal} skipRestBtn={skipRestBtn} />
+  return (
+    <Timer
+      timerVal={timerVal}
+      skipRestBtn={skipRestBtn}
+      lastSetFailed={lastSetFailed}
+      setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
+    />
+  )
 }
 
-export default TimerContainer
+const mapStateToProps = state => {
+  const runningWorkout = state.workout.workoutData.runningWorkout
+  return {
+    restTime: runningWorkout.currWorkout.restTime,
+    failSetRestTime: runningWorkout.currWorkout.failSetRestTime,
+    lastSetFailed: runningWorkout.currWorkout.lastSetFailed,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateWorkout: data => dispatch(updateWorkout(data)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TimerContainer)

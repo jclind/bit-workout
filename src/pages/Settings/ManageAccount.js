@@ -1,15 +1,10 @@
 import React from 'react'
-import SettingsSectionTitle from '../../components/SettingsComponents/SettingsSectionTitle'
-import SettingsButton from '../../components/SettingsComponents/SettingsButton'
-import { useAuth } from '../../contexts/AuthContext'
-import BackButton from '../../components/SettingsComponents/BackButton'
+import SettingsSectionTitle from '../../components/SettingsComponents/SettingsSectionTitle/SettingsSectionTitle'
+import SettingsButton from '../../components/SettingsComponents/SettingsButton/SettingsButton'
+import BackButton from '../../components/SettingsComponents/BackButton/BackButton'
+import { connect } from 'react-redux'
 
-const ManageAccount = () => {
-  const { currUserData, currentUser } = useAuth()
-
-  const { name, username } = currUserData
-  const { email } = currentUser
-
+const ManageAccount = ({ name, username, email }) => {
   return (
     <div className='manage-account-page page'>
       <div className='settings-title'>Manage Account</div>
@@ -32,4 +27,13 @@ const ManageAccount = () => {
   )
 }
 
-export default ManageAccount
+const mapStateToProps = state => {
+  const userAccountData = state.auth.userAccountData
+  return {
+    name: userAccountData.name,
+    username: userAccountData.username,
+    email: userAccountData.email,
+  }
+}
+
+export default connect(mapStateToProps)(ManageAccount)

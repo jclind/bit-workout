@@ -1,0 +1,31 @@
+@import '../../../helpers.scss';
+
+.logout-confirm-modal {
+  .sub-text {
+    margin: 0;
+    margin-top: 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  .btns {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 1.875rem;
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      width: fit-content;
+      padding: 0 1rem;
+      background: none;
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+    .cancel-btn {
+      color: $secondary-text;
+    }
+    .logout-btn {
+      background: $error-red;
+    }
+  }
+}

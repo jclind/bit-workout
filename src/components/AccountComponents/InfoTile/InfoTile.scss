@@ -1,0 +1,48 @@
+@import '../../../helpers.scss';
+
+.info-tile {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 130px;
+  width: 150px;
+  background: $secondary-background;
+  border-radius: 10px;
+  padding: 0 1.25rem;
+  cursor: pointer;
+
+  .info-tile-title {
+    font-size: 0.875;
+    color: $secondary-text;
+    padding: 0;
+    margin: 0;
+    font-weight: 500;
+  }
+  .text-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.315rem;
+    padding: 0;
+    margin: 0;
+    .info-tile-text,
+    .info-tile-subtext {
+      display: flex;
+      align-items: flex-end;
+      font-weight: 500;
+      padding: 0;
+      margin: 0;
+    }
+    .info-tile-text {
+      font-size: 2.125rem;
+      color: $primary;
+      overflow-wrap: none;
+      white-space: nowrap;
+      line-height: 100%;
+    }
+    .info-tile-subtext {
+      font-size: 0.875;
+      color: $secondary-text;
+    }
+  }
+}
