@@ -14,6 +14,7 @@ const TimerContainer = ({
   setIsWorkoutPathModalOpen,
 }) => {
   const [timerVal, setTimerVal] = useState()
+  const [updateCounter, setUpdateCounter] = useState(0)
 
   const skipRestBtn = useRef()
 
@@ -42,6 +43,8 @@ const TimerContainer = ({
       // Get current time and subtract start time to get total elapsed time
       const elapsed = new Date().getTime() - timerStart
 
+      setUpdateCounter(prev => prev + 1)
+
       // Format elapsed time to milliseconds
       const elapsedMS = Math.round(elapsed / 1000) * 1000
       // Get time left on timer
@@ -58,16 +61,31 @@ const TimerContainer = ({
       }
     }, 100)
     skipTimer(skipRestBtn, timer)
+
+    const onFocus = () => {
+      if (timerVal <= 0) {
+        clearTimer(timer)
+      }
+    }
+
+    window.addEventListener('focus', onFocus)
+    // Specify how to clean up after this effect:
+    return () => {
+      window.removeEventListener('focus', onFocus)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timerStart, restTime, updateWorkout])
 
   return (
-    <Timer
-      timerVal={timerVal}
-      skipRestBtn={skipRestBtn}
-      lastSetFailed={lastSetFailed}
-      setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
-    />
+    <>
+      <Timer
+        timerVal={timerVal}
+        skipRestBtn={skipRestBtn}
+        lastSetFailed={lastSetFailed}
+        setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
+      />
+      {updateCounter}
+    </>
   )
 }
 
