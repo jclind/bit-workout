@@ -1,5 +1,10 @@
-import React, { useState, useRef } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import React, { useState, useEffect, useRef } from 'react'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import Account from './pages/Account/Account'
 import Workout from './pages/Workout/Workout'
@@ -41,6 +46,14 @@ import LikedWorkouts from './components/Workout/WorkoutSelection/LikedWorkouts'
 import WorkoutSettings from './pages/Settings/Workout/WorkoutSettings'
 import ReleaseNotes from './pages/Settings/ReleaseNotes/ReleaseNotes'
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    document.querySelector('.app-container').scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
+
 function App() {
   const [loading, setLoading] = useState(true)
 
@@ -59,6 +72,7 @@ function App() {
         <AppLoadingScreen />
       ) : (
         <Router>
+          <ScrollToTop />
           <Routes>
             <Route exact path='/' element={<PrivateRoute />}>
               <Route exact path='/' element={<Dashboard />} />
