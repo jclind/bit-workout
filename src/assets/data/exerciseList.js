@@ -160,4 +160,11 @@ export const exerciseList = [
     weights: true,
     imageURL: '/workouts/incline-dumbbell-curl.png',
   },
+  {
+    id: 1000,
+    name: 'Other',
+    animation: null,
+    weights: true,
+    imageURL: '/workouts/other.png',
+  },
 ]
