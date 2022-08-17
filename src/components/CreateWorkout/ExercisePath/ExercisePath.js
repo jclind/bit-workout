@@ -8,9 +8,15 @@ import './ExercisePath.scss'
 import StraightSet from './StraightSet/StraightSet'
 import TimerSet from './TimerSet/TimerSet'
 
-const options = [
+// Exercise types for weighted exercise
+const weightOptions = [
   { value: 'straight', label: 'Straight Sets' },
   { value: 'drop', label: 'Drop Sets' },
+  { value: 'timed', label: 'Timed Sets' },
+]
+// Exercise types for non-weighted exercises
+const noWeightOptions = [
+  { value: 'straight', label: 'Straight Sets' },
   { value: 'timed', label: 'Timed Sets' },
 ]
 
@@ -23,11 +29,19 @@ const ExercisePath = ({
   idx,
   selectedExerciseID,
 }) => {
+  const selectedExercise = exerciseList.find(ex => ex.id === selectedExerciseID)
+  const selectedExerciseIsWeighted = selectedExercise?.weights
+
   const [exerciseType, setExerciseType] = useState(type || null)
   const [exercisePath, setExercisePath] = useState(sets || [])
 
-  const selectedExercise = exerciseList.find(ex => ex.id === selectedExerciseID)
-  const selectedExerciseIsWeighted = selectedExercise.weights
+  useEffect(() => {
+    if (selectedExerciseIsWeighted === false && exerciseType === 'drop') {
+      console.log('Should change exercise type')
+      setExerciseType(noWeightOptions[0].value)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedExerciseID])
 
   const handleSetExerciseType = e => {
     const type = e.value
@@ -61,7 +75,7 @@ const ExercisePath = ({
           setError={setError}
         />
       )
-    } else if (type === 'drop') {
+    } else if (type === 'drop' && selectedExerciseIsWeighted !== false) {
       return (
         <DropSet
           exercisePath={exercisePath}
@@ -86,7 +100,11 @@ const ExercisePath = ({
     <div className='exercise-path'>
       <div className='exercise-type-selector'>
         <ExerciseTypeDropdown
-          options={options}
+          options={
+            selectedExerciseIsWeighted === false
+              ? noWeightOptions
+              : weightOptions
+          }
           exerciseType={exerciseType}
           handleSetExerciseType={handleSetExerciseType}
         />
