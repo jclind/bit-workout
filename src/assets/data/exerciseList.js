@@ -165,6 +165,13 @@ export const exerciseList = [
     name: 'Other',
     animation: null,
     weights: true,
-    imageURL: '/workouts/other.png',
+    imageURL: '/workouts/other-weights.png',
+  },
+  {
+    id: 1001,
+    name: 'Other',
+    animation: null,
+    weights: false,
+    imageURL: '/workouts/other-no-weights.png',
   },
 ]

@@ -45,6 +45,8 @@ export const updateWorkout = data => async (dispatch, getState) => {
   if (!uid) console.error('UID not defined in updateWorkout')
   const workoutRef = doc(db, 'workoutData', uid)
 
+  console.log(data)
+
   await updateDoc(workoutRef, {
     ...data,
   })
@@ -180,6 +182,7 @@ const incCurrWorkoutStats = (
 export const completeSet =
   (currSetTotal, completedReps, exerciseID, weight, lastSetFailed) =>
   async (dispatch, getState) => {
+    const weights = getState().workout.workoutData.weights
     const runningWorkout = getState().workout.workoutData.runningWorkout
     const timeLastUpdated = runningWorkout.timeLastUpdated
     const currSet = runningWorkout.remainingWorkout.currSet
@@ -189,9 +192,14 @@ export const completeSet =
 
     // If user doesn't have recorded weight for current exercise, set to 45
     let currExerciseWeight
-    if (!weight) {
+    console.log(
+      exerciseID,
+      weights.find(w => w.exerciseID === exerciseID)
+    )
+    if (weights.find(w => w.exerciseID === exerciseID) === undefined) {
+      console.log('among us?????')
       currExerciseWeight = 45
-      addNewExerciseWeight(45, exerciseID)
+      dispatch(addNewExerciseWeight(45, exerciseID))
     } else {
       currExerciseWeight = weight
     }
@@ -312,6 +320,7 @@ export const addNewExerciseWeight =
   (newWeight, exerciseID) => async (dispatch, getState) => {
     const weights = getState().workout.workoutData.weights
     const newWeights = [...weights, { weight: newWeight, exerciseID }]
+    console.log(newWeight, exerciseID)
     dispatch(
       updateWorkout({
         weights: newWeights,

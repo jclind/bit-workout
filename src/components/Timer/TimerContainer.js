@@ -14,7 +14,6 @@ const TimerContainer = ({
   setIsWorkoutPathModalOpen,
 }) => {
   const [timerVal, setTimerVal] = useState()
-  const [updateCounter, setUpdateCounter] = useState(0)
 
   const skipRestBtn = useRef()
 
@@ -42,8 +41,6 @@ const TimerContainer = ({
     let timer = setInterval(() => {
       // Get current time and subtract start time to get total elapsed time
       const elapsed = new Date().getTime() - timerStart
-
-      setUpdateCounter(prev => prev + 1)
 
       // Format elapsed time to milliseconds
       const elapsedMS = Math.round(elapsed / 1000) * 1000
@@ -77,15 +74,12 @@ const TimerContainer = ({
   }, [timerStart, restTime, updateWorkout])
 
   return (
-    <>
-      <Timer
-        timerVal={timerVal}
-        skipRestBtn={skipRestBtn}
-        lastSetFailed={lastSetFailed}
-        setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
-      />
-      {updateCounter}
-    </>
+    <Timer
+      timerVal={timerVal}
+      skipRestBtn={skipRestBtn}
+      lastSetFailed={lastSetFailed}
+      setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
+    />
   )
 }
 

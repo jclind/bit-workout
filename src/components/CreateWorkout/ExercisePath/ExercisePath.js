@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
+import { exerciseList } from '../../../assets/data/exerciseList'
 
 import ExerciseTypeDropdown from '../ExerciseTypeDropdown/ExerciseTypeDropdown'
 import DropSet from './DropSet/DropSet'
@@ -20,9 +21,13 @@ const ExercisePath = ({
   setSets,
   setError,
   idx,
+  selectedExerciseID,
 }) => {
   const [exerciseType, setExerciseType] = useState(type || null)
   const [exercisePath, setExercisePath] = useState(sets || [])
+
+  const selectedExercise = exerciseList.find(ex => ex.id === selectedExerciseID)
+  const selectedExerciseIsWeighted = selectedExercise.weights
 
   const handleSetExerciseType = e => {
     const type = e.value

@@ -53,6 +53,7 @@ const ExerciseItem = ({
         setError={setError}
         setSelectedType={setSelectedType}
         idx={idx}
+        selectedExerciseID={exerciseID}
       />
 
       <div className='description-container'>
