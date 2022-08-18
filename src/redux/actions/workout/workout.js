@@ -46,7 +46,6 @@ export const updateWorkout = data => async (dispatch, getState) => {
   const workoutRef = doc(db, 'workoutData', uid)
 
   console.log(data)
-
   await updateDoc(workoutRef, {
     ...data,
   })
@@ -196,8 +195,10 @@ export const completeSet =
       exerciseID,
       weights.find(w => w.exerciseID === exerciseID)
     )
-    if (weights.find(w => w.exerciseID === exerciseID) === undefined) {
-      console.log('among us?????')
+    if (
+      weights.find(w => w.exerciseID === exerciseID) === undefined &&
+      exerciseID
+    ) {
       currExerciseWeight = 45
       dispatch(addNewExerciseWeight(45, exerciseID))
     } else {

@@ -24,7 +24,7 @@ const TimedSetExercise = ({
 
   const exerciseIsWeighted = currExercise.weights
 
-  const { name: exerciseName, imageURL, exerciseID } = currExercise
+  const { name: exerciseName, imageURL, id: exerciseID } = currExercise
 
   const plateWeights = calculatePlates(45, currSetWeight)
 

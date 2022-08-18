@@ -19,7 +19,7 @@ const DropSetExercise = ({
   const numSets = sets.length
   const currSetWeight = currSet.weight
 
-  const { name: exerciseName, imageURL, exerciseID } = currExercise
+  const { name: exerciseName, imageURL, id: exerciseID } = currExercise
 
   const plateWeights = calculatePlates(45, currSetWeight)
 
