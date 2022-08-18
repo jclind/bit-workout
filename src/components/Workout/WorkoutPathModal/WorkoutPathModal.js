@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDom from 'react-dom'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import useClickOutside from '../../../util/useClickOutside'
+import { AiOutlinePlusCircle } from 'react-icons/ai'
 import './WorkoutPathModal.scss'
+import AddExerciseToWorkoutModal from '../AddExerciseToWorkoutModal/AddExerciseToWorkoutModal'
 
 const WorkoutPathModal = ({
   onClose,
@@ -11,8 +13,13 @@ const WorkoutPathModal = ({
   workout,
   weights,
 }) => {
+  const [isExerciseToWorkoutModalOpen, setIsExerciseToWorkoutModalOpen] =
+    useState(false)
+
   const modalContent = useClickOutside(() => {
-    onClose()
+    if (!isExerciseToWorkoutModalOpen) {
+      onClose()
+    }
   })
   return ReactDom.createPortal(
     <>
@@ -93,8 +100,25 @@ const WorkoutPathModal = ({
               )
             })}
           </div>
+          <button
+            className='add-exercise'
+            onClick={() => setIsExerciseToWorkoutModalOpen(true)}
+          >
+            <AiOutlinePlusCircle className='icon' /> <span>Add Exercise</span>
+          </button>
         </div>
       </div>
+      {isExerciseToWorkoutModalOpen ? (
+        <AddExerciseToWorkoutModal
+          onClose={() => {
+            setIsExerciseToWorkoutModalOpen(false)
+          }}
+          workout={workout}
+          currExerciseIdx={currExerciseIdx}
+          currSetIdx={currSetIdx}
+          weights={weights}
+        />
+      ) : null}
     </>,
     document.getElementById('portal')
   )

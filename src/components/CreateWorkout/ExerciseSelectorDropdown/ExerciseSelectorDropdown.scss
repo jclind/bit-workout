@@ -3,4 +3,143 @@
 .select-exercise-container {
   position: relative;
   width: 100%;
+  .select-exercise {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    // background: $tag-select-background;
+    border-radius: $border-radius;
+    padding: 0 0.5rem !important;
+    box-sizing: border-box;
+    width: 100% !important;
+    text-transform: capitalize;
+    // border: 1px solid $tag-select-border;
+
+    background: $secondary-background;
+
+    .selector-text {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      height: 100%;
+      background: inherit;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      width: 100%;
+      color: $primary;
+      text-align: center;
+      font-weight: 500;
+
+      .img-container {
+        height: 40px;
+        width: 40px;
+        img {
+          object-fit: contain;
+          height: 40px;
+          width: 40px;
+        }
+      }
+      .name {
+        .weights {
+          font-size: 0.8rem;
+          color: $secondary-text;
+        }
+      }
+
+      .tag-icon {
+        height: 18px;
+        width: 18px;
+      }
+      .icon {
+        height: 18px !important;
+        width: 18px !important;
+      }
+    }
+  }
+}
+.dropdown {
+  position: absolute;
+  top: 100%;
+  visibility: 0;
+  opacity: 0;
+  z-index: -1;
+  width: 100%;
+  height: fit-content;
+  box-sizing: border-box;
+  background: $secondary-background;
+  border: 1px solid $tertiary-text;
+  border-radius: 5px;
+  transition: all 0.1s linear;
+
+  .dropdown-cell {
+    width: 100%;
+    padding: 0.5rem;
+    background: inherit;
+    margin: 0 auto;
+    border-bottom: 1px solid $tertiary-text;
+    box-sizing: border-box;
+  }
+  .exercise-cells {
+    overflow-y: scroll;
+    height: 260px;
+  }
+  .exercise-cell {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-transform: capitalize;
+
+    .img-container {
+      height: 40px;
+      width: 40px;
+      img {
+        object-fit: contain;
+        height: 40px;
+        width: 40px;
+      }
+    }
+    .name {
+      .weights {
+        font-size: 0.8rem;
+        color: $secondary-text;
+      }
+    }
+  }
+  label {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0.5rem 0;
+    margin: 0;
+    height: fit-content;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  input {
+    background: inherit;
+    width: 100%;
+    background: $secondary-background;
+    // border: 1px solid $tag-select-border;
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    color: $primary;
+    padding: 0.25rem 0.5rem;
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    outline: 1px solid $tertiary-text;
+
+    &:focus {
+      outline: 2px solid $primary !important;
+    }
+  }
+}
+.dropdown.visible {
+  opacity: 1;
+  visibility: 1;
+  margin-top: 0.5rem;
+  z-index: 5;
 }

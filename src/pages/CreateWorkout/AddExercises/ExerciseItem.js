@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ExercisePath from '../../../components/CreateWorkout/ExercisePath/ExercisePath'
 import ExerciseSelectorDropdown from '../../../components/CreateWorkout/ExerciseSelectorDropdown/ExerciseSelectorDropdown'
+import './ExerciseItem.scss'
 
 const ExerciseItem = ({
   exerciseData,

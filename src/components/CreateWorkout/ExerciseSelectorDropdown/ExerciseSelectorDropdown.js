@@ -1,9 +1,8 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import ChooseExerciseBtn from '../ChooseExerciseBtn/ChooseExerciseBtn'
 import ExerciseDropdown from '../ExerciseDropdown/ExerciseDropdown'
 import useClickOutside from '../../../util/useClickOutside'
 import './ExerciseSelectorDropdown.scss'
-import { useEffect } from 'react'
 
 const ExerciseSelectorDropdown = ({
   selectedExerciseID,

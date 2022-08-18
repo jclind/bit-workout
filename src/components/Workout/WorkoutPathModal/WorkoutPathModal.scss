@@ -80,5 +80,20 @@
         background: $secondary;
       }
     }
+
+    button.add-exercise {
+      display: flex;
+      align-items: center;
+      background: none;
+      gap: 0.5rem;
+      margin: 1rem auto 0;
+      width: fit-content;
+      font-size: 0.9rem;
+
+      .icon {
+        height: 22px;
+        width: 22px;
+      }
+    }
   }
 }

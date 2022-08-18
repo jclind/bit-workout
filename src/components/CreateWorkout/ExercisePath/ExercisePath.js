@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { exerciseList } from '../../../assets/data/exerciseList'
-
 import ExerciseTypeDropdown from '../ExerciseTypeDropdown/ExerciseTypeDropdown'
 import DropSet from './DropSet/DropSet'
 import './ExercisePath.scss'
