@@ -90,6 +90,7 @@ const ExercisePath = ({
           exercisePath={exercisePath}
           setExercisePath={setExercisePath}
           setError={setError}
+          selectedExerciseIsWeighted={selectedExerciseIsWeighted}
         />
       )
     }
