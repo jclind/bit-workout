@@ -68,7 +68,7 @@ const WorkoutPathModal = ({
 
               return (
                 <div
-                  key={ex.exerciseID}
+                  key={`${ex.exerciseID}-${idx}`}
                   className={`workout-path-exercise ${exerciseState}`}
                 >
                   <div className='image'>
