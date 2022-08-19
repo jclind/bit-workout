@@ -122,6 +122,16 @@ export const startWorkout = workoutData => async (dispatch, getState) => {
   dispatch(updateWorkout(data))
   dispatch(setWorkoutFinished(false))
 }
+export const addExerciseToWorkout =
+  newExercise => async (dispatch, getState) => {
+    const currWorkout =
+      getState().workout.workoutData.runningWorkout.currWorkout
+    const updatedWorkoutPath = [...currWorkout.path, newExercise]
+    const updatedWorkoutData = {
+      'runningWorkout.currWorkout.path': updatedWorkoutPath,
+    }
+    await dispatch(updateWorkout(updatedWorkoutData))
+  }
 
 const incCurrWorkoutStats = (
   currWorkoutStats,

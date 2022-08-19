@@ -3,12 +3,13 @@ import ReactDom from 'react-dom'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import useClickOutside from '../../../util/useClickOutside'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { addExerciseToWorkout } from '../../../redux/actions/workout/workout'
 import { connect } from 'react-redux'
-import { getSingleExercise } from '../../../redux/actions/workout/workout'
 import { v4 as uuidv4 } from 'uuid'
 import './AddExerciseToWorkoutModal.scss'
 import ExerciseSelectorDropdown from '../../CreateWorkout/ExerciseSelectorDropdown/ExerciseSelectorDropdown'
 import ExercisePath from '../../CreateWorkout/ExercisePath/ExercisePath'
+import { useEffect } from 'react'
 
 const AddExerciseToWorkoutModal = ({
   onClose,
@@ -16,7 +17,7 @@ const AddExerciseToWorkoutModal = ({
   currSetIdx,
   workout,
   weights,
-  getSingleExercise,
+  addExerciseToWorkout,
 }) => {
   const [selectedExercise, setSelectedExercise] = useState({
     exerciseID: null,
@@ -24,28 +25,48 @@ const AddExerciseToWorkoutModal = ({
     sets: null,
     type: null,
     id: uuidv4(),
-    error: '',
   })
+
+  const [showErrors, setShowErrors] = useState(false) // Only show errors on next button click
+  const [error, setError] = useState('')
 
   const modalContent = useClickOutside(() => {
     onClose()
   })
-  console.log(workout)
 
-  const setSelectedExerciseID = exerciseID => {
-    const updatedData = { ...selectedExercise, exerciseID }
-    console.log(updatedData)
+  useEffect(() => {
+    console.log(selectedExercise)
+  }, [selectedExercise])
+
+  const updateSelectedExercise = (prop, val) => {
+    setShowErrors(false)
+    let updatedData = { ...selectedExercise }
+    updatedData[prop] = val
     setSelectedExercise(updatedData)
   }
-  const setSets = sets => {
-    const updatedData = { ...selectedExercise, sets }
-    console.log(updatedData)
-    setSelectedExercise(updatedData)
-  }
-  const setType = type => {
-    const updatedData = { ...selectedExercise, type }
-    console.log(updatedData)
-    setSelectedExercise(updatedData)
+
+  const handleAddExercise = () => {
+    console.log(selectedExercise)
+    setShowErrors(false)
+
+    let isError = false
+    if (selectedExercise.exerciseID !== 0 && !selectedExercise.exerciseID) {
+      isError = true
+      setError('Please Select Exercise')
+    } else if (!selectedExercise.type) {
+      isError = true
+      setError('Please Select Exercise Type')
+    } else if (error) {
+      isError = true
+    }
+
+    if (isError) {
+      setShowErrors(true)
+    } else {
+      addExerciseToWorkout(selectedExercise).then(() => {
+        onClose()
+      })
+    }
   }
 
   return ReactDom.createPortal(
@@ -53,17 +74,20 @@ const AddExerciseToWorkoutModal = ({
       <div className='add-exercise-to-workout-modal overlay'>
         <div className='modal-content' ref={modalContent}>
           <div className='settings-title'>Add Workout</div>
+          {showErrors && error && <div className='error'>{error}</div>}
           <div className='exercise-item-container'>
             <ExerciseSelectorDropdown
               selectedExerciseID={selectedExercise.exerciseID}
-              setSelectedExerciseID={setSelectedExerciseID}
+              setSelectedExerciseID={exerciseID =>
+                updateSelectedExercise('exerciseID', exerciseID)
+              }
             />
             <ExercisePath
               sets={selectedExercise.sets}
-              setSets={setSets}
+              setSets={sets => updateSelectedExercise('sets', sets)}
               type={selectedExercise.type}
-              setSelectedType={setType}
-              setError={() => {}}
+              setSelectedType={type => updateSelectedExercise('type', type)}
+              setError={setError}
               selectedExerciseID={selectedExercise.exerciseID}
             />
           </div>
@@ -71,7 +95,9 @@ const AddExerciseToWorkoutModal = ({
             <button className='cancel-btn' onClick={onClose}>
               Cancel
             </button>
-            <button className='confirm-btn'>Add Exercise</button>
+            <button className='confirm-btn' onClick={handleAddExercise}>
+              Add Exercise
+            </button>
           </div>
         </div>
       </div>
@@ -82,7 +108,8 @@ const AddExerciseToWorkoutModal = ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    getSingleExercise: exerciseID => dispatch(getSingleExercise(exerciseID)),
+    addExerciseToWorkout: exerciseData =>
+      dispatch(addExerciseToWorkout(exerciseData)),
   }
 }
 

@@ -36,7 +36,6 @@ const ExercisePath = ({
 
   useEffect(() => {
     if (selectedExerciseIsWeighted === false && exerciseType === 'drop') {
-      console.log('Should change exercise type')
       setExerciseType(noWeightOptions[0].value)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

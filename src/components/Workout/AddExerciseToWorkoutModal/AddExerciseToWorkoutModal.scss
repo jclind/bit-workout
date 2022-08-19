@@ -7,6 +7,10 @@
     .settings-title {
       margin-bottom: 1rem;
     }
+    .error {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
     .exercise-item-container {
       display: flex;
       flex-direction: column;
@@ -36,6 +40,9 @@
 
       .confirm-btn {
         background: $secondary;
+        &:hover {
+          background: $secondary;
+        }
       }
     }
   }
