@@ -11,14 +11,7 @@ import ExerciseSelectorDropdown from '../../CreateWorkout/ExerciseSelectorDropdo
 import ExercisePath from '../../CreateWorkout/ExercisePath/ExercisePath'
 import { useEffect } from 'react'
 
-const AddExerciseToWorkoutModal = ({
-  onClose,
-  currExerciseIdx,
-  currSetIdx,
-  workout,
-  weights,
-  addExerciseToWorkout,
-}) => {
+const AddExerciseToWorkoutModal = ({ onClose, addExerciseToWorkout }) => {
   const [selectedExercise, setSelectedExercise] = useState({
     exerciseID: null,
     description: '',

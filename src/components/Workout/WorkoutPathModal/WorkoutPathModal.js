@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import ReactDom from 'react-dom'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import useClickOutside from '../../../util/useClickOutside'
-import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { AiOutlinePlusCircle, AiOutlineClose } from 'react-icons/ai'
 import './WorkoutPathModal.scss'
 import AddExerciseToWorkoutModal from '../AddExerciseToWorkoutModal/AddExerciseToWorkoutModal'
+import ConfirmRemoveExerciseModal from '../ChangeWeightModal/ConfirmRemoveExerciseModal/ConfirmRemoveExerciseModal'
 
 const WorkoutPathModal = ({
   onClose,
@@ -15,6 +16,12 @@ const WorkoutPathModal = ({
 }) => {
   const [isExerciseToWorkoutModalOpen, setIsExerciseToWorkoutModalOpen] =
     useState(false)
+  const [
+    isConfirmRemoveExerciseModalOpen,
+    setIsConfirmRemoveExerciseModalOpen,
+  ] = useState(false)
+
+  const handleRemoveExercise = () => {}
 
   const modalContent = useClickOutside(() => {
     if (!isExerciseToWorkoutModalOpen) {
@@ -96,6 +103,12 @@ const WorkoutPathModal = ({
                   {currExerciseWeight && (
                     <div className='weight'>{currExerciseWeight}lbs</div>
                   )}
+                  <button
+                    className='remove-exercise-btn'
+                    onClick={handleRemoveExercise}
+                  >
+                    <AiOutlineClose className='icon' />
+                  </button>
                 </div>
               )
             })}
@@ -110,6 +123,13 @@ const WorkoutPathModal = ({
       </div>
       {isExerciseToWorkoutModalOpen ? (
         <AddExerciseToWorkoutModal
+          onClose={() => {
+            setIsExerciseToWorkoutModalOpen(false)
+          }}
+        />
+      ) : null}
+      {isConfirmRemoveExerciseModalOpen ? (
+        <ConfirmRemoveExerciseModal
           onClose={() => {
             setIsExerciseToWorkoutModalOpen(false)
           }}
