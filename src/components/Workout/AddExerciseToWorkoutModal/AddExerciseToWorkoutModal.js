@@ -67,6 +67,12 @@ const AddExerciseToWorkoutModal = ({
               selectedExerciseID={selectedExercise.exerciseID}
             />
           </div>
+          <div className='actions'>
+            <button className='cancel-btn' onClick={onClose}>
+              Cancel
+            </button>
+            <button className='confirm-btn'>Add Exercise</button>
+          </div>
         </div>
       </div>
     </>,

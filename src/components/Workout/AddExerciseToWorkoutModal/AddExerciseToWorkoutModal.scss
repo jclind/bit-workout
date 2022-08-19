@@ -3,6 +3,7 @@
 .add-exercise-to-workout-modal {
   .modal-content {
     background: $primary-background;
+    padding: 2rem 1rem;
     .settings-title {
       margin-bottom: 1rem;
     }
@@ -21,16 +22,21 @@
 
       .select-exercise-container {
         .select-exercise {
-          background: $secondary-background-card !important;
         }
       }
       .dropdown {
-        background: $secondary-background-card !important;
       }
     }
     .exercise-path {
-      background: $secondary-background-card !important;
       text-align: left;
+    }
+
+    .actions {
+      margin-top: 2rem;
+
+      .confirm-btn {
+        background: $secondary;
+      }
     }
   }
 }
