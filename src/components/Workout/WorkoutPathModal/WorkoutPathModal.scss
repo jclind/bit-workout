@@ -13,9 +13,11 @@
       width: 100%;
 
       .workout-path-exercise {
+        position: relative;
         display: flex;
         background: $secondary-background-card;
         padding: 0.5rem 1rem;
+        margin-right: 1rem;
         border-radius: $border-radius;
         box-sizing: border-box;
         .image {
@@ -64,6 +66,23 @@
           display: flex;
           align-items: center;
         }
+        button.remove-exercise-btn {
+          position: absolute;
+          right: -1.75rem;
+          top: 50%;
+          transform: translateY(-50%);
+
+          width: fit-content;
+          height: fit-content;
+          padding: 0.25rem;
+          background: none;
+
+          .icon {
+            height: 20px;
+            width: 20px;
+            color: $like-red;
+          }
+        }
       }
       .workout-path-exercise.COMPLETED {
         background: $primary-background;
@@ -78,6 +97,21 @@
       }
       .workout-path-exercise.ACTIVE {
         background: $secondary;
+      }
+    }
+
+    button.add-exercise {
+      display: flex;
+      align-items: center;
+      background: none;
+      gap: 0.5rem;
+      margin: 1rem auto 0;
+      width: fit-content;
+      font-size: 0.9rem;
+
+      .icon {
+        height: 22px;
+        width: 22px;
       }
     }
   }

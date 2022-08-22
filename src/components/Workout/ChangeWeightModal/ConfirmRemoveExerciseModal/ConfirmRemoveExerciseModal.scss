@@ -1,0 +1,17 @@
+@import '../../../../helpers.scss';
+
+.confirm-remove-exercise-modal {
+  .modal-content {
+    .settings-title {
+      margin-bottom: 0;
+    }
+    .description {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: $secondary-text;
+    }
+    .actions {
+      margin-top: 1rem;
+    }
+  }
+}

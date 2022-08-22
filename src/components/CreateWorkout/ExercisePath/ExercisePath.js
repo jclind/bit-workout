@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { exerciseList } from '../../../assets/data/exerciseList'
-
 import ExerciseTypeDropdown from '../ExerciseTypeDropdown/ExerciseTypeDropdown'
 import DropSet from './DropSet/DropSet'
 import './ExercisePath.scss'
@@ -37,7 +36,6 @@ const ExercisePath = ({
 
   useEffect(() => {
     if (selectedExerciseIsWeighted === false && exerciseType === 'drop') {
-      console.log('Should change exercise type')
       setExerciseType(noWeightOptions[0].value)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

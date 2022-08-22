@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDom from 'react-dom'
 import { exerciseList } from '../../../assets/data/exerciseList'
 import useClickOutside from '../../../util/useClickOutside'
+import { AiOutlinePlusCircle, AiOutlineClose } from 'react-icons/ai'
 import './WorkoutPathModal.scss'
+import AddExerciseToWorkoutModal from '../AddExerciseToWorkoutModal/AddExerciseToWorkoutModal'
+import ConfirmRemoveExerciseModal from '../ChangeWeightModal/ConfirmRemoveExerciseModal/ConfirmRemoveExerciseModal'
 
 const WorkoutPathModal = ({
   onClose,
@@ -11,8 +14,23 @@ const WorkoutPathModal = ({
   workout,
   weights,
 }) => {
+  const [isExerciseToWorkoutModalOpen, setIsExerciseToWorkoutModalOpen] =
+    useState(false)
+  const [
+    isConfirmRemoveExerciseModalOpen,
+    setIsConfirmRemoveExerciseModalOpen,
+  ] = useState(false)
+  const [removedExerciseIdx, setRemovedExerciseIdx] = useState(null)
+
+  const handleRemoveExercise = idx => {
+    setRemovedExerciseIdx(idx)
+    setIsConfirmRemoveExerciseModalOpen(true)
+  }
+
   const modalContent = useClickOutside(() => {
-    onClose()
+    if (!isExerciseToWorkoutModalOpen && !isConfirmRemoveExerciseModalOpen) {
+      onClose()
+    }
   })
   return ReactDom.createPortal(
     <>
@@ -68,7 +86,7 @@ const WorkoutPathModal = ({
 
               return (
                 <div
-                  key={ex.exerciseID}
+                  key={`${ex.exerciseID}-${idx}`}
                   className={`workout-path-exercise ${exerciseState}`}
                 >
                   <div className='image'>
@@ -89,12 +107,42 @@ const WorkoutPathModal = ({
                   {currExerciseWeight && (
                     <div className='weight'>{currExerciseWeight}lbs</div>
                   )}
+                  {workout.path.length > 1 && (
+                    <button
+                      className='remove-exercise-btn'
+                      onClick={() => handleRemoveExercise(idx)}
+                    >
+                      <AiOutlineClose className='icon' />
+                    </button>
+                  )}
                 </div>
               )
             })}
           </div>
+          <button
+            className='add-exercise'
+            onClick={() => setIsExerciseToWorkoutModalOpen(true)}
+          >
+            <AiOutlinePlusCircle className='icon' /> <span>Add Exercise</span>
+          </button>
         </div>
       </div>
+      {isExerciseToWorkoutModalOpen ? (
+        <AddExerciseToWorkoutModal
+          onClose={() => {
+            setIsExerciseToWorkoutModalOpen(false)
+          }}
+        />
+      ) : null}
+      {isConfirmRemoveExerciseModalOpen ? (
+        <ConfirmRemoveExerciseModal
+          onClose={() => {
+            setIsConfirmRemoveExerciseModalOpen(false)
+          }}
+          removedExerciseIdx={removedExerciseIdx}
+          workout={workout}
+        />
+      ) : null}
     </>,
     document.getElementById('portal')
   )
