@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
 import ReactDom from 'react-dom'
-import { exerciseList } from '../../../assets/data/exerciseList'
 import useClickOutside from '../../../util/useClickOutside'
-import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { addExerciseToWorkout } from '../../../redux/actions/workout/workout'
 import { connect } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
 import './AddExerciseToWorkoutModal.scss'
 import ExerciseSelectorDropdown from '../../CreateWorkout/ExerciseSelectorDropdown/ExerciseSelectorDropdown'
 import ExercisePath from '../../CreateWorkout/ExercisePath/ExercisePath'
-import { useEffect } from 'react'
 
 const AddExerciseToWorkoutModal = ({ onClose, addExerciseToWorkout }) => {
   const [selectedExercise, setSelectedExercise] = useState({
@@ -27,10 +24,6 @@ const AddExerciseToWorkoutModal = ({ onClose, addExerciseToWorkout }) => {
     onClose()
   })
 
-  useEffect(() => {
-    console.log(selectedExercise)
-  }, [selectedExercise])
-
   const updateSelectedExercise = (prop, val) => {
     setShowErrors(false)
     let updatedData = { ...selectedExercise }
@@ -39,7 +32,6 @@ const AddExerciseToWorkoutModal = ({ onClose, addExerciseToWorkout }) => {
   }
 
   const handleAddExercise = () => {
-    console.log(selectedExercise)
     setShowErrors(false)
 
     let isError = false

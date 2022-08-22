@@ -1,3 +1,5 @@
+export const current_version_number = 'v0.4.1-alpha'
+
 export const releaseNotes = [
   {
     version: 'v0.3.0-alpha',
@@ -30,5 +32,15 @@ export const releaseNotes = [
       'Drop sets no longer have rest time after set completion.',
     ],
     improvements: ['Add ability to toggle workout chime in settings.'],
+  },
+  {
+    version: 'v0.4.1-alpha',
+    date: 'August 22, 2022',
+    title: '',
+    description: '',
+    features: [
+      "Exercises can now be added and removed in the current workout through the 'workout path' modal.",
+    ],
+    fixes: ['Multiple minor fixes'],
   },
 ]

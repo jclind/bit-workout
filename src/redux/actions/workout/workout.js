@@ -45,7 +45,6 @@ export const updateWorkout = data => async (dispatch, getState) => {
   if (!uid) console.error('UID not defined in updateWorkout')
   const workoutRef = doc(db, 'workoutData', uid)
 
-  console.log(data)
   await updateDoc(workoutRef, {
     ...data,
   })
@@ -136,10 +135,8 @@ export const removeExerciseFromWorkout =
   exerciseIdx => async (dispatch, getState) => {
     const currWorkout =
       getState().workout.workoutData.runningWorkout.currWorkout
-    console.log(exerciseIdx)
     const updatedWorkoutPath = [...currWorkout.path]
     updatedWorkoutPath.splice(exerciseIdx, 1)
-    console.log(currWorkout.path, updatedWorkoutPath)
     const updatedWorkoutData = {
       'runningWorkout.currWorkout.path': updatedWorkoutPath,
     }
@@ -214,10 +211,6 @@ export const completeSet =
 
     // If user doesn't have recorded weight for current exercise, set to 45
     let currExerciseWeight
-    console.log(
-      exerciseID,
-      weights.find(w => w.exerciseID === exerciseID)
-    )
     if (
       weights.find(w => w.exerciseID === exerciseID) === undefined &&
       exerciseID
@@ -344,7 +337,6 @@ export const addNewExerciseWeight =
   (newWeight, exerciseID) => async (dispatch, getState) => {
     const weights = getState().workout.workoutData.weights
     const newWeights = [...weights, { weight: newWeight, exerciseID }]
-    console.log(newWeight, exerciseID)
     dispatch(
       updateWorkout({
         weights: newWeights,
