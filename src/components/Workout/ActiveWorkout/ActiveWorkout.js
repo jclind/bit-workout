@@ -17,7 +17,6 @@ const ActiveWorkout = ({
   currExerciseIdx,
   currWorkout,
   completeSet,
-  weights,
   stopWorkout,
   setIsWorkoutPathModalOpen,
 }) => {
@@ -36,7 +35,6 @@ const ActiveWorkout = ({
         <StraightSetExercise
           currActiveWorkoutExercise={currActiveWorkoutExercise}
           currExercise={currExercise}
-          weights={weights}
           currSetIdx={currSetIdx}
           completeSet={completeSet}
           setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}

@@ -32,7 +32,8 @@ describe('Workout Tests', () => {
     )
 
     // Exercise 2
-    cy.get('button.add-exercise-btn').click()
+    cy.get('button.add-exercise-btn').trigger('click')
+
     cy.get('.exercise-item')
       .eq(1)
       .within(() => {
@@ -56,7 +57,8 @@ describe('Workout Tests', () => {
       })
 
     // Exercise 3
-    cy.get('button.add-exercise-btn').click()
+    cy.get('button.add-exercise-btn').trigger('click')
+
     cy.get('.exercise-item')
       .eq(2)
       .within(() => {
@@ -86,7 +88,7 @@ describe('Workout Tests', () => {
         )
       })
 
-    cy.get('button.next-btn').click()
+    cy.get('button.next-btn').trigger('click')
 
     // Workout Rest Time Page
     cy.get('.rest-time .minutes input').type(2)
@@ -94,7 +96,7 @@ describe('Workout Tests', () => {
     cy.get('.failed-rest-time .minutes input').type(4)
     cy.get('.failed-rest-time .seconds input').type(30)
 
-    cy.get('button.next-btn').click()
+    cy.get('button.next-btn').trigger('click')
 
     // Workout Info Page
     const workoutName = `Test ${new Date().getTime()}`
@@ -102,11 +104,11 @@ describe('Workout Tests', () => {
     cy.get('.workout-description textarea').type(
       'Description testing: Eiusmod irure pariatur adipisicing proident. Exercitation officia sunt excepteur et labore anim esse excepteur laboris labore id laborum esse.'
     )
-    cy.get('button.next-btn').click()
+    cy.get('button.next-btn').trigger('click')
 
     // Workout Type Page
     cy.get('button.saved').click()
-    cy.get('button.next-btn').click()
+    cy.get('button.next-btn').trigger('click')
 
     // Delete Just Created Workout
     cy.get('button.selection-btn').contains('Created').click()

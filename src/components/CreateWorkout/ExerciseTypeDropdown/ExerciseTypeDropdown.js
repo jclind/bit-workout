@@ -33,6 +33,7 @@ const customStyles = {
   input: (provided, state) => ({
     ...provided,
     margin: '0px',
+    color: '#eeeeee',
   }),
   indicatorSeparator: state => ({
     display: 'none',

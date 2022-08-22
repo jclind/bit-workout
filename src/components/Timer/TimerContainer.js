@@ -58,6 +58,18 @@ const TimerContainer = ({
       }
     }, 100)
     skipTimer(skipRestBtn, timer)
+
+    const onFocus = () => {
+      if (timerVal <= 0) {
+        clearTimer(timer)
+      }
+    }
+
+    window.addEventListener('focus', onFocus)
+    // Specify how to clean up after this effect:
+    return () => {
+      window.removeEventListener('focus', onFocus)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timerStart, restTime, updateWorkout])
 

@@ -121,6 +121,27 @@ export const startWorkout = workoutData => async (dispatch, getState) => {
   dispatch(updateWorkout(data))
   dispatch(setWorkoutFinished(false))
 }
+export const addExerciseToWorkout =
+  newExercise => async (dispatch, getState) => {
+    const currWorkout =
+      getState().workout.workoutData.runningWorkout.currWorkout
+    const updatedWorkoutPath = [...currWorkout.path, newExercise]
+    const updatedWorkoutData = {
+      'runningWorkout.currWorkout.path': updatedWorkoutPath,
+    }
+    await dispatch(updateWorkout(updatedWorkoutData))
+  }
+export const removeExerciseFromWorkout =
+  exerciseIdx => async (dispatch, getState) => {
+    const currWorkout =
+      getState().workout.workoutData.runningWorkout.currWorkout
+    const updatedWorkoutPath = [...currWorkout.path]
+    updatedWorkoutPath.splice(exerciseIdx, 1)
+    const updatedWorkoutData = {
+      'runningWorkout.currWorkout.path': updatedWorkoutPath,
+    }
+    await dispatch(updateWorkout(updatedWorkoutData))
+  }
 
 const incCurrWorkoutStats = (
   currWorkoutStats,
@@ -180,6 +201,7 @@ const incCurrWorkoutStats = (
 export const completeSet =
   (currSetTotal, completedReps, exerciseID, weight, lastSetFailed) =>
   async (dispatch, getState) => {
+    const weights = getState().workout.workoutData.weights
     const runningWorkout = getState().workout.workoutData.runningWorkout
     const timeLastUpdated = runningWorkout.timeLastUpdated
     const currSet = runningWorkout.remainingWorkout.currSet
@@ -189,9 +211,12 @@ export const completeSet =
 
     // If user doesn't have recorded weight for current exercise, set to 45
     let currExerciseWeight
-    if (!weight) {
+    if (
+      weights.find(w => w.exerciseID === exerciseID) === undefined &&
+      exerciseID
+    ) {
       currExerciseWeight = 45
-      addNewExerciseWeight(45, exerciseID)
+      dispatch(addNewExerciseWeight(45, exerciseID))
     } else {
       currExerciseWeight = weight
     }

@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 
-const TimerSetItem = ({ set, idx, setPathData, removeSet }) => {
+const TimerSetItem = ({
+  set,
+  idx,
+  setPathData,
+  removeSet,
+  selectedExerciseIsWeighted,
+}) => {
   const [minutes, setMinutes] = useState(() => {
     return set && set.time.minutes ? set.time.minutes : ''
   })
@@ -102,17 +108,19 @@ const TimerSetItem = ({ set, idx, setPathData, removeSet }) => {
             <label className='seconds-label'>Secs.</label>
           </div>
         </div>
-        <div className='weight' onClick={() => weightRef.current.select()}>
-          <input
-            className='weight-input'
-            placeholder='45'
-            type='number'
-            value={weight}
-            onChange={handleSetWeight}
-            ref={weightRef}
-          />
-          <label className='weight-label'>Lbs</label>
-        </div>
+        {selectedExerciseIsWeighted !== false ? (
+          <div className='weight' onClick={() => weightRef.current.select()}>
+            <input
+              className='weight-input'
+              placeholder='45'
+              type='number'
+              value={weight}
+              onChange={handleSetWeight}
+              ref={weightRef}
+            />
+            <label className='weight-label'>Lbs</label>
+          </div>
+        ) : null}
         <button className='delete-item-btn' onClick={() => removeSet(set.id)}>
           <AiOutlineClose className='icon' />
         </button>

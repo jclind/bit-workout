@@ -23,9 +23,9 @@ const ExerciseDropdown = ({
       </div>
       <div className='exercise-cells'>
         {exerciseList.slice(0, 50).map(ex => {
-          const exerciseMatchesSearchVal = ex.name
-            .toLowerCase()
-            .includes(exerciseSearchVal.toLowerCase())
+          const exerciseMatchesSearchVal =
+            ex.name.toLowerCase().includes(exerciseSearchVal.toLowerCase()) ||
+            ex.name.toLowerCase() === 'other'
           if (exerciseSearchVal && !exerciseMatchesSearchVal) {
             return null
           }

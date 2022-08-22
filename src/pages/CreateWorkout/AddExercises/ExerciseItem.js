@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ExercisePath from '../../../components/CreateWorkout/ExercisePath/ExercisePath'
 import ExerciseSelectorDropdown from '../../../components/CreateWorkout/ExerciseSelectorDropdown/ExerciseSelectorDropdown'
+import './ExerciseItem.scss'
 
 const ExerciseItem = ({
   exerciseData,
@@ -53,6 +54,7 @@ const ExerciseItem = ({
         setError={setError}
         setSelectedType={setSelectedType}
         idx={idx}
+        selectedExerciseID={exerciseID}
       />
 
       <div className='description-container'>

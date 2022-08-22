@@ -3,7 +3,12 @@ import TimerSetItem from './TimerSetItem'
 import { v4 as uuidv4 } from 'uuid'
 import './TimerSet.scss'
 
-const TimerSet = ({ exercisePath, setExercisePath, setError }) => {
+const TimerSet = ({
+  exercisePath,
+  setExercisePath,
+  setError,
+  selectedExerciseIsWeighted,
+}) => {
   const pathTemplate = {
     id: uuidv4(),
     time: { minutes: null, seconds: null },
@@ -54,7 +59,8 @@ const TimerSet = ({ exercisePath, setExercisePath, setError }) => {
     path.every(set => {
       if (!set.time.minutes && !set.time.seconds)
         response.error = 'Please Enter Minutes Or Seconds'
-      else if (!set.weight) response.error = 'Please Enter Weight'
+      else if (!set.weight && selectedExerciseIsWeighted)
+        response.error = 'Please Enter Weight'
       else if (Number(set.weight) % 5 !== 0)
         response.error = 'Weight Must Be A Multiple Of 5'
 
@@ -88,6 +94,7 @@ const TimerSet = ({ exercisePath, setExercisePath, setError }) => {
             set={set}
             setPathData={setPathData}
             removeSet={removeSet}
+            selectedExerciseIsWeighted={selectedExerciseIsWeighted}
           />
         )
       })}

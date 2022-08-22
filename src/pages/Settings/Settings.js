@@ -16,6 +16,7 @@ import {
 import './Settings.scss'
 import { logout } from '../../redux/actions/auth/authStatus'
 import { Link } from 'react-router-dom'
+import { current_version_number } from '../../assets/data/releaseNotes'
 
 const Settings = ({ logout }) => {
   const [error, setError] = useState(false)
@@ -79,7 +80,7 @@ const Settings = ({ logout }) => {
       </section>
       <BackButton />
       <Link to='/account/settings/release-notes' className='version'>
-        Version v0.3.0-alpha <AiOutlineRight />
+        Version {current_version_number} <AiOutlineRight />
       </Link>
     </div>
   )

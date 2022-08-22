@@ -22,7 +22,9 @@ const TimedSetExercise = ({
   const numSets = sets.length
   const currSetWeight = currSet.weight
 
-  const { name: exerciseName, imageURL, exerciseID } = currExercise
+  const exerciseIsWeighted = currExercise.weights
+
+  const { name: exerciseName, imageURL, id: exerciseID } = currExercise
 
   const plateWeights = calculatePlates(45, currSetWeight)
 
@@ -114,10 +116,20 @@ const TimedSetExercise = ({
       <div className='workout-data'>
         <div
           className='exercise-weight'
-          onClick={() => setIsPlatesModalOpen(true)}
+          onClick={() => {
+            if (exerciseIsWeighted) {
+              setIsPlatesModalOpen(true)
+            }
+          }}
         >
-          <span>{currSetWeight} lbs</span>
-          <AiFillInfoCircle className='icon' />
+          {exerciseIsWeighted ? (
+            <>
+              <span>{currSetWeight} lbs</span>
+              <AiFillInfoCircle className='icon' />
+            </>
+          ) : (
+            'No Weights'
+          )}
         </div>
         <div className='exercise-img-container'>
           <img src={imageURL} alt={exerciseName} className='exercise-img' />
