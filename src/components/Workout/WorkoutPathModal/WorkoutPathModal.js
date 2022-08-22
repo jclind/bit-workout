@@ -20,11 +20,15 @@ const WorkoutPathModal = ({
     isConfirmRemoveExerciseModalOpen,
     setIsConfirmRemoveExerciseModalOpen,
   ] = useState(false)
+  const [removedExerciseIdx, setRemovedExerciseIdx] = useState(null)
 
-  const handleRemoveExercise = () => {}
+  const handleRemoveExercise = idx => {
+    setRemovedExerciseIdx(idx)
+    setIsConfirmRemoveExerciseModalOpen(true)
+  }
 
   const modalContent = useClickOutside(() => {
-    if (!isExerciseToWorkoutModalOpen) {
+    if (!isExerciseToWorkoutModalOpen && !isConfirmRemoveExerciseModalOpen) {
       onClose()
     }
   })
@@ -105,7 +109,7 @@ const WorkoutPathModal = ({
                   )}
                   <button
                     className='remove-exercise-btn'
-                    onClick={handleRemoveExercise}
+                    onClick={() => handleRemoveExercise(idx)}
                   >
                     <AiOutlineClose className='icon' />
                   </button>
@@ -131,12 +135,10 @@ const WorkoutPathModal = ({
       {isConfirmRemoveExerciseModalOpen ? (
         <ConfirmRemoveExerciseModal
           onClose={() => {
-            setIsExerciseToWorkoutModalOpen(false)
+            setIsConfirmRemoveExerciseModalOpen(false)
           }}
+          removedExerciseIdx={removedExerciseIdx}
           workout={workout}
-          currExerciseIdx={currExerciseIdx}
-          currSetIdx={currSetIdx}
-          weights={weights}
         />
       ) : null}
     </>,
