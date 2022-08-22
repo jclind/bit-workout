@@ -132,6 +132,19 @@ export const addExerciseToWorkout =
     }
     await dispatch(updateWorkout(updatedWorkoutData))
   }
+export const removeExerciseFromWorkout =
+  exerciseIdx => async (dispatch, getState) => {
+    const currWorkout =
+      getState().workout.workoutData.runningWorkout.currWorkout
+    console.log(exerciseIdx)
+    const updatedWorkoutPath = [...currWorkout.path]
+    updatedWorkoutPath.splice(exerciseIdx, 1)
+    console.log(currWorkout.path, updatedWorkoutPath)
+    const updatedWorkoutData = {
+      'runningWorkout.currWorkout.path': updatedWorkoutPath,
+    }
+    await dispatch(updateWorkout(updatedWorkoutData))
+  }
 
 const incCurrWorkoutStats = (
   currWorkoutStats,

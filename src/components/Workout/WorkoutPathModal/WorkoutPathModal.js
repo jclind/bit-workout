@@ -107,12 +107,14 @@ const WorkoutPathModal = ({
                   {currExerciseWeight && (
                     <div className='weight'>{currExerciseWeight}lbs</div>
                   )}
-                  <button
-                    className='remove-exercise-btn'
-                    onClick={() => handleRemoveExercise(idx)}
-                  >
-                    <AiOutlineClose className='icon' />
-                  </button>
+                  {workout.path.length > 1 && (
+                    <button
+                      className='remove-exercise-btn'
+                      onClick={() => handleRemoveExercise(idx)}
+                    >
+                      <AiOutlineClose className='icon' />
+                    </button>
+                  )}
                 </div>
               )
             })}

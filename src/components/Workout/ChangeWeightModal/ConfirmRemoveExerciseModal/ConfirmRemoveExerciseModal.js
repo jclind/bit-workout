@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import ReactDom from 'react-dom'
+import { connect } from 'react-redux'
+import { removeExerciseFromWorkout } from '../../../../redux/actions/workout/workout'
 import useClickOutside from '../../../../util/useClickOutside'
 import './ConfirmRemoveExerciseModal.scss'
 
 const ConfirmRemoveExerciseModal = ({
   onClose,
   removedExerciseIdx,
-  workout,
+  removeExerciseFromWorkout,
 }) => {
   if (removedExerciseIdx === null) {
     // !ERROR
@@ -16,7 +18,11 @@ const ConfirmRemoveExerciseModal = ({
     onClose()
   })
 
-  // const removedExercise = workout?.path[removedExerciseIdx]
+  const handleRemoveExercise = () => {
+    removeExerciseFromWorkout(removedExerciseIdx).then(() => {
+      onClose()
+    })
+  }
 
   return ReactDom.createPortal(
     <>
@@ -31,7 +37,7 @@ const ConfirmRemoveExerciseModal = ({
             <button className='cancel-btn' onClick={onClose}>
               Cancel
             </button>
-            <button className='confirm-btn' onClick={() => {}}>
+            <button className='confirm-btn' onClick={handleRemoveExercise}>
               Remove
             </button>
           </div>
@@ -42,4 +48,11 @@ const ConfirmRemoveExerciseModal = ({
   )
 }
 
-export default ConfirmRemoveExerciseModal
+const mapDispatchToProps = dispatch => {
+  return {
+    removeExerciseFromWorkout: exerciseIdx =>
+      dispatch(removeExerciseFromWorkout(exerciseIdx)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(ConfirmRemoveExerciseModal)
