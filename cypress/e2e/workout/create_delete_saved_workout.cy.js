@@ -32,7 +32,8 @@ describe('Workout Tests', () => {
     )
 
     // Exercise 2
-    cy.get('button.add-exercise-btn').click()
+    cy.get('button.add-exercise-btn').trigger('click')
+
     cy.get('.exercise-item')
       .eq(1)
       .within(() => {
@@ -56,7 +57,8 @@ describe('Workout Tests', () => {
       })
 
     // Exercise 3
-    cy.get('button.add-exercise-btn').click()
+    cy.get('button.add-exercise-btn').trigger('click')
+
     cy.get('.exercise-item')
       .eq(2)
       .within(() => {
