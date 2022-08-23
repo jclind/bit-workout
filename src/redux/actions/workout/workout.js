@@ -33,7 +33,7 @@ export const fetchWorkoutData = uid => async dispatch => {
     const isWorkoutRunning = workoutData.isWorkoutRunning
     if (
       isWorkoutRunning &&
-      (!timeLastUpdated || timeLastUpdated < new Date().getTime() - 1800)
+      (!timeLastUpdated || timeLastUpdated < new Date().getTime() - 1800000)
     ) {
       dispatch(stopWorkout())
     }
