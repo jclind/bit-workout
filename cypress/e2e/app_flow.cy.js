@@ -86,5 +86,8 @@ describe('Workout Tests', () => {
 
     // Settings Page
     // Manage Account
+    cy.get('button.settings-button')
+      .contains('Manage Account', { matchCase: false })
+      .click()
   })
 })
