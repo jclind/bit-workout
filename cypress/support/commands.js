@@ -91,3 +91,7 @@ Cypress.Commands.add('completeTimedSet', (skipRest, testRepFunctionality) => {
     cy.get('button.skip-rest-btn').click()
   }
 })
+
+Cypress.Commands.add('clickBackButton', () => {
+  cy.get('button.back-button').click()
+})

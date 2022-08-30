@@ -23,6 +23,8 @@
       right: 0.625rem;
     }
     button {
+      display: flex;
+      justify-content: center;
       background: none;
       border: 2px solid $primary;
       font-size: 0.875rem;

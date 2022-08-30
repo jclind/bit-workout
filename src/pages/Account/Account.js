@@ -25,7 +25,7 @@ const Account = ({ name, height, weight }) => {
         </div>
         <Link to='/account/settings' className='settings-btn-container'>
           <img src={rightIcon} alt='right' className='icon' />
-          <button className='settings-btn'>Account Settings</button>
+          <button className='settings-button'>Account Settings</button>
         </Link>
       </div>
 

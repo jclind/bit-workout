@@ -77,17 +77,49 @@ describe('Workout Tests', () => {
 
     // cy.get('.weight input').type(randomWeight)
     // cy.get('button.add-weight-btn').click()
-    // cy.get('button.back-button').click()
+    // cy.clickBackButton()
 
     // // Check that the account info tile contains the newly inputted weight
     // cy.get('.info-tile').eq(1).contains(randomWeight)
 
-    cy.get('button.settings-btn').click()
+    Cypress.Commands.add('clickSettingsButton', btnText => {
+      cy.get('button.settings-button')
+        .contains(btnText, { matchCase: false })
+        .click()
+    })
+
+    cy.clickSettingsButton('Account Settings')
 
     // Settings Page
     // Manage Account
-    cy.get('button.settings-button')
-      .contains('Manage Account', { matchCase: false })
-      .click()
+    cy.clickSettingsButton('Manage Account')
+
+    const randomNumber = Math.floor(Math.random() * 10000)
+    // Update Name
+    cy.clickSettingsButton('Jesse Lind')
+    const newName = `Jesse Lind ${randomNumber}`
+    cy.get('input').clear().type(newName)
+    cy.get('button.save.active').click()
+    cy.get('button.settings-button').contains(newName)
+    // Update Username
+    cy.clickSettingsButton('jesselind')
+    const newUsername = `jesselind${randomNumber}`
+    cy.get('input').clear().type(newUsername)
+    cy.get('button.save.active').click()
+    cy.get('button.settings-button').contains(newUsername)
+
+    cy.clickBackButton()
+
+    // Workout Settings
+    cy.clickSettingsButton('Workout Settings')
+    cy.get('button.settings-button').contains('Chime', { matchCase: false })
+    cy.clickBackButton()
+
+    // Feedback Page
+    cy.clickSettingsButton('Feedback')
+    cy.get('.text').contains('Category', { matchCase: false })
+    cy.get('.text').contains('Title', { matchCase: false })
+    cy.get('.text').contains('Description', { matchCase: false })
+    cy.clickBackButton()
   })
 })
