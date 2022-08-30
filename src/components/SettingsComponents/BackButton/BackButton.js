@@ -12,9 +12,9 @@ const BackButton = ({ link }) => {
   }
 
   return (
-    <div className='back-button icon' onClick={handleNavigate}>
+    <button className='back-button icon' onClick={handleNavigate}>
       <img src={leftIcon} alt='back-button' className='icon' />
-    </div>
+    </button>
   )
 }
 

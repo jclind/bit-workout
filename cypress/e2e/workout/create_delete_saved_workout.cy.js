@@ -14,8 +14,8 @@ describe('Workout Tests', () => {
 
     // Exercise 1
     cy.get('button.select-exercise').click()
-    cy.get('div.dropdown-cell').contains('squat', { matchCase: false }).click()
-
+    cy.get('.dropdown input.search-input').type('other')
+    cy.get('div.exercise-cell').eq(1).click()
     cy.get('.exercise-type-selector').click()
     cy.get('.exercise-type-selector #react-select-3-option-0').click()
     cy.get('.path-item input').type(5)

@@ -24,7 +24,7 @@ const SettingsButton = ({
   }
 
   return (
-    <div className='settings-button' onClick={handleClick}>
+    <button className='settings-button' onClick={handleClick}>
       {icon && icon}
       <div className={icon ? 'setting-title active-icon' : 'setting-title'}>
         {title}
@@ -43,7 +43,7 @@ const SettingsButton = ({
         />
       )}
       {link && <AiOutlineRight className='right-icon icon' />}
-    </div>
+    </button>
   )
 }
 

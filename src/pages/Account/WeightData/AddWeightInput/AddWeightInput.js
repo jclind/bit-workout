@@ -23,6 +23,7 @@ const AddWeightInput = ({
             onChange={handleWeightChange}
             placeholder={latestWeightEntry}
           />
+          <div className="after">lbs</div>
         </label>
         <label className='date'>
           <div className='text'>Date</div>
