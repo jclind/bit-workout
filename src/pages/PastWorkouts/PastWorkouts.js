@@ -211,7 +211,9 @@ const PastWorkouts = ({ queryPastWorkoutData, getSingleExercise }) => {
           />
         </div>
       )}
-      <div className='past-workouts-container'>
+      <div
+        className={`past-workouts-container${isDataLoading ? ' loading' : ''}`}
+      >
         {isDataLoading ? (
           <>
             <PastWorkoutsItem key={1} workout={null} loading={true} />

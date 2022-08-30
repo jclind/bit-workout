@@ -24,6 +24,40 @@ describe('Workout Tests', () => {
 
     // Past Workouts Page
     cy.get('div.settings-title').should('have.text', 'Past Workouts')
-    cy.get('.past-workouts-item').eq(0).click()
+    cy.get("[class='past-workouts-container loading']").should('not.exist')
+    cy.get('.past-workouts-item')
+      .eq(0)
+      .within(el => {
+        cy.get(el).click()
+        cy.get('.start-finish-time').contains('Timespan', { matchCase: false })
+        cy.get('.coins').contains('Coins Earned', { matchCase: false })
+        cy.get('.exp').contains('Experience Earned', { matchCase: false })
+        cy.get('.workout-path-exercise')
+          .eq(0)
+          .within(el => {
+            cy.get(el).click()
+            cy.get('div.set-num').eq(0).contains('SET 1:', { matchCase: false })
+          })
+      })
+
+    Cypress.Commands.add('selectPastWorkoutSortingOption', name => {
+      cy.get('.sort-options .select').click()
+      cy.get('.sort-options .select')
+        .contains(name, { matchCase: false })
+        .click()
+      cy.get("[class='past-workouts-container loading']").should('not.exist')
+      cy.get('.past-workouts-item').eq(0).should('exist')
+    })
+    cy.selectPastWorkoutSortingOption('oldest')
+    cy.selectPastWorkoutSortingOption('longest')
+    cy.selectPastWorkoutSortingOption('shortest')
+
+    // Account page
+    cy.visit('/account')
+    cy.get('div.user-name').contains('Jesse Lind', { matchCase: false })
+    cy.get('.info-tile')
+      .eq(0)
+      .should('contain', 'height')
+      .and('contain', '5\' 11"')
   })
 })

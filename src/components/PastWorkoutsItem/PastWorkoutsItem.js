@@ -105,7 +105,7 @@ const PastWorkoutsItem = ({ workout, getSingleExercise, loading }) => {
   const exp = workout && workout.expEarned
 
   return (
-    <div className='past-workouts-item'>
+    <div className={`past-workouts-item`}>
       <div
         className='head'
         aria-label='Workout Collapse Toggle'
