@@ -82,8 +82,9 @@ describe('Workout Tests', () => {
     // // Check that the account info tile contains the newly inputted weight
     // cy.get('.info-tile').eq(1).contains(randomWeight)
 
-    // cy.get('button.settings-btn').click()
+    cy.get('button.settings-btn').click()
 
     // Settings Page
+    // Manage Account
   })
 })
