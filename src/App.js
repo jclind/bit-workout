@@ -10,9 +10,8 @@ import Account from './pages/Account/Account'
 import Workout from './pages/Workout/Workout'
 import Signup from './pages/Auth/Signup/Signup'
 import Dashboard from './components/Dashboard'
-import Login from './pages/Auth/Login/Login'
 import PrivateRoute from './components/PrivateRoute'
-import ForgotPasswordContainer from './components/AuthForms/ForgotPassword/ForgotPasswordContainer'
+import ForgotPasswordContainer from './pages/Auth/ForgotPassword/ForgotPasswordContainer'
 import Settings from './pages/Settings/Settings'
 import ManageAccount from './pages/Settings/ManageAccount'
 import UpdateName from './pages/Settings/UpdateName'
@@ -45,6 +44,7 @@ import UserWorkouts from './components/Workout/WorkoutSelection/UserWorkouts'
 import LikedWorkouts from './components/Workout/WorkoutSelection/LikedWorkouts'
 import WorkoutSettings from './pages/Settings/Workout/WorkoutSettings'
 import ReleaseNotes from './pages/Settings/ReleaseNotes/ReleaseNotes'
+import LoginContainer from './pages/Auth/Login/LoginContainer'
 
 const ScrollToTop = () => {
   const { pathname } = useLocation()
@@ -190,7 +190,7 @@ function App() {
               <Route path='email-signup' element={<EmailSignup />} />
             </Route>
             <Route path='/auth' element={<AuthLandingPage />} />
-            <Route path='/login' element={<Login />} />
+            <Route path='/login' element={<LoginContainer />} />
             <Route
               path='/forgot-password'
               element={<ForgotPasswordContainer />}

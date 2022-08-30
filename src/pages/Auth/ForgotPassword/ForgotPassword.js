@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import FormInput from '../../FormInput/FormInput'
+import FormInput from '../../../components/FormInput/FormInput'
 import { BsArrowLeft } from 'react-icons/bs'
 import { AiOutlineCheck, AiOutlineWarning } from 'react-icons/ai'
 import { TailSpin } from 'react-loader-spinner'

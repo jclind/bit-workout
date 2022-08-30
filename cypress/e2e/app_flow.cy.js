@@ -1,12 +1,9 @@
 describe('Workout Tests', () => {
-  before(() => {
+  it('Create Workout Test', () => {
     cy.callFirestore('update', `workoutData/${Cypress.env('TEST_UID')}`, {
       isWorkoutRunning: false,
       runningWorkout: {},
     })
-  })
-
-  it('Create Workout Test', () => {
     cy.login()
     cy.visit('/')
 

@@ -1,12 +1,9 @@
 describe('Workout Tests', () => {
-  before(() => {
+  it('Follow Drop Set 1 Exercise Workout', () => {
     cy.callFirestore('update', `workoutData/${Cypress.env('TEST_UID')}`, {
       isWorkoutRunning: false,
       runningWorkout: {},
     })
-  })
-
-  it('Follow Drop Set 1 Exercise Workout', () => {
     cy.login()
     cy.visit('/workout')
     cy.get('button.selection-btn').contains('Created').click()
