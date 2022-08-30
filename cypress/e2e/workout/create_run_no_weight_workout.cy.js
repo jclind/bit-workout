@@ -45,9 +45,18 @@ describe('Workout Tests', () => {
     cy.get('button.next-btn').trigger('click')
 
     // Active Workout
-    cy.get('button.exercise-weight').contains('no weights', {
+    cy.get('div.exercise-weight').contains('no weights', {
       matchCase: false,
     })
-    cy.get()
+    cy.validateWorkoutPath(1)
+
+    cy.completeSet(true)
+    cy.completeSet(true)
+    cy.completeSet(true)
+    cy.completeSet(true)
+    cy.completeSet()
+
+    cy.get('.workout-complete.page').should('be.visible')
+    cy.get('button.back-home-btn').click()
   })
 })
