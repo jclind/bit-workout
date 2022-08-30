@@ -121,5 +121,9 @@ describe('Workout Tests', () => {
     cy.get('.text').contains('Title', { matchCase: false })
     cy.get('.text').contains('Description', { matchCase: false })
     cy.clickBackButton()
+
+    // Logout
+    cy.clickSettingsButton('Logout')
+    cy.get('button.signup').contains('GET STARTED', { matchCase: false })
   })
 })
