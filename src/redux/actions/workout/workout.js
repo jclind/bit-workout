@@ -421,7 +421,9 @@ export const stopWorkout = () => async (dispatch, getState) => {
   const runningWorkout = workoutData.runningWorkout
   const currWorkout = runningWorkout.currWorkout
   const workoutStartTime = runningWorkout.workoutStartTime
-  const totalWorkoutTime = new Date() - workoutStartTime
+  const timeLastUpdated = runningWorkout.timeLastUpdated
+  console.log(new Date().getTime(), timeLastUpdated)
+  const totalWorkoutTime = timeLastUpdated - workoutStartTime
   const weights = workoutData.weights
 
   const coins = runningWorkout.coins ? runningWorkout.coins : 0
