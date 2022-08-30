@@ -59,27 +59,31 @@ describe('Workout Tests', () => {
       .eq(0)
       .should('contain', 'height')
       .and('contain', '5\' 11"')
-    cy.get('.info-tile')
-      .eq(1)
-      .within(el => {
-        cy.get(el).should('contain', 'weight')
-        cy.get(el).click()
-      })
+    // cy.get('.info-tile')
+    //   .eq(1)
+    //   .within(el => {
+    //     cy.get(el).should('contain', 'weight')
+    //     cy.get(el).click()
+    //   })
 
     // Weight Chart Page
-    cy.get('button.time-span-btn').each(el => {
-      cy.get(el).click()
-      cy.get('canvas').should('exist')
-    })
-    cy.get('button.add-weight').click()
+    // cy.get('button.time-span-btn').each(el => {
+    //   cy.get(el).click()
+    //   cy.get('canvas').should('exist')
+    // })
+    // cy.get('button.add-weight').click()
 
-    const randomWeight = (Math.floor(Math.random() * (2999 - 1500)) + 1500) / 10
+    // const randomWeight = (Math.floor(Math.random() * (2999 - 1500)) + 1500) / 10
 
-    cy.get('.weight input').type(randomWeight)
-    cy.get('button.add-weight-btn').click()
-    cy.get('button.back-button').click()
+    // cy.get('.weight input').type(randomWeight)
+    // cy.get('button.add-weight-btn').click()
+    // cy.get('button.back-button').click()
 
-    // Check that the account info tile contains the newly inputted weight
-    cy.get('.info-tile').eq(1).contains(randomWeight)
+    // // Check that the account info tile contains the newly inputted weight
+    // cy.get('.info-tile').eq(1).contains(randomWeight)
+
+    // cy.get('button.settings-btn').click()
+
+    // Settings Page
   })
 })
