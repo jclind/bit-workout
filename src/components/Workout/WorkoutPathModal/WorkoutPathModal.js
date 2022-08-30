@@ -50,24 +50,26 @@ const WorkoutPathModal = ({
 
               const numSets = sets.length
 
-              let currExerciseWeight
-              if (setType === 'straight') {
-                let weightObj = weights.find(
-                  weight => weight.exerciseID === ex.exerciseID
-                )
-                currExerciseWeight = weightObj.weight || 45
-              } else if (setType === 'drop' || setType === 'timed') {
-                const maxWeight = Math.max.apply(
-                  Math,
-                  sets.map(o => Number(o.weight))
-                )
-                const minWeight = Math.min.apply(
-                  Math,
-                  sets.map(o => Number(o.weight))
-                )
+              let currExerciseWeight = null
+              if (currExercise.weights) {
+                if (setType === 'straight') {
+                  let weightObj = weights.find(
+                    weight => weight.exerciseID === ex.exerciseID
+                  )
+                  currExerciseWeight = weightObj.weight || 45
+                } else if (setType === 'drop' || setType === 'timed') {
+                  const maxWeight = Math.max.apply(
+                    Math,
+                    sets.map(o => Number(o.weight))
+                  )
+                  const minWeight = Math.min.apply(
+                    Math,
+                    sets.map(o => Number(o.weight))
+                  )
 
-                currExerciseWeight =
-                  maxWeight + (minWeight < maxWeight && `-${minWeight}`)
+                  currExerciseWeight =
+                    maxWeight + (minWeight < maxWeight && `-${minWeight}`)
+                }
               }
 
               const exerciseState =

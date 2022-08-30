@@ -43,5 +43,11 @@ describe('Workout Tests', () => {
     // Workout Type Page
     cy.get('button.temp').click()
     cy.get('button.next-btn').trigger('click')
+
+    // Active Workout
+    cy.get('button.exercise-weight').contains('no weights', {
+      matchCase: false,
+    })
+    cy.get()
   })
 })
