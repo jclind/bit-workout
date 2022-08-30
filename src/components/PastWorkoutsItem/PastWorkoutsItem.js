@@ -22,7 +22,7 @@ const ExerciseItem = ({ currActiveWorkoutExercise, getSingleExercise }) => {
 
   const exerciseID = currActiveWorkoutExercise.exerciseID
   const currExercise = getSingleExercise(exerciseID)
-  const { name, imageURL } = currExercise
+  const { name, imageURL, weights: isWeighted } = currExercise
 
   return (
     <div className='workout-path-exercise'>
@@ -73,10 +73,12 @@ const ExerciseItem = ({ currActiveWorkoutExercise, getSingleExercise }) => {
                     )}
                   </div>
                 )}
-                <div className='weight'>
-                  <label>Weight:</label>
-                  {weight}
-                </div>
+                {isWeighted && (
+                  <div className='weight'>
+                    <label>Weight:</label>
+                    {weight}
+                  </div>
+                )}
               </div>
             )
           })}
