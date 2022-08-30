@@ -23,7 +23,7 @@ describe('Workout Tests', () => {
     })
 
     // Past Workouts Page
-    // cy.get('div.settings-title').should('have.text', 'Past Workouts')
-    // cy.get('past-workouts-item')
+    cy.get('div.settings-title').should('have.text', 'Past Workouts')
+    cy.get('.past-workouts-item').eq(0).click()
   })
 })
