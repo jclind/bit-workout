@@ -58,31 +58,33 @@ const AddExerciseToWorkoutModal = ({ onClose, addExerciseToWorkout }) => {
     <>
       <div className='add-exercise-to-workout-modal overlay'>
         <div className='modal-content' ref={modalContent}>
-          <div className='settings-title'>Add Workout</div>
-          {showErrors && error && <div className='error'>{error}</div>}
-          <div className='exercise-item-container'>
-            <ExerciseSelectorDropdown
-              selectedExerciseID={selectedExercise.exerciseID}
-              setSelectedExerciseID={exerciseID =>
-                updateSelectedExercise('exerciseID', exerciseID)
-              }
-            />
-            <ExercisePath
-              sets={selectedExercise.sets}
-              setSets={sets => updateSelectedExercise('sets', sets)}
-              type={selectedExercise.type}
-              setSelectedType={type => updateSelectedExercise('type', type)}
-              setError={setError}
-              selectedExerciseID={selectedExercise.exerciseID}
-            />
-          </div>
-          <div className='actions'>
-            <button className='cancel-btn' onClick={onClose}>
-              Cancel
-            </button>
-            <button className='confirm-btn' onClick={handleAddExercise}>
-              Add Exercise
-            </button>
+          <div className='container'>
+            <div className='settings-title'>Add Workout</div>
+            {showErrors && error && <div className='error'>{error}</div>}
+            <div className='exercise-item-container'>
+              <ExerciseSelectorDropdown
+                selectedExerciseID={selectedExercise.exerciseID}
+                setSelectedExerciseID={exerciseID =>
+                  updateSelectedExercise('exerciseID', exerciseID)
+                }
+              />
+              <ExercisePath
+                sets={selectedExercise.sets}
+                setSets={sets => updateSelectedExercise('sets', sets)}
+                type={selectedExercise.type}
+                setSelectedType={type => updateSelectedExercise('type', type)}
+                setError={setError}
+                selectedExerciseID={selectedExercise.exerciseID}
+              />
+            </div>
+            <div className='actions'>
+              <button className='cancel-btn' onClick={onClose}>
+                Cancel
+              </button>
+              <button className='confirm-btn' onClick={handleAddExercise}>
+                Add Exercise
+              </button>
+            </div>
           </div>
         </div>
       </div>

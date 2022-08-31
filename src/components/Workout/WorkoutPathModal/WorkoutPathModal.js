@@ -56,7 +56,8 @@ const WorkoutPathModal = ({
                   let weightObj = weights.find(
                     weight => weight.exerciseID === ex.exerciseID
                   )
-                  currExerciseWeight = weightObj.weight || 45
+                  currExerciseWeight =
+                    weightObj && weightObj.weight ? weightObj.weight : 45
                 } else if (setType === 'drop' || setType === 'timed') {
                   const maxWeight = Math.max.apply(
                     Math,
