@@ -119,10 +119,14 @@
     }
 
     .submit-btn {
-      height: 50px;
+      height: 55px;
       width: fit-content;
-      padding: 0 2.5rem;
+      padding: 0 3rem;
       margin: 0 auto;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: $border-radius;
     }
     .submit-btn.grayed {
       background: $gray-background;
@@ -131,10 +135,13 @@
       background: none;
       width: fit-content;
       height: fit-content;
-      margin: 0.5rem auto;
+      margin: 1rem auto 0.5rem;
       padding: 0.25rem 0.5rem;
       color: $error-red;
       font-weight: 500;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 0.9rem;
     }
   }
 }
