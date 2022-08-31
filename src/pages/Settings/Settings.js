@@ -102,7 +102,7 @@ const Settings = ({ logout, isWorkoutRunning }) => {
   )
 }
 const mapStateToProps = state => {
-  const isWorkoutRunning = state.workout?.workoutData?.runningWorkout
+  const isWorkoutRunning = state.workout?.workoutData?.isWorkoutRunning
   return {
     isWorkoutRunning,
   }
