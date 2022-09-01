@@ -6,19 +6,37 @@
     max-width: 90%;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
+    .settings-title {
+      margin-bottom: 1.5rem;
+    }
+    .form-error {
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 0.8rem;
+      .icon {
+        height: 20px;
+        width: 20px;
+        flex-shrink: 0;
+      }
+    }
     .path {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
       width: 100%;
 
       .workout-path-exercise {
         position: relative;
-        display: flex;
-        background: $secondary-background-card;
-        padding: 0.5rem 1rem;
         border-radius: $border-radius;
-        box-sizing: border-box;
+
+        top: auto !important;
+        left: auto !important;
+        margin: 1rem 0 0 0;
+        .container {
+          display: flex;
+          padding: 0.5rem 1rem;
+          border-radius: $border-radius;
+          background: $secondary-background-card;
+          box-sizing: border-box;
+        }
+
         .image {
           display: flex;
           align-items: center;
@@ -87,18 +105,80 @@
         margin-right: 1rem;
       }
       .workout-path-exercise.COMPLETED {
-        background: $primary-background;
-        color: $secondary;
-
-        .reps,
-        .sets,
-        .reps span,
-        .sets span {
+        .container {
+          background: $primary-background;
           color: $secondary;
+
+          .reps,
+          .sets,
+          .reps span,
+          .sets span {
+            color: $secondary;
+          }
         }
       }
       .workout-path-exercise.ACTIVE {
-        background: $secondary;
+        .container {
+          background: $secondary;
+        }
+      }
+
+      .jiggle {
+        animation: jiggle 0.3s infinite;
+        -webkit-animation: jiggle 0.3s infinite;
+        -moz-animation-duration: 0.3s;
+        -moz-animation-name: jiggle;
+        -moz-animation-iteration-count: infinite;
+        -webkit-transform: rotate(-0.5deg);
+        -moz-transform: rotate(-0.5deg);
+
+        // &:nth-child(1) {
+        //   animation-delay: 2.25s;
+        // }
+        // &:nth-child(2) {
+        //   animation-delay: 0s;
+        // }
+      }
+      .workout-path-exercise:nth-child(2n) {
+        .jiggle {
+          animation-delay: 0.25s;
+        }
+      }
+      .workout-path-exercise:nth-child(2n + 1) {
+        .jiggle {
+          animation-delay: 0s;
+        }
+      }
+      .workout-path-exercise:nth-child(3n) {
+        .jiggle {
+          animation-delay: 0.1s;
+        }
+      }
+
+      @keyframes jiggle {
+        0% {
+          transform: rotate(-0.15deg);
+        }
+        50% {
+          transform: rotate(0.15deg);
+        }
+      }
+      @-moz-keyframes jiggle {
+        0% {
+          // -moz-transform: rotate(-1deg);
+        }
+        50% {
+          // -moz-transform: rotate(1deg);
+        }
+      }
+
+      @-webkit-keyframes jiggle {
+        0% {
+          // -webkit-transform: rotate(-1deg);
+        }
+        50% {
+          // -webkit-transform: rotate(1deg);
+        }
       }
     }
 

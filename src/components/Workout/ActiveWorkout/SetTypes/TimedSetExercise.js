@@ -20,7 +20,7 @@ const TimedSetExercise = ({
   const sets = currActiveWorkoutExercise.sets
   const currSet = sets[currSetIdx - 1]
   const numSets = sets.length
-  const currSetWeight = currSet.weight
+  const currSetWeight = currSet?.weight
 
   const exerciseIsWeighted = currExercise.weights
 
@@ -28,8 +28,8 @@ const TimedSetExercise = ({
 
   const plateWeights = calculatePlates(45, currSetWeight)
 
-  const time = currSet.time
-  const timeMS = timeToMS(time.minutes, time.seconds)
+  const time = currSet?.time
+  const timeMS = timeToMS(time?.minutes, time?.seconds)
 
   const [isCountDown, setIsCountDown] = useState(false)
   const [timerVal, setTimerVal] = useState(formatTime(timeMS))
