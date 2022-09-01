@@ -22,6 +22,8 @@ const WorkoutPathModal = ({
   ] = useState(false)
   const [removedExerciseIdx, setRemovedExerciseIdx] = useState(null)
 
+  const [isEditing, setIsEditing] = useState(false)
+
   const handleRemoveExercise = idx => {
     setRemovedExerciseIdx(idx)
     setIsConfirmRemoveExerciseModalOpen(true)
@@ -90,7 +92,9 @@ const WorkoutPathModal = ({
               return (
                 <div
                   key={`${ex.exerciseID}-${idx}`}
-                  className={`workout-path-exercise ${exerciseState}`}
+                  className={`workout-path-exercise ${exerciseState}${
+                    isEditing && ' editing'
+                  }`}
                 >
                   <div className='image'>
                     <img src={imageURL} alt={name} />
@@ -110,18 +114,24 @@ const WorkoutPathModal = ({
                   {currExerciseWeight && (
                     <div className='weight'>{currExerciseWeight}lbs</div>
                   )}
-                  {workout.path.length > 1 && (
+                  {workout.path.length > 1 && isEditing ? (
                     <button
                       className='remove-exercise-btn'
                       onClick={() => handleRemoveExercise(idx)}
                     >
                       <AiOutlineClose className='icon' />
                     </button>
-                  )}
+                  ) : null}
                 </div>
               )
             })}
           </div>
+          <button
+            className='editing-btn'
+            onClick={() => setIsEditing(prev => !prev)}
+          >
+            {isEditing ? 'Edit' : 'Done'}
+          </button>
           <button
             className='add-exercise'
             onClick={() => setIsExerciseToWorkoutModalOpen(true)}

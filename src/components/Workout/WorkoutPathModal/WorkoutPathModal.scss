@@ -17,7 +17,6 @@
         display: flex;
         background: $secondary-background-card;
         padding: 0.5rem 1rem;
-        margin-right: 1rem;
         border-radius: $border-radius;
         box-sizing: border-box;
         .image {
@@ -84,6 +83,9 @@
           }
         }
       }
+      .workout-path-exercise.editing {
+        margin-right: 1rem;
+      }
       .workout-path-exercise.COMPLETED {
         background: $primary-background;
         color: $secondary;
@@ -97,6 +99,20 @@
       }
       .workout-path-exercise.ACTIVE {
         background: $secondary;
+      }
+    }
+
+    button.editing-btn {
+      background: none;
+      height: fit-content;
+      width: 5ch;
+      font-size: 0.9rem;
+      color: $secondary-text;
+      margin-top: 0.25rem;
+      padding: 0.25rem;
+
+      &:hover {
+        color: $primary;
       }
     }
 
