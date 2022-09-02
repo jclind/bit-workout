@@ -79,7 +79,10 @@ const WorkoutPathModal = ({
     if (isEqual) return
 
     setCurrWorkoutPath(updatedPath)
-    updateWorkout({ 'runningWorkout.currWorkout.path': updatedPath })
+    updateWorkout({
+      'runningWorkout.currWorkout.path': updatedPath,
+      'runningWorkout.remainingWorkout.currSet': 1,
+    })
   }
   return ReactDom.createPortal(
     <>
