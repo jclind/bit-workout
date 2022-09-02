@@ -12,6 +12,12 @@
     }
     .actions {
       margin-top: 1rem;
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 10ch;
+      }
     }
   }
 }
