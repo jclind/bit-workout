@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDom from 'react-dom'
 import { connect } from 'react-redux'
 import { removeExerciseFromWorkout } from '../../../../redux/actions/workout/workout'
 import useClickOutside from '../../../../util/useClickOutside'
+import { TailSpin } from 'react-loader-spinner'
 import './ConfirmRemoveExerciseModal.scss'
 
 const ConfirmRemoveExerciseModal = ({
   onClose,
   removedExerciseIdx,
-  removeExerciseFromWorkout,
+  removeExercise,
 }) => {
+  const [loading, setLoading] = useState(false)
+
   if (removedExerciseIdx === null) {
     // !ERROR
     onClose()
@@ -19,7 +22,9 @@ const ConfirmRemoveExerciseModal = ({
   })
 
   const handleRemoveExercise = () => {
-    removeExerciseFromWorkout(removedExerciseIdx).then(() => {
+    setLoading(true)
+    removeExercise(removedExerciseIdx).then(() => {
+      setLoading(false)
       onClose()
     })
   }
@@ -34,11 +39,25 @@ const ConfirmRemoveExerciseModal = ({
             workout?
           </p>
           <div className='actions'>
-            <button className='cancel-btn' onClick={onClose}>
+            <button className='cancel-btn' onClick={onClose} disabled={loading}>
               Cancel
             </button>
-            <button className='confirm-btn' onClick={handleRemoveExercise}>
-              Remove
+            <button
+              className='confirm-btn'
+              onClick={handleRemoveExercise}
+              disabled={loading}
+            >
+              {loading ? (
+                <TailSpin
+                  height='30'
+                  width='30'
+                  color='white'
+                  arialLabel='loading'
+                  className='spinner'
+                />
+              ) : (
+                'Remove'
+              )}
             </button>
           </div>
         </div>
