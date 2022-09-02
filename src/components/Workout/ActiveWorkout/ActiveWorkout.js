@@ -23,9 +23,9 @@ const ActiveWorkout = ({
   const [isStopModalOpen, setIsStopModalOpen] = useState(false)
 
   const currActiveWorkoutExercise = currWorkout.path[currExerciseIdx]
-  const exerciseType = currActiveWorkoutExercise.type
+  const exerciseType = currActiveWorkoutExercise?.type
 
-  const exerciseID = currActiveWorkoutExercise.exerciseID
+  const exerciseID = currActiveWorkoutExercise?.exerciseID
   const currExercise = getSingleExercise(exerciseID)
   const exerciseName = currExercise.name
 

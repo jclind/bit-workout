@@ -9,7 +9,12 @@ const ConfirmRemoveExerciseModal = ({
   onClose,
   removedExerciseIdx,
   removeExerciseFromWorkout,
+  currWorkoutPath,
+  setCurrWorkoutPath,
+  removeExercise,
 }) => {
+  // const []
+
   if (removedExerciseIdx === null) {
     // !ERROR
     onClose()
@@ -19,9 +24,15 @@ const ConfirmRemoveExerciseModal = ({
   })
 
   const handleRemoveExercise = () => {
-    removeExerciseFromWorkout(removedExerciseIdx).then(() => {
+    removeExercise(removedExerciseIdx).then(() => {
       onClose()
     })
+
+    // removeExerciseFromWorkout(removedExerciseIdx).then(updatedPath => {
+    //   console.log(updatedPath)
+    //   setCurrWorkoutPath(updatedPath)
+    //   onClose()
+    // })
   }
 
   return ReactDom.createPortal(

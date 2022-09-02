@@ -36,9 +36,30 @@ const WorkoutPathModal = ({
 
   const [isEditing, setIsEditing] = useState(false)
 
-  const handleRemoveExercise = idx => {
+  const handleConfirmRemoveExercise = idx => {
     setRemovedExerciseIdx(idx)
     setIsConfirmRemoveExerciseModalOpen(true)
+  }
+  const removeExercise = async idx => {
+    const updatedPath = Array.from(currWorkoutPath)
+    updatedPath.splice(idx, 1)
+
+    let updatedSetIdx = currSetIdx
+    let updatedExerciseIdx = currExerciseIdx
+    // If exercise is already completed decrement currExerciseIdx
+    if (currExerciseIdx < idx) {
+      updatedExerciseIdx--
+    }
+    if (currExerciseIdx === idx) {
+      updatedSetIdx = 1
+    }
+
+    setCurrWorkoutPath(updatedPath)
+    await updateWorkout({
+      'runningWorkout.currWorkout.path': updatedPath,
+      'runningWorkout.remainingWorkout.currSet': updatedSetIdx,
+      'runningWorkout.remainingWorkout.currIdx': updatedExerciseIdx,
+    })
   }
 
   const modalContent = useClickOutside(() => {
@@ -47,8 +68,8 @@ const WorkoutPathModal = ({
     }
   })
 
-  const reorder = (list, startIndex, endIndex) => {
-    const result = Array.from(list)
+  const reorder = (path, startIndex, endIndex) => {
+    const result = Array.from(path)
     const [removed] = result.splice(startIndex, 1)
     result.splice(endIndex, 0, removed)
 
@@ -202,7 +223,7 @@ const WorkoutPathModal = ({
                             {workout.path.length > 1 && isEditing ? (
                               <button
                                 className='remove-exercise-btn'
-                                onClick={() => handleRemoveExercise(idx)}
+                                onClick={() => handleConfirmRemoveExercise(idx)}
                               >
                                 <AiOutlineClose className='icon' />
                               </button>
@@ -245,6 +266,9 @@ const WorkoutPathModal = ({
           }}
           removedExerciseIdx={removedExerciseIdx}
           workout={workout}
+          setCurrWorkoutPath={setCurrWorkoutPath}
+          currWorkoutPath={currWorkoutPath}
+          removeExercise={removeExercise}
         />
       ) : null}
     </>,

@@ -141,6 +141,7 @@ export const removeExerciseFromWorkout =
       'runningWorkout.currWorkout.path': updatedWorkoutPath,
     }
     await dispatch(updateWorkout(updatedWorkoutData))
+    return updatedWorkoutPath
   }
 
 const incCurrWorkoutStats = (

@@ -165,23 +165,22 @@
       }
       @-moz-keyframes jiggle {
         0% {
-          // -moz-transform: rotate(-1deg);
+          -moz-transform: rotate(-0.15deg);
         }
         50% {
-          // -moz-transform: rotate(1deg);
+          -moz-transform: rotate(0.15deg);
         }
       }
 
       @-webkit-keyframes jiggle {
         0% {
-          // -webkit-transform: rotate(-1deg);
+          -webkit-transform: rotate(-0.15deg);
         }
         50% {
-          // -webkit-transform: rotate(1deg);
+          -webkit-transform: rotate(0.15deg);
         }
       }
     }
-
     button.editing-btn {
       background: none;
       height: fit-content;
