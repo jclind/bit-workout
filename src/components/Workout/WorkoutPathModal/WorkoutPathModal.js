@@ -48,11 +48,9 @@ const WorkoutPathModal = ({
     let updatedExerciseIdx = currExerciseIdx
     // If exercise is already completed decrement currExerciseIdx
     if (currExerciseIdx > idx) {
-      console.log('here', currExerciseIdx, idx)
       updatedExerciseIdx--
     }
     if (currExerciseIdx === idx) {
-      console.log('here 2', currExerciseIdx, idx)
       updatedSetIdx = 1
     }
 

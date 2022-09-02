@@ -1,4 +1,4 @@
-export const current_version_number = 'v0.4.4-alpha'
+export const current_version_number = 'v0.4.5-alpha'
 
 export const releaseNotes = [
   {
@@ -42,5 +42,15 @@ export const releaseNotes = [
       "Exercises can now be added and removed in the current workout through the 'workout path' modal.",
     ],
     fixes: ['Multiple minor fixes'],
+  },
+  {
+    version: 'v0.4.5-alpha',
+    date: 'September 2, 2022',
+    title: '',
+    description: '',
+    features: [
+      'Workout path can now be further edited while workout is running through the workout path modal.',
+    ],
+    fixes: ['Multiple bug fixes'],
   },
 ]
