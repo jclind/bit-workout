@@ -8,7 +8,12 @@ import './AddExerciseToWorkoutModal.scss'
 import ExerciseSelectorDropdown from '../../CreateWorkout/ExerciseSelectorDropdown/ExerciseSelectorDropdown'
 import ExercisePath from '../../CreateWorkout/ExercisePath/ExercisePath'
 
-const AddExerciseToWorkoutModal = ({ onClose, addExerciseToWorkout }) => {
+const AddExerciseToWorkoutModal = ({
+  onClose,
+  addExerciseToWorkout,
+  currWorkoutPath,
+  setCurrWorkoutPath,
+}) => {
   const [selectedExercise, setSelectedExercise] = useState({
     exerciseID: null,
     description: '',
@@ -48,7 +53,8 @@ const AddExerciseToWorkoutModal = ({ onClose, addExerciseToWorkout }) => {
     if (isError) {
       setShowErrors(true)
     } else {
-      addExerciseToWorkout(selectedExercise).then(() => {
+      addExerciseToWorkout(selectedExercise).then(updatedPath => {
+        setCurrWorkoutPath(updatedPath)
         onClose()
       })
     }

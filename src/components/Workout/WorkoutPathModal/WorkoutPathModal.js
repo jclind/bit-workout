@@ -47,10 +47,12 @@ const WorkoutPathModal = ({
     let updatedSetIdx = currSetIdx
     let updatedExerciseIdx = currExerciseIdx
     // If exercise is already completed decrement currExerciseIdx
-    if (currExerciseIdx < idx) {
+    if (currExerciseIdx > idx) {
+      console.log('here', currExerciseIdx, idx)
       updatedExerciseIdx--
     }
     if (currExerciseIdx === idx) {
+      console.log('here 2', currExerciseIdx, idx)
       updatedSetIdx = 1
     }
 
@@ -171,7 +173,6 @@ const WorkoutPathModal = ({
                     if (exerciseState === 'COMPLETED') completedSets = numSets
                     if (exerciseState === 'ACTIVE')
                       completedSets = currSetIdx - 1
-
                     return (
                       <Draggable
                         key={idx}
@@ -257,6 +258,8 @@ const WorkoutPathModal = ({
           onClose={() => {
             setIsExerciseToWorkoutModalOpen(false)
           }}
+          setCurrWorkoutPath={setCurrWorkoutPath}
+          currWorkoutPath={currWorkoutPath}
         />
       ) : null}
       {isConfirmRemoveExerciseModalOpen ? (
@@ -265,9 +268,6 @@ const WorkoutPathModal = ({
             setIsConfirmRemoveExerciseModalOpen(false)
           }}
           removedExerciseIdx={removedExerciseIdx}
-          workout={workout}
-          setCurrWorkoutPath={setCurrWorkoutPath}
-          currWorkoutPath={currWorkoutPath}
           removeExercise={removeExercise}
         />
       ) : null}

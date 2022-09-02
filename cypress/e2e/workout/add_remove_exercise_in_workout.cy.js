@@ -23,6 +23,7 @@ describe('Workout Tests', () => {
     cy.get('button.add-set-btn').click().click().click().click()
 
     cy.get('button.confirm-btn').click()
+    cy.get('button.editing-btn').click()
     cy.get('.workout-path-exercise')
       .eq(2)
       .within(() => {
@@ -30,6 +31,7 @@ describe('Workout Tests', () => {
       })
 
     cy.get('.confirm-remove-exercise-modal button.confirm-btn').click()
+    cy.get('.confirm-remove-exercise-modal').should('not.exist')
 
     cy.get('.workout-path-modal.overlay').click(15, 15)
 
