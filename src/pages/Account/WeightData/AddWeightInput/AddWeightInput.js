@@ -1,6 +1,7 @@
 import React from 'react'
 import { AiOutlineCheck } from 'react-icons/ai'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
+import { AiOutlineWarning } from 'react-icons/ai'
 import './AddWeightInput.scss'
 
 const AddWeightInput = ({
@@ -10,10 +11,17 @@ const AddWeightInput = ({
   handleWeightChange,
   latestWeightEntry,
   handleAddWeight,
+  error,
 }) => {
   return (
     <div className='add-weight-input page'>
       <div className='settings-title'>Add Weight</div>
+      {error && (
+        <div className='error'>
+          <AiOutlineWarning className='icon' />
+          {error}
+        </div>
+      )}
       <div className='inputs'>
         <label className='weight'>
           <div className='text'>Weight</div>
@@ -23,7 +31,7 @@ const AddWeightInput = ({
             onChange={handleWeightChange}
             placeholder={latestWeightEntry}
           />
-          <div className="after">lbs</div>
+          <div className='after'>lbs</div>
         </label>
         <label className='date'>
           <div className='text'>Date</div>
