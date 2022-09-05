@@ -4,6 +4,7 @@ import SettingsButton from '../../components/SettingsComponents/SettingsButton/S
 import BackButton from '../../components/SettingsComponents/BackButton/BackButton'
 import ConfirmLogoutModal from '../../components/SettingsComponents/ConfirmLogoutModal/ConfirmLogoutModal'
 import { connect } from 'react-redux'
+import { toast } from 'react-toastify'
 import {
   AiOutlineRight,
   AiOutlineSetting,
@@ -23,6 +24,7 @@ const Settings = ({ logout, isWorkoutRunning }) => {
   const [isConfirmLogoutModalOpen, setIsConfirmLogoutModalOpen] =
     useState(false)
   const [error, setError] = useState(false)
+  const notify = () => toast('Name Changed Successfully', { type: 'success' })
 
   async function handleLogout() {
     setError('')
@@ -87,6 +89,7 @@ const Settings = ({ logout, isWorkoutRunning }) => {
             action={handleLogout}
           />
         </section>
+        {/* <button onClick={notify}>CLICK ME</button> */}
         <BackButton />
         <Link to='/account/settings/release-notes' className='version'>
           Version {current_version_number} <AiOutlineRight />

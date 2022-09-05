@@ -3,6 +3,7 @@ import UpdateUserInputContainer from '../../components/SettingsComponents/Update
 import { useNavigate } from 'react-router'
 import { connect } from 'react-redux'
 import { updateUserAccountData } from '../../redux/actions/auth/authStatus'
+import { toast } from 'react-toastify'
 
 const UpdateName = ({ updateUserAccountData, userAccountData }) => {
   const { name } = userAccountData
@@ -16,11 +17,12 @@ const UpdateName = ({ updateUserAccountData, userAccountData }) => {
       const payload = { prop: 'name', val: userName }
       updateUserAccountData(payload)
         .then(() => {
+          toast('Name Changed Successfully', { type: 'success' })
           navigate(-1)
         })
         .catch(err => {
-          console.log(err)
-          // !ERROR
+          setUserName(name)
+          setError(err.message)
         })
     }
   }, [userName, name, updateUserAccountData, navigate])
