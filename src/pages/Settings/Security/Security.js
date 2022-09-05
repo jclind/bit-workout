@@ -15,7 +15,6 @@ const Security = ({
   setShowPassword,
   handlePasswordSubmit,
   error,
-  success,
   passMatches,
 }) => {
   return (
@@ -24,7 +23,6 @@ const Security = ({
       <section className='settings-section change-password-section'>
         <SettingsSectionTitle text={'change password'} />
         {error && <div className='error-text'>{error}</div>}
-        {success && <div className='error-text'>{success}</div>}
         <form
           action=''
           className='change-password-form'

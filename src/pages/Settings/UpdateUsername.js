@@ -7,6 +7,7 @@ import {
   checkUsernameAvailability,
   updateUserAccountData,
 } from '../../redux/actions/auth/authStatus'
+import { toast } from 'react-toastify'
 
 const UpdateUsername = ({ updateUserAccountData, userAccountData }) => {
   const { username } = userAccountData
@@ -23,10 +24,12 @@ const UpdateUsername = ({ updateUserAccountData, userAccountData }) => {
         if (checkUsernameAvailability) {
           updateUserAccountData(payload)
             .then(() => {
+              toast('Username Changed Successfully', { type: 'success' })
               navigate(-1)
             })
             .catch(err => {
-              setError(err)
+              setNewUsername(username)
+              setError(err.message)
             })
         } else {
           setError('Username taken')

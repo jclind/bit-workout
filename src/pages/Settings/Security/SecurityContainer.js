@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleUpdatePassword } from '../../../redux/actions/auth/authStatus'
 import Security from './Security'
+import { toast } from 'react-toastify'
 
 const SecurityContainer = ({ updatePassword }) => {
   const navigate = useNavigate()
 
   const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
   const [passMatches, setPassMatches] = useState(true)
 
   const [oldPass, setOldPass] = useState('')
@@ -25,7 +25,6 @@ const SecurityContainer = ({ updatePassword }) => {
   const handlePasswordSubmit = e => {
     e.preventDefault()
     setError('')
-    setSuccess('')
 
     if (newPass !== repNewPass) {
       return setError('New Passwords Must Match')
@@ -36,17 +35,13 @@ const SecurityContainer = ({ updatePassword }) => {
     updatePassword(oldPass, newPass)
       .then(() => {
         setError('')
+        toast('Password Changed Successfully', { type: 'success' })
 
-        setSuccess('Password Changed')
-        setTimeout(() => {
-          setSuccess('')
-        }, 4000)
         clearResetPasswordForm()
         navigate(-1)
       })
       .catch(err => {
         const errCode = err.code
-        setSuccess('')
 
         if (errCode === 'auth/wrong-password') {
           setError('Incorrect Password, Try Again.')
@@ -74,7 +69,6 @@ const SecurityContainer = ({ updatePassword }) => {
       setShowPassword={setShowPassword}
       handlePasswordSubmit={handlePasswordSubmit}
       error={error}
-      success={success}
       passMatches={passMatches}
     />
   )

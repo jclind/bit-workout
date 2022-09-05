@@ -20,6 +20,7 @@ const UpdateUserInputContainer = ({
 
   const handleSave = () => {
     setError('')
+    console.log(unsavedVal, val)
     if (unsavedVal === val || unsavedVal === '')
       return setError('New value cannot be empty / equal original value')
 
