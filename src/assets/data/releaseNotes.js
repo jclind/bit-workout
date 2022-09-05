@@ -1,4 +1,4 @@
-export const current_version_number = 'v0.4.5-alpha'
+export const current_version_number = 'v0.4.6-alpha'
 
 export const releaseNotes = [
   {
@@ -52,5 +52,23 @@ export const releaseNotes = [
       'Workout path can now be further edited while workout is running through the workout path modal.',
     ],
     fixes: ['Multiple bug fixes'],
+  },
+  {
+    version: 'v0.4.6-alpha',
+    date: 'September 5, 2022',
+    title: '',
+    description: '',
+    features: [
+      'Workouts will no longer be added to past workouts list if no sets have been completed before workout is stopped.',
+      'Added toast notifications for many settings forms for a better user experience.',
+    ],
+    fixes: [
+      'Multiple minor style fixes / changes.',
+      'Fix frustrating tab indexes in settings forms.',
+    ],
+    improvements: [
+      'Added loading indications to settings forms and add weight input page.',
+      'Added additional error handling / messages in settings forms.',
+    ],
   },
 ]
