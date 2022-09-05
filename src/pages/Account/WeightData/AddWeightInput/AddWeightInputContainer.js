@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { addWeight } from '../../../../redux/actions/auth/authStatus'
 import { formatYearMonthDay } from '../../../../util/formatDate'
 import AddWeightInput from './AddWeightInput'
+import { toast } from 'react-toastify'
 
 const AddWeightInputContainer = ({ addWeight, latestWeightEntry }) => {
   const navigate = useNavigate()
@@ -11,6 +12,9 @@ const AddWeightInputContainer = ({ addWeight, latestWeightEntry }) => {
 
   const [weight, setWeight] = useState('')
   const [date, setDate] = useState(formatYearMonthDay(tempDate))
+
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const handleWeightChange = e => {
     const value = e.target.value
@@ -24,6 +28,7 @@ const AddWeightInputContainer = ({ addWeight, latestWeightEntry }) => {
       return
     }
 
+    setLoading(true)
     const weightDate =
       formatYearMonthDay(new Date()) === date
         ? new Date().getTime()
@@ -32,10 +37,12 @@ const AddWeightInputContainer = ({ addWeight, latestWeightEntry }) => {
     const weightObj = { date: weightDate, weight: Number(weight) }
     let error = await addWeight(weightObj)
     if (error) {
-      console.log(error)
-      // !ERROR
+      setLoading(false)
+      return setError(error.message)
     }
+    toast('Weight Added Successfully', { type: 'success' })
     navigate(-1)
+    setLoading(false)
   }
 
   return (
@@ -46,6 +53,8 @@ const AddWeightInputContainer = ({ addWeight, latestWeightEntry }) => {
       handleWeightChange={handleWeightChange}
       latestWeightEntry={latestWeightEntry}
       handleAddWeight={handleAddWeight}
+      loading={loading}
+      error={error}
     />
   )
 }

@@ -17,7 +17,7 @@ const ExerciseItem = ({ currActiveWorkoutExercise, getSingleExercise }) => {
 
   const setPath = currActiveWorkoutExercise.setPath
   const sets = currActiveWorkoutExercise.sets
-  const numSets = setPath.length
+  const numSets = setPath?.length
   const type = currActiveWorkoutExercise.type
 
   const exerciseID = currActiveWorkoutExercise.exerciseID
@@ -56,7 +56,7 @@ const ExerciseItem = ({ currActiveWorkoutExercise, getSingleExercise }) => {
       </div>
       <div className={isCollapsed ? 'collapse' : 'collapse show'}>
         <div className='set-path-data'>
-          {setPath.map((set, idx) => {
+          {setPath?.map((set, idx) => {
             const weight = set.weight || sets[idx].weight
 
             return (

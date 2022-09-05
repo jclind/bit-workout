@@ -1,7 +1,7 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import deleteIcon from '../../../assets/images/icons/delete.svg'
 import './UpdateUserInput.scss'
+import UpdateUserInputActions from './UpdateUserInputActions'
 
 const UpdateUserInput = ({
   input,
@@ -14,11 +14,15 @@ const UpdateUserInput = ({
   handleInput,
   activeSave,
   handleSave,
+  loading,
 }) => {
-  const navigate = useNavigate()
-
   return (
     <div className='update-user-input'>
+      <UpdateUserInputActions
+        activeSave={activeSave}
+        handleSave={handleSave}
+        loading={loading}
+      />
       <div className='input-container'>
         <input
           type={input ? input : 'text'}
@@ -46,18 +50,6 @@ const UpdateUserInput = ({
       ) : (
         <br />
       )}
-      <div className='action-buttons'>
-        <button className='cancel' type='button' onClick={() => navigate(-1)}>
-          cancel
-        </button>
-        <button
-          className={activeSave ? 'save active' : 'save'}
-          onClick={handleSave}
-          type='submit'
-        >
-          save
-        </button>
-      </div>
     </div>
   )
 }

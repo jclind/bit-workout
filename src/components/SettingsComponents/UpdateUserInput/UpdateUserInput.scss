@@ -62,7 +62,10 @@
       color: $secondary-text;
     }
     .save {
+      display: flex;
+      justify-content: center;
       color: $secondary-background;
+      width: 4ch;
     }
     .save.active {
       color: $secondary;

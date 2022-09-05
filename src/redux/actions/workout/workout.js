@@ -430,7 +430,8 @@ export const stopWorkout = () => async (dispatch, getState) => {
   const coins = runningWorkout.coins ? runningWorkout.coins : 0
   const exp = runningWorkout.exp ? runningWorkout.exp : 0
 
-  const currIdx = runningWorkout.remainingWorkout.currIdx
+  const remainingWorkout = runningWorkout.remainingWorkout
+  const { currIdx, currSet } = remainingWorkout
 
   const path = [...currWorkout.path.slice(0, currIdx + 1)]
   // Get path data with weights included for pastWorkoutData stats
@@ -458,10 +459,14 @@ export const stopWorkout = () => async (dispatch, getState) => {
   }
 
   await dispatch(updateWorkout({ isWorkoutRunning: false }))
-  dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
 
-  dispatch(setWorkoutFinished(true))
-  dispatch(addWorkoutToPastWorkouts(finishedWorkoutData))
+  // If the no sets have been completed in the workout, don't add it to past workout list
+  const setsHaveBeenCompleted = currIdx > 0 || currSet > 1
+  if (setsHaveBeenCompleted) {
+    dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
+    dispatch(setWorkoutFinished(true))
+    dispatch(addWorkoutToPastWorkouts(finishedWorkoutData))
+  }
 }
 
 // PAST WORKOUT DATA
