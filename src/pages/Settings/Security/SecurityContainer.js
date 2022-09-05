@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 const SecurityContainer = ({ updatePassword }) => {
   const navigate = useNavigate()
 
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [passMatches, setPassMatches] = useState(true)
 
@@ -32,8 +33,10 @@ const SecurityContainer = ({ updatePassword }) => {
       return setError('New Password Must Be Different Than Old.')
     }
 
+    setLoading(true)
     updatePassword(oldPass, newPass)
       .then(() => {
+        setLoading(false)
         setError('')
         toast('Password Changed Successfully', { type: 'success' })
 
@@ -41,6 +44,7 @@ const SecurityContainer = ({ updatePassword }) => {
         navigate(-1)
       })
       .catch(err => {
+        setLoading(false)
         const errCode = err.code
 
         if (errCode === 'auth/wrong-password') {
@@ -68,8 +72,9 @@ const SecurityContainer = ({ updatePassword }) => {
       showPassword={showPassword}
       setShowPassword={setShowPassword}
       handlePasswordSubmit={handlePasswordSubmit}
-      error={error}
       passMatches={passMatches}
+      loading={loading}
+      error={error}
     />
   )
 }

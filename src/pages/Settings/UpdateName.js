@@ -10,17 +10,21 @@ const UpdateName = ({ updateUserAccountData, userAccountData }) => {
   const navigate = useNavigate()
 
   const [userName, setUserName] = useState(name)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
     if (userName !== '' && userName !== name) {
+      setLoading(true)
       const payload = { prop: 'name', val: userName }
       updateUserAccountData(payload)
         .then(() => {
+          setLoading(false)
           toast('Name Changed Successfully', { type: 'success' })
           navigate(-1)
         })
         .catch(err => {
+          setLoading(false)
           setUserName(name)
           setError(err.message)
         })
@@ -36,6 +40,7 @@ const UpdateName = ({ updateUserAccountData, userAccountData }) => {
         val={userName}
         setVal={setUserName}
         maxCharacters={30}
+        loading={loading}
         setError={setError}
       />
     </div>

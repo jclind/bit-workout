@@ -11,23 +11,28 @@ const UpdateEmail = ({ updateEmail, userAuth }) => {
   const { email } = userAuth
   const [newEmail, setNewEmail] = useState(email)
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (newEmail && !password) return setError('Please Enter Password')
-    console.log(newEmail, email)
     if (newEmail !== '' && newEmail !== email && password) {
+      setLoading(true)
       updateEmail(newEmail, password)
         .then(() => {
+          setLoading(false)
           toast('Email Changed Successfully', { type: 'success' })
           navigate(-1)
         })
         .catch(err => {
+          setLoading(false)
           setNewEmail(email)
-          setError(err.message)
+          if (err.code === 'auth/requires-recent-login') {
+            return setError('Password Is Incorrect')
+          } else {
+            setError(err.message)
+          }
         })
-    } else {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newEmail, email, navigate, updateEmail])
@@ -46,6 +51,7 @@ const UpdateEmail = ({ updateEmail, userAuth }) => {
         val={newEmail}
         setVal={setNewEmail}
         input={'email'}
+        loading={loading}
         setError={setError}
       />
       <FormInput

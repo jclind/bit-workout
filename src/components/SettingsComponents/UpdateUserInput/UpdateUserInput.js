@@ -14,10 +14,15 @@ const UpdateUserInput = ({
   handleInput,
   activeSave,
   handleSave,
+  loading,
 }) => {
   return (
     <div className='update-user-input'>
-      <UpdateUserInputActions activeSave={activeSave} handleSave={handleSave} />
+      <UpdateUserInputActions
+        activeSave={activeSave}
+        handleSave={handleSave}
+        loading={loading}
+      />
       <div className='input-container'>
         <input
           type={input ? input : 'text'}

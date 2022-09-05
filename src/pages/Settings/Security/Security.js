@@ -1,8 +1,9 @@
 import React from 'react'
 import SettingsSectionTitle from '../../../components/SettingsComponents/SettingsSectionTitle/SettingsSectionTitle'
 import FormInput from '../../../components/FormInput/FormInput'
-import './Security.scss'
 import BackButton from '../../../components/SettingsComponents/BackButton/BackButton'
+import { TailSpin } from 'react-loader-spinner'
+import './Security.scss'
 
 const Security = ({
   oldPass,
@@ -14,8 +15,9 @@ const Security = ({
   showPassword,
   setShowPassword,
   handlePasswordSubmit,
-  error,
   passMatches,
+  loading,
+  error,
 }) => {
   return (
     <div className='security-page page'>
@@ -58,7 +60,19 @@ const Security = ({
           >
             {showPassword ? 'Hide Passwords' : 'Show Passwords'}
           </div>
-          <button className='submit-btn'>Reset</button>
+          <button className='submit-btn' disabled={loading}>
+            {loading ? (
+              <TailSpin
+                height='25'
+                width='25'
+                color='white'
+                arialLabel='loading'
+                className='spinner'
+              />
+            ) : (
+              'Reset'
+            )}
+          </button>
         </form>
       </section>
       <BackButton />
