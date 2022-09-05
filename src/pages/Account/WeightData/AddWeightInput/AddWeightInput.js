@@ -2,6 +2,7 @@ import React from 'react'
 import { AiOutlineCheck } from 'react-icons/ai'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
 import { AiOutlineWarning } from 'react-icons/ai'
+import { TailSpin } from 'react-loader-spinner'
 import './AddWeightInput.scss'
 
 const AddWeightInput = ({
@@ -11,6 +12,7 @@ const AddWeightInput = ({
   handleWeightChange,
   latestWeightEntry,
   handleAddWeight,
+  loading,
   error,
 }) => {
   return (
@@ -42,8 +44,22 @@ const AddWeightInput = ({
           />
         </label>
       </div>
-      <button className='add-weight-btn btn' onClick={handleAddWeight}>
-        <AiOutlineCheck className='icon' />
+      <button
+        className='add-weight-btn btn'
+        onClick={handleAddWeight}
+        disabled={loading}
+      >
+        {loading ? (
+          <TailSpin
+            height='20'
+            width='20'
+            color='white'
+            arialLabel='loading'
+            className='spinner'
+          />
+        ) : (
+          <AiOutlineCheck className='icon' />
+        )}
       </button>
       <BackButton />
     </div>
