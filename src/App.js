@@ -5,6 +5,8 @@ import {
   Route,
   useLocation,
 } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Helmet } from 'react-helmet'
 import Account from './pages/Account/Account'
 import Workout from './pages/Workout/Workout'
@@ -198,6 +200,14 @@ function App() {
           </Routes>
         </Router>
       )}
+
+      <ToastContainer
+        position='bottom-center'
+        theme='colored'
+        autoClose={3000}
+        hideProgressBar
+        className='toast-alerts-container'
+      />
     </div>
   )
 }

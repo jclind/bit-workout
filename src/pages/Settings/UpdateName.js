@@ -3,24 +3,30 @@ import UpdateUserInputContainer from '../../components/SettingsComponents/Update
 import { useNavigate } from 'react-router'
 import { connect } from 'react-redux'
 import { updateUserAccountData } from '../../redux/actions/auth/authStatus'
+import { toast } from 'react-toastify'
 
 const UpdateName = ({ updateUserAccountData, userAccountData }) => {
   const { name } = userAccountData
   const navigate = useNavigate()
 
   const [userName, setUserName] = useState(name)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
     if (userName !== '' && userName !== name) {
+      setLoading(true)
       const payload = { prop: 'name', val: userName }
       updateUserAccountData(payload)
         .then(() => {
+          setLoading(false)
+          toast('Name Changed Successfully', { type: 'success' })
           navigate(-1)
         })
         .catch(err => {
-          console.log(err)
-          // !ERROR
+          setLoading(false)
+          setUserName(name)
+          setError(err.message)
         })
     }
   }, [userName, name, updateUserAccountData, navigate])
@@ -34,6 +40,7 @@ const UpdateName = ({ updateUserAccountData, userAccountData }) => {
         val={userName}
         setVal={setUserName}
         maxCharacters={30}
+        loading={loading}
         setError={setError}
       />
     </div>

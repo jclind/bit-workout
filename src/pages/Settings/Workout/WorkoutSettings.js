@@ -5,6 +5,7 @@ import SettingsSectionTitle from '../../../components/SettingsComponents/Setting
 import { AiOutlineSound } from 'react-icons/ai'
 import { connect } from 'react-redux'
 import { updateUserAccountData } from '../../../redux/actions/auth/authStatus'
+import { toast } from 'react-toastify'
 
 const WorkoutSettings = ({ updateUserAccountData, isChime }) => {
   const [isChimeChecked, setIsChimeChecked] = useState(isChime)
@@ -15,6 +16,8 @@ const WorkoutSettings = ({ updateUserAccountData, isChime }) => {
     updateUserAccountData({
       prop: 'settings.workout.isChime',
       val: updatedIsChecked,
+    }).catch(err => {
+      toast('Something Went Wrong', { type: 'error' })
     })
   }
 

@@ -87,6 +87,7 @@ const Settings = ({ logout, isWorkoutRunning }) => {
             action={handleLogout}
           />
         </section>
+        {/* <button onClick={notify}>CLICK ME</button> */}
         <BackButton />
         <Link to='/account/settings/release-notes' className='version'>
           Version {current_version_number} <AiOutlineRight />

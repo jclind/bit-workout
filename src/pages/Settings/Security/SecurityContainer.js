@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleUpdatePassword } from '../../../redux/actions/auth/authStatus'
 import Security from './Security'
+import { toast } from 'react-toastify'
 
 const SecurityContainer = ({ updatePassword }) => {
   const navigate = useNavigate()
 
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
   const [passMatches, setPassMatches] = useState(true)
 
   const [oldPass, setOldPass] = useState('')
@@ -25,7 +26,6 @@ const SecurityContainer = ({ updatePassword }) => {
   const handlePasswordSubmit = e => {
     e.preventDefault()
     setError('')
-    setSuccess('')
 
     if (newPass !== repNewPass) {
       return setError('New Passwords Must Match')
@@ -33,20 +33,19 @@ const SecurityContainer = ({ updatePassword }) => {
       return setError('New Password Must Be Different Than Old.')
     }
 
+    setLoading(true)
     updatePassword(oldPass, newPass)
       .then(() => {
+        setLoading(false)
         setError('')
+        toast('Password Changed Successfully', { type: 'success' })
 
-        setSuccess('Password Changed')
-        setTimeout(() => {
-          setSuccess('')
-        }, 4000)
         clearResetPasswordForm()
         navigate(-1)
       })
       .catch(err => {
+        setLoading(false)
         const errCode = err.code
-        setSuccess('')
 
         if (errCode === 'auth/wrong-password') {
           setError('Incorrect Password, Try Again.')
@@ -73,9 +72,9 @@ const SecurityContainer = ({ updatePassword }) => {
       showPassword={showPassword}
       setShowPassword={setShowPassword}
       handlePasswordSubmit={handlePasswordSubmit}
-      error={error}
-      success={success}
       passMatches={passMatches}
+      loading={loading}
+      error={error}
     />
   )
 }

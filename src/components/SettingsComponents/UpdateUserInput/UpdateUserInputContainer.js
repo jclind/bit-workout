@@ -7,6 +7,7 @@ const UpdateUserInputContainer = ({
   val,
   setVal,
   maxCharacters,
+  loading,
   setError,
 }) => {
   const [unsavedVal, setUnsavedVal] = useState(val)
@@ -55,6 +56,7 @@ const UpdateUserInputContainer = ({
       handleInput={handleInput}
       activeSave={activeSave}
       handleSave={handleSave}
+      loading={loading}
     />
   )
 }

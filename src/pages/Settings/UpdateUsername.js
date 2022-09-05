@@ -7,26 +7,33 @@ import {
   checkUsernameAvailability,
   updateUserAccountData,
 } from '../../redux/actions/auth/authStatus'
+import { toast } from 'react-toastify'
 
 const UpdateUsername = ({ updateUserAccountData, userAccountData }) => {
   const { username } = userAccountData
   const navigate = useNavigate()
 
   const [newUsername, setNewUsername] = useState(username)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
     setError('')
     if (newUsername !== '' && newUsername !== username) {
+      setLoading(true)
       const payload = { prop: 'username', val: newUsername }
       checkUsernameAvailability(newUsername).then(checkUsernameAvailability => {
         if (checkUsernameAvailability) {
           updateUserAccountData(payload)
             .then(() => {
+              setLoading(false)
+              toast('Username Changed Successfully', { type: 'success' })
               navigate(-1)
             })
             .catch(err => {
-              setError(err)
+              setLoading(false)
+              setNewUsername(username)
+              setError(err.message)
             })
         } else {
           setError('Username taken')
@@ -49,6 +56,7 @@ const UpdateUsername = ({ updateUserAccountData, userAccountData }) => {
         val={newUsername}
         setVal={setNewUsername}
         maxCharacters={30}
+        loading={loading}
         setError={setError}
       />
     </div>

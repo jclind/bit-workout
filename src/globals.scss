@@ -317,7 +317,7 @@ input[type='number'] {
     font-size: 1rem;
     font-weight: 600;
     width: 80%;
-    height: fit-content;
+    height: 50px;
     padding: 1rem 0;
     border-radius: $border-radius;
   }
@@ -377,8 +377,37 @@ input[type='number'] {
     font-size: 1rem;
     font-weight: 600;
     width: 80%;
-    height: fit-content;
+    height: 50px;
     padding: 1rem 0;
     border-radius: $border-radius;
   }
+}
+
+// Alert Styles
+.toast-alerts-container {
+  --toastify-toast-min-height: 15px !important;
+  --toastify-toast-width: 350px;
+  .Toastify__toast {
+    border-radius: $border-radius;
+    font-size: 0.8rem;
+    font-weight: 600;
+    max-width: 90%;
+    margin: 0.75rem auto;
+  }
+  .Toastify__toast-body {
+    padding: 0;
+  }
+  .Toastify__toast-theme--colored.Toastify__toast--success {
+    background: $success-green !important;
+  }
+  .Toastify__close-button {
+    width: fit-content;
+    height: fit-content;
+    // height: 100% !important;
+  }
+  // .Toastify__toast {
+  // }
+}
+.Toastify__toast-container--bottom-center {
+  bottom: 15px;
 }

@@ -14,6 +14,7 @@ const FormInput = ({
   showPasswordBtn,
   textarea,
   inputRef,
+  tabIndex,
 }) => {
   const [type, setType] = useState(inputType)
   const [clear, setClear] = useState(false)
@@ -68,6 +69,7 @@ const FormInput = ({
           required={required}
           className={icon ? 'active-icon' : null}
           ref={inputRef}
+          tabIndex={tabIndex}
         />
       )}
 
