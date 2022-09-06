@@ -6,7 +6,13 @@ import {
   setUserStatusSignedOut,
 } from './redux/actions/auth/authStatus'
 
-const Auth = ({ signInAndFetchUserAccountData, signOut, setLoading }) => {
+const Auth = ({
+  signInAndFetchUserAccountData,
+  signOut,
+  setLoading,
+  userAuth,
+  userAccountData,
+}) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
@@ -24,6 +30,13 @@ const Auth = ({ signInAndFetchUserAccountData, signOut, setLoading }) => {
   return null
 }
 
+const mapStateToProps = state => {
+  return {
+    userAuth: state.auth.userAuth,
+    userAccountData: state.auth.userAccountData,
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     signInAndFetchUserAccountData: user =>
@@ -32,4 +45,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Auth)
+export default connect(mapStateToProps, mapDispatchToProps)(Auth)
