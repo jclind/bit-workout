@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './FormInput.scss'
-import deleteIcon from '../../assets/images/icons/delete.svg'
+import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 
 const FormInput = ({
@@ -51,7 +51,7 @@ const FormInput = ({
           : 'form-input-label form-label'
       }
     >
-      {icon && <img src={icon} alt={placeholder} className='icon' />}
+      {icon && icon}
       {textarea ? (
         <textarea
           placeholder={placeholder}
@@ -87,8 +87,8 @@ const FormInput = ({
           </div>
         )}
         {clear && (
-          <div onClick={() => setVal('')} className='delete-icon'>
-            <img src={deleteIcon} alt='clear' />
+          <div onClick={() => setVal('')} className='clear-icon-container'>
+            <AiOutlineCloseCircle className='clear-icon' />
           </div>
         )}
       </div>

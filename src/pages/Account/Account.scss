@@ -18,8 +18,10 @@
     text-decoration: none;
     margin-top: 4rem;
     .icon {
+      color: $primary;
       position: absolute;
-      height: 20px;
+      height: 24px;
+      width: 24px;
       right: 0.625rem;
     }
     button {

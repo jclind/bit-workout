@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import leftIcon from '../../../assets/images/icons/left.svg'
+import { BsChevronLeft } from 'react-icons/bs'
 import './BackButton.scss'
 
 const BackButton = ({ link }) => {
@@ -12,8 +12,8 @@ const BackButton = ({ link }) => {
   }
 
   return (
-    <button className='back-button icon' onClick={handleNavigate}>
-      <img src={leftIcon} alt='back-button' className='icon' />
+    <button className='back-button' onClick={handleNavigate}>
+      <BsChevronLeft className='icon' />
     </button>
   )
 }

@@ -3,7 +3,7 @@ import UserAvatarAndTitle from '../../components/AccountComponents/UserAvatarAnd
 import './Account.scss'
 import NavbarContainer from '../../components/Navbar/Navbar'
 import InfoTile from '../../components/AccountComponents/InfoTile/InfoTile'
-import rightIcon from '../../assets/images/icons/right.svg'
+import { BsChevronRight } from 'react-icons/bs'
 import { connect } from 'react-redux'
 
 const Account = ({ name, height, weight }) => {
@@ -24,7 +24,7 @@ const Account = ({ name, height, weight }) => {
           />
         </div>
         <Link to='/account/settings' className='settings-btn-container'>
-          <img src={rightIcon} alt='right' className='icon' />
+          <BsChevronRight className='icon' />
           <button className='settings-button'>Account Settings</button>
         </Link>
       </div>

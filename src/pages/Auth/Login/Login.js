@@ -2,8 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import loginIMG from '../../../assets/images/login-background.png'
 import FormInput from '../../../components/FormInput/FormInput'
-import emailIcon from '../../../assets/images/icons/email.svg'
-import passwordIcon from '../../../assets/images/icons/password.svg'
+import { AiOutlineMail } from 'react-icons/ai'
+import { BiLockAlt } from 'react-icons/bi'
 import { TailSpin } from 'react-loader-spinner'
 import { AiOutlineWarning } from 'react-icons/ai'
 // import { FcGoogle } from 'react-icons/fc'
@@ -41,8 +41,8 @@ const Login = ({
           <form className='login-form'>
             <div className='inputs'>
               <FormInput
+                icon={<AiOutlineMail className='icon' />}
                 placeholder='email'
-                icon={emailIcon}
                 inputType='email'
                 val={emailVal}
                 setVal={setEmailVal}
@@ -51,7 +51,7 @@ const Login = ({
               />
               <FormInput
                 placeholder='password'
-                icon={passwordIcon}
+                icon={<BiLockAlt className='icon' />}
                 inputType='password'
                 val={passwordVal}
                 setVal={setPasswordVal}
