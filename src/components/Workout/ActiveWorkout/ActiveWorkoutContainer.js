@@ -18,6 +18,30 @@ const WorkoutContainer = ({
 }) => {
   const [isWorkoutPathModalOpen, setIsWorkoutPathModalOpen] = useState(false)
 
+  useEffect(() => {
+    function preventDefault(e) {
+      e.preventDefault()
+    }
+
+    function disableScroll() {
+      document.body.addEventListener('touchmove', preventDefault, {
+        passive: false,
+      })
+    }
+    function enableScroll() {
+      document.body.removeEventListener('touchmove', preventDefault, {
+        passive: true,
+      })
+    }
+    if (isWorkoutPathModalOpen) {
+      disableScroll()
+      console.log('disabled')
+    } else {
+      enableScroll()
+      console.log('enabled')
+    }
+  }, [isWorkoutPathModalOpen])
+
   const [play] = useSound(timerFinishedSound)
 
   useEffect(() => {
