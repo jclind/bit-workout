@@ -9,7 +9,7 @@
 html,
 body {
   height: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 body {
   color: $primary;
@@ -278,7 +278,6 @@ input[type='number'] {
 }
 
 // Sign up
-
 .signup-page {
   position: relative;
   display: flex;

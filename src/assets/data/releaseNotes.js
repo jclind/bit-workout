@@ -1,4 +1,4 @@
-export const current_version_number = 'v0.4.6-alpha'
+export const current_version_number = 'v0.4.7-alpha'
 
 export const releaseNotes = [
   {
@@ -69,6 +69,22 @@ export const releaseNotes = [
     improvements: [
       'Added loading indications to settings forms and add weight input page.',
       'Added additional error handling / messages in settings forms.',
+    ],
+  },
+  {
+    version: 'v0.4.7-alpha',
+    date: 'September 19, 2022',
+    title: '',
+    description: '',
+    fixes: [
+      'Fix: workout path modal scrolls background when trying to re-order exercises',
+    ],
+    improvements: [
+      'Added improved loading indication after user authentication through signup/login',
+      'Update all UI icons to react-icons for better consistency and faster loading',
+      'All images have been compressed for faster performance',
+      'Greatly increase speed of running workout actions, i.e. completing sets and skipping rests',
+      'Several style improvements / changes',
     ],
   },
 ]

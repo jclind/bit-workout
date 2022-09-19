@@ -26,6 +26,7 @@
       background: none;
       resize: vertical;
       outline: none;
+      max-height: 300px;
 
       &:focus {
         border: 2px solid $secondary;

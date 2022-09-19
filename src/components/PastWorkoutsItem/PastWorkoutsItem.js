@@ -150,28 +150,30 @@ const PastWorkoutsItem = ({ workout, getSingleExercise, loading }) => {
             ) : (
               <WorkoutTime workoutTime={workoutTime} />
             )}
+            <div className='date-container'>
+              <div className='date'>
+                {loading ? (
+                  <Skeleton
+                    baseColor={SKELETON_BASE_COLOR}
+                    highlightColor={SKELETON_HIGHLIGHT_COLOR}
+                    width='8ch'
+                  />
+                ) : (
+                  date
+                )}
+              </div>
+              {!loading && (
+                <div className='collapse-indicator'>
+                  {isCollapsed ? (
+                    <AiOutlineRight className='icon ' />
+                  ) : (
+                    <AiOutlineDown className='icon' />
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-        <div className='date'>
-          {loading ? (
-            <Skeleton
-              baseColor={SKELETON_BASE_COLOR}
-              highlightColor={SKELETON_HIGHLIGHT_COLOR}
-              width='8ch'
-            />
-          ) : (
-            date
-          )}
-        </div>
-        {!loading && (
-          <div className='collapse-indicator'>
-            {isCollapsed ? (
-              <AiOutlineRight className='icon ' />
-            ) : (
-              <AiOutlineDown className='icon' />
-            )}
-          </div>
-        )}
       </div>
 
       {!loading && (

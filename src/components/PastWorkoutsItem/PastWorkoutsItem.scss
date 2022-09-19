@@ -50,26 +50,30 @@
       .name {
         font-size: 1rem;
         font-weight: 700;
+        margin-bottom: 0.5rem;
       }
     }
     .bottom {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       .workout-time {
         font-size: 1rem !important;
       }
+      .date-container {
+        display: flex;
+        .date {
+          display: flex;
+          align-items: flex-end;
+          gap: 0.35rem;
+          color: $secondary-text;
+          font-size: 0.8rem;
+        }
+        .collapse-indicator-container {
+          display: flex;
+          align-items: flex-end;
+        }
+      }
     }
-  }
-  .date {
-    display: flex;
-    align-items: flex-end;
-    gap: 0.35rem;
-    color: $secondary-text;
-    font-size: 0.8rem;
-  }
-  .collapse-indicator-container {
-    display: flex;
-    align-items: flex-end;
   }
   .set-path-label {
     display: flex;

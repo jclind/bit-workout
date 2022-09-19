@@ -6,6 +6,7 @@ import { AiOutlineCalendar } from 'react-icons/ai'
 import { formatDate } from '../../util/formatDate'
 import { formatTimeToObject } from '../../util/formatTime'
 import WorkoutTime from '../WorkoutTime/WorkoutTime'
+import { trimString } from '../../util/trimString'
 
 const SKELETON_BASE_COLOR = '#546d80'
 const SKELETON_HIGHLIGHT_COLOR = '#548ca8'
@@ -32,7 +33,12 @@ const PastWorkoutsLink = ({ pastWorkoutData, isResponse }) => {
   const workoutImageURL = pastWorkoutData
     ? pastWorkoutData.path[0].imageURL
     : null
-  const workoutName = pastWorkoutData && pastWorkoutData.workoutName
+  // Only allow 50 characters to be shown
+  const workoutName = !pastWorkoutData
+    ? null
+    : pastWorkoutData.workoutName.length > 53
+    ? trimString(pastWorkoutData.workoutName, 50, true)
+    : pastWorkoutData.workoutName
 
   return (
     <div className={`past-workouts-link ${loading ? 'loading' : ''}`}>

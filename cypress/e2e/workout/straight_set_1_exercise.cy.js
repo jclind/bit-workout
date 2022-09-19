@@ -9,7 +9,7 @@ describe('Workout Tests', () => {
     cy.get('button.selection-btn').contains('Created').click()
 
     // Start Workout
-    cy.clickWorkoutSelectionStartButtonByText('Straight Set 1 Exercise').click()
+    cy.clickWorkoutSelectionStartButtonByText('Straight Set 1 Exercise')
 
     // Validate workout path shows correctly
     cy.validateWorkoutPath(1)

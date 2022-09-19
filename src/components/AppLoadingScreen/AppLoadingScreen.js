@@ -1,5 +1,5 @@
 import React from 'react'
-import dumbbellIcon from '../../assets/images/icons/dumbbell-icon.svg'
+import dumbbellIcon from '../../assets/images/dumbbell-icon.svg'
 import HashLoader from 'react-spinners/HashLoader'
 import './AppLoadingScreen.scss'
 

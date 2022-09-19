@@ -50,7 +50,7 @@ export const signInAndFetchUserAccountData =
     if (userAccountData && !userAccountData.email) {
       const email = getState().auth.userAuth.email
 
-      dispatch(updateUserAccountData({ prop: 'email', val: email }))
+      await dispatch(updateUserAccountData({ prop: 'email', val: email }))
     }
   }
 

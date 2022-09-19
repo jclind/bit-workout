@@ -9,7 +9,7 @@ describe('Workout Tests', () => {
     cy.get('button.selection-btn').contains('Created').click()
 
     // Start Workout
-    cy.clickWorkoutSelectionStartButtonByText('All Types 3 Exercises').click()
+    cy.clickWorkoutSelectionStartButtonByText('All Types 3 Exercises')
 
     cy.get('button.view-workout-path').click()
     cy.get('button.add-exercise').click()

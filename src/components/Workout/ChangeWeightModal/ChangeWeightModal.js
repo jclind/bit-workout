@@ -3,7 +3,7 @@ import ReactDom from 'react-dom'
 import useClickOutside from '../../../util/useClickOutside'
 import './ChangeWeightModal.scss'
 import FormInput from '../../FormInput/FormInput'
-import weightIcon from '../../../assets/images/icons/weight.svg'
+import { IoBarbellOutline } from 'react-icons/io5'
 import { connect } from 'react-redux'
 import { updateWorkout } from '../../../redux/actions/workout/workout'
 
@@ -70,7 +70,7 @@ const ChangeWeightModal = ({
           </div>
           {error && <div className='error-text'>{error}</div>}
           <FormInput
-            icon={weightIcon}
+            icon={<IoBarbellOutline className='icon' />}
             placeholder={'Enter Weight'}
             inputType={'number'}
             val={newWeight}

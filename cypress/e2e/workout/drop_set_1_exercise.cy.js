@@ -10,7 +10,7 @@ describe('Workout Tests', () => {
 
     // Start Workout
     cy.get('.single-workout').should('have.length.greaterThan', 0)
-    cy.clickWorkoutSelectionStartButtonByText('Drop Set 1 Exercise').click()
+    cy.clickWorkoutSelectionStartButtonByText('Drop Set 1 Exercise')
 
     // Validate workout path is correct
     cy.validateWorkoutPath(1)
