@@ -1,5 +1,5 @@
 import React from 'react'
-import accountIcon from '../../../assets/images/icons/account.svg'
+import { BiUser } from 'react-icons/bi'
 import './UserAvatarAndTitle.scss'
 
 const UserAvatarAndTitle = ({ image, name, membership }) => {
@@ -10,7 +10,7 @@ const UserAvatarAndTitle = ({ image, name, membership }) => {
           {image ? (
             <img src={image} alt='avatar' />
           ) : (
-            <img src={accountIcon} alt='avatar' className='icon no-avatar' />
+            <BiUser className='icon no-avatar' />
           )}
         </div>
         <div className='user-title-container'>

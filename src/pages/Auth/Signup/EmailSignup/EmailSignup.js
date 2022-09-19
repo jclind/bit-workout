@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import FormInput from '../../../../components/FormInput/FormInput'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
-import accountIcon from '../../../../assets/images/icons/account.svg'
-import emailIcon from '../../../../assets/images/icons/email.svg'
-import passwordIcon from '../../../../assets/images/icons/password.svg'
-import { AiOutlineWarning } from 'react-icons/ai'
+import { AiOutlineWarning, AiOutlineMail } from 'react-icons/ai'
+import { BiUser, BiLockAlt } from 'react-icons/bi'
 import { connect } from 'react-redux'
 import './EmailSignup.scss'
 import { signupWithEmail } from '../../../../redux/actions/auth/authStatus'
@@ -99,7 +97,7 @@ const EmailSignup = ({ signupWithEmail }) => {
       )}
       <form className='signup-inputs'>
         <FormInput
-          icon={accountIcon}
+          icon={<BiUser className='icon' />}
           placeholder={'full name'}
           inputType={'name'}
           val={name}
@@ -108,7 +106,7 @@ const EmailSignup = ({ signupWithEmail }) => {
           inputRef={nameRef}
         />
         <FormInput
-          icon={emailIcon}
+          icon={<AiOutlineMail className='icon' />}
           placeholder={'email'}
           inputType={'email'}
           val={email}
@@ -116,7 +114,7 @@ const EmailSignup = ({ signupWithEmail }) => {
           required={true}
         />
         <FormInput
-          icon={passwordIcon}
+          icon={<BiLockAlt className='icon' />}
           placeholder={'password'}
           inputType={'password'}
           val={password}

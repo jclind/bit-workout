@@ -1,5 +1,5 @@
 import React from 'react'
-import deleteIcon from '../../../assets/images/icons/delete.svg'
+import { AiOutlineCloseCircle } from 'react-icons/ai'
 import './UpdateUserInput.scss'
 import UpdateUserInputActions from './UpdateUserInputActions'
 
@@ -34,14 +34,7 @@ const UpdateUserInput = ({
         />
         {val && (
           <div className='clear-icon-container'>
-            <img
-              src={deleteIcon}
-              alt='clear input'
-              className='clear'
-              onClick={() => {
-                setUnsavedVal('')
-              }}
-            />
+            <AiOutlineCloseCircle className='icon' />
           </div>
         )}
       </div>

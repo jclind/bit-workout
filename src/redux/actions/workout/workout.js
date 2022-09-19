@@ -45,16 +45,13 @@ export const updateWorkout = data => async (dispatch, getState) => {
   if (!uid) console.error('UID not defined in updateWorkout')
   const workoutRef = doc(db, 'workoutData', uid)
 
+  dispatch({ type: SET_WORKOUT_DATA, payload: data })
   await updateDoc(workoutRef, {
     ...data,
+  }).catch(err => {
+    console.log(err)
+    // !ERROR
   })
-    .then(() => {
-      dispatch({ type: SET_WORKOUT_DATA, payload: data })
-    })
-    .catch(err => {
-      console.log(err)
-      // !ERROR
-    })
 }
 export const setWorkoutFinished = isFinished => {
   return {

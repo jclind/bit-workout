@@ -4,14 +4,12 @@ import Character from './Character/Character'
 import PastWorkoutsLinkContainer from './PastWorkoutsLink/PastWorkoutsLinkContainer'
 
 const Dashboard = ({ userAuth, userAccountData }) => {
-  if (!userAuth || !userAccountData) {
-    return 'loading'
-  }
+  const loading = !userAuth || !userAccountData
 
   return (
     <>
       <div className='page'>
-        <Character />
+        <Character loading={loading} />
         <PastWorkoutsLinkContainer />
       </div>
 
