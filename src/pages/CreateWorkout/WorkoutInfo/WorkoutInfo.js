@@ -72,7 +72,9 @@ const WorkoutData = ({ getSingleExercise }) => {
           <input
             type='text'
             placeholder={'Title'}
-            onChange={e => setTitle(e.target.value)}
+            onChange={e => {
+              setTitle(e.target.value.substring(0, 100))
+            }}
             value={title}
           />
         </div>
@@ -80,7 +82,7 @@ const WorkoutData = ({ getSingleExercise }) => {
           <textarea
             type='text'
             placeholder={'Description'}
-            onChange={e => setDescription(e.target.value)}
+            onChange={e => setDescription(e.target.value.substring(0, 320))}
             value={description}
             rows='6'
           />
