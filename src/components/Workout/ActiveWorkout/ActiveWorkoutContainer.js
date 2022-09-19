@@ -35,10 +35,8 @@ const WorkoutContainer = ({
     }
     if (isWorkoutPathModalOpen) {
       disableScroll()
-      console.log('disabled')
     } else {
       enableScroll()
-      console.log('enabled')
     }
   }, [isWorkoutPathModalOpen])
 
