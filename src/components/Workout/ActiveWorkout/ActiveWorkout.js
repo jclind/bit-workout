@@ -39,10 +39,7 @@ const ActiveWorkout = ({
     if (isWarmupRunning) {
       return (
         <WarmupExercise
-          currActiveWorkoutExercise={currActiveWorkoutExercise}
           currExercise={currExercise}
-          currSetIdx={currSetIdx}
-          completeSet={completeSet}
           setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
         />
       )

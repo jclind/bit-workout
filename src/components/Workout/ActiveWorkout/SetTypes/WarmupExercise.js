@@ -14,6 +14,7 @@ const WarmupExercise = ({
   currExercise,
   endWarmup,
   completeWarmupSet,
+  setIsWorkoutPathModalOpen,
 }) => {
   const [isPlatesModalOpen, setIsPlatesModalOpen] = useState(false)
 
@@ -46,7 +47,7 @@ const WarmupExercise = ({
         </div>
         <button
           className='view-workout-path'
-          // onClick={() => setIsWorkoutPathModalOpen(true)}
+          onClick={() => setIsWorkoutPathModalOpen(true)}
         >
           Workout Path <AiOutlineRight className='icon' />
         </button>
