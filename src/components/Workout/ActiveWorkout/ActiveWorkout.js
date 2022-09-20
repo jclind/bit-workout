@@ -5,11 +5,13 @@ import {
   completeSet,
   getSingleExercise,
   stopWorkout,
+  addWarmup,
 } from '../../../redux/actions/workout/workout'
 import StraightSetExercise from './SetTypes/StraightSetExercise'
 import DropSetExercise from './SetTypes/DropSetExercise'
 import StopWorkoutModal from '../StopWorkoutModal/StopWorkoutModal'
 import TimedSetExercise from './SetTypes/TimedSetExercise'
+import WarmupExercise from './SetTypes/WarmupExercise'
 
 const ActiveWorkout = ({
   getSingleExercise,
@@ -19,6 +21,8 @@ const ActiveWorkout = ({
   completeSet,
   stopWorkout,
   setIsWorkoutPathModalOpen,
+  addWarmup,
+  isWarmupRunning,
 }) => {
   const [isStopModalOpen, setIsStopModalOpen] = useState(false)
 
@@ -27,9 +31,22 @@ const ActiveWorkout = ({
 
   const exerciseID = currActiveWorkoutExercise?.exerciseID
   const currExercise = getSingleExercise(exerciseID)
-  const exerciseName = currExercise.name
+  const exerciseName = isWarmupRunning
+    ? `${currExercise.name} Warmup`
+    : currExercise.name
 
   const exerciseTypeOptions = type => {
+    if (isWarmupRunning) {
+      return (
+        <WarmupExercise
+          currActiveWorkoutExercise={currActiveWorkoutExercise}
+          currExercise={currExercise}
+          currSetIdx={currSetIdx}
+          completeSet={completeSet}
+          setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
+        />
+      )
+    }
     if (type === 'straight') {
       return (
         <StraightSetExercise
@@ -38,6 +55,7 @@ const ActiveWorkout = ({
           currSetIdx={currSetIdx}
           completeSet={completeSet}
           setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
+          addWarmup={addWarmup}
         />
       )
     } else if (type === 'drop') {
@@ -48,6 +66,7 @@ const ActiveWorkout = ({
           currSetIdx={currSetIdx}
           setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
           completeSet={completeSet}
+          addWarmup={addWarmup}
         />
       )
     } else if (type === 'timed') {
@@ -58,6 +77,7 @@ const ActiveWorkout = ({
           currSetIdx={currSetIdx}
           setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
           completeSet={completeSet}
+          addWarmup={addWarmup}
         />
       )
     }
@@ -66,7 +86,9 @@ const ActiveWorkout = ({
   return (
     <div className='active-workout'>
       <div className='exercise-title'>{exerciseName}</div>
-      <div className='exercise-type'>({exerciseType} Sets)</div>
+      {!isWarmupRunning && (
+        <div className='exercise-type'>({exerciseType} Sets)</div>
+      )}
       {exerciseTypeOptions(exerciseType)}
       <button
         type='button'
@@ -96,6 +118,7 @@ const mapStateTopProps = state => {
     currExerciseIdx: runningWorkout.remainingWorkout.currIdx,
     currWorkout: runningWorkout.currWorkout,
     weights: state.workout.workoutData.weights,
+    isWarmupRunning: runningWorkout.currWorkout.isWarmupRunning,
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -107,6 +130,7 @@ const mapDispatchToProps = dispatch => {
       ),
     stopWorkout: (coins, exp) => dispatch(stopWorkout(coins, exp)),
     getSingleExercise: exerciseID => dispatch(getSingleExercise(exerciseID)),
+    addWarmup: currWeight => dispatch(addWarmup(currWeight)),
   }
 }
 
