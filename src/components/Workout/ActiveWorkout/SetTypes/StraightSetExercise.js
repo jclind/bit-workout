@@ -37,15 +37,17 @@ const StraightSetExercise = ({
   return (
     <>
       <div className='rep-set-text'>{`${numReps} Reps, Set ${currSetIdx} of ${numSets}`}</div>
-      <button
-        className='add-warmup'
-        onClick={() => {
-          addWarmup(exerciseWeight)
-        }}
-      >
-        <AiOutlinePlusCircle className='icon' />
-        Add Warmup Sets
-      </button>
+      {exerciseIsWeighted && currSetIdx === 1 ? (
+        <button
+          className='add-warmup'
+          onClick={() => {
+            addWarmup(exerciseWeight)
+          }}
+        >
+          <AiOutlinePlusCircle className='icon' />
+          Add Warmup Sets
+        </button>
+      ) : null}
       <div className='workout-data'>
         <div
           className='exercise-weight'
