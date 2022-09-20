@@ -17,11 +17,11 @@ export const createWarmupPath = (startWeight, endWeight) => {
   for (let i = 0; i < divisor; i++) {
     const weight = roundNumber(startWeight + weightBetweenSets * i, 5)
     if (i <= 1) {
-      sets.push({ weight, sets: 5 })
+      sets.push({ weight, reps: 5 })
     } else if (i === 2) {
-      sets.push({ weight, sets: 3 })
+      sets.push({ weight, reps: 3 })
     } else if (i >= 3) {
-      sets.push({ weight, sets: 2 })
+      sets.push({ weight, reps: 2 })
     }
   }
   return sets
