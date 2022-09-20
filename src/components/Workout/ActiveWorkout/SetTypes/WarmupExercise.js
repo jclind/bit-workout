@@ -13,6 +13,7 @@ const WarmupExercise = ({
   warmupPath,
   currExercise,
   endWarmup,
+  completeWarmupSet,
 }) => {
   const [isPlatesModalOpen, setIsPlatesModalOpen] = useState(false)
 
@@ -51,12 +52,7 @@ const WarmupExercise = ({
         </button>
       </div>
       <div className='options'>
-        <button
-          className='submit-btn'
-          // onClick={() =>
-          // completeSet(numSets, numReps, exerciseID, exerciseWeight)
-          // }
-        >
+        <button className='submit-btn' onClick={completeWarmupSet}>
           Completed
         </button>
         <button className='set-failed-btn' onClick={endWarmup}>

@@ -325,7 +325,26 @@ export const addWarmup = currWeight => async (dispatch, getState) => {
   // createWarmupPath(45, 135)
   // createWarmupPath(45, 250)
 }
-export const completeWarmupSet = () => async (dispatch, getState) => {}
+export const completeWarmupSet = () => async (dispatch, getState) => {
+  const runningWorkout = getState().workout.workoutData.runningWorkout
+  const currIdx = runningWorkout.remainingWorkout.currIdx
+  const currWarmupSetIdx = runningWorkout.remainingWorkout.currWarmupSetIdx
+  const warmupPath = runningWorkout.currWorkout.path[currIdx].warmupPath
+  const numSets = warmupPath.length
+
+  if (currWarmupSetIdx >= numSets - 1) {
+    const updatedData = {
+      'runningWorkout.remainingWorkout.currWarmupSetIdx': 0,
+      'runningWorkout.currWorkout.isWarmupRunning': false,
+    }
+    return dispatch(updateWorkout(updatedData))
+  } else {
+    const updatedData = {
+      'runningWorkout.remainingWorkout.currWarmupSetIdx': currWarmupSetIdx + 1,
+    }
+    return dispatch(updateWorkout(updatedData))
+  }
+}
 export const endWarmup = () => async (dispatch, getState) => {
   const updatedData = {
     'runningWorkout.currWorkout.isWarmupRunning': false,
