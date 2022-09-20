@@ -37,6 +37,7 @@
     text-transform: capitalize;
     margin-bottom: 0.75rem;
   }
+
   .exercise-type {
     color: $secondary-text;
     padding-bottom: 0.5rem;
@@ -45,6 +46,18 @@
   .rep-set-text {
     font-size: 1.1rem;
     font-weight: 400;
+  }
+  .add-warmup {
+    background: $secondary-background;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    margin: 1rem auto 0;
+    padding: 0 0.5rem;
+    border-radius: $border-radius;
+    width: fit-content;
   }
   .workout-data {
     position: absolute;
@@ -76,7 +89,7 @@
       }
     }
     .exercise-img-container {
-      margin: 1rem auto;
+      margin: 0.25rem auto;
       width: 55%;
       .exercise-img {
         object-fit: contain;

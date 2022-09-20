@@ -24,6 +24,7 @@ import {
 import { exerciseList } from '../../../assets/data/exerciseList'
 import { calcCoins, calcExp, logWorkout } from '../character/character'
 import { v4 as uuidv4 } from 'uuid'
+import { createWarmupPath } from '../../../util/createWarmupPath'
 
 export const fetchWorkoutData = uid => async dispatch => {
   await getDoc(doc(db, 'workoutData', uid)).then(document => {
@@ -297,7 +298,40 @@ export const completeSet =
     // Calculate character stats based on completed reps
     dispatch(logWorkout(completedReps))
   }
+export const addWarmup = currWeight => async (dispatch, getState) => {
+  const runningWorkout = getState().workout.workoutData.runningWorkout
+  const currIdx = runningWorkout.remainingWorkout.currIdx
+  const currPath = runningWorkout.currWorkout.path
+  const barbellWeight = Number(getState().auth.userAccountData.barbellWeight)
 
+  const updatedPath = [...currPath]
+  const currPathExercise = updatedPath[currIdx]
+  updatedPath[currIdx] = {
+    ...currPathExercise,
+    warmupPath: createWarmupPath(barbellWeight, Number(currWeight)),
+  }
+
+  const updatedData = {
+    'runningWorkout.remainingWorkout.currWarmupSetIdx': 0,
+    'runningWorkout.currWorkout.isWarmupRunning': true,
+    'runningWorkout.currWorkout.path': updatedPath,
+  }
+
+  dispatch(updateWorkout(updatedData))
+
+  // createWarmupPath(45, 55)
+  // createWarmupPath(45, 75)
+  // createWarmupPath(45, 95)
+  // createWarmupPath(45, 135)
+  // createWarmupPath(45, 250)
+}
+export const completeWarmupSet = () => async (dispatch, getState) => {}
+export const endWarmup = () => async (dispatch, getState) => {
+  const updatedData = {
+    'runningWorkout.currWorkout.isWarmupRunning': false,
+  }
+  dispatch(updateWorkout(updatedData))
+}
 export const failSet =
   (newWeight, exerciseID, currSetTotal, completedReps, currWeight) =>
   async (dispatch, getState) => {

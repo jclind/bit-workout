@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { calculatePlates } from '../../../../util/calculatePlates'
-import { AiFillInfoCircle, AiOutlineRight } from 'react-icons/ai'
+import {
+  AiFillInfoCircle,
+  AiOutlineRight,
+  AiOutlinePlusCircle,
+} from 'react-icons/ai'
 import PlatesModal from '../../PlatesModal/PlatesModal'
 import ConfirmSetFailedModal from '../../ConfirmSetFailedModal/ConfirmSetFailedModal'
 
@@ -10,6 +14,7 @@ const StraightSetExercise = ({
   currSetIdx,
   completeSet,
   setIsWorkoutPathModalOpen,
+  addWarmup,
 }) => {
   const [isPlatesModalOpen, setIsPlatesModalOpen] = useState(false)
   const [isSetFailedModalOpen, setIsSetFailedModalOpen] = useState(false)
@@ -32,6 +37,15 @@ const StraightSetExercise = ({
   return (
     <>
       <div className='rep-set-text'>{`${numReps} Reps, Set ${currSetIdx} of ${numSets}`}</div>
+      <button
+        className='add-warmup'
+        onClick={() => {
+          addWarmup(exerciseWeight)
+        }}
+      >
+        <AiOutlinePlusCircle className='icon' />
+        Add Warmup Sets
+      </button>
       <div className='workout-data'>
         <div
           className='exercise-weight'
