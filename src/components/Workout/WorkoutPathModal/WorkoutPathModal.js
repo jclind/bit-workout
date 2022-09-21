@@ -76,13 +76,6 @@ const WorkoutPathModal = ({
     return result
   }
 
-  const getItemStyle = (isDragging, draggableStyle) => ({
-    background: isDragging ? 'lightgreen' : 'grey',
-
-    ...draggableStyle,
-  })
-
-  const onDragStart = () => {}
   const onDragEnd = result => {
     setError('')
     if (!result.destination) {
