@@ -116,7 +116,7 @@ const WorkoutPathModal = ({
               {error}
             </div>
           )}
-          <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+          <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId='droppable'>
               {(provided, snapshot) => (
                 <div
