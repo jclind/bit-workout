@@ -62,7 +62,7 @@ function App() {
   const appContainerRef = useRef()
 
   return (
-    <div className='app-container' ref={appContainerRef}>
+    <div className='app-container' id='app-container' ref={appContainerRef}>
       <Helmet>
         <meta
           name='viewport'

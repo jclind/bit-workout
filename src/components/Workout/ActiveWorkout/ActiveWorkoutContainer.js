@@ -19,25 +19,28 @@ const WorkoutContainer = ({
   const [isWorkoutPathModalOpen, setIsWorkoutPathModalOpen] = useState(false)
 
   useEffect(() => {
-    function preventDefault(e) {
-      e.preventDefault()
-    }
-
-    function disableScroll() {
-      document.body.addEventListener('touchmove', preventDefault, {
-        passive: false,
-      })
-    }
-    function enableScroll() {
-      document.body.removeEventListener('touchmove', preventDefault, {
-        passive: true,
-      })
-    }
-    if (isWorkoutPathModalOpen) {
-      disableScroll()
-    } else {
-      enableScroll()
-    }
+    // function preventDefault(e) {
+    //   e.preventDefault()
+    // }
+    // function disableScroll() {
+    //   document
+    //     .getElementById('app-container')
+    //     .addEventListener('touchmove', preventDefault, {
+    //       // passive: false,
+    //     })
+    // }
+    // function enableScroll() {
+    //   document
+    //     .getElementById('app-container')
+    //     .removeEventListener('touchmove', preventDefault, {
+    //       // passive: false,
+    //     })
+    // }
+    // if (isWorkoutPathModalOpen) {
+    //   disableScroll()
+    // } else {
+    //   enableScroll()
+    // }
   }, [isWorkoutPathModalOpen])
 
   const [play] = useSound(timerFinishedSound)
