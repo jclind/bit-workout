@@ -76,6 +76,13 @@ const WorkoutPathModal = ({
     return result
   }
 
+  const getItemStyle = (isDragging, draggableStyle) => ({
+    background: isDragging ? 'lightgreen' : 'grey',
+
+    ...draggableStyle,
+  })
+
+  const onDragStart = () => {}
   const onDragEnd = result => {
     setError('')
     if (!result.destination) {
@@ -116,7 +123,7 @@ const WorkoutPathModal = ({
               {error}
             </div>
           )}
-          <DragDropContext onDragEnd={onDragEnd}>
+          <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
             <Droppable droppableId='droppable'>
               {(provided, snapshot) => (
                 <div
@@ -194,7 +201,7 @@ const WorkoutPathModal = ({
                                 isEditing && exerciseState !== 'COMPLETED'
                                   ? ' jiggle'
                                   : ''
-                              }`}
+                              }${snapshot.isDragging ? ' dragging' : ''}`}
                             >
                               <div className='image'>
                                 <img src={imageURL} alt={name} />
