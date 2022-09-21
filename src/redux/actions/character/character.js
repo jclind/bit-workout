@@ -24,11 +24,15 @@ export const fetchCharacterData = uid => async dispatch => {
   dispatch({ type: FETCH_CHARACTER_DATA, payload: characterData })
 }
 
-export const calcCoins = reps => {
-  return Math.ceil(reps * 0.5)
+export const calcCoins = (reps, isWarmup) => {
+  const coins = reps * 0.5
+  if (isWarmup) return Math.ceil(coins / 2)
+  return Math.ceil(coins)
 }
-export const calcExp = reps => {
-  return Math.ceil(reps * 0.8)
+export const calcExp = (reps, isWarmup) => {
+  const exp = reps * 0.8
+  if (isWarmup) return Math.ceil(exp / 2)
+  return Math.ceil(exp)
 }
 
 export const logWorkout = reps => async (dispatch, getState) => {

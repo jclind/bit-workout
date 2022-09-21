@@ -24,6 +24,7 @@ import {
 import { exerciseList } from '../../../assets/data/exerciseList'
 import { calcCoins, calcExp, logWorkout } from '../character/character'
 import { v4 as uuidv4 } from 'uuid'
+import { createWarmupPath } from '../../../util/createWarmupPath'
 
 export const fetchWorkoutData = uid => async dispatch => {
   await getDoc(doc(db, 'workoutData', uid)).then(document => {
@@ -297,7 +298,79 @@ export const completeSet =
     // Calculate character stats based on completed reps
     dispatch(logWorkout(completedReps))
   }
+export const addWarmup = currWeight => async (dispatch, getState) => {
+  const runningWorkout = getState().workout.workoutData.runningWorkout
+  const currIdx = runningWorkout.remainingWorkout.currIdx
+  const currPath = runningWorkout.currWorkout.path
+  const barbellWeight = Number(getState().auth.userAccountData.barbellWeight)
 
+  const updatedPath = [...currPath]
+  const currPathExercise = updatedPath[currIdx]
+  updatedPath[currIdx] = {
+    ...currPathExercise,
+    warmupPath: createWarmupPath(barbellWeight, Number(currWeight)),
+  }
+
+  const updatedData = {
+    'runningWorkout.remainingWorkout.currWarmupSetIdx': 0,
+    'runningWorkout.currWorkout.isWarmupRunning': true,
+    'runningWorkout.currWorkout.path': updatedPath,
+  }
+
+  dispatch(updateWorkout(updatedData))
+}
+export const completeWarmupSet = () => async (dispatch, getState) => {
+  const runningWorkout = getState().workout.workoutData.runningWorkout
+  const currIdx = runningWorkout.remainingWorkout.currIdx
+  const currWarmupSetIdx = runningWorkout.remainingWorkout.currWarmupSetIdx
+  const currExercise = runningWorkout.currWorkout.path[currIdx]
+  const warmupPath = currExercise.warmupPath
+  const exerciseID = currExercise.exerciseID
+  const numSets = warmupPath.length
+  const completedReps = warmupPath[currWarmupSetIdx].reps
+  const timeLastUpdated = runningWorkout.timeLastUpdated
+  const elapsedTime = new Date().getTime() - timeLastUpdated
+
+  const currCoins = runningWorkout.coins ? runningWorkout.coins : 0
+  const totalCoins = calcCoins(completedReps, true) + currCoins
+  const currExp = runningWorkout.exp ? runningWorkout.exp : 0
+  const totalExp = calcExp(completedReps, true) + currExp
+
+  const workoutStats = incCurrWorkoutStats(
+    getState().workout.workoutData.workoutStats,
+    true,
+    completedReps,
+    exerciseID,
+    elapsedTime
+  )
+
+  if (currWarmupSetIdx >= numSets - 1) {
+    const updatedData = {
+      'runningWorkout.remainingWorkout.currWarmupSetIdx': 0,
+      'runningWorkout.currWorkout.isWarmupRunning': false,
+      'runningWorkout.timeLastUpdated': new Date().getTime(),
+      'runningWorkout.coins': totalCoins,
+      'runningWorkout.exp': totalExp,
+      workoutStats,
+    }
+    return dispatch(updateWorkout(updatedData))
+  } else {
+    const updatedData = {
+      'runningWorkout.remainingWorkout.currWarmupSetIdx': currWarmupSetIdx + 1,
+      'runningWorkout.timeLastUpdated': new Date().getTime(),
+      'runningWorkout.coins': totalCoins,
+      'runningWorkout.exp': totalExp,
+      workoutStats,
+    }
+    return dispatch(updateWorkout(updatedData))
+  }
+}
+export const endWarmup = () => async (dispatch, getState) => {
+  const updatedData = {
+    'runningWorkout.currWorkout.isWarmupRunning': false,
+  }
+  dispatch(updateWorkout(updatedData))
+}
 export const failSet =
   (newWeight, exerciseID, currSetTotal, completedReps, currWeight) =>
   async (dispatch, getState) => {

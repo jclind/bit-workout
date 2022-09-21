@@ -1,4 +1,4 @@
-export const current_version_number = 'v0.4.8-alpha'
+export const current_version_number = 'v0.5.0-alpha'
 
 export const releaseNotes = [
   {
@@ -85,6 +85,15 @@ export const releaseNotes = [
       'All images have been compressed for faster performance',
       'Greatly increase speed of running workout actions, i.e. completing sets and skipping rests',
       'Several style improvements / changes',
+    ],
+  },
+  {
+    version: 'v0.5.0-alpha',
+    date: 'September 21, 2022',
+    title: '',
+    description: '',
+    features: [
+      'Added warmups to weighted exercises. Users can now add warmup sets before each weighted exercise, no matter the set type. Warm up set weights/reps are calculated based on bar weight and starting exercise weight.',
     ],
   },
 ]

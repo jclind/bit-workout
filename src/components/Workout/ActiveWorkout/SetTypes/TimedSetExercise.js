@@ -5,7 +5,7 @@ import { timeToMS } from '../../../../util/timeToMS'
 import { formatTime } from '../../../../util/formatTime'
 import RepInputModal from '../RepInputModal/RepInputModal'
 import PlatesModal from '../../PlatesModal/PlatesModal'
-import { AiFillInfoCircle } from 'react-icons/ai'
+import { AiFillInfoCircle, AiOutlinePlusCircle } from 'react-icons/ai'
 
 const TimedSetExercise = ({
   currActiveWorkoutExercise,
@@ -13,6 +13,7 @@ const TimedSetExercise = ({
   currSetIdx,
   setIsWorkoutPathModalOpen,
   completeSet,
+  addWarmup,
 }) => {
   const [isRepInputModalOpen, setIsRepInputModalOpen] = useState(false)
   const [isPlatesModalOpen, setIsPlatesModalOpen] = useState(false)
@@ -113,6 +114,20 @@ const TimedSetExercise = ({
   return (
     <>
       <div className='rep-set-text'>{`Set ${currSetIdx} of ${numSets}, Reps for given time`}</div>
+      {exerciseIsWeighted &&
+      currSetIdx === 1 &&
+      !isTimerRunning &&
+      !isRepInputModalOpen ? (
+        <button
+          className='add-warmup'
+          onClick={() => {
+            addWarmup(currSetWeight)
+          }}
+        >
+          <AiOutlinePlusCircle className='icon' />
+          Add Warmup Sets
+        </button>
+      ) : null}
       <div className='workout-data'>
         <div
           className='exercise-weight'
