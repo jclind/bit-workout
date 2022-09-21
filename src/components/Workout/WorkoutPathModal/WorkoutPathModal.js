@@ -194,7 +194,7 @@ const WorkoutPathModal = ({
                                 isEditing && exerciseState !== 'COMPLETED'
                                   ? ' jiggle'
                                   : ''
-                              }`}
+                              }${snapshot.isDragging ? ' dragging' : ''}`}
                             >
                               <div className='image'>
                                 <img src={imageURL} alt={name} />
