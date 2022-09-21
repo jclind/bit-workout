@@ -80,7 +80,6 @@ const mapStateToProps = state => {
   const runningWorkout = state.workout.workoutData.runningWorkout
   const remainingWorkout = runningWorkout.remainingWorkout
   const currIdx = remainingWorkout.currIdx
-  console.log(runningWorkout, remainingWorkout, currIdx)
   return {
     currWarmupSetIdx: remainingWorkout.currWarmupSetIdx,
 

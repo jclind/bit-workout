@@ -12,7 +12,6 @@ export const createWarmupPath = (startWeight, endWeight) => {
   }
 
   const weightBetweenSets = weightDifference / divisor
-  console.log(weightBetweenSets)
   let sets = [{ weight: startWeight, reps: 5 }]
   for (let i = 0; i < divisor; i++) {
     const weight = roundNumber(startWeight + weightBetweenSets * i, 5)

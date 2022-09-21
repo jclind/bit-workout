@@ -24,7 +24,6 @@ const TimedSetExercise = ({
   const currSetWeight = currSet?.weight
 
   const exerciseIsWeighted = currExercise.weights
-  console.log(currExercise.weights)
 
   const { name: exerciseName, imageURL, id: exerciseID } = currExercise
 
