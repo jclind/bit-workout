@@ -25,6 +25,7 @@ import { exerciseList } from '../../../assets/data/exerciseList'
 import { calcCoins, calcExp, logWorkout } from '../character/character'
 import { v4 as uuidv4 } from 'uuid'
 import { createWarmupPath } from '../../../util/createWarmupPath'
+import { setAccountStats } from '../auth/authStatus'
 
 export const fetchWorkoutData = uid => async dispatch => {
   await getDoc(doc(db, 'workoutData', uid)).then(document => {
@@ -147,6 +148,7 @@ const incCurrWorkoutStats = (
   currWorkoutStats,
   incSets,
   incReps,
+  weight,
   exerciseID,
   incTotalTime
 ) => {
@@ -237,6 +239,15 @@ export const completeSet =
     const currExp = runningWorkout.exp ? runningWorkout.exp : 0
     const totalExp = calcExp(completedReps) + currExp
 
+    const workoutStats = incCurrWorkoutStats(
+      getState().auth.userAccountData.accountStats,
+      true,
+      completedReps,
+      weight,
+      exerciseID,
+      elapsedTime
+    )
+
     // If the current set is the last set
     // Else start rest timer, increment set, and updateWorkout
     if (currSet >= currSetTotal) {
@@ -249,13 +260,6 @@ export const completeSet =
         const nextIdx = currIdx + 1
         const nextSet = 1
 
-        const workoutStats = incCurrWorkoutStats(
-          getState().workout.workoutData.workoutStats,
-          true,
-          completedReps,
-          exerciseID,
-          elapsedTime
-        )
         const updatedData = {
           'runningWorkout.remainingWorkout.currIdx': nextIdx,
           'runningWorkout.remainingWorkout.currSet': nextSet,
@@ -266,7 +270,6 @@ export const completeSet =
           'runningWorkout.coins': totalCoins,
           'runningWorkout.exp': totalExp,
           'runningWorkout.currWorkout.path': updatedPath,
-          workoutStats,
         }
 
         dispatch(updateWorkout(updatedData))
@@ -275,13 +278,6 @@ export const completeSet =
       const startTime = new Date().getTime()
       const nextSet = currSet + 1
 
-      const workoutStats = incCurrWorkoutStats(
-        getState().workout.workoutData.workoutStats,
-        true,
-        completedReps,
-        exerciseID,
-        elapsedTime
-      )
       const updatedData = {
         'runningWorkout.remainingWorkout.currSet': nextSet,
         'runningWorkout.timer.isTimer': true,
@@ -290,11 +286,11 @@ export const completeSet =
         'runningWorkout.timeLastUpdated': new Date().getTime(),
         'runningWorkout.coins': totalCoins,
         'runningWorkout.exp': totalExp,
-        workoutStats,
       }
       dispatch(updateWorkout(updatedData))
     }
 
+    dispatch(setAccountStats(workoutStats))
     // Calculate character stats based on completed reps
     dispatch(logWorkout(completedReps))
   }
