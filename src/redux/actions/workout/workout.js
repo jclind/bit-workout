@@ -150,7 +150,9 @@ const incCurrWorkoutStats = (
   incReps,
   weight,
   exerciseID,
-  incTotalTime
+  incTotalTime,
+  incCoins,
+  incExp
 ) => {
   const workoutStats = currWorkoutStats
     ? currWorkoutStats
@@ -287,7 +289,9 @@ export const completeSet =
       completedReps,
       weight,
       exerciseID,
-      elapsedTime
+      elapsedTime,
+      totalCoins,
+      totalExp
     )
 
     // If the current set is the last set
@@ -357,7 +361,7 @@ export const addWarmup = currWeight => async (dispatch, getState) => {
 
   dispatch(updateWorkout(updatedData))
 }
-export const completeWarmupSet = () => async (dispatch, getState) => {
+export const completeWarmupSet = weight => async (dispatch, getState) => {
   const runningWorkout = getState().workout.workoutData.runningWorkout
   const currIdx = runningWorkout.remainingWorkout.currIdx
   const currWarmupSetIdx = runningWorkout.remainingWorkout.currWarmupSetIdx
@@ -378,8 +382,11 @@ export const completeWarmupSet = () => async (dispatch, getState) => {
     getState().workout.workoutData.workoutStats,
     true,
     completedReps,
+    weight,
     exerciseID,
-    elapsedTime
+    elapsedTime,
+    totalCoins,
+    totalExp
   )
 
   if (currWarmupSetIdx >= numSets - 1) {
@@ -498,6 +505,7 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
   const workoutStats = incCurrWorkoutStats(
     getState().workout.workoutData.workoutStats,
     true,
+    null,
     null,
     null,
     elapsedTime
