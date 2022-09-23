@@ -166,7 +166,8 @@ const incCurrWorkoutStats = (
     workoutStats.totalStats.totalWorkoutTime =
       Number(workoutStats.totalStats.totalWorkoutTime) + Number(incTotalTime)
   }
-  if (exerciseID) {
+  console.log(exerciseID)
+  if (exerciseID || exerciseID === 0) {
     if (
       workoutStats.exerciseStats.findIndex(
         exercise => exercise.exerciseID === exerciseID
@@ -176,24 +177,65 @@ const incCurrWorkoutStats = (
         exerciseID,
         totalReps: 0,
         totalSets: 0,
+        totalWeightLifted: 0,
       })
     }
+    const exerciseStatsIdx = workoutStats.exerciseStats.findIndex(
+      exercise => exercise.exerciseID === exerciseID
+    )
     if (incSets) {
       workoutStats.totalStats.totalSets += 1
-      const exerciseStatsIdx = workoutStats.exerciseStats.findIndex(
-        exercise => exercise.exerciseID === exerciseID
-      )
       workoutStats.exerciseStats[exerciseStatsIdx].totalSets =
         Number(workoutStats.exerciseStats[exerciseStatsIdx].totalSets) + 1
     }
     if (incReps) {
       workoutStats.totalStats.totalReps += Number(incReps)
-      const exerciseStatsIdx = workoutStats.exerciseStats.findIndex(
-        exercise => exercise.exerciseID === exerciseID
-      )
       workoutStats.exerciseStats[exerciseStatsIdx].totalReps =
         Number(workoutStats.exerciseStats[exerciseStatsIdx].totalReps) +
         Number(incReps)
+    }
+    if (weight) {
+      const netWeightInc = Number(weight) * Number(incReps)
+      const totalWeightLifted =
+        Number(workoutStats.totalStats.totalWeightLifted) || 0
+      workoutStats.totalStats.totalWeightLifted =
+        Number(totalWeightLifted) + Number(netWeightInc)
+
+      const prevExerciseWeightLifted =
+        Number(workoutStats.totalStats.totalWeightLifted) || 0
+      const totalExerciseWeightLifted =
+        Number(prevExerciseWeightLifted) + Number(netWeightInc)
+
+      const currPR1x1 = workoutStats.exerciseStats[exerciseStatsIdx].pr1x1 || {
+        weight: 0,
+        date: null,
+      }
+      const newPR1x1 =
+        weight > currPR1x1.weight
+          ? { weight, date: new Date().getTime() }
+          : currPR1x1
+
+      const currPR1x5 = workoutStats.exerciseStats[exerciseStatsIdx].pr1x5 || {
+        weight: 0,
+        date: null,
+      }
+      let newPR1x5 = currPR1x5
+      if (incReps >= 5 && weight > currPR1x5.weight) {
+        newPR1x5 = { weight, date: new Date().getTime() }
+      }
+
+      workoutStats.exerciseStats[exerciseStatsIdx] = {
+        ...workoutStats.exerciseStats[exerciseStatsIdx],
+        totalExerciseWeightLifted,
+        pr1x1: newPR1x1,
+        pr1x5: newPR1x5,
+      }
+    }
+    if (incTotalTime) {
+      const totalExerciseTime =
+        Number(workoutStats.exerciseStats[exerciseStatsIdx].totalTime) || 0
+      workoutStats.exerciseStats[exerciseStatsIdx].totalTime =
+        Number(totalExerciseTime) + Number(incTotalTime)
     }
   }
 
