@@ -8,9 +8,13 @@
   height: 130px;
   width: 150px;
   background: $secondary-background;
-  border-radius: 10px;
+  border-radius: $border-radius;
   padding: 0 1.25rem;
   cursor: pointer;
+
+  &:focus {
+    outline: 1px solid $outline;
+  }
 
   .info-tile-title {
     font-size: 0.875;

@@ -88,7 +88,7 @@ describe('Workout Tests', () => {
         .click()
     })
 
-    cy.clickSettingsButton('Account Settings')
+    cy.get('button.settings-btn').click()
 
     // Settings Page
     // Manage Account
