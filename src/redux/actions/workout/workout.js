@@ -239,6 +239,18 @@ const incCurrWorkoutStats = (
       workoutStats.exerciseStats[exerciseStatsIdx].totalTime =
         Number(totalExerciseTime) + Number(incTotalTime)
     }
+    if (incCoins) {
+      workoutStats.totalStats.totalCoins += Number(incCoins)
+      workoutStats.exerciseStats[exerciseStatsIdx].totalCoins =
+        Number(workoutStats.exerciseStats[exerciseStatsIdx].totalCoins) +
+        Number(incCoins)
+    }
+    if (incExp) {
+      workoutStats.totalStats.totalExp += Number(incExp)
+      workoutStats.exerciseStats[exerciseStatsIdx].totalExp =
+        Number(workoutStats.exerciseStats[exerciseStatsIdx].totalExp) +
+        Number(incExp)
+    }
   }
 
   return workoutStats
