@@ -240,16 +240,20 @@ const incCurrWorkoutStats = (
         Number(totalExerciseTime) + Number(incTotalTime)
     }
     if (incCoins) {
-      workoutStats.totalStats.totalCoins += Number(incCoins)
+      const totalCoins = Number(workoutStats.totalStats.totalCoins) || 0
+      workoutStats.totalStats.totalCoins = totalCoins + Number(incCoins)
+      const totalExerciseCoins =
+        Number(workoutStats.exerciseStats[exerciseStatsIdx].totalCoins) || 0
       workoutStats.exerciseStats[exerciseStatsIdx].totalCoins =
-        Number(workoutStats.exerciseStats[exerciseStatsIdx].totalCoins) +
-        Number(incCoins)
+        totalExerciseCoins + Number(incCoins)
     }
     if (incExp) {
-      workoutStats.totalStats.totalExp += Number(incExp)
+      const totalExp = Number(workoutStats.totalStats.totalExp) || 0
+      workoutStats.totalStats.totalExp = totalExp + Number(incExp)
+      const totalExerciseExp =
+        Number(workoutStats.exerciseStats[exerciseStatsIdx].totalExp) || 0
       workoutStats.exerciseStats[exerciseStatsIdx].totalExp =
-        Number(workoutStats.exerciseStats[exerciseStatsIdx].totalExp) +
-        Number(incExp)
+        totalExerciseExp + Number(incExp)
     }
   }
 
@@ -291,9 +295,11 @@ export const completeSet =
     ]
 
     const currCoins = runningWorkout.coins ? runningWorkout.coins : 0
-    const totalCoins = calcCoins(completedReps) + currCoins
+    const earnedCoins = calcCoins(completedReps)
+    const totalCoins = earnedCoins + currCoins
     const currExp = runningWorkout.exp ? runningWorkout.exp : 0
-    const totalExp = calcExp(completedReps) + currExp
+    const earnedExp = calcCoins(completedReps)
+    const totalExp = earnedExp + currExp
 
     const workoutStats = incCurrWorkoutStats(
       getState().auth.userAccountData.accountStats,
@@ -302,8 +308,8 @@ export const completeSet =
       weight,
       exerciseID,
       elapsedTime,
-      totalCoins,
-      totalExp
+      earnedCoins,
+      earnedExp
     )
 
     // If the current set is the last set
@@ -386,9 +392,11 @@ export const completeWarmupSet = weight => async (dispatch, getState) => {
   const elapsedTime = new Date().getTime() - timeLastUpdated
 
   const currCoins = runningWorkout.coins ? runningWorkout.coins : 0
-  const totalCoins = calcCoins(completedReps, true) + currCoins
+  const earnedCoins = calcCoins(completedReps)
+  const totalCoins = earnedCoins + currCoins
   const currExp = runningWorkout.exp ? runningWorkout.exp : 0
-  const totalExp = calcExp(completedReps, true) + currExp
+  const earnedExp = calcCoins(completedReps)
+  const totalExp = earnedExp + currExp
 
   const workoutStats = incCurrWorkoutStats(
     getState().workout.workoutData.workoutStats,
@@ -397,8 +405,8 @@ export const completeWarmupSet = weight => async (dispatch, getState) => {
     weight,
     exerciseID,
     elapsedTime,
-    totalCoins,
-    totalExp
+    earnedCoins,
+    earnedExp
   )
 
   if (currWarmupSetIdx >= numSets - 1) {
