@@ -1,4 +1,4 @@
-export const current_version_number = 'v0.5.0-alpha'
+export const current_version_number = 'v0.6.0-alpha'
 
 export const releaseNotes = [
   {
@@ -94,6 +94,25 @@ export const releaseNotes = [
     description: '',
     features: [
       'Added warmups to weighted exercises. Users can now add warmup sets before each weighted exercise, no matter the set type. Warm up set weights/reps are calculated based on bar weight and starting exercise weight.',
+    ],
+  },
+  {
+    version: 'v0.6.0-alpha',
+    date: 'September 27, 2022',
+    title: '',
+    description: '',
+    features: [
+      'Major improvements to tracked account statistics and progress. Now with a dedicated stats accessed from the account page.',
+    ],
+    fixes: [
+      "Fix: warmup sets show weight as 'NaN' for some users and actual weight cannot be found.",
+      "Fix: trending workouts don't fetch more results when page is scrolled to bottom of page like intended.",
+      'Fix: exercises with lengthy names push content on page to occasionally be unreadable / merge with other content.',
+      "Fix: adding a workout with the workout path modal occasionally messes up set type which can't be changed.",
+      'Fix: workout path modal easily overflows off the page making functionality unusable.',
+    ],
+    improvements: [
+      'Added minor quality of life and accessability changes to inputs / forms.',
     ],
   },
 ]

@@ -168,7 +168,6 @@ const incCurrWorkoutStats = (
     workoutStats.totalStats.totalWorkoutTime =
       Number(workoutStats.totalStats.totalWorkoutTime) + Number(incTotalTime)
   }
-  console.log(exerciseID)
   if (exerciseID || exerciseID === 0) {
     if (
       workoutStats.exerciseStats.findIndex(

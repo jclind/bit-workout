@@ -98,7 +98,6 @@ const WorkoutPathModal = ({
     if (isEqual) return
 
     setCurrWorkoutPath(updatedPath)
-    console.log(startIndex, endIndex, currExerciseIdx)
     // If the currently active exercise wasn't moved and is still active, don't reset current number of completed sets
     if (startIndex > currExerciseIdx && endIndex > currExerciseIdx) {
       updateWorkout({

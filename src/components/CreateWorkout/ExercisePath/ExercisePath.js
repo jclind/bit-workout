@@ -52,7 +52,6 @@ const ExercisePath = ({
   }
 
   useEffect(() => {
-    console.log(1, exerciseType)
     setSelectedType(exerciseType)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [exerciseType])

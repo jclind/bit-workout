@@ -341,6 +341,5 @@ export const submitUserFeedback =
   }
 
 export const setAccountStats = data => async dispatch => {
-  console.log('test')
   dispatch(updateUserAccountData({ prop: 'accountStats', val: data }))
 }
