@@ -12,12 +12,8 @@ export const msToTime = duration => {
 }
 
 export const msToDayHour = duration => {
-  let hours = Math.floor((duration / (1000 * 60 * 60)) % 24),
+  let hours = ((duration / (1000 * 60 * 60)) % 24).toFixed(1),
     days = Math.floor(duration / (1000 * 60 * 60 * 24))
-
-  if (days === 0) {
-    days = null
-  }
 
   return (days ? days + 'd, ' : '') + (hours ? hours + 'h' : '')
 }

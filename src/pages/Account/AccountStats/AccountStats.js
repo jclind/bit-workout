@@ -35,7 +35,20 @@ const AccountStats = ({ accountStats }) => {
     totalExp,
   } = totalStats
 
-  const totalWorkoutTimeFormatted = msToDayHour(104520000)
+  const getExercisePR = exerciseID => {
+    const exerciseData = exerciseStats.find(ex => ex.exerciseID === exerciseID)
+    const pr1x1 = exerciseData?.pr1x1
+    if (!pr1x1 || !pr1x1.weight) {
+      return 'No Data'
+    }
+    return `${pr1x1.weight} lbs`
+  }
+
+  const squatPR = getExercisePR(0)
+  const benchPressPR = getExercisePR(3)
+  const deadliftPR = getExercisePR(1)
+
+  const totalWorkoutTimeFormatted = msToDayHour(totalWorkoutTime)
 
   return (
     <div className='account-stats-page page'>
@@ -50,17 +63,25 @@ const AccountStats = ({ accountStats }) => {
             link
           />
           {/* <StatItem title={'Big Three Max'} weight='45' /> */}
-          <StatItem title={'Sets'} value={totalSets} link />
-          <StatItem title={'Reps'} value={totalReps} link />
-          <StatItem title={'Time'} value={totalWorkoutTimeFormatted} link />
+          <StatItem title={'Sets'} value={totalSets.toLocaleString()} link />
+          <StatItem title={'Reps'} value={totalReps.toLocaleString()} link />
+          <StatItem
+            title={'Workout Time'}
+            value={totalWorkoutTimeFormatted}
+            link
+          />
         </section>
         <section>
-          <StatItem title={'Squat'} value='155lb' link />
-          <StatItem title={'Bench Press'} value='135lb' link />
+          <StatItem title={'Squat'} value={squatPR} link />
+          <StatItem title={'Bench Press'} value={benchPressPR} link />
+          <StatItem title={'DeadLift'} value={deadliftPR} link />
         </section>
         <section>
-          <StatItem title={'Coins Earned'} value='532' />
-          <StatItem title={'Exp Earned'} value='230' />
+          <StatItem
+            title={'Coins Earned'}
+            value={totalCoins.toLocaleString()}
+          />
+          <StatItem title={'Exp Earned'} value={totalExp.toLocaleString()} />
         </section>
       </div>
     </div>
