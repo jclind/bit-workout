@@ -79,22 +79,20 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
             <StatItem
               title={'Volume'}
               value={`${totalWeightLifted.toLocaleString()} lbs`}
-              link
             />
             {/* <StatItem title={'Big Three Max'} weight='45' /> */}
-            <StatItem title={'Sets'} value={totalSets.toLocaleString()} link />
-            <StatItem title={'Reps'} value={totalReps.toLocaleString()} link />
+            <StatItem title={'Sets'} value={totalSets.toLocaleString()} />
+            <StatItem title={'Reps'} value={totalReps.toLocaleString()} />
             <StatItem
               title={'Workout Time'}
               value={totalWorkoutTimeFormatted}
-              link
             />
           </section>
           <section>
-            <StatItem title={'Squat'} value={squatPR} link />
-            <StatItem title={'Bench Press'} value={benchPressPR} link />
-            <StatItem title={'DeadLift'} value={deadliftPR} link />
-            <StatItem title={'View All'} link />
+            <StatItem title={'Squat'} value={squatPR} />
+            <StatItem title={'Bench Press'} value={benchPressPR} />
+            <StatItem title={'DeadLift'} value={deadliftPR} />
+            {/* <StatItem title={'View All'} /> */}
           </section>
           <section>
             <StatItem

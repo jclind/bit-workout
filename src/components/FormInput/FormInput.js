@@ -78,7 +78,7 @@ const FormInput = ({
               tabRef.current.focus()
             }
           }}
-          autoCapitalize={autoCapitalize || 'none'}
+          autoCapitalize={autoCapitalize ?? 'none'}
         />
       )}
 
