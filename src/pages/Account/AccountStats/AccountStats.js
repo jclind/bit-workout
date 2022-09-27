@@ -1,7 +1,10 @@
 import React from 'react'
 import BackButton from '../../../components/SettingsComponents/BackButton/BackButton'
 import { BsChevronRight } from 'react-icons/bs'
+import { connect } from 'react-redux'
 import './AccountStats.scss'
+import { formatTimeToObject } from '../../../util/formatTime'
+import { msToDayHour } from '../../../util/msToTime'
 
 const StatItem = ({ title, value, link, icon }) => {
   return (
@@ -21,7 +24,19 @@ const StatItem = ({ title, value, link, icon }) => {
   )
 }
 
-const AccountStats = () => {
+const AccountStats = ({ accountStats }) => {
+  const { exerciseStats, totalStats } = accountStats
+  const {
+    totalWeightLifted,
+    totalReps,
+    totalSets,
+    totalWorkoutTime,
+    totalCoins,
+    totalExp,
+  } = totalStats
+
+  const totalWorkoutTimeFormatted = msToDayHour(104520000)
+
   return (
     <div className='account-stats-page page'>
       <div className='settings-title'>Statistics / Progress</div>
@@ -29,11 +44,15 @@ const AccountStats = () => {
 
       <div className='stats-container'>
         <section>
-          <StatItem title={'Volume'} value='45lb' link />
+          <StatItem
+            title={'Volume'}
+            value={`${totalWeightLifted.toLocaleString()} lbs`}
+            link
+          />
           {/* <StatItem title={'Big Three Max'} weight='45' /> */}
-          <StatItem title={'Sets'} value='45' link />
-          <StatItem title={'Reps'} value='45' link />
-          <StatItem title={'Time'} value='1d 2h 1s' link />
+          <StatItem title={'Sets'} value={totalSets} link />
+          <StatItem title={'Reps'} value={totalReps} link />
+          <StatItem title={'Time'} value={totalWorkoutTimeFormatted} link />
         </section>
         <section>
           <StatItem title={'Squat'} value='155lb' link />
@@ -48,4 +67,10 @@ const AccountStats = () => {
   )
 }
 
-export default AccountStats
+const mapStateToProps = state => {
+  return {
+    accountStats: state?.auth?.userAccountData?.accountStats,
+  }
+}
+
+export default connect(mapStateToProps)(AccountStats)
