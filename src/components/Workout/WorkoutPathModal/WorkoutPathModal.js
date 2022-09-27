@@ -86,11 +86,9 @@ const WorkoutPathModal = ({
       return setError('Cannot move before completed exercises.')
     }
 
-    const updatedPath = reorder(
-      currWorkoutPath,
-      result.source.index,
-      result.destination.index
-    )
+    const startIndex = result.source.index
+    const endIndex = result.destination.index
+    const updatedPath = reorder(currWorkoutPath, startIndex, endIndex)
 
     // Check if updatedPath equals original path
     let isEqual = true
@@ -100,10 +98,18 @@ const WorkoutPathModal = ({
     if (isEqual) return
 
     setCurrWorkoutPath(updatedPath)
-    updateWorkout({
-      'runningWorkout.currWorkout.path': updatedPath,
-      'runningWorkout.remainingWorkout.currSet': 1,
-    })
+    console.log(startIndex, endIndex, currExerciseIdx)
+    // If the currently active exercise wasn't moved and is still active, don't reset current number of completed sets
+    if (startIndex > currExerciseIdx && endIndex > currExerciseIdx) {
+      updateWorkout({
+        'runningWorkout.currWorkout.path': updatedPath,
+      })
+    } else {
+      updateWorkout({
+        'runningWorkout.currWorkout.path': updatedPath,
+        'runningWorkout.remainingWorkout.currSet': 1,
+      })
+    }
   }
   return ReactDom.createPortal(
     <>
@@ -134,7 +140,6 @@ const WorkoutPathModal = ({
                     const setType = ex.type
                     const numSets = sets.length
                     let currExerciseWeight = null
-
                     if (currExercise.weights) {
                       if (setType === 'straight') {
                         let weightObj = weights.find(
