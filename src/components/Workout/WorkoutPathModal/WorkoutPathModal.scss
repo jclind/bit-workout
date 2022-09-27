@@ -3,9 +3,21 @@
 .workout-path-modal {
   .modal-content {
     width: calc(#{$max-width} * 0.9);
-    max-width: 90%;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    // max-width: 90%;
+    max-height: 80%;
+    margin: 0;
+    padding: 0;
+    // padding-left: 1.25rem;
+    // padding-right: 1.25rem;
+
+    .container {
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      overflow-y: auto;
+      min-height: 450px;
+    }
     .settings-title {
       margin-bottom: 1.5rem;
     }
@@ -29,7 +41,7 @@
         top: auto !important;
         left: auto !important;
         margin: 1rem 0 0 0;
-        .container {
+        .exercise-container {
           display: flex;
           padding: 0.5rem 1rem;
           border-radius: $border-radius;
@@ -104,7 +116,7 @@
         margin-right: 1rem;
       }
       .workout-path-exercise.COMPLETED {
-        .container {
+        .exercise-container {
           background: $primary-background;
           color: $secondary;
 
@@ -117,7 +129,7 @@
         }
       }
       .workout-path-exercise.ACTIVE {
-        .container {
+        .exercise-container {
           background: $secondary;
         }
       }

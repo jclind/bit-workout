@@ -12,7 +12,16 @@ const InfoTile = ({ title, text, subtext, link }) => {
     }
   }
   return (
-    <div className='info-tile' onClick={handleInfoTileClick}>
+    <div
+      className='info-tile'
+      onClick={handleInfoTileClick}
+      onKeyDown={e => {
+        if (e.key === 'Enter') {
+          handleInfoTileClick()
+        }
+      }}
+      tabIndex='0'
+    >
       <div className='info-tile-title'>{title}</div>
       <div className='text-container'>
         <div className='info-tile-text'>{text}</div>
@@ -23,4 +32,3 @@ const InfoTile = ({ title, text, subtext, link }) => {
 }
 
 export default InfoTile
-

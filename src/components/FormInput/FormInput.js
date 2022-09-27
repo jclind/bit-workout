@@ -14,7 +14,9 @@ const FormInput = ({
   showPasswordBtn,
   textarea,
   inputRef,
+  tabRef,
   tabIndex,
+  autoCapitalize,
 }) => {
   const [type, setType] = useState(inputType)
   const [clear, setClear] = useState(false)
@@ -70,6 +72,13 @@ const FormInput = ({
           className={icon ? 'active-icon' : null}
           ref={inputRef}
           tabIndex={tabIndex}
+          onKeyDown={e => {
+            if (tabRef?.current && e.key === 'Enter') {
+              e.preventDefault()
+              tabRef.current.focus()
+            }
+          }}
+          autoCapitalize={autoCapitalize ?? 'none'}
         />
       )}
 

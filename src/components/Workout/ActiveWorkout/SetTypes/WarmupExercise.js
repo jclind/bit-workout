@@ -53,7 +53,10 @@ const WarmupExercise = ({
         </button>
       </div>
       <div className='options'>
-        <button className='submit-btn' onClick={completeWarmupSet}>
+        <button
+          className='submit-btn'
+          onClick={() => completeWarmupSet(warmupWeight)}
+        >
           Completed
         </button>
         <button className='set-failed-btn' onClick={endWarmup}>
@@ -88,7 +91,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    completeWarmupSet: () => dispatch(completeWarmupSet()),
+    completeWarmupSet: weight => dispatch(completeWarmupSet(weight)),
     endWarmup: () => dispatch(endWarmup()),
   }
 }

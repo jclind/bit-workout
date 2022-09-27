@@ -37,6 +37,12 @@
     text-transform: capitalize;
     margin-bottom: 0.75rem;
   }
+  .exercise-title.sm-text {
+    font-size: 1.6rem;
+  }
+  .exercise-title.xsm-text {
+    font-size: 1.5rem;
+  }
 
   .exercise-type {
     color: $secondary-text;
@@ -61,7 +67,7 @@
   }
   .workout-data {
     position: absolute;
-    top: calc(50%);
+    top: calc(55%);
     transform: translateY(-50%);
     left: 0;
     right: 0;
@@ -121,7 +127,7 @@
     .timer {
       display: flex;
       flex-direction: column;
-      margin-bottom: 3rem;
+      margin-bottom: 1rem;
       .text {
         color: $secondary-text;
       }

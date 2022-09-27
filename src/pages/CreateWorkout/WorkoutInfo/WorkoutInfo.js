@@ -76,6 +76,7 @@ const WorkoutData = ({ getSingleExercise }) => {
               setTitle(e.target.value.substring(0, 100))
             }}
             value={title}
+            autoCapitalize='words'
           />
         </div>
         <div className='workout-description'>
@@ -85,6 +86,7 @@ const WorkoutData = ({ getSingleExercise }) => {
             onChange={e => setDescription(e.target.value.substring(0, 320))}
             value={description}
             rows='6'
+            autoCapitalize='on'
           />
         </div>
       </div>

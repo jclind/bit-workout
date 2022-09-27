@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useNavigate, Navigate } from 'react-router'
 import Login from './Login'
 import './Login.scss'
@@ -38,6 +38,8 @@ const LoginPage = ({ login, isSignedIn }) => {
     }
   }
 
+  const passwordInputRef = useRef('')
+
   if (isSignedIn) {
     return <Navigate to='/' />
   }
@@ -50,6 +52,7 @@ const LoginPage = ({ login, isSignedIn }) => {
       emailVal={emailVal}
       setEmailVal={setEmailVal}
       passwordVal={passwordVal}
+      passwordInputRef={passwordInputRef}
       setPasswordVal={setPasswordVal}
     />
   )

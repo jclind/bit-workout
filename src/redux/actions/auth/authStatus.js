@@ -339,3 +339,7 @@ export const submitUserFeedback =
 
     return coinsAdded
   }
+
+export const setAccountStats = data => async dispatch => {
+  dispatch(updateUserAccountData({ prop: 'accountStats', val: data }))
+}

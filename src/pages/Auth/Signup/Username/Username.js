@@ -78,6 +78,11 @@ const Username = () => {
           value={username}
           ref={usernameRef}
           data-testid='username'
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              nextBtnRef.current.click()
+            }
+          }}
         />
         {isUsernameAvailable !== null && (
           <div
