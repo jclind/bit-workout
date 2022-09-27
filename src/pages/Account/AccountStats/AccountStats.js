@@ -55,7 +55,10 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
       <div className='settings-title'>Statistics / Progress</div>
       <BackButton />
       {!workoutsCompleted ? (
-        'Complete A Workout To See Statistics And Progress'
+        <div className='no-data-container'>
+          <div className='title'>No Data</div>
+          <p>Complete a workout to see progress.</p>
+        </div>
       ) : loading ? (
         <div className='fade-loader-container'>
           <div className='spinner-container'>

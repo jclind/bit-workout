@@ -4,6 +4,22 @@
   min-height: calc(100% - #{$navbar-height} - 2rem);
   margin-bottom: 3rem;
 
+  .no-data-container {
+    text-align: center;
+    padding: 2rem;
+    border-radius: $border-radius;
+    background: $secondary-background;
+    .title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding-bottom: 1rem;
+    }
+    p {
+      color: $secondary-text;
+      margin: 0;
+    }
+  }
+
   .stats-container {
     margin-bottom: 5rem;
     section {
