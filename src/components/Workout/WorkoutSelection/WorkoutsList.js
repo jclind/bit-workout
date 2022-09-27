@@ -6,11 +6,15 @@ import ConfirmDeleteWorkoutModal from './ConfirmDeleteWorkoutModal'
 import { connect } from 'react-redux'
 import { deleteWorkout } from '../../../redux/actions/workout/workout'
 
-const WorkoutsList = ({ getWorkouts, appContainerRef, deleteWorkout }) => {
+const WorkoutsList = ({
+  getWorkouts,
+  appContainerRef,
+  deleteWorkout,
+  test,
+}) => {
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
     useState(false)
   const [deletedWorkoutID, setDeletedWorkoutID] = useState(null)
-
   const handleDeleteWorkout = workoutID => {
     setDeletedWorkoutID(workoutID)
     setIsConfirmDeleteModalOpen(true)
@@ -55,7 +59,7 @@ const WorkoutsList = ({ getWorkouts, appContainerRef, deleteWorkout }) => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [workouts])
+  }, [workouts, appContainerRef])
 
   const getMoreWorkoutData = () => {
     getWorkouts('', null, limit, latestDoc).then(res => {
@@ -74,6 +78,7 @@ const WorkoutsList = ({ getWorkouts, appContainerRef, deleteWorkout }) => {
     }
     if (appContainerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = appContainerRef.current
+      console.log(scrollTop + clientHeight, scrollHeight)
       if (scrollTop + clientHeight === scrollHeight && !isPaginationLoading) {
         setIsPaginationLoading(true)
         getMoreWorkoutData()

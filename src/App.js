@@ -90,7 +90,9 @@ function App() {
               >
                 <Route
                   path='trending-workouts'
-                  element={<TrendingWorkouts />}
+                  element={
+                    <TrendingWorkouts appContainerRef={appContainerRef} />
+                  }
                 />
                 <Route
                   path='user-workouts'
