@@ -1,5 +1,5 @@
 describe('Workout Tests', () => {
-  it('Create Workout Test', () => {
+  it('App Flow Test', () => {
     cy.callFirestore('update', `workoutData/${Cypress.env('TEST_UID')}`, {
       isWorkoutRunning: false,
       runningWorkout: {},
@@ -88,7 +88,7 @@ describe('Workout Tests', () => {
         .click()
     })
 
-    cy.get('button.settings-btn').click()
+    cy.get('.settings-btn-container').click()
 
     // Settings Page
     // Manage Account
