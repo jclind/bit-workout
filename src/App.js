@@ -47,6 +47,7 @@ import LikedWorkouts from './components/Workout/WorkoutSelection/LikedWorkouts'
 import WorkoutSettings from './pages/Settings/Workout/WorkoutSettings'
 import ReleaseNotes from './pages/Settings/ReleaseNotes/ReleaseNotes'
 import LoginContainer from './pages/Auth/Login/LoginContainer'
+import AccountStats from './pages/Account/AccountStats/AccountStats'
 
 const ScrollToTop = () => {
   const { pathname } = useLocation()
@@ -89,7 +90,9 @@ function App() {
               >
                 <Route
                   path='trending-workouts'
-                  element={<TrendingWorkouts />}
+                  element={
+                    <TrendingWorkouts appContainerRef={appContainerRef} />
+                  }
                 />
                 <Route
                   path='user-workouts'
@@ -135,6 +138,16 @@ function App() {
                 exact
                 path='/account/weight/add-weight'
                 element={<AddWeightInputContainer />}
+              />
+              <Route
+                exact
+                path='/account/stats'
+                element={
+                  <>
+                    <AccountStats />
+                    <NavbarContainer />
+                  </>
+                }
               />
               <Route exact path='/account/settings' element={<Settings />} />
               <Route

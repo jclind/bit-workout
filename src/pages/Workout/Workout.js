@@ -19,7 +19,7 @@ const Workout = ({ uid, fetchWorkoutData, isWorkoutFinished, workoutData }) => {
 
   if (!workoutData) {
     return (
-      <div className='workout-loading'>
+      <div className='fade-loader-container'>
         <div className='spinner-container'>
           <FadeLoader
             color={'#548ca8'}

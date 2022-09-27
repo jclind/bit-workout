@@ -116,7 +116,7 @@ export const exerciseList = [
     name: 'Seated Dumbbell Shoulder Press',
     animation: null,
     weights: true,
-    imageURL: '/workouts/seated-dumbbell-shoulder-press',
+    imageURL: '/workouts/seated-dumbbell-shoulder-press.png',
   },
   {
     id: 17,

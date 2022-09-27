@@ -23,6 +23,8 @@ const EmailSignup = ({ signupWithEmail }) => {
   }, [name, email, password])
 
   const nameRef = useRef()
+  const emailRef = useRef()
+  const passwordRef = useRef()
   useEffect(() => {
     if (nameRef && nameRef.current) {
       nameRef.current.focus()
@@ -104,6 +106,8 @@ const EmailSignup = ({ signupWithEmail }) => {
           setVal={val => handleSetName(val)}
           required={true}
           inputRef={nameRef}
+          tabRef={emailRef}
+          autoCapitalize='words'
         />
         <FormInput
           icon={<AiOutlineMail className='icon' />}
@@ -112,6 +116,8 @@ const EmailSignup = ({ signupWithEmail }) => {
           val={email}
           setVal={setEmail}
           required={true}
+          inputRef={emailRef}
+          tabRef={passwordRef}
         />
         <FormInput
           icon={<BiLockAlt className='icon' />}
@@ -121,6 +127,7 @@ const EmailSignup = ({ signupWithEmail }) => {
           setVal={setPassword}
           required={true}
           showPasswordBtn={true}
+          inputRef={passwordRef}
         />
         <button
           className='signup-next-btn'

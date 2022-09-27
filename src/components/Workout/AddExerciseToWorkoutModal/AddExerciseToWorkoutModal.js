@@ -11,16 +11,11 @@ import ExercisePath from '../../CreateWorkout/ExercisePath/ExercisePath'
 const AddExerciseToWorkoutModal = ({
   onClose,
   addExerciseToWorkout,
-  currWorkoutPath,
   setCurrWorkoutPath,
 }) => {
-  const [selectedExercise, setSelectedExercise] = useState({
-    exerciseID: null,
-    description: '',
-    sets: null,
-    type: null,
-    id: uuidv4(),
-  })
+  const [type, setType] = useState(null)
+  const [sets, setSets] = useState(null)
+  const [exerciseID, setExerciseID] = useState(null)
 
   const [showErrors, setShowErrors] = useState(false) // Only show errors on next button click
   const [error, setError] = useState('')
@@ -29,21 +24,14 @@ const AddExerciseToWorkoutModal = ({
     onClose()
   })
 
-  const updateSelectedExercise = (prop, val) => {
-    setShowErrors(false)
-    let updatedData = { ...selectedExercise }
-    updatedData[prop] = val
-    setSelectedExercise(updatedData)
-  }
-
   const handleAddExercise = () => {
     setShowErrors(false)
 
     let isError = false
-    if (selectedExercise.exerciseID !== 0 && !selectedExercise.exerciseID) {
+    if (exerciseID !== 0 && !exerciseID) {
       isError = true
       setError('Please Select Exercise')
-    } else if (!selectedExercise.type) {
+    } else if (!type) {
       isError = true
       setError('Please Select Exercise Type')
     } else if (error) {
@@ -53,6 +41,12 @@ const AddExerciseToWorkoutModal = ({
     if (isError) {
       setShowErrors(true)
     } else {
+      const selectedExercise = {
+        exerciseID,
+        sets,
+        type,
+        id: uuidv4(),
+      }
       addExerciseToWorkout(selectedExercise).then(updatedPath => {
         setCurrWorkoutPath(updatedPath)
         onClose()
@@ -69,18 +63,16 @@ const AddExerciseToWorkoutModal = ({
             {showErrors && error && <div className='error'>{error}</div>}
             <div className='exercise-item-container'>
               <ExerciseSelectorDropdown
-                selectedExerciseID={selectedExercise.exerciseID}
-                setSelectedExerciseID={exerciseID =>
-                  updateSelectedExercise('exerciseID', exerciseID)
-                }
+                selectedExerciseID={exerciseID}
+                setSelectedExerciseID={setExerciseID}
               />
               <ExercisePath
-                sets={selectedExercise.sets}
-                setSets={sets => updateSelectedExercise('sets', sets)}
-                type={selectedExercise.type}
-                setSelectedType={type => updateSelectedExercise('type', type)}
+                sets={sets}
+                setSets={setSets}
+                type={type}
+                setSelectedType={setType}
                 setError={setError}
-                selectedExerciseID={selectedExercise.exerciseID}
+                selectedExerciseID={exerciseID}
               />
             </div>
             <div className='actions'>
