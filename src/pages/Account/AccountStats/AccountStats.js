@@ -110,7 +110,7 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
 }
 
 const mapStateToProps = state => {
-  const loading = !state.auth.userAccountData
+  const loading = !state.auth.userAccountData.accountStats
   const exp = state.character.exp
   const workoutsCompleted = !loading && exp !== 0
   return {
