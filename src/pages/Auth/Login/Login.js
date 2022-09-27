@@ -18,6 +18,7 @@ const Login = ({
   setEmailVal,
   passwordVal,
   setPasswordVal,
+  passwordInputRef,
   // signupWithGoogle,
 }) => {
   return (
@@ -48,6 +49,7 @@ const Login = ({
                 setVal={setEmailVal}
                 required={true}
                 class='login-input'
+                tabRef={passwordInputRef}
               />
               <FormInput
                 placeholder='password'
@@ -58,6 +60,7 @@ const Login = ({
                 required={true}
                 class='login-input'
                 showPasswordBtn={true}
+                inputRef={passwordInputRef}
               />
             </div>
 
