@@ -16,6 +16,7 @@ const FormInput = ({
   inputRef,
   tabRef,
   tabIndex,
+  autoCapitalize,
 }) => {
   const [type, setType] = useState(inputType)
   const [clear, setClear] = useState(false)
@@ -77,6 +78,7 @@ const FormInput = ({
               tabRef.current.focus()
             }
           }}
+          autoCapitalize={autoCapitalize || 'none'}
         />
       )}
 
