@@ -78,7 +78,6 @@ const WorkoutsList = ({
     }
     if (appContainerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = appContainerRef.current
-      console.log(scrollTop + clientHeight, scrollHeight)
       if (scrollTop + clientHeight === scrollHeight && !isPaginationLoading) {
         setIsPaginationLoading(true)
         getMoreWorkoutData()

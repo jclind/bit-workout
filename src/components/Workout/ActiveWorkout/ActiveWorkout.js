@@ -82,7 +82,17 @@ const ActiveWorkout = ({
 
   return (
     <div className='active-workout'>
-      <div className='exercise-title'>{exerciseName}</div>
+      <div
+        className={`exercise-title${
+          exerciseName.length >= 34
+            ? ' xsm-text'
+            : exerciseName.length >= 28
+            ? ' sm-text'
+            : ''
+        }`}
+      >
+        {exerciseName}
+      </div>
       {!isWarmupRunning && (
         <div className='exercise-type'>({exerciseType} Sets)</div>
       )}
