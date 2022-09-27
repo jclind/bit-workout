@@ -3,7 +3,7 @@ import BackButton from '../../../components/SettingsComponents/BackButton/BackBu
 import { BsChevronRight } from 'react-icons/bs'
 import { connect } from 'react-redux'
 import './AccountStats.scss'
-import { formatTimeToObject } from '../../../util/formatTime'
+import FadeLoader from 'react-spinners/FadeLoader'
 import { msToDayHour } from '../../../util/msToTime'
 
 const StatItem = ({ title, value, link, icon }) => {
@@ -11,21 +11,21 @@ const StatItem = ({ title, value, link, icon }) => {
     <div className='stat-item'>
       <div className='content'>
         <div className='top'>{title}</div>
-        {link && <div className='bottom'>{value}</div>}
+        {link && value ? <div className='bottom'>{value}</div> : null}
       </div>
       {link ? (
         <div className='icon-container'>
           <BsChevronRight className='icon' />
         </div>
-      ) : (
+      ) : value ? (
         <div className='right'>{value}</div>
-      )}
+      ) : null}
     </div>
   )
 }
 
-const AccountStats = ({ accountStats }) => {
-  const { exerciseStats, totalStats } = accountStats
+const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
+  const { exerciseStats, totalStats } = accountStats ?? {}
   const {
     totalWeightLifted,
     totalReps,
@@ -33,7 +33,7 @@ const AccountStats = ({ accountStats }) => {
     totalWorkoutTime,
     totalCoins,
     totalExp,
-  } = totalStats
+  } = totalStats ?? {}
 
   const getExercisePR = exerciseID => {
     const exerciseData = exerciseStats.find(ex => ex.exerciseID === exerciseID)
@@ -44,9 +44,9 @@ const AccountStats = ({ accountStats }) => {
     return `${pr1x1.weight} lbs`
   }
 
-  const squatPR = getExercisePR(0)
-  const benchPressPR = getExercisePR(3)
-  const deadliftPR = getExercisePR(1)
+  const squatPR = !loading && workoutsCompleted ? getExercisePR(0) : ''
+  const benchPressPR = !loading && workoutsCompleted ? getExercisePR(3) : ''
+  const deadliftPR = !loading && workoutsCompleted ? getExercisePR(1) : ''
 
   const totalWorkoutTimeFormatted = msToDayHour(totalWorkoutTime)
 
@@ -54,43 +54,66 @@ const AccountStats = ({ accountStats }) => {
     <div className='account-stats-page page'>
       <div className='settings-title'>Statistics / Progress</div>
       <BackButton />
-
-      <div className='stats-container'>
-        <section>
-          <StatItem
-            title={'Volume'}
-            value={`${totalWeightLifted.toLocaleString()} lbs`}
-            link
-          />
-          {/* <StatItem title={'Big Three Max'} weight='45' /> */}
-          <StatItem title={'Sets'} value={totalSets.toLocaleString()} link />
-          <StatItem title={'Reps'} value={totalReps.toLocaleString()} link />
-          <StatItem
-            title={'Workout Time'}
-            value={totalWorkoutTimeFormatted}
-            link
-          />
-        </section>
-        <section>
-          <StatItem title={'Squat'} value={squatPR} link />
-          <StatItem title={'Bench Press'} value={benchPressPR} link />
-          <StatItem title={'DeadLift'} value={deadliftPR} link />
-        </section>
-        <section>
-          <StatItem
-            title={'Coins Earned'}
-            value={totalCoins.toLocaleString()}
-          />
-          <StatItem title={'Exp Earned'} value={totalExp.toLocaleString()} />
-        </section>
-      </div>
+      {!workoutsCompleted ? (
+        'Complete A Workout To See Statistics And Progress'
+      ) : loading ? (
+        <div className='fade-loader-container'>
+          <div className='spinner-container'>
+            <FadeLoader
+              color={'#548ca8'}
+              className='spinner'
+              height={8}
+              width={3}
+              radius={10}
+              margin={-8}
+            />
+          </div>
+          <div className='text'>loading...</div>
+        </div>
+      ) : (
+        <div className='stats-container'>
+          <section>
+            <StatItem
+              title={'Volume'}
+              value={`${totalWeightLifted.toLocaleString()} lbs`}
+              link
+            />
+            {/* <StatItem title={'Big Three Max'} weight='45' /> */}
+            <StatItem title={'Sets'} value={totalSets.toLocaleString()} link />
+            <StatItem title={'Reps'} value={totalReps.toLocaleString()} link />
+            <StatItem
+              title={'Workout Time'}
+              value={totalWorkoutTimeFormatted}
+              link
+            />
+          </section>
+          <section>
+            <StatItem title={'Squat'} value={squatPR} link />
+            <StatItem title={'Bench Press'} value={benchPressPR} link />
+            <StatItem title={'DeadLift'} value={deadliftPR} link />
+            <StatItem title={'View All'} link />
+          </section>
+          <section>
+            <StatItem
+              title={'Coins Earned'}
+              value={totalCoins.toLocaleString()}
+            />
+            <StatItem title={'Exp Earned'} value={totalExp.toLocaleString()} />
+          </section>
+        </div>
+      )}
     </div>
   )
 }
 
 const mapStateToProps = state => {
+  const loading = !state.auth.userAccountData
+  const exp = state.character.exp
+  const workoutsCompleted = !loading && exp !== 0
   return {
     accountStats: state?.auth?.userAccountData?.accountStats,
+    loading,
+    workoutsCompleted,
   }
 }
 
