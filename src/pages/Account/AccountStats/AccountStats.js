@@ -1,14 +1,23 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import BackButton from '../../../components/SettingsComponents/BackButton/BackButton'
 import { BsChevronRight } from 'react-icons/bs'
 import { connect } from 'react-redux'
 import './AccountStats.scss'
-import FadeLoader from 'react-spinners/FadeLoader'
 import { msToDayHour } from '../../../util/msToTime'
+import PageLoading from '../../../components/PageLoading/PageLoading'
 
-const StatItem = ({ title, value, link, icon }) => {
+export const StatItem = ({ title, value, link, icon }) => {
+  const navigate = useNavigate()
   return (
-    <div className='stat-item'>
+    <button
+      disabled={!link}
+      onClick={() => {
+        console.log('here')
+        navigate('/account/stats/exercises')
+      }}
+      className='stat-item'
+    >
       <div className='content'>
         <div className='top'>{title}</div>
         {link && value ? <div className='bottom'>{value}</div> : null}
@@ -20,7 +29,7 @@ const StatItem = ({ title, value, link, icon }) => {
       ) : value ? (
         <div className='right'>{value}</div>
       ) : null}
-    </div>
+    </button>
   )
 }
 
@@ -60,19 +69,7 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
           <p>Complete a workout to see progress.</p>
         </div>
       ) : loading ? (
-        <div className='fade-loader-container'>
-          <div className='spinner-container'>
-            <FadeLoader
-              color={'#548ca8'}
-              className='spinner'
-              height={8}
-              width={3}
-              radius={10}
-              margin={-8}
-            />
-          </div>
-          <div className='text'>loading...</div>
-        </div>
+        <PageLoading />
       ) : (
         <div className='stats-container'>
           <section>
@@ -92,7 +89,7 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
             <StatItem title={'Squat'} value={squatPR} />
             <StatItem title={'Bench Press'} value={benchPressPR} />
             <StatItem title={'DeadLift'} value={deadliftPR} />
-            {/* <StatItem title={'View All'} /> */}
+            <StatItem title={'View All'} link='exercises' />
           </section>
           <section>
             <StatItem
