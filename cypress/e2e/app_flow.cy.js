@@ -79,6 +79,8 @@ describe('Workout Tests', () => {
     cy.get('button.add-weight-btn').click()
     cy.clickBackButton()
 
+    cy.get('.Toastify__toast').click()
+
     // Check that the account info tile contains the newly inputted weight
     cy.get('.info-tile').eq(1).contains(randomWeight)
 
@@ -101,6 +103,9 @@ describe('Workout Tests', () => {
     cy.get('input').clear().type(newName)
     cy.get('button.save.active').click()
     cy.get('button.settings-button').contains(newName)
+
+    cy.get('.Toastify__toast').click()
+
     // Update Username
     cy.clickSettingsButton('jesselind')
     const newUsername = `jesselind${randomNumber}`
@@ -109,6 +114,8 @@ describe('Workout Tests', () => {
     cy.get('button.settings-button').contains(newUsername)
 
     cy.clickBackButton()
+
+    cy.get('.Toastify__toast').click()
 
     // Workout Settings
     cy.clickSettingsButton('Workout Settings')
