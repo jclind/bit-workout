@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import PageLoading from '../../../../components/PageLoading/PageLoading'
 import BackButton from '../../../../components/SettingsComponents/BackButton/BackButton'
 import { getSingleExercise } from '../../../../redux/actions/workout/workout'
 import { StatItem } from '../AccountStats'
 import Select from 'react-select'
+import { AiOutlineSearch, AiOutlineCloseCircle } from 'react-icons/ai'
 import { BsSortDown } from 'react-icons/bs'
 import './AllExercises.scss'
 
 const sortSelectStyles = {
   control: (provided, state) => ({
     ...provided,
-    minHeight: '40px',
+    minHeight: '35px',
     background: 'none',
-    height: '40px',
+    height: '35px',
     margin: '0 auto',
     boxShadow: state.isFocused ? null : null,
     outline: 'none',
     border: state.isFocused ? '1px solid #548ca8' : '1px solid #bebebe',
+    fontSize: '0.9rem',
     ':hover': {
       border: '1px solid #548ca8',
     },
@@ -32,7 +34,7 @@ const sortSelectStyles = {
 
   valueContainer: (provided, state) => ({
     ...provided,
-    height: '40px',
+    height: '35px',
     padding: '0 6px',
   }),
 
@@ -40,13 +42,15 @@ const sortSelectStyles = {
     ...provided,
     color: '#fff',
     margin: '0px',
+    fontSize: '0.9rem',
   }),
   indicatorSeparator: state => ({
     display: 'none',
   }),
   indicatorsContainer: (provided, state) => ({
     ...provided,
-    height: '40px',
+    height: '35px',
+    paddingBottom: '3px',
   }),
   placeholder: (provided, state) => ({
     ...provided,
@@ -87,11 +91,14 @@ const AllExercises = ({
       return { ...ex, ...getSingleExercise(ex.exerciseID) }
     })
   })
+  const [searchVal, setSearchVal] = useState('')
 
   const [order, setOrder] = useState({
     sort: 'name',
     descending: true,
   })
+
+  const searchRef = useRef()
   useEffect(() => {
     const sortByProp = (arr, prop, reverse) => {
       const sortedArr = [...arr].sort((a, b) =>
@@ -103,6 +110,7 @@ const AllExercises = ({
       }
       return sortedArr
     }
+
     if (order.sort === 'pr1x1.weight') {
       const sortedExercises = [...exercises].sort((a, b) => {
         const weight1 = a?.pr1x1?.weight ? Number(a.pr1x1.weight) : 0
@@ -110,10 +118,8 @@ const AllExercises = ({
         return weight1 > weight2 ? 1 : weight2 > weight1 ? -1 : 0
       })
       if (order.descending) {
-        console.log(sortedExercises)
         return setExercises(sortedExercises.reverse())
       }
-      console.log(sortedExercises)
       return setExercises(sortedExercises)
     }
 
@@ -160,29 +166,56 @@ const AllExercises = ({
         <PageLoading />
       ) : (
         <div className='stats-container'>
-          <div className='sort-options'>
-            <Select
-              options={sortOptions}
-              styles={sortSelectStyles}
-              className='select'
-              placeholder={
-                <div className='select-placeholder'>
-                  <BsSortDown /> Sort:
+          <div className='filters'>
+            <div className='search-exercises-container'>
+              <AiOutlineSearch className='icon' />
+              <input
+                type='text'
+                className='search-workouts'
+                placeholder='Search...'
+                value={searchVal}
+                onChange={e => setSearchVal(e.target.value)}
+                ref={searchRef}
+                onClick={() => searchRef.current.select()}
+              />
+              {searchVal && (
+                <div
+                  onClick={() => setSearchVal('')}
+                  className='clear-icon-container'
+                >
+                  <AiOutlineCloseCircle className='clear-icon' />
                 </div>
-              }
-              onChange={handleSelectChange}
-            />
+              )}
+            </div>
+            <div className='sort-options'>
+              <Select
+                options={sortOptions}
+                styles={sortSelectStyles}
+                className='select'
+                placeholder={
+                  <div className='select-placeholder'>
+                    <BsSortDown /> Sort:
+                  </div>
+                }
+                onChange={handleSelectChange}
+              />
+            </div>
           </div>
           <section>
             {exercises.map(ex => {
               if (ex.name === 'Other') return null
 
-              const pr1x1 = ex?.pr1x1?.weight
-                ? ex.pr1x1.weight + 'lbs'
-                : 'No Data'
-              return (
-                <StatItem key={ex.exerciseID} title={ex.name} value={pr1x1} />
-              )
+              if (
+                !searchVal ||
+                ex.name.toLowerCase().includes(searchVal.toLowerCase())
+              ) {
+                const pr1x1 = ex?.pr1x1?.weight
+                  ? ex.pr1x1.weight + 'lbs'
+                  : 'No Data'
+                return (
+                  <StatItem key={ex.exerciseID} title={ex.name} value={pr1x1} />
+                )
+              }
             })}
           </section>
         </div>
