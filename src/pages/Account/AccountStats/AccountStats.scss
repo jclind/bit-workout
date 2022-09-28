@@ -3,64 +3,79 @@
 .account-stats-page {
   min-height: calc(100% - #{$navbar-height} - 2rem);
   margin-bottom: 3rem;
-
-  .no-data-container {
-    text-align: center;
-    padding: 2rem;
-    border-radius: $border-radius;
-    background: $secondary-background;
-    .title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      padding-bottom: 1rem;
-    }
-    p {
-      color: $secondary-text;
-      margin: 0;
-    }
+}
+.no-data-container {
+  text-align: center;
+  padding: 2rem;
+  border-radius: $border-radius;
+  background: $secondary-background;
+  .title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding-bottom: 1rem;
   }
+  p {
+    color: $secondary-text;
+    margin: 0;
+  }
+}
+.stats-container {
+  margin-bottom: 5rem;
+  .section-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: $secondary-text;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  section {
+    background: $secondary-background;
+    padding: 0 1.25rem;
+    border-radius: $border-radius;
+    margin-bottom: 2rem;
+  }
+  .stat-item {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background: none;
+    border-radius: 0;
+    padding: 0.75rem 0.1rem;
+    border-bottom: 1px solid $secondary-background-card;
 
-  .stats-container {
-    margin-bottom: 5rem;
-    section {
-      background: $secondary-background;
-      padding: 0 1.25rem;
-      border-radius: $border-radius;
-      margin-bottom: 2rem;
+    &:focus {
+      outline-offset: -2px;
     }
-    .stat-item {
-      display: flex;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid $secondary-background-card;
 
-      .top {
-        font-weight: 500;
-        text-transform: capitalize;
+    .top {
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+    .bottom {
+      margin-top: 0.35rem;
+      font-size: 0.8rem;
+      color: $secondary-text;
+      width: fit-content;
+    }
+    .icon-container {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      color: $tertiary-text;
+      .icon {
+        stroke-width: 5%;
       }
-      .bottom {
-        margin-top: 0.35rem;
-        font-size: 0.8rem;
-        color: $secondary-text;
-      }
-      .icon-container {
-        display: flex;
-        align-items: center;
-        margin-left: auto;
-        color: $tertiary-text;
-        .icon {
-          stroke-width: 5%;
-        }
-      }
-      .right {
-        display: flex;
-        align-items: center;
-        margin-left: auto;
-        font-size: 0.95rem;
-        color: $secondary-text;
-      }
-      &:last-child {
-        border: none;
-      }
+    }
+    .right {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      font-size: 0.95rem;
+      color: $secondary-text;
+    }
+    &:last-child {
+      border: none;
     }
   }
 }

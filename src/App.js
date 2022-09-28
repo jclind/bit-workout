@@ -48,6 +48,8 @@ import WorkoutSettings from './pages/Settings/Workout/WorkoutSettings'
 import ReleaseNotes from './pages/Settings/ReleaseNotes/ReleaseNotes'
 import LoginContainer from './pages/Auth/Login/LoginContainer'
 import AccountStats from './pages/Account/AccountStats/AccountStats'
+import AllExercises from './pages/Account/AccountStats/AllExercises/AllExercises'
+import SingleExerciseStats from './pages/Account/AccountStats/SingleExerciseStats/SingleExerciseStats'
 
 const ScrollToTop = () => {
   const { pathname } = useLocation()
@@ -148,6 +150,16 @@ function App() {
                     <NavbarContainer />
                   </>
                 }
+              />
+              <Route
+                exact
+                path='/account/stats/exercises'
+                element={<AllExercises />}
+              />
+              <Route
+                exact
+                path='/account/stats/exercises/:exerciseID'
+                element={<SingleExerciseStats />}
               />
               <Route exact path='/account/settings' element={<Settings />} />
               <Route

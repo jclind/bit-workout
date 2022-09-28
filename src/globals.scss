@@ -154,6 +154,7 @@ label.input-error,
   margin: 0 auto;
   text-align: center;
   margin-bottom: 3.125rem;
+  text-transform: capitalize;
 }
 .settings-section {
   padding-bottom: 1.6rem;
@@ -409,32 +410,4 @@ input[type='number'] {
 }
 .Toastify__toast-container--bottom-center {
   bottom: 15px;
-}
-
-// Fade Loader
-.fade-loader-container {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  .spinner-container {
-    display: flex;
-    justify-content: center;
-    height: 30px;
-    width: 100%;
-    margin-left: 16px;
-  }
-  .text {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    font-size: 0.9rem;
-    color: $secondary-text;
-  }
 }
