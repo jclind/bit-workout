@@ -15,10 +15,8 @@ const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
   const singleExerciseStats = exerciseStats.find(ex => {
     return ex.exerciseID.toString() === exerciseID
   })
-  console.log(singleExerciseStats)
   const isData = !loading && !!singleExerciseStats
 
-  console.log(getSingleExercise(exerciseID))
   const singleExerciseData = isData
     ? {
         ...getSingleExercise(exerciseID),
@@ -44,13 +42,13 @@ const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
     <div className='single-exercise-stats-page page'>
       <div className='settings-title'>{name} Stats</div>
       <BackButton />
-      {!isData ? (
+      {loading ? (
+        <PageLoading />
+      ) : !isData ? (
         <div className='no-data-container'>
           <div className='title'>No Data</div>
           <p>Complete a workout to see progress.</p>
         </div>
-      ) : loading ? (
-        <PageLoading />
       ) : (
         <div className='stats-container'>
           <div className='section-title'>Personal Bests</div>

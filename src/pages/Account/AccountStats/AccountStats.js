@@ -64,13 +64,13 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
     <div className='account-stats-page page'>
       <div className='settings-title'>Statistics / Progress</div>
       <BackButton />
-      {!workoutsCompleted ? (
+      {loading ? (
+        <PageLoading />
+      ) : !workoutsCompleted ? (
         <div className='no-data-container'>
           <div className='title'>No Data</div>
           <p>Complete a workout to see progress.</p>
         </div>
-      ) : loading ? (
-        <PageLoading />
       ) : (
         <div className='stats-container'>
           <section>

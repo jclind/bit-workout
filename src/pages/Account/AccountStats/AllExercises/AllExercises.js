@@ -124,6 +124,7 @@ const AllExercises = ({
     }
 
     return setExercises(sortByProp(exercises, order.sort, order.descending))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order])
 
   const handleSelectChange = e => {
@@ -157,13 +158,13 @@ const AllExercises = ({
     <div className='all-exercises-stats-page page'>
       <div className='settings-title'>Completed Exercises</div>
       <BackButton />
-      {!workoutsCompleted ? (
+      {loading ? (
+        <PageLoading />
+      ) : !workoutsCompleted ? (
         <div className='no-data-container'>
           <div className='title'>No Data</div>
           <p>Complete a workout to see progress.</p>
         </div>
-      ) : loading ? (
-        <PageLoading />
       ) : (
         <div className='stats-container'>
           <div className='filters'>
@@ -204,7 +205,6 @@ const AllExercises = ({
           <section>
             {exercises.map(ex => {
               if (ex.name === 'Other') return null
-
               if (
                 !searchVal ||
                 ex.name.toLowerCase().includes(searchVal.toLowerCase())
@@ -221,6 +221,7 @@ const AllExercises = ({
                   />
                 )
               }
+              return null
             })}
           </section>
         </div>

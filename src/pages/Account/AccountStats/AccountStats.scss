@@ -41,8 +41,12 @@
     width: 100%;
     background: none;
     border-radius: 0;
-    padding: 0.75rem 0;
+    padding: 0.75rem 0.1rem;
     border-bottom: 1px solid $secondary-background-card;
+
+    &:focus {
+      outline-offset: -2px;
+    }
 
     .top {
       font-weight: 500;

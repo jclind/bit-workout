@@ -1,6 +1,7 @@
 @import '../../../../helpers.scss';
 
 .all-exercises-stats-page {
+  min-height: calc(100% - #{$navbar-height} - 2rem);
   .stats-container {
     .filters {
       display: flex;
