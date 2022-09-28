@@ -30,6 +30,7 @@
   }
   .stat-item {
     display: flex;
+    align-items: center;
     height: 100%;
     width: 100%;
     background: none;
@@ -45,6 +46,7 @@
       margin-top: 0.35rem;
       font-size: 0.8rem;
       color: $secondary-text;
+      width: fit-content;
     }
     .icon-container {
       display: flex;

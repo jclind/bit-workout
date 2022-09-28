@@ -13,8 +13,9 @@ export const StatItem = ({ title, value, link, icon }) => {
     <button
       disabled={!link}
       onClick={() => {
-        console.log('here')
-        navigate('/account/stats/exercises')
+        if (link) {
+          navigate(link)
+        }
       }}
       className='stat-item'
     >

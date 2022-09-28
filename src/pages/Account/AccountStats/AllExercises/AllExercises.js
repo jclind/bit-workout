@@ -213,7 +213,12 @@ const AllExercises = ({
                   ? ex.pr1x1.weight + 'lbs'
                   : 'No Data'
                 return (
-                  <StatItem key={ex.exerciseID} title={ex.name} value={pr1x1} />
+                  <StatItem
+                    key={ex.exerciseID}
+                    title={ex.name}
+                    value={pr1x1}
+                    link={`/account/stats/exercises/${ex.exerciseID}`}
+                  />
                 )
               }
             })}
