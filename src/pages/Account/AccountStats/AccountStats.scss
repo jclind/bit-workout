@@ -3,25 +3,31 @@
 .account-stats-page {
   min-height: calc(100% - #{$navbar-height} - 2rem);
   margin-bottom: 3rem;
-
-  .no-data-container {
-    text-align: center;
-    padding: 2rem;
-    border-radius: $border-radius;
-    background: $secondary-background;
-    .title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      padding-bottom: 1rem;
-    }
-    p {
-      color: $secondary-text;
-      margin: 0;
-    }
+}
+.no-data-container {
+  text-align: center;
+  padding: 2rem;
+  border-radius: $border-radius;
+  background: $secondary-background;
+  .title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding-bottom: 1rem;
+  }
+  p {
+    color: $secondary-text;
+    margin: 0;
   }
 }
 .stats-container {
   margin-bottom: 5rem;
+  .section-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: $secondary-text;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
   section {
     background: $secondary-background;
     padding: 0 1.25rem;
