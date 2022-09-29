@@ -16,9 +16,7 @@ const WeightDataContainer = ({ weightData }) => {
     { value: 'all', label: 'A' },
   ]
 
-  const [selectedTimeSpan, setSelectedTimeSpan] = useState(
-    timeSpanOptions[0].value
-  )
+  const [selectedTimeSpan, setSelectedTimeSpan] = useState(timeSpanOptions[0])
   const timeSpanData = getTimeSpanData(selectedTimeSpan, weightData)
   const labels = timeSpanData.labels
   const chartData = timeSpanData.data

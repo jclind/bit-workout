@@ -7,6 +7,7 @@ import { getSingleExercise } from '../../../../redux/actions/workout/workout'
 import { msToDayHour } from '../../../../util/msToTime'
 import { StatItem } from '../AccountStats'
 import './SingleExerciseStats.scss'
+import SingleExerciseChartContainer from './ExerciseChart/SingleExerciseStatsChartContainer'
 
 const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
   const params = useParams()
@@ -51,6 +52,8 @@ const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
         </div>
       ) : (
         <div className='stats-container'>
+          <SingleExerciseChartContainer />
+
           <div className='section-title'>Personal Bests</div>
           <section>
             <StatItem title='1x1' value={pr1x1?.weight + ' lbs' ?? 'No Data'} />

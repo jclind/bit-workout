@@ -197,6 +197,23 @@ const incCurrWorkoutStats = (
       workoutStats.exerciseStats[exerciseStatsIdx].totalReps =
         Number(workoutStats.exerciseStats[exerciseStatsIdx].totalReps) +
         Number(incReps)
+      const date = new Date().getTime()
+      const completedSetsPath =
+        workoutStats.exerciseStats[exerciseStatsIdx]?.completedSetsPath ?? []
+      const completedSetData = {
+        reps: incReps,
+        date: date,
+        weight,
+      }
+      if (completedSetsPath.length > 0) {
+        workoutStats.exerciseStats[exerciseStatsIdx].completedSetsPath.push(
+          completedSetData
+        )
+      } else {
+        workoutStats.exerciseStats[exerciseStatsIdx].completedSetsPath = [
+          completedSetData,
+        ]
+      }
     }
     if (weight) {
       const netWeightInc = Number(weight) * Number(incReps)
