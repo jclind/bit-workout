@@ -43,14 +43,27 @@
     border-radius: 0;
     padding: 0.75rem 0.1rem;
     border-bottom: 1px solid $secondary-background-card;
+    &:disabled {
+      pointer-events: none;
+      cursor: default;
+    }
 
     &:focus {
       outline-offset: -2px;
     }
 
     .top {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
       font-weight: 500;
       text-transform: capitalize;
+
+      .pr-icon {
+        height: 20px;
+        width: 20px;
+        color: $exp-color;
+      }
     }
     .bottom {
       margin-top: 0.35rem;

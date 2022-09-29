@@ -29,7 +29,12 @@ const AllChartData = ({ exerciseStats, loading }) => {
 
     console.log(startIdx, endIdx)
 
-    setChartData([...chartData, ...newData.slice(startIdx, endIdx)])
+    setChartData([
+      ...chartData,
+      ...newData
+        .sort((a, b) => (a.date < b.date ? 1 : b.date < a.date ? -1 : 0))
+        .slice(startIdx, endIdx),
+    ])
   }, [currPage])
 
   return (
@@ -50,10 +55,13 @@ const AllChartData = ({ exerciseStats, loading }) => {
               const dateStr = new Date(el.date).toDateString()
               const date = dateStr.substring(4, dateStr.length - 5)
               const time = formatAMPM(el.date)
+              const isPR = el.isNewPR1x1
+              console.log(isPR)
               return (
                 <StatItem
                   title={`${el.weight} lbs`}
                   value={`${date} at ${time}`}
+                  isPR={isPR}
                   key={el.date}
                 />
                 // <div className='chart-data-item' key={el.date}>

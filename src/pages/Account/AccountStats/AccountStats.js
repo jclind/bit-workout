@@ -6,8 +6,9 @@ import { connect } from 'react-redux'
 import './AccountStats.scss'
 import { msToDayHour } from '../../../util/msToTime'
 import PageLoading from '../../../components/PageLoading/PageLoading'
+import { AiFillStar } from 'react-icons/ai'
 
-export const StatItem = ({ title, value, link, icon }) => {
+export const StatItem = ({ title, value, link, isPR, icon }) => {
   const navigate = useNavigate()
   return (
     <button
@@ -20,7 +21,10 @@ export const StatItem = ({ title, value, link, icon }) => {
       className='stat-item'
     >
       <div className='content'>
-        <div className='top'>{title}</div>
+        <div className='top'>
+          {title}
+          {isPR ? <AiFillStar className='pr-icon' /> : null}
+        </div>
         {link && value ? <div className='bottom'>{value}</div> : null}
       </div>
       {link ? (

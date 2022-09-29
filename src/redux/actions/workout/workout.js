@@ -192,29 +192,7 @@ const incCurrWorkoutStats = (
       workoutStats.exerciseStats[exerciseStatsIdx].totalSets =
         Number(workoutStats.exerciseStats[exerciseStatsIdx].totalSets) + 1
     }
-    if (incReps) {
-      workoutStats.totalStats.totalReps += Number(incReps)
-      workoutStats.exerciseStats[exerciseStatsIdx].totalReps =
-        Number(workoutStats.exerciseStats[exerciseStatsIdx].totalReps) +
-        Number(incReps)
-      const date = new Date().getTime()
-      const completedSetsPath =
-        workoutStats.exerciseStats[exerciseStatsIdx]?.completedSetsPath ?? []
-      const completedSetData = {
-        reps: Number(incReps),
-        date: date,
-        weight,
-      }
-      if (completedSetsPath.length > 0) {
-        workoutStats.exerciseStats[exerciseStatsIdx].completedSetsPath.push(
-          completedSetData
-        )
-      } else {
-        workoutStats.exerciseStats[exerciseStatsIdx].completedSetsPath = [
-          completedSetData,
-        ]
-      }
-    }
+    let isNewPR1x1 = false
     if (weight) {
       const netWeightInc = Number(weight) * Number(incReps)
       const totalWeightLifted =
@@ -231,6 +209,7 @@ const incCurrWorkoutStats = (
         weight: 0,
         date: null,
       }
+      if (weight > currPR1x1.weight) isNewPR1x1 = true
       const newPR1x1 =
         weight > currPR1x1.weight
           ? { weight, date: new Date().getTime() }
@@ -252,6 +231,31 @@ const incCurrWorkoutStats = (
         pr1x5: newPR1x5,
       }
     }
+    if (incReps) {
+      workoutStats.totalStats.totalReps += Number(incReps)
+      workoutStats.exerciseStats[exerciseStatsIdx].totalReps =
+        Number(workoutStats.exerciseStats[exerciseStatsIdx].totalReps) +
+        Number(incReps)
+      const date = new Date().getTime()
+      const completedSetsPath =
+        workoutStats.exerciseStats[exerciseStatsIdx]?.completedSetsPath ?? []
+      const completedSetData = {
+        reps: Number(incReps),
+        date: date,
+        weight,
+        isNewPR1x1,
+      }
+      if (completedSetsPath.length > 0) {
+        workoutStats.exerciseStats[exerciseStatsIdx].completedSetsPath.push(
+          completedSetData
+        )
+      } else {
+        workoutStats.exerciseStats[exerciseStatsIdx].completedSetsPath = [
+          completedSetData,
+        ]
+      }
+    }
+
     if (incTotalTime) {
       const totalExerciseTime =
         Number(workoutStats.exerciseStats[exerciseStatsIdx].totalTime) || 0
