@@ -75,10 +75,14 @@ const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
               value={`${totalReps.toLocaleString()}`}
             />
             <StatItem title='Time' value={formattedTotalTime} />
-          </section>
-          <section>
             <StatItem title='Coins Earned' value={totalCoins} />
             <StatItem title='Experience Earned' value={totalExp} />
+          </section>
+          <section>
+            <StatItem
+              title='View All Chart Data'
+              link={`/account/stats/exercises/${exerciseID}/chart-data`}
+            />
           </section>
         </div>
       )}

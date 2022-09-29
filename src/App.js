@@ -50,6 +50,7 @@ import LoginContainer from './pages/Auth/Login/LoginContainer'
 import AccountStats from './pages/Account/AccountStats/AccountStats'
 import AllExercises from './pages/Account/AccountStats/AllExercises/AllExercises'
 import SingleExerciseStats from './pages/Account/AccountStats/SingleExerciseStats/SingleExerciseStats'
+import AllChartData from './pages/Account/AccountStats/SingleExerciseStats/AllChartData/AllChartData'
 
 const ScrollToTop = () => {
   const { pathname } = useLocation()
@@ -160,6 +161,11 @@ function App() {
                 exact
                 path='/account/stats/exercises/:exerciseID'
                 element={<SingleExerciseStats />}
+              />
+              <Route
+                exact
+                path='/account/stats/exercises/:exerciseID/chart-data'
+                element={<AllChartData />}
               />
               <Route exact path='/account/settings' element={<Settings />} />
               <Route
