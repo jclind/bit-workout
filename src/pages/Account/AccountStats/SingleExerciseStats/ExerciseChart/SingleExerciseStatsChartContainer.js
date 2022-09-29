@@ -42,33 +42,37 @@ const timeSpanOptions = [
   { value: 'all', label: 'A' },
 ]
 
-const SingleExerciseChartContainer = ({ pathData }) => {
+const SingleExerciseChartContainer = ({ pathData = [] }) => {
+  const isData = pathData.length > 0
+
   const [selectedTimeSpan, setSelectedTimeSpan] = useState(timeSpanOptions[0])
 
-  const timeSpanData = getTimeSpanData(selectedTimeSpan, pathData)
-  const labels = timeSpanData.labels
-  const chartData = timeSpanData.data
+  const timeSpanData = isData && getTimeSpanData(selectedTimeSpan, pathData)
+  const labels = isData && timeSpanData.labels
+  const chartData = isData && timeSpanData.data
 
-  const pointRadiusArr = chartData.map((el, idx, arr) => {
-    if (arr.length <= 15) return 3
+  const pointRadiusArr =
+    isData &&
+    chartData.map((el, idx, arr) => {
+      if (arr.length <= 15) return 3
 
-    const endIdx = arr.length - 1
-    const pointIdxs = [
-      0,
-      Math.round(endIdx / 8),
-      Math.round(endIdx / 4),
-      Math.round((endIdx * 3) / 8),
-      Math.round(endIdx / 2),
-      Math.round((endIdx * 5) / 8),
-      Math.round((endIdx * 3) / 4),
-      Math.round((endIdx * 7) / 8),
-      endIdx,
-    ]
-    if (pointIdxs.find(el => el === idx) !== undefined) {
-      return 3
-    }
-    return 0
-  })
+      const endIdx = arr.length - 1
+      const pointIdxs = [
+        0,
+        Math.round(endIdx / 8),
+        Math.round(endIdx / 4),
+        Math.round((endIdx * 3) / 8),
+        Math.round(endIdx / 2),
+        Math.round((endIdx * 5) / 8),
+        Math.round((endIdx * 3) / 4),
+        Math.round((endIdx * 7) / 8),
+        endIdx,
+      ]
+      if (pointIdxs.find(el => el === idx) !== undefined) {
+        return 3
+      }
+      return 0
+    })
 
   const maxDataVal = Math.max.apply(
     Math,
@@ -109,7 +113,7 @@ const SingleExerciseChartContainer = ({ pathData }) => {
     labels: labels,
     datasets: [
       {
-        data: chartData,
+        data: chartData || [],
         borderColor: colors.secondaryColor,
         backgroundColor: colors.secondaryColor,
         pointRadius: pointRadiusArr,
@@ -118,13 +122,16 @@ const SingleExerciseChartContainer = ({ pathData }) => {
   }
 
   return (
-    <SingleExerciseStatsChart
-      options={options}
-      data={data}
-      selectedTimeSpan={selectedTimeSpan}
-      setSelectedTimeSpan={setSelectedTimeSpan}
-      timeSpanOptions={timeSpanOptions}
-    />
+    <>
+      <SingleExerciseStatsChart
+        options={options}
+        data={data}
+        selectedTimeSpan={selectedTimeSpan}
+        setSelectedTimeSpan={setSelectedTimeSpan}
+        timeSpanOptions={timeSpanOptions}
+        isData={isData}
+      />
+    </>
   )
 }
 
