@@ -165,7 +165,7 @@ function App() {
               <Route
                 exact
                 path='/account/stats/exercises/:exerciseID/chart-data'
-                element={<AllChartData />}
+                element={<AllChartData appContainerRef={appContainerRef} />}
               />
               <Route exact path='/account/settings' element={<Settings />} />
               <Route
