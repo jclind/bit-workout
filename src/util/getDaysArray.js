@@ -4,8 +4,6 @@ export const getDaysArray = (s, e) => {
   let start = new Date(s)
   let end = new Date(e)
 
-  console.log(start, end)
-
   const arr = []
   while (start <= end) {
     const currStart = new Date(start)
@@ -49,7 +47,6 @@ export const getTimeSpanData = (timeSpan, data) => {
       startDate.setDate(startDate.getDate() + 1)
       break
     case 'all':
-      console.log('???')
       startDate = Math.min.apply(
         Math,
         data.map(o => o.date)
@@ -75,7 +72,6 @@ export const getTimeSpanData = (timeSpan, data) => {
       }
     })
     .sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0))
-  console.log(startDate, endDate)
   return {
     labels: getDaysArray(startDate, endDate),
     data: timeSpanData,
