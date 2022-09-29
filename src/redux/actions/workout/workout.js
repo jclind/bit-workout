@@ -201,7 +201,7 @@ const incCurrWorkoutStats = (
       const completedSetsPath =
         workoutStats.exerciseStats[exerciseStatsIdx]?.completedSetsPath ?? []
       const completedSetData = {
-        reps: incReps,
+        reps: Number(incReps),
         date: date,
         weight,
       }

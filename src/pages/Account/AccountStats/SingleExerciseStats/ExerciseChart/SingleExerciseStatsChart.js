@@ -1,5 +1,6 @@
 import React from 'react'
 import { Line } from 'react-chartjs-2'
+import WeightChartOptions from '../../../../../components/AccountComponents/WeightData/WeightChartOptions/WeightChartOptions'
 
 const SingleExerciseStatsChart = ({
   options,
@@ -9,14 +10,13 @@ const SingleExerciseStatsChart = ({
   timeSpanOptions,
 }) => {
   return (
-    <div className='weight-data page'>
-      <div className='settings-title'>Weight</div>
+    <div className='weight-data'>
       <div className='options'>
-        {/* <WeightChartOptions
+        <WeightChartOptions
           selectedTimeSpan={selectedTimeSpan}
           setSelectedTimeSpan={setSelectedTimeSpan}
           timeSpanOptions={timeSpanOptions}
-        /> */}
+        />
       </div>
       <div className='chart-container'>
         <Line options={options} data={data} />

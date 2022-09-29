@@ -35,13 +35,14 @@ const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
     totalTime,
     totalCoins,
     totalExp,
+    completedSetsPath,
   } = singleExerciseData
 
   const formattedTotalTime = isData ? msToDayHour(totalTime) : null
 
   return (
     <div className='single-exercise-stats-page page'>
-      <div className='settings-title'>{name} Stats</div>
+      <div className='settings-title'>{name} Progress</div>
       <BackButton />
       {loading ? (
         <PageLoading />
@@ -52,7 +53,7 @@ const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
         </div>
       ) : (
         <div className='stats-container'>
-          <SingleExerciseChartContainer />
+          <SingleExerciseChartContainer pathData={completedSetsPath} />
 
           <div className='section-title'>Personal Bests</div>
           <section>

@@ -9,8 +9,8 @@ export const getDaysArray = (s, e) => {
   const arr = []
   while (start <= end) {
     const currStart = new Date(start)
-    const formatedDate = formatDateMonthDay(currStart)
-    arr.push(formatedDate)
+    const formattedDate = formatDateMonthDay(currStart)
+    arr.push(formattedDate)
     start.setDate(start.getDate() + 1)
   }
 

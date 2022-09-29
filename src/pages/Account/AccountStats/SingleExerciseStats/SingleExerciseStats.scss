@@ -1,4 +1,8 @@
 @import '../../../../helpers.scss';
 .single-exercise-stats-page {
   min-height: calc(100% - #{$navbar-height} - 2rem);
+
+  .weight-data {
+    margin-bottom: 2rem;
+  }
 }
