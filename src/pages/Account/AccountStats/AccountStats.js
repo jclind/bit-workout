@@ -8,7 +8,7 @@ import { msToDayHour } from '../../../util/msToTime'
 import PageLoading from '../../../components/PageLoading/PageLoading'
 import { AiFillStar } from 'react-icons/ai'
 
-export const StatItem = ({ title, value, link, isPR, icon }) => {
+export const StatItem = ({ title, subTitle, value, link, isPR, icon }) => {
   const navigate = useNavigate()
   return (
     <button
@@ -22,7 +22,8 @@ export const StatItem = ({ title, value, link, isPR, icon }) => {
     >
       <div className='content'>
         <div className='top'>
-          {title}
+          <div className='title'>{title}</div>
+          <div className='sub-title'>{subTitle}</div>
           {isPR ? <AiFillStar className='pr-icon' /> : null}
         </div>
         {link && value ? <div className='bottom'>{value}</div> : null}

@@ -18,7 +18,7 @@ const AllChartData = ({ exerciseStats, loading }) => {
   const isData = !loading && !!singleExerciseStats
 
   const [currPage, setCurrPage] = useState(0)
-  const limit = 2
+  const limit = 30
   const [chartData, setChartData] = useState([])
 
   useEffect(() => {
@@ -50,16 +50,20 @@ const AllChartData = ({ exerciseStats, loading }) => {
         </div>
       ) : (
         <div className='stats-container'>
+          <div className='section-title'>LBS</div>
           <section>
             {chartData.map(el => {
               const dateStr = new Date(el.date).toDateString()
               const date = dateStr.substring(4, dateStr.length - 5)
               const time = formatAMPM(el.date)
-              const isPR = el.isNewPR1x1
-              console.log(isPR)
+              let isPR = false
+              if (singleExerciseStats?.pr1x1?.date === el.date) {
+                isPR = true
+              }
               return (
                 <StatItem
-                  title={`${el.weight} lbs`}
+                  title={`${el.weight}`}
+                  subTitle={`x ${el.reps}`}
                   value={`${date} at ${time}`}
                   isPR={isPR}
                   key={el.date}
