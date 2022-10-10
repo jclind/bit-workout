@@ -29,19 +29,22 @@
     margin-bottom: 0.5rem;
   }
   section {
+    position: relative;
     background: $secondary-background;
     padding: 0 1.25rem;
     border-radius: $border-radius;
     margin-bottom: 2rem;
+    overflow: hidden !important;
   }
   .stat-item {
     display: flex;
     align-items: center;
+    min-height: 35px;
     height: 100%;
     width: 100%;
     background: none;
     border-radius: 0;
-    padding: 0.75rem 0.1rem;
+    padding: 0.25rem 0.1rem;
     border-bottom: 1px solid $secondary-background-card;
     &:disabled {
       pointer-events: none;
@@ -53,22 +56,38 @@
     }
 
     .dash-icon-container {
+      position: absolute;
       display: flex;
       justify-content: center;
       align-items: center;
 
       border-radius: 50%;
       background: $error-red;
-      height: 25px;
-      width: 25px;
-      margin-right: 0.75rem;
+      height: 22px;
+      width: 22px;
+
+      transition: transform 0.2s linear, opacity 0.1s linear;
+      transform: translateX(-200%);
+      opacity: 0;
 
       .dash-icon {
-        height: 20px;
-        width: 20px;
+        height: 22px;
+        width: 30px;
         color: $primary;
-        stroke-width: 8%;
+        stroke-width: 2%;
       }
+    }
+    .dash-icon-container.active {
+      opacity: 1;
+      transform: translateX(0%);
+      cursor: pointer;
+    }
+    .content {
+      margin-left: 0;
+      transition: all 0.2s linear;
+    }
+    .content.active-editing {
+      margin-left: 2.5rem;
     }
     .top {
       display: flex;

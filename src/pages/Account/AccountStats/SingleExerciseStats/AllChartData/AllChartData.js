@@ -78,6 +78,38 @@ const AllChartData = ({ exerciseStats, loading, appContainerRef }) => {
     }
   }
 
+  const deleteItem = id => {
+    const { pr1x1, pr1x5 } = singleExerciseStats
+    const { weight, reps } = chartData.find(el => el.date === id)
+
+    let newPR1x1ID = null
+    if (id === pr1x1.date) {
+      const maxWeight = Math.max.apply(
+        Math,
+        chartData.filter(el => el.date !== id).map(o => Number(o.weight))
+      )
+      newPR1x1ID = Math.min.apply(
+        Math,
+        chartData.filter(el => el.weight === maxWeight).map(o => Number(o.date))
+      )
+    }
+    let newPR1x5ID = null
+    if (id === pr1x5.date) {
+      const maxWeight = Math.max.apply(
+        Math,
+        chartData
+          .filter(el => el.date !== id && el.reps >= 5)
+          .map(o => Number(o.weight))
+      )
+      newPR1x5ID = Math.min.apply(
+        Math,
+        chartData
+          .filter(el => el.weight === maxWeight && el.reps >= 5)
+          .map(o => Number(o.date))
+      )
+    }
+  }
+
   return (
     <div className='all-chart-data-page page'>
       <div className='settings-title'>All Chart Data</div>
@@ -112,6 +144,7 @@ const AllChartData = ({ exerciseStats, loading, appContainerRef }) => {
                   isPR={isPR}
                   key={el.date}
                   isEditing={isEditing}
+                  deleteItem={() => deleteItem(el.date)}
                 />
               )
             })}

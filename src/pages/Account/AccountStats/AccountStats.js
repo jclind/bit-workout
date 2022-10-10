@@ -16,10 +16,16 @@ export const StatItem = ({
   isPR,
   icon,
   isEditing,
+  deleteItem,
 }) => {
+  const handleDelete = e => {
+    e.stopPropagation()
+    deleteItem()
+  }
+
   const navigate = useNavigate()
   return (
-    <button
+    <div
       disabled={!link}
       onClick={() => {
         if (link) {
@@ -28,12 +34,14 @@ export const StatItem = ({
       }}
       className='stat-item'
     >
-      {isEditing && (
-        <div className='dash-icon-container'>
-          <BsDash className='dash-icon' />
-        </div>
-      )}
-      <div className='content'>
+      <div
+        className={`dash-icon-container ${isEditing ? 'active' : ''}`}
+        tabIndex='0'
+        onClick={handleDelete}
+      >
+        <BsDash className='dash-icon' />
+      </div>
+      <div className={`content ${isEditing ? 'active-editing' : ''}`}>
         <div className='top'>
           <div className='title'>{title}</div>
           <div className='sub-title'>{subTitle}</div>
@@ -48,7 +56,7 @@ export const StatItem = ({
       ) : value ? (
         <div className='right'>{value}</div>
       ) : null}
-    </button>
+    </div>
   )
 }
 
