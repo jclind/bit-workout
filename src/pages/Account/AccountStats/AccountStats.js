@@ -1,14 +1,22 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import BackButton from '../../../components/SettingsComponents/BackButton/BackButton'
-import { BsChevronRight } from 'react-icons/bs'
+import { BsChevronRight, BsDash } from 'react-icons/bs'
 import { connect } from 'react-redux'
 import './AccountStats.scss'
 import { msToDayHour } from '../../../util/msToTime'
 import PageLoading from '../../../components/PageLoading/PageLoading'
 import { AiFillStar } from 'react-icons/ai'
 
-export const StatItem = ({ title, subTitle, value, link, isPR, icon }) => {
+export const StatItem = ({
+  title,
+  subTitle,
+  value,
+  link,
+  isPR,
+  icon,
+  isEditing,
+}) => {
   const navigate = useNavigate()
   return (
     <button
@@ -20,6 +28,11 @@ export const StatItem = ({ title, subTitle, value, link, isPR, icon }) => {
       }}
       className='stat-item'
     >
+      {isEditing && (
+        <div className='dash-icon-container'>
+          <BsDash className='dash-icon' />
+        </div>
+      )}
       <div className='content'>
         <div className='top'>
           <div className='title'>{title}</div>

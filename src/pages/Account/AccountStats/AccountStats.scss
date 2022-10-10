@@ -52,6 +52,24 @@
       outline-offset: -2px;
     }
 
+    .dash-icon-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      border-radius: 50%;
+      background: $error-red;
+      height: 25px;
+      width: 25px;
+      margin-right: 0.75rem;
+
+      .dash-icon {
+        height: 20px;
+        width: 20px;
+        color: $primary;
+        stroke-width: 8%;
+      }
+    }
     .top {
       display: flex;
       align-items: center;

@@ -24,6 +24,8 @@ const AllChartData = ({ exerciseStats, loading, appContainerRef }) => {
   const [isPaginationLoading, setIsPaginationLoading] = useState(false)
   const [chartData, setChartData] = useState([])
 
+  const [isEditing, setIsEditing] = useState(false)
+
   useEffect(() => {
     console.log('test')
     const newData = singleExerciseStats?.completedSetsPath ?? []
@@ -80,6 +82,9 @@ const AllChartData = ({ exerciseStats, loading, appContainerRef }) => {
     <div className='all-chart-data-page page'>
       <div className='settings-title'>All Chart Data</div>
       <BackButton />
+      <button className='edit-btn' onClick={() => setIsEditing(prev => !prev)}>
+        {isEditing ? 'Done' : 'Edit'}
+      </button>
       {loading ? (
         <PageLoading />
       ) : !isData ? (
@@ -106,6 +111,7 @@ const AllChartData = ({ exerciseStats, loading, appContainerRef }) => {
                   value={`${date} at ${time}`}
                   isPR={isPR}
                   key={el.date}
+                  isEditing={isEditing}
                 />
               )
             })}

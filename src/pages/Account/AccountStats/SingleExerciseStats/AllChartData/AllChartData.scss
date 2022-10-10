@@ -1,6 +1,19 @@
 @import '../../../../../helpers.scss';
 
 .all-chart-data-page {
+  .edit-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    height: fit-content;
+    width: fit-content;
+    background: none;
+
+    font-size: 1rem;
+    font-weight: 500;
+    color: $secondary;
+  }
   .stats-container {
     .fade-loader-container {
       position: relative;
