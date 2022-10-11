@@ -5,6 +5,8 @@ import {
   getDoc,
   getDocs,
   increment,
+  limit,
+  orderBy,
   query,
   setDoc,
   where,
@@ -122,13 +124,6 @@ export const updateWorkoutStats =
     })
   }
 
-// export const getStats = () => async (dispatch, getState) => {
-//   dispatch({ type: SET_STATS_STATUS, payload: 'loading' })
-//   const uid = getState().auth.userAuth.uid
-//   const userStatsRef = doc(db, 'userStats', uid)
-//   const userStatsSnap = await getDoc(userStatsRef)
-// }
-
 export const getStats = () => async (dispatch, getState) => {
   dispatch({ type: SET_STATS_STATUS, payload: 'loading' })
   const uid = getState().auth.userAuth.uid
@@ -155,6 +150,38 @@ export const getStats = () => async (dispatch, getState) => {
   dispatch({ type: SET_EXERCISE_STATS, payload: exerciseData })
 
   return dispatch({ type: SET_STATS_STATUS, payload: 'success' })
+}
+
+export const queryChartData = exerciseID => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
+
+  const userStatsRef = doc(db, 'userStats', uid)
+  const exerciseDataQuery = query(
+    collection(userStatsRef, 'exerciseStats'),
+    where('exerciseID', '==', Number(exerciseID))
+  )
+
+  const exerciseQuerySnapshot = await getDocs(exerciseDataQuery)
+  let exerciseStatsRef
+  exerciseQuerySnapshot.forEach(doc => {
+    console.log('here!!!')
+    exerciseStatsRef = doc
+  })
+
+  // const completedSetsPathRef = collection(
+  //   exerciseStatsRef.ref,
+  //   'completedSetsPath'
+  // )
+  // const setsPathQuery = query(
+  //   completedSetsPathRef,
+  //   orderBy('date', 'desc'),
+  //   limit(3)
+  // )
+  // const completedSetsPathSnapshot = await getDocs(setsPathQuery)
+
+  // completedSetsPathSnapshot.forEach(doc => {
+  //   console.log(doc.data())
+  // })
 }
 
 // export const getExercisePR = exerciseID => async (dispatch, getState) => {

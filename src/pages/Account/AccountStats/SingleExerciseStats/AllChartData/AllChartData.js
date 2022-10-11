@@ -1,17 +1,26 @@
-import React, { useState } from 'react'
-import { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { FadeLoader } from 'react-spinners'
 import PageLoading from '../../../../../components/PageLoading/PageLoading'
 import BackButton from '../../../../../components/SettingsComponents/BackButton/BackButton'
+import { queryChartData } from '../../../../../redux/actions/stats/stats'
 import { formatAMPM } from '../../../../../util/formatDate'
 import { StatItem } from '../../AccountStats'
 import './AllChartData.scss'
 
-const AllChartData = ({ exerciseStats, loading, appContainerRef }) => {
+const AllChartData = ({
+  exerciseStats,
+  loading,
+  appContainerRef,
+  queryChartData,
+}) => {
   const params = useParams()
   const exerciseID = params.exerciseID
+
+  useEffect(() => {
+    queryChartData(exerciseID)
+  }, [])
 
   const singleExerciseStats = exerciseStats.find(ex => {
     return ex.exerciseID.toString() === exerciseID
@@ -178,5 +187,10 @@ const mapStateToProps = (state, ownProps) => {
     loading,
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    queryChartData: exerciseID => dispatch(queryChartData(exerciseID)),
+  }
+}
 
-export default connect(mapStateToProps)(AllChartData)
+export default connect(mapStateToProps, mapDispatchToProps)(AllChartData)
