@@ -7,6 +7,8 @@ import './AccountStats.scss'
 import { msToDayHour } from '../../../util/msToTime'
 import PageLoading from '../../../components/PageLoading/PageLoading'
 import { AiFillStar } from 'react-icons/ai'
+import { getStats } from '../../../redux/actions/stats/stats'
+import { useEffect } from 'react'
 
 export const StatItem = ({
   title,
@@ -60,8 +62,16 @@ export const StatItem = ({
   )
 }
 
-const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
-  const { exerciseStats, totalStats } = accountStats ?? {}
+const AccountStats = ({
+  loading,
+  isData,
+  totalUserStats,
+  exerciseStats,
+  getStats,
+}) => {
+  useEffect(() => {
+    getStats()
+  }, [])
   const {
     totalWeightLifted,
     totalReps,
@@ -69,7 +79,7 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
     totalWorkoutTime,
     totalCoins,
     totalExp,
-  } = totalStats ?? {}
+  } = totalUserStats ?? {}
 
   const getExercisePR = exerciseID => {
     const exerciseData = exerciseStats.find(ex => ex.exerciseID === exerciseID)
@@ -80,9 +90,9 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
     return `${pr1x1.weight} lbs`
   }
 
-  const squatPR = !loading && workoutsCompleted ? getExercisePR(0) : ''
-  const benchPressPR = !loading && workoutsCompleted ? getExercisePR(3) : ''
-  const deadliftPR = !loading && workoutsCompleted ? getExercisePR(1) : ''
+  const squatPR = !loading && isData ? getExercisePR(0) : ''
+  const benchPressPR = !loading && isData ? getExercisePR(3) : ''
+  const deadliftPR = !loading && isData ? getExercisePR(1) : ''
 
   const totalWorkoutTimeFormatted = msToDayHour(totalWorkoutTime)
 
@@ -92,7 +102,7 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
       <BackButton />
       {loading ? (
         <PageLoading />
-      ) : !workoutsCompleted ? (
+      ) : !isData ? (
         <div className='no-data-container'>
           <div className='title'>No Data</div>
           <p>Complete a workout to see progress.</p>
@@ -104,7 +114,6 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
               title={'Volume'}
               value={`${totalWeightLifted.toLocaleString()} lbs`}
             />
-            {/* <StatItem title={'Big Three Max'} weight='45' /> */}
             <StatItem title={'Sets'} value={totalSets.toLocaleString()} />
             <StatItem title={'Reps'} value={totalReps.toLocaleString()} />
             <StatItem
@@ -132,14 +141,20 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
 }
 
 const mapStateToProps = state => {
-  const loading = !state.auth.userAccountData.accountStats
-  const exp = state.character.exp
-  const workoutsCompleted = !loading && exp !== 0
+  const status = state.stats.status
+  const loading = status === 'loading' || status === 'unloaded'
+  const isData = status !== 'no_data'
   return {
-    accountStats: state?.auth?.userAccountData?.accountStats,
     loading,
-    workoutsCompleted,
+    isData,
+    totalUserStats: state.stats.totalUserStats,
+    exerciseStats: state.stats.exerciseStats,
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    getStats: () => dispatch(getStats()),
   }
 }
 
-export default connect(mapStateToProps)(AccountStats)
+export default connect(mapStateToProps, mapDispatchToProps)(AccountStats)

@@ -21,3 +21,8 @@ export const INC_EXP = 'INC_EXP'
 export const DEC_EXP = 'DEC_EXP'
 export const INC_HEALTH = 'INC_HEALTH'
 export const DEC_HEALTH = 'DEC_HEALTH'
+
+// Stats Types
+export const SET_TOTAL_USER_STATS = 'SET_TOTAL_USER_STATS'
+export const SET_EXERCISE_STATS = 'SET_EXERCISE_STATS'
+export const SET_STATS_STATUS = 'SET_STATS_STATUS'

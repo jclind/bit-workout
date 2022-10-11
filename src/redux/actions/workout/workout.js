@@ -25,7 +25,7 @@ import { exerciseList } from '../../../assets/data/exerciseList'
 import { calcCoins, calcExp, logWorkout } from '../character/character'
 import { v4 as uuidv4 } from 'uuid'
 import { createWarmupPath } from '../../../util/createWarmupPath'
-import { setAccountStats } from '../auth/authStatus'
+import { updateWorkoutStats } from '../stats/stats'
 
 export const fetchWorkoutData = uid => async dispatch => {
   await getDoc(doc(db, 'workoutData', uid)).then(document => {
@@ -147,34 +147,6 @@ export const removeExerciseFromWorkout =
     return updatedWorkoutPath
   }
 
-
-
-    if (incTotalTime) {
-      const totalExerciseTime =
-        Number(workoutStats.exerciseStats[exerciseStatsIdx].totalTime) || 0
-      workoutStats.exerciseStats[exerciseStatsIdx].totalTime =
-        Number(totalExerciseTime) + Number(incTotalTime)
-    }
-    if (incCoins) {
-      const totalCoins = Number(workoutStats.totalStats.totalCoins) || 0
-      workoutStats.totalStats.totalCoins = totalCoins + Number(incCoins)
-      const totalExerciseCoins =
-        Number(workoutStats.exerciseStats[exerciseStatsIdx].totalCoins) || 0
-      workoutStats.exerciseStats[exerciseStatsIdx].totalCoins =
-        totalExerciseCoins + Number(incCoins)
-    }
-    if (incExp) {
-      const totalExp = Number(workoutStats.totalStats.totalExp) || 0
-      workoutStats.totalStats.totalExp = totalExp + Number(incExp)
-      const totalExerciseExp =
-        Number(workoutStats.exerciseStats[exerciseStatsIdx].totalExp) || 0
-      workoutStats.exerciseStats[exerciseStatsIdx].totalExp =
-        totalExerciseExp + Number(incExp)
-    }
-  }
-
-  return workoutStats
-}
 const removeChartData =
   (exerciseID, deletedID, newPR1x1, newPR1x5) => async (dispatch, getState) => {
     const currExerciseStats =
@@ -248,17 +220,17 @@ export const completeSet =
     const earnedExp = calcExp(completedReps)
     const totalExp = earnedExp + currExp
 
-    const workoutStats = incCurrWorkoutStats(
-      getState().auth.userAccountData.accountStats,
-      true,
-      completedReps,
-      weight,
-      exerciseID,
-      elapsedTime,
-      earnedCoins,
-      earnedExp
+    dispatch(
+      updateWorkoutStats(
+        1,
+        completedReps,
+        weight,
+        exerciseID,
+        elapsedTime,
+        earnedCoins,
+        earnedExp
+      )
     )
-
     // If the current set is the last set
     // Else start rest timer, increment set, and updateWorkout
     if (currSet >= currSetTotal) {
@@ -301,7 +273,6 @@ export const completeSet =
       dispatch(updateWorkout(updatedData))
     }
 
-    dispatch(setAccountStats(workoutStats))
     // Calculate character stats based on completed reps
     dispatch(logWorkout(completedReps))
   }
@@ -346,15 +317,16 @@ export const completeWarmupSet = weight => async (dispatch, getState) => {
   const earnedExp = calcExp(completedReps)
   const totalExp = earnedExp + currExp
 
-  const workoutStats = incCurrWorkoutStats(
-    getState().auth.userAccountData.accountStats,
-    true,
-    completedReps,
-    weight,
-    exerciseID,
-    elapsedTime,
-    earnedCoins,
-    totalExp
+  dispatch(
+    updateWorkoutStats(
+      1,
+      completedReps,
+      weight,
+      exerciseID,
+      elapsedTime,
+      earnedCoins,
+      earnedExp
+    )
   )
 
   if (currWarmupSetIdx >= numSets - 1) {
@@ -373,7 +345,6 @@ export const completeWarmupSet = weight => async (dispatch, getState) => {
       'runningWorkout.coins': totalCoins,
       'runningWorkout.exp': totalExp,
     }
-    dispatch(setAccountStats(workoutStats))
     return dispatch(updateWorkout(updatedData))
   }
 }
@@ -427,7 +398,6 @@ export const addNewExerciseWeight =
       })
     )
   }
-
 export const addWorkoutToPastWorkouts = data => async (dispatch, getState) => {
   const uid = getState().auth.userAuth.uid
   const userWorkoutDataRef = doc(db, 'workoutData', uid)
@@ -461,27 +431,14 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
     return { ...ex, weight: currWeight, imageURL }
   })
 
-  const timeLastUpdated =
-    getState().workout.workoutData.runningWorkout.timeLastUpdated
   const updatedWeights = await updateWeights(
     weights,
     workoutData.runningWorkout.currWorkout.path
   )
 
-  const elapsedTime = new Date().getTime() - timeLastUpdated
-  const workoutStats = incCurrWorkoutStats(
-    getState().auth.userAccountData.accountStats,
-    true,
-    null,
-    null,
-    null,
-    elapsedTime
-  )
-
   const updatedData = {
     isWorkoutRunning: false,
     weights: updatedWeights,
-    workoutStats,
   }
 
   const workoutStartTime = runningWorkout.workoutStartTime
