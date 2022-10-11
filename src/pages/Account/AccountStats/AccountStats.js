@@ -70,7 +70,9 @@ const AccountStats = ({
   getStats,
 }) => {
   useEffect(() => {
-    getStats()
+    if (!totalUserStats) {
+      getStats()
+    }
   }, [])
   const {
     totalWeightLifted,

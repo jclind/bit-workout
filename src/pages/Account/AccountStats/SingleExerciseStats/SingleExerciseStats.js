@@ -8,14 +8,29 @@ import { msToDayHour } from '../../../../util/msToTime'
 import { StatItem } from '../AccountStats'
 import './SingleExerciseStats.scss'
 import SingleExerciseChartContainer from './ExerciseChart/SingleExerciseStatsChartContainer'
+import { getStats } from '../../../../redux/actions/stats/stats'
+import { useEffect } from 'react'
 
-const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
+const SingleExerciseStats = ({
+  exerciseStats,
+  loading,
+  getSingleExercise,
+  getStats,
+}) => {
+  useEffect(() => {
+    if (!exerciseStats) {
+      getStats()
+    }
+  })
+
   const params = useParams()
   const exerciseID = params.exerciseID
 
-  const singleExerciseStats = exerciseStats.find(ex => {
-    return ex.exerciseID.toString() === exerciseID
-  })
+  const singleExerciseStats =
+    !loading &&
+    exerciseStats.find(ex => {
+      return ex.exerciseID.toString() === exerciseID
+    })
   const isData = !loading && !!singleExerciseStats
 
   const singleExerciseData = isData
@@ -90,17 +105,21 @@ const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
   )
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const loading = !state.auth.userAccountData.accountStats
+const mapStateToProps = state => {
+  const status = state.stats.status
+  const loading = status === 'loading' || status === 'unloaded'
+  const isData = status !== 'no_data'
 
   return {
-    exerciseStats: state?.auth?.userAccountData?.accountStats?.exerciseStats,
     loading,
+    isData,
+    exerciseStats: state.stats.exerciseStats,
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     getSingleExercise: exerciseID => dispatch(getSingleExercise(exerciseID)),
+    getStats: () => dispatch(getStats()),
   }
 }
 
