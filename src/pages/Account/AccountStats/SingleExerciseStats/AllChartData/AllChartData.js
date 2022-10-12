@@ -12,18 +12,15 @@ import { formatAMPM } from '../../../../../util/formatDate'
 import { StatItem } from '../../AccountStats'
 import './AllChartData.scss'
 
-const AllChartData = ({
-  exerciseStats,
-  appContainerRef,
-  queryChartData,
-  removeChartData,
-}) => {
+const AllChartData = ({ appContainerRef, queryChartData, removeChartData }) => {
   const params = useParams()
   const exerciseID = params.exerciseID
 
-  const singleExerciseStats = exerciseStats.find(ex => {
-    return ex.exerciseID.toString() === exerciseID
-  })
+  // const singleExerciseStats = exerciseStats.find(ex => {
+  //   return ex.exerciseID.toString() === exerciseID
+  // })
+
+  const [singleExerciseStats, setSingleExerciseStats] = useState(null)
 
   const limit = 30
   const [isMoreData, setIsMoreData] = useState(true)
@@ -44,6 +41,7 @@ const AllChartData = ({
         setIsMoreData(false)
         if (res.data.length === 0) return setChartData([])
       }
+      setSingleExerciseStats(res.exerciseStatsData)
       setLatestDoc(res.latestDoc)
       setChartData(res.data)
       setLoading(false)
@@ -81,6 +79,12 @@ const AllChartData = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chartData, appContainerRef])
 
+  useEffect(() => {
+    if (isPaginationLoading) {
+      getMoreData()
+    }
+  }, [isPaginationLoading])
+
   const handleScroll = () => {
     if (!isMoreData) {
       return
@@ -88,9 +92,7 @@ const AllChartData = ({
     if (appContainerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = appContainerRef.current
       if (scrollTop + clientHeight === scrollHeight && !isPaginationLoading) {
-        setIsPaginationLoading(true)
-        console.log(chartData, latestDoc)
-        getMoreData()
+        setIsPaginationLoading(true) // called getMoreData in useEffect
       }
     }
   }
@@ -101,35 +103,6 @@ const AllChartData = ({
       setChartData(prev => prev.filter(el => el.id !== id))
       setDeleteIDsLoading(prev => prev.filter(currId => currId !== id))
     })
-
-    // const { pr1x1, pr1x5 } = singleExerciseStats
-    // const { weight, reps } = chartData.find(el => el.date === id)
-    // let newPR1x1ID = null
-    // if (id === pr1x1.date) {
-    //   const maxWeight = Math.max.apply(
-    //     Math,
-    //     chartData.filter(el => el.id !== id).map(o => Number(o.weight))
-    //   )
-    //   newPR1x1ID = Math.min.apply(
-    //     Math,
-    //     chartData.filter(el => el.weight === maxWeight).map(o => Number(o.date))
-    //   )
-    // }
-    // let newPR1x5ID = null
-    // if (id === pr1x5.date) {
-    //   const maxWeight = Math.max.apply(
-    //     Math,
-    //     chartData
-    //       .filter(el => el.id !== id && el.reps >= 5)
-    //       .map(o => Number(o.weight))
-    //   )
-    //   newPR1x5ID = Math.min.apply(
-    //     Math,
-    //     chartData
-    //       .filter(el => el.weight === maxWeight && el.reps >= 5)
-    //       .map(o => Number(o.date))
-    //   )
-    // }
   }
 
   return (
@@ -155,7 +128,7 @@ const AllChartData = ({
               const date = dateStr.substring(4, dateStr.length - 5)
               const time = formatAMPM(el.date)
               let isPR = false
-              if (singleExerciseStats?.pr1x1?.date === el.date) {
+              if (singleExerciseStats?.pr1x1?.id === el.id) {
                 isPR = true
               }
               return (
@@ -195,7 +168,7 @@ const AllChartData = ({
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    exerciseStats: state?.auth?.userAccountData?.accountStats?.exerciseStats,
+    // exerciseStats: state?.auth?.userAccountData?.accountStats?.exerciseStats,
   }
 }
 const mapDispatchToProps = dispatch => {

@@ -17,8 +17,24 @@
   }
   .stats-container {
     .pagination-fade-loader-container {
+      .spinner-container {
+        display: flex;
+        justify-content: center;
+        height: 30px;
+        width: 100%;
+        margin-left: 8px;
+      }
+      .text {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        font-size: 0.9rem;
+        color: $secondary-text;
+      }
       position: relative;
-      padding-top: 2rem;
+      // left: 50%;
+      margin: 0 auto;
+      width: fit-content;
     }
   }
 }

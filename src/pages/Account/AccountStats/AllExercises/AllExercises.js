@@ -101,9 +101,7 @@ const AllExercises = ({
   }, [])
 
   useEffect(() => {
-    console.log(exerciseStats)
     if (exerciseStats) {
-      console.log('here')
       setExercises(
         exerciseStats.map(ex => ({
           ...ex,
@@ -255,7 +253,7 @@ const AllExercises = ({
 const mapStateToProps = state => {
   const status = state.stats.status
   const loading = status === 'loading' || status === 'unloaded'
-  const isData = status !== 'no_data'
+  const isData = state?.stats?.exerciseStats?.length > 0 ?? false
   return {
     exerciseStats: state.stats.exerciseStats,
     loading,
