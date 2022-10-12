@@ -9,23 +9,13 @@ import { formatAMPM } from '../../../../../util/formatDate'
 import { StatItem } from '../../AccountStats'
 import './AllChartData.scss'
 
-const AllChartData = ({
-  exerciseStats,
-  loading,
-  appContainerRef,
-  queryChartData,
-}) => {
+const AllChartData = ({ exerciseStats, appContainerRef, queryChartData }) => {
   const params = useParams()
   const exerciseID = params.exerciseID
-
-  useEffect(() => {
-    queryChartData(exerciseID)
-  }, [])
 
   const singleExerciseStats = exerciseStats.find(ex => {
     return ex.exerciseID.toString() === exerciseID
   })
-  const isData = !loading && !!singleExerciseStats
 
   const [currPage, setCurrPage] = useState(0)
   const limit = 30
@@ -33,27 +23,41 @@ const AllChartData = ({
   const [isPaginationLoading, setIsPaginationLoading] = useState(false)
   const [chartData, setChartData] = useState([])
 
+  const [latestDoc, setLatestDoc] = useState(null)
+
+  const [loading, setLoading] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
 
   useEffect(() => {
-    console.log('test')
-    const newData = singleExerciseStats?.completedSetsPath ?? []
-    const startIdx = limit * currPage
-    const endIdx = limit * (currPage + 1)
-    console.log('PAGINATION')
-    const newChartDataArr = [
-      ...chartData,
-      ...newData
-        .sort((a, b) => (a.date < b.date ? 1 : b.date < a.date ? -1 : 0))
-        .slice(startIdx, endIdx),
-    ]
+    setLoading(true)
+    queryChartData(exerciseID).then(res => {
+      setChartData(res.data)
+      setLatestDoc(res.latestDoc)
+      setLoading(false)
+      res.data.forEach(el => {
+        console.log(el.date)
+      })
+    })
+  }, [])
 
-    setChartData(newChartDataArr)
-    setIsPaginationLoading(false)
+  const isData = !loading && chartData.length > 0
 
-    setIsMoreData(
-      newChartDataArr.length < singleExerciseStats.completedSetsPath.length
-    )
+  useEffect(() => {
+    // const newData = singleExerciseStats?.completedSetsPath ?? []
+    // const startIdx = limit * currPage
+    // const endIdx = limit * (currPage + 1)
+    // console.log('PAGINATION')
+    // const newChartDataArr = [
+    //   ...chartData,
+    //   ...newData
+    //     .sort((a, b) => (a.date < b.date ? 1 : b.date < a.date ? -1 : 0))
+    //     .slice(startIdx, endIdx),
+    // ]
+    // setChartData(newChartDataArr)
+    // setIsPaginationLoading(false)
+    // setIsMoreData(
+    //   newChartDataArr.length < singleExerciseStats.completedSetsPath.length
+    // )
   }, [currPage])
 
   useEffect(() => {
@@ -180,11 +184,8 @@ const AllChartData = ({
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const loading = !state.auth.userAccountData.accountStats
-
   return {
     exerciseStats: state?.auth?.userAccountData?.accountStats?.exerciseStats,
-    loading,
   }
 }
 const mapDispatchToProps = dispatch => {
