@@ -1,6 +1,7 @@
 @import '../../../../../helpers.scss';
 
 .all-chart-data-page {
+  min-height: calc(100vh - 3rem);
   .edit-btn {
     position: absolute;
     top: 0;
@@ -15,7 +16,7 @@
     color: $secondary;
   }
   .stats-container {
-    .fade-loader-container {
+    .pagination-fade-loader-container {
       position: relative;
       padding-top: 2rem;
     }

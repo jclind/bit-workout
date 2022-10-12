@@ -4,12 +4,20 @@ import { useParams } from 'react-router-dom'
 import { FadeLoader } from 'react-spinners'
 import PageLoading from '../../../../../components/PageLoading/PageLoading'
 import BackButton from '../../../../../components/SettingsComponents/BackButton/BackButton'
-import { queryChartData } from '../../../../../redux/actions/stats/stats'
+import {
+  queryChartData,
+  removeChartData,
+} from '../../../../../redux/actions/stats/stats'
 import { formatAMPM } from '../../../../../util/formatDate'
 import { StatItem } from '../../AccountStats'
 import './AllChartData.scss'
 
-const AllChartData = ({ exerciseStats, appContainerRef, queryChartData }) => {
+const AllChartData = ({
+  exerciseStats,
+  appContainerRef,
+  queryChartData,
+  removeChartData,
+}) => {
   const params = useParams()
   const exerciseID = params.exerciseID
 
@@ -17,7 +25,6 @@ const AllChartData = ({ exerciseStats, appContainerRef, queryChartData }) => {
     return ex.exerciseID.toString() === exerciseID
   })
 
-  const [currPage, setCurrPage] = useState(0)
   const limit = 30
   const [isMoreData, setIsMoreData] = useState(true)
   const [isPaginationLoading, setIsPaginationLoading] = useState(false)
@@ -27,38 +34,36 @@ const AllChartData = ({ exerciseStats, appContainerRef, queryChartData }) => {
 
   const [loading, setLoading] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
+  const [deleteIDsLoading, setDeleteIDsLoading] = useState([])
 
   useEffect(() => {
     setLoading(true)
-    queryChartData(exerciseID).then(res => {
-      setChartData(res.data)
+    queryChartData(exerciseID, limit).then(res => {
+      if (!res.data || res.data.length < limit) {
+        setLoading(false)
+        setIsMoreData(false)
+        if (res.data.length === 0) return setChartData([])
+      }
       setLatestDoc(res.latestDoc)
+      setChartData(res.data)
       setLoading(false)
-      res.data.forEach(el => {
-        console.log(el.date)
-      })
     })
   }, [])
+  const getMoreData = () => {
+    queryChartData(exerciseID, limit, latestDoc).then(res => {
+      if (!res.data || res.data.length === 0) {
+        setIsMoreData(false)
+      } else {
+        if (res.data.length < limit) {
+          setIsMoreData(false)
+        }
+        setChartData(prevWorkouts => [...prevWorkouts, ...res.data])
+      }
+      setIsPaginationLoading(false)
+    })
+  }
 
   const isData = !loading && chartData.length > 0
-
-  useEffect(() => {
-    // const newData = singleExerciseStats?.completedSetsPath ?? []
-    // const startIdx = limit * currPage
-    // const endIdx = limit * (currPage + 1)
-    // console.log('PAGINATION')
-    // const newChartDataArr = [
-    //   ...chartData,
-    //   ...newData
-    //     .sort((a, b) => (a.date < b.date ? 1 : b.date < a.date ? -1 : 0))
-    //     .slice(startIdx, endIdx),
-    // ]
-    // setChartData(newChartDataArr)
-    // setIsPaginationLoading(false)
-    // setIsMoreData(
-    //   newChartDataArr.length < singleExerciseStats.completedSetsPath.length
-    // )
-  }, [currPage])
 
   useEffect(() => {
     setIsPaginationLoading(false)
@@ -77,50 +82,54 @@ const AllChartData = ({ exerciseStats, appContainerRef, queryChartData }) => {
   }, [chartData, appContainerRef])
 
   const handleScroll = () => {
-    console.log(isMoreData)
     if (!isMoreData) {
       return
     }
     if (appContainerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = appContainerRef.current
-      console.log(scrollTop + clientHeight)
       if (scrollTop + clientHeight === scrollHeight && !isPaginationLoading) {
         setIsPaginationLoading(true)
-        setCurrPage(prev => prev + 1)
+        console.log(chartData, latestDoc)
+        getMoreData()
       }
     }
   }
 
-  const deleteItem = id => {
-    const { pr1x1, pr1x5 } = singleExerciseStats
-    const { weight, reps } = chartData.find(el => el.date === id)
+  const deleteItem = (id, reps) => {
+    setDeleteIDsLoading(prev => [...prev, id])
+    removeChartData(id, singleExerciseStats, reps).then(() => {
+      setChartData(prev => prev.filter(el => el.id !== id))
+      setDeleteIDsLoading(prev => prev.filter(currId => currId !== id))
+    })
 
-    let newPR1x1ID = null
-    if (id === pr1x1.date) {
-      const maxWeight = Math.max.apply(
-        Math,
-        chartData.filter(el => el.date !== id).map(o => Number(o.weight))
-      )
-      newPR1x1ID = Math.min.apply(
-        Math,
-        chartData.filter(el => el.weight === maxWeight).map(o => Number(o.date))
-      )
-    }
-    let newPR1x5ID = null
-    if (id === pr1x5.date) {
-      const maxWeight = Math.max.apply(
-        Math,
-        chartData
-          .filter(el => el.date !== id && el.reps >= 5)
-          .map(o => Number(o.weight))
-      )
-      newPR1x5ID = Math.min.apply(
-        Math,
-        chartData
-          .filter(el => el.weight === maxWeight && el.reps >= 5)
-          .map(o => Number(o.date))
-      )
-    }
+    // const { pr1x1, pr1x5 } = singleExerciseStats
+    // const { weight, reps } = chartData.find(el => el.date === id)
+    // let newPR1x1ID = null
+    // if (id === pr1x1.date) {
+    //   const maxWeight = Math.max.apply(
+    //     Math,
+    //     chartData.filter(el => el.id !== id).map(o => Number(o.weight))
+    //   )
+    //   newPR1x1ID = Math.min.apply(
+    //     Math,
+    //     chartData.filter(el => el.weight === maxWeight).map(o => Number(o.date))
+    //   )
+    // }
+    // let newPR1x5ID = null
+    // if (id === pr1x5.date) {
+    //   const maxWeight = Math.max.apply(
+    //     Math,
+    //     chartData
+    //       .filter(el => el.id !== id && el.reps >= 5)
+    //       .map(o => Number(o.weight))
+    //   )
+    //   newPR1x5ID = Math.min.apply(
+    //     Math,
+    //     chartData
+    //       .filter(el => el.weight === maxWeight && el.reps >= 5)
+    //       .map(o => Number(o.date))
+    //   )
+    // }
   }
 
   return (
@@ -155,15 +164,16 @@ const AllChartData = ({ exerciseStats, appContainerRef, queryChartData }) => {
                   subTitle={`x ${el.reps}`}
                   value={`${date} at ${time}`}
                   isPR={isPR}
-                  key={el.date}
+                  key={el.id}
                   isEditing={isEditing}
-                  deleteItem={() => deleteItem(el.date)}
+                  deleteItem={() => deleteItem(el.id, el.reps)}
+                  deleteLoading={!!deleteIDsLoading.find(id => id === el.id)}
                 />
               )
             })}
           </section>
           {isPaginationLoading && (
-            <div className='fade-loader-container'>
+            <div className='pagination-fade-loader-container'>
               <div className='spinner-container'>
                 <FadeLoader
                   color={'#548ca8'}
@@ -190,7 +200,10 @@ const mapStateToProps = (state, ownProps) => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    queryChartData: exerciseID => dispatch(queryChartData(exerciseID)),
+    queryChartData: (exerciseID, limit, latestDoc) =>
+      dispatch(queryChartData(exerciseID, limit, latestDoc)),
+    removeChartData: (id, singleExerciseStats, setReps) =>
+      dispatch(removeChartData(id, singleExerciseStats, setReps)),
   }
 }
 

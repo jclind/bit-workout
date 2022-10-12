@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -10,6 +11,7 @@ import {
   query,
   setDoc,
   startAfter,
+  updateDoc,
   where,
 } from 'firebase/firestore'
 import { db } from '../../../firebase'
@@ -19,6 +21,23 @@ import {
   SET_TOTAL_USER_STATS,
 } from '../../types'
 import { v4 as uuidv4 } from 'uuid'
+
+const getSingleExerciseStatsRef = async (uid, exerciseID) => {
+  const userStatsRef = doc(db, 'userStats', uid)
+  const exerciseDataQuery = query(
+    collection(userStatsRef, 'exerciseStats'),
+    where('exerciseID', '==', Number(exerciseID))
+  )
+
+  const exerciseQuerySnapshot = await getDocs(exerciseDataQuery)
+  let exerciseStatsRef
+  exerciseQuerySnapshot.forEach(doc => {
+    console.log('here!!!')
+    exerciseStatsRef = doc
+  })
+
+  return exerciseStatsRef.ref
+}
 
 export const updateWorkoutStats =
   (
@@ -158,27 +177,17 @@ export const getStats = () => async (dispatch, getState) => {
 }
 
 export const queryChartData =
-  (exerciseID, numResults = 20, latestDoc) =>
-  async (dispatch, getState) => {
+  (exerciseID, numResults, latestDoc) => async (dispatch, getState) => {
     const uid = getState().auth.userAuth.uid
 
-    const userStatsRef = doc(db, 'userStats', uid)
-    const exerciseDataQuery = query(
-      collection(userStatsRef, 'exerciseStats'),
-      where('exerciseID', '==', Number(exerciseID))
-    )
-
-    const exerciseQuerySnapshot = await getDocs(exerciseDataQuery)
-    let exerciseStatsRef
-    exerciseQuerySnapshot.forEach(doc => {
-      console.log('here!!!')
-      exerciseStatsRef = doc
-    })
+    const exerciseStatsRef = await getSingleExerciseStatsRef(uid, exerciseID)
 
     const completedSetsPathRef = collection(
-      exerciseStatsRef.ref,
+      exerciseStatsRef,
       'completedSetsPath'
     )
+
+    console.log(latestDoc)
     let setsPathQuery
     if (latestDoc) {
       setsPathQuery = query(
@@ -201,12 +210,100 @@ export const queryChartData =
 
     let sets = []
     completedSetsPathSnapshot.forEach(doc => {
-      sets.push(doc.data())
+      const data = doc.data()
+      if (data) {
+        sets.push(doc.data())
+      }
     })
 
     return { data: sets, latestDoc: newLatestDoc }
   }
 
+export const removeChartData =
+  (id, singleExerciseStats, setReps) => async (dispatch, getState) => {
+    const uid = getState().auth.userAuth.uid
+    const { exerciseID, pr1x1, pr1x5 } = singleExerciseStats
+
+    const exerciseStatsRef = await getSingleExerciseStatsRef(uid, exerciseID)
+    const completedSetsPathRef = collection(
+      exerciseStatsRef,
+      'completedSetsPath'
+    )
+    const completedSetsPathDocRef = doc(
+      exerciseStatsRef,
+      'completedSetsPath',
+      id
+    )
+
+    await deleteDoc(completedSetsPathDocRef)
+
+    let isNewPR1x1 = false
+    let newPR1x1Data = null
+    let newPRRef
+    if (pr1x1.id === id) {
+      const setsPathQuery = query(
+        completedSetsPathRef,
+        orderBy('weight', 'desc'),
+        orderBy('date'),
+        limit(1)
+      )
+      const newPR1x1Snapshot = await getDocs(setsPathQuery)
+
+      newPR1x1Snapshot.forEach(res => {
+        newPRRef = res.ref
+        isNewPR1x1 = true
+        const { id, date, reps, weight } = res.data()
+        newPR1x1Data = { id, date, reps, weight }
+      })
+
+      // await updateDoc(newPR1x1Ref, {
+      //   // isNewPR1x1
+      // })
+    }
+    let isNewPR1x5 = false
+    let newPR1x5Data = null
+    if (pr1x5.id === id) {
+      const setsPathQuery = query(
+        completedSetsPathRef,
+        where('reps', '>=', 5),
+        orderBy('weight', 'desc'),
+        orderBy('date'),
+        limit(1)
+      )
+
+      const newPR1x5Snapshot = await getDocs(setsPathQuery)
+      newPR1x5Snapshot.forEach(res => {
+        newPRRef = res.ref
+        isNewPR1x5 = true
+        const { id, date, reps, weight } = res.data()
+        newPR1x5Data = { id, date, reps, weight }
+      })
+    }
+
+    if (newPRRef && (isNewPR1x1 || isNewPR1x5)) {
+      await updateDoc(newPRRef, {
+        ...(isNewPR1x1 && { isNewPR1x1 }),
+        ...(isNewPR1x5 && { isNewPR1x5 }),
+      })
+      await exerciseStatsRef.updateDoc(newPRRef, {
+        ...(newPR1x1Data && { pr1x1: newPR1x1Data }),
+        ...(newPR1x5Data && { pr1x5: newPR1x5Data }),
+      })
+    }
+    // const newPR
+
+    // const removedSetDoc = await getDoc(completedSetsPathRef)
+    // const {weight} = removedSetDoc
+
+    // if ()
+
+    // const userStatsRef = doc(db, 'userStats', uid)
+    // const exerciseDataQuery = query(
+    //   collection(userStatsRef, 'exerciseStats'),
+    //   where('exerciseID', '==', exerciseID)
+    // )
+    // const querySnapshot = await getDocs(exerciseDataQuery)
+  }
 // export const getExercisePR = exerciseID => async (dispatch, getState) => {
 //   const uid = getState().auth.userAuth.uid
 

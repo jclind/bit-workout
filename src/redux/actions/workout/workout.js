@@ -149,33 +149,29 @@ export const removeExerciseFromWorkout =
 
 const removeChartData =
   (exerciseID, deletedID, newPR1x1, newPR1x5) => async (dispatch, getState) => {
-    const currExerciseStats =
-      getState().auth.userAccountData.accountStats.exerciseStats.find(
-        ex => ex.exerciseID === exerciseID
-      )
-
-    const updatedCompletedSetsPath = currExerciseStats.completedSetsPath.filter(
-      el => el.date !== deletedID
-    )
-
-    let updatedPR1x1 = currExerciseStats.pr1x1
-    if (newPR1x1) {
-      const newPR1x1Idx = updatedCompletedSetsPath.findIndex(
-        el => el.date === newPR1x1.date
-      )
-      updatedCompletedSetsPath[newPR1x1Idx].isNewPR1x1 = true
-      updatedPR1x1 = newPR1x1
-    }
-    let updatedPR1x5 = currExerciseStats.pr1x5
-    if (newPR1x5) updatedPR1x5 = newPR1x5
-
-    const updatedExerciseStats = {
-      ...currExerciseStats,
-      pr1x1: updatedPR1x1,
-      pr1x5: updatedPR1x5,
-      updatedCompletedSetsPath,
-    }
-
+    // const currExerciseStats =
+    //   getState().auth.userAccountData.accountStats.exerciseStats.find(
+    //     ex => ex.exerciseID === exerciseID
+    //   )
+    // const updatedCompletedSetsPath = currExerciseStats.completedSetsPath.filter(
+    //   el => el.date !== deletedID
+    // )
+    // let updatedPR1x1 = currExerciseStats.pr1x1
+    // if (newPR1x1) {
+    //   const newPR1x1Idx = updatedCompletedSetsPath.findIndex(
+    //     el => el.date === newPR1x1.date
+    //   )
+    //   updatedCompletedSetsPath[newPR1x1Idx].isNewPR1x1 = true
+    //   updatedPR1x1 = newPR1x1
+    // }
+    // let updatedPR1x5 = currExerciseStats.pr1x5
+    // if (newPR1x5) updatedPR1x5 = newPR1x5
+    // const updatedExerciseStats = {
+    //   ...currExerciseStats,
+    //   pr1x1: updatedPR1x1,
+    //   pr1x5: updatedPR1x5,
+    //   updatedCompletedSetsPath,
+    // }
     // await updateDoc(db, 'users')
   }
 

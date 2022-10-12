@@ -69,6 +69,24 @@
       transition: transform 0.2s linear, opacity 0.1s linear;
       transform: translateX(-200%);
       opacity: 0;
+      .delete-loading-spinner-container {
+        // position: relative;
+        // left: 50%;
+        // top: 50%;
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        margin-top: 28px;
+        margin-left: 15px;
+        height: 22px;
+        width: 22px;
+        // display: flex !important;
+        // justify-content: center;
+        // align-items: center;
+        // height: 22px;
+        // width: 22px;
+        // overflow: hidden;
+      }
 
       .dash-icon {
         height: 22px;
@@ -76,6 +94,9 @@
         color: $primary;
         stroke-width: 2%;
       }
+    }
+    .dash-icon-container.delete-loading {
+      background: none;
     }
     .dash-icon-container.active {
       opacity: 1;

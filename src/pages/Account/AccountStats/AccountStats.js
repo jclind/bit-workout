@@ -9,6 +9,7 @@ import PageLoading from '../../../components/PageLoading/PageLoading'
 import { AiFillStar } from 'react-icons/ai'
 import { getStats } from '../../../redux/actions/stats/stats'
 import { useEffect } from 'react'
+import FadeLoader from 'react-spinners/FadeLoader'
 
 export const StatItem = ({
   title,
@@ -19,10 +20,13 @@ export const StatItem = ({
   icon,
   isEditing,
   deleteItem,
+  deleteLoading,
 }) => {
   const handleDelete = e => {
     e.stopPropagation()
-    deleteItem()
+    if (!deleteLoading) {
+      deleteItem()
+    }
   }
 
   const navigate = useNavigate()
@@ -37,11 +41,26 @@ export const StatItem = ({
       className='stat-item'
     >
       <div
-        className={`dash-icon-container ${isEditing ? 'active' : ''}`}
+        className={`dash-icon-container${isEditing ? ' active' : ''}${
+          deleteLoading ? ' delete-loading' : ''
+        }`}
         tabIndex='0'
         onClick={handleDelete}
       >
-        <BsDash className='dash-icon' />
+        {deleteLoading ? (
+          <div className='delete-loading-spinner-container'>
+            <FadeLoader
+              color={'#eee'}
+              className='spinner'
+              height={5}
+              width={2}
+              radius={1}
+              margin={-12}
+            />
+          </div>
+        ) : (
+          <BsDash className='dash-icon' />
+        )}
       </div>
       <div className={`content ${isEditing ? 'active-editing' : ''}`}>
         <div className='top'>
