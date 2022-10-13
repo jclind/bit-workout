@@ -21,16 +21,17 @@ const SingleExerciseStats = ({
     if (!exerciseStats) {
       getStats()
     }
-  })
+  }, [])
 
   const params = useParams()
   const exerciseID = params.exerciseID
 
   const singleExerciseStats =
-    !loading &&
-    exerciseStats.find(ex => {
-      return ex.exerciseID.toString() === exerciseID
-    })
+    !loading && exerciseStats?.length > 0
+      ? exerciseStats.find(ex => {
+          return ex.exerciseID.toString() === exerciseID
+        })
+      : null
   const isData = !loading && !!singleExerciseStats
 
   const singleExerciseData = isData
