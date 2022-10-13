@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import UpdateUserInputContainer from '../../components/SettingsComponents/UpdateUserInput/UpdateUserInputContainer'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { updateUserAccountData } from '../../redux/actions/auth/authStatus'
 import { toast } from 'react-toastify'

@@ -29,28 +29,104 @@
     margin-bottom: 0.5rem;
   }
   section {
+    position: relative;
     background: $secondary-background;
     padding: 0 1.25rem;
     border-radius: $border-radius;
     margin-bottom: 2rem;
+    overflow: hidden !important;
   }
   .stat-item {
     display: flex;
     align-items: center;
+    // min-height: 35px;
     height: 100%;
     width: 100%;
     background: none;
     border-radius: 0;
     padding: 0.75rem 0.1rem;
     border-bottom: 1px solid $secondary-background-card;
+    &:disabled {
+      pointer-events: none;
+      cursor: default;
+    }
 
     &:focus {
       outline-offset: -2px;
     }
 
+    .dash-icon-container {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      border-radius: 50%;
+      background: $error-red;
+      height: 22px;
+      width: 22px;
+
+      transition: transform 0.2s linear, opacity 0.1s linear;
+      transform: translateX(-200%);
+      opacity: 0;
+      .delete-loading-spinner-container {
+        // position: relative;
+        // left: 50%;
+        // top: 50%;
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        margin-top: 28px;
+        margin-left: 15px;
+        height: 22px;
+        width: 22px;
+        // display: flex !important;
+        // justify-content: center;
+        // align-items: center;
+        // height: 22px;
+        // width: 22px;
+        // overflow: hidden;
+      }
+
+      .dash-icon {
+        height: 22px;
+        width: 30px;
+        color: $primary;
+        stroke-width: 2%;
+      }
+    }
+    .dash-icon-container.delete-loading {
+      background: none;
+    }
+    .dash-icon-container.active {
+      opacity: 1;
+      transform: translateX(0%);
+      cursor: pointer;
+    }
+    .content {
+      margin-left: 0;
+      transition: all 0.2s linear;
+    }
+    .content.active-editing {
+      margin-left: 2.5rem;
+    }
     .top {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
       font-weight: 500;
       text-transform: capitalize;
+      .sub-title {
+        font-size: 0.8rem;
+        color: $secondary-text;
+        text-transform: lowercase;
+      }
+
+      .pr-icon {
+        height: 20px;
+        width: 20px;
+        color: $exp-color;
+      }
     }
     .bottom {
       margin-top: 0.35rem;

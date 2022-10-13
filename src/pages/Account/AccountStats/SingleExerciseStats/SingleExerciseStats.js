@@ -8,14 +8,31 @@ import { msToDayHour } from '../../../../util/msToTime'
 import { StatItem } from '../AccountStats'
 import './SingleExerciseStats.scss'
 import SingleExerciseChartContainer from './ExerciseChart/SingleExerciseStatsChartContainer'
+import { getStats } from '../../../../redux/actions/stats/stats'
+import { useEffect } from 'react'
 
-const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
+const SingleExerciseStats = ({
+  exerciseStats,
+  loading,
+  getSingleExercise,
+  getStats,
+}) => {
+  useEffect(() => {
+    if (!exerciseStats) {
+      getStats()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const params = useParams()
   const exerciseID = params.exerciseID
 
-  const singleExerciseStats = exerciseStats.find(ex => {
-    return ex.exerciseID.toString() === exerciseID
-  })
+  const singleExerciseStats =
+    !loading && exerciseStats?.length > 0
+      ? exerciseStats.find(ex => {
+          return ex.exerciseID.toString() === exerciseID
+        })
+      : null
   const isData = !loading && !!singleExerciseStats
 
   const singleExerciseData = isData
@@ -35,7 +52,6 @@ const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
     totalTime,
     totalCoins,
     totalExp,
-    completedSetsPath,
   } = singleExerciseData
 
   const formattedTotalTime = isData ? msToDayHour(totalTime) : null
@@ -53,7 +69,7 @@ const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
         </div>
       ) : (
         <div className='stats-container'>
-          <SingleExerciseChartContainer pathData={completedSetsPath} />
+          <SingleExerciseChartContainer exerciseID={exerciseID} />
 
           <div className='section-title'>Personal Bests</div>
           <section>
@@ -75,10 +91,14 @@ const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
               value={`${totalReps.toLocaleString()}`}
             />
             <StatItem title='Time' value={formattedTotalTime} />
-          </section>
-          <section>
             <StatItem title='Coins Earned' value={totalCoins} />
             <StatItem title='Experience Earned' value={totalExp} />
+          </section>
+          <section>
+            <StatItem
+              title='View All Chart Data'
+              link={`/account/stats/exercises/${exerciseID}/chart-data`}
+            />
           </section>
         </div>
       )}
@@ -86,17 +106,21 @@ const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
   )
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const loading = !state.auth.userAccountData.accountStats
+const mapStateToProps = state => {
+  const status = state.stats.status
+  const loading = status === 'loading' || status === 'unloaded'
+  const isData = status !== 'no_data'
 
   return {
-    exerciseStats: state?.auth?.userAccountData?.accountStats?.exerciseStats,
     loading,
+    isData,
+    exerciseStats: state.stats.exerciseStats,
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     getSingleExercise: exerciseID => dispatch(getSingleExercise(exerciseID)),
+    getStats: () => dispatch(getStats()),
   }
 }
 

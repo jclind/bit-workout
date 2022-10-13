@@ -3,6 +3,27 @@
   min-height: calc(100% - #{$navbar-height} - 2rem);
 
   .weight-data {
+    margin: auto 0;
     margin-bottom: 2rem;
+    height: 380px;
+    background: $secondary-background;
+    border-radius: $border-radius;
+    padding: 0 0.5rem;
+
+    .loading-container {
+      position: relative;
+      height: 380px;
+      width: 100%;
+      border-radius: $border-radius;
+      background: $secondary-background;
+    }
+
+    .time-span-label {
+      text-align: center;
+      font-weight: 500;
+      color: $secondary-text;
+      padding-bottom: 0.5rem;
+      padding-top: 1rem;
+    }
   }
 }
