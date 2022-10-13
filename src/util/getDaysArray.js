@@ -75,7 +75,6 @@ export const getTimeSpanData = (timeSpan, data) => {
       }
     })
     .sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0))
-  console.log(timeSpanData)
   return {
     labels: getDaysArray(startDate, endDate),
     data: timeSpanData,

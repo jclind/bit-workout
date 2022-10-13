@@ -5,6 +5,7 @@ import SingleExerciseStatsChart from './SingleExerciseStatsChart'
 import { connect } from 'react-redux'
 import { queryChartData } from '../../../../../redux/actions/stats/stats'
 import { useEffect } from 'react'
+import PageLoading from '../../../../../components/PageLoading/PageLoading'
 
 const timeSpanOptions = [
   { value: 'month', label: 'M' },
@@ -31,7 +32,14 @@ const SingleExerciseChartContainer = ({ exerciseID, queryChartData }) => {
 
   const [selectedTimeSpan, setSelectedTimeSpan] = useState(timeSpanOptions[0])
 
-  if (loading) return 'loading'
+  if (loading)
+    return (
+      <div className='weight-data'>
+        <div className='loading-container'>
+          <PageLoading loadingText={'Chart Loading...'} />
+        </div>
+      </div>
+    )
 
   const timeSpanData = isData && getTimeSpanData(selectedTimeSpan, queriedData)
   console.log(timeSpanData)
@@ -75,6 +83,9 @@ const SingleExerciseChartContainer = ({ exerciseID, queryChartData }) => {
       y: {
         max: maxDataVal + 5,
         min: minDataVal - 5,
+        ticks: {
+          color: '#c0c0c0',
+        },
       },
       x: {
         offset: true,
@@ -85,6 +96,7 @@ const SingleExerciseChartContainer = ({ exerciseID, queryChartData }) => {
           display: true,
           autoSkip: true,
           maxTicksLimit: 6,
+          color: '#c0c0c0',
         },
       },
     },
