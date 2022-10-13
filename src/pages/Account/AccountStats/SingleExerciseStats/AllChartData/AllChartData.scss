@@ -1,0 +1,40 @@
+@import '../../../../../helpers.scss';
+
+.all-chart-data-page {
+  min-height: calc(100vh - 3rem);
+  .edit-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    height: fit-content;
+    width: fit-content;
+    background: none;
+
+    font-size: 1rem;
+    font-weight: 500;
+    color: $secondary;
+  }
+  .stats-container {
+    .pagination-fade-loader-container {
+      .spinner-container {
+        display: flex;
+        justify-content: center;
+        height: 30px;
+        width: 100%;
+        margin-left: 8px;
+      }
+      .text {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        font-size: 0.9rem;
+        color: $secondary-text;
+      }
+      position: relative;
+      // left: 50%;
+      margin: 0 auto;
+      width: fit-content;
+    }
+  }
+}

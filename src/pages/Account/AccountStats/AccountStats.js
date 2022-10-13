@@ -1,16 +1,37 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import BackButton from '../../../components/SettingsComponents/BackButton/BackButton'
-import { BsChevronRight } from 'react-icons/bs'
+import { BsChevronRight, BsDash } from 'react-icons/bs'
 import { connect } from 'react-redux'
 import './AccountStats.scss'
 import { msToDayHour } from '../../../util/msToTime'
 import PageLoading from '../../../components/PageLoading/PageLoading'
+import { AiFillStar } from 'react-icons/ai'
+import { getStats } from '../../../redux/actions/stats/stats'
+import { useEffect } from 'react'
+import FadeLoader from 'react-spinners/FadeLoader'
 
-export const StatItem = ({ title, value, link, icon }) => {
+export const StatItem = ({
+  title,
+  subTitle,
+  value,
+  link,
+  isPR,
+  icon,
+  isEditing,
+  deleteItem,
+  deleteLoading,
+}) => {
+  const handleDelete = e => {
+    e.stopPropagation()
+    if (!deleteLoading) {
+      deleteItem()
+    }
+  }
+
   const navigate = useNavigate()
   return (
-    <button
+    <div
       disabled={!link}
       onClick={() => {
         if (link) {
@@ -19,8 +40,34 @@ export const StatItem = ({ title, value, link, icon }) => {
       }}
       className='stat-item'
     >
-      <div className='content'>
-        <div className='top'>{title}</div>
+      <div
+        className={`dash-icon-container${isEditing ? ' active' : ''}${
+          deleteLoading ? ' delete-loading' : ''
+        }`}
+        tabIndex='0'
+        onClick={handleDelete}
+      >
+        {deleteLoading ? (
+          <div className='delete-loading-spinner-container'>
+            <FadeLoader
+              color={'#eee'}
+              className='spinner'
+              height={5}
+              width={2}
+              radius={1}
+              margin={-12}
+            />
+          </div>
+        ) : (
+          <BsDash className='dash-icon' />
+        )}
+      </div>
+      <div className={`content ${isEditing ? 'active-editing' : ''}`}>
+        <div className='top'>
+          <div className='title'>{title}</div>
+          <div className='sub-title'>{subTitle}</div>
+          {isPR ? <AiFillStar className='pr-icon' /> : null}
+        </div>
         {link && value ? <div className='bottom'>{value}</div> : null}
       </div>
       {link ? (
@@ -30,12 +77,23 @@ export const StatItem = ({ title, value, link, icon }) => {
       ) : value ? (
         <div className='right'>{value}</div>
       ) : null}
-    </button>
+    </div>
   )
 }
 
-const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
-  const { exerciseStats, totalStats } = accountStats ?? {}
+const AccountStats = ({
+  loading,
+  isData,
+  totalUserStats,
+  exerciseStats,
+  getStats,
+}) => {
+  useEffect(() => {
+    if (!totalUserStats) {
+      getStats()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const {
     totalWeightLifted,
     totalReps,
@@ -43,7 +101,7 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
     totalWorkoutTime,
     totalCoins,
     totalExp,
-  } = totalStats ?? {}
+  } = totalUserStats ?? {}
 
   const getExercisePR = exerciseID => {
     const exerciseData = exerciseStats.find(ex => ex.exerciseID === exerciseID)
@@ -54,9 +112,9 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
     return `${pr1x1.weight} lbs`
   }
 
-  const squatPR = !loading && workoutsCompleted ? getExercisePR(0) : ''
-  const benchPressPR = !loading && workoutsCompleted ? getExercisePR(3) : ''
-  const deadliftPR = !loading && workoutsCompleted ? getExercisePR(1) : ''
+  const squatPR = !loading && isData ? getExercisePR(0) : ''
+  const benchPressPR = !loading && isData ? getExercisePR(3) : ''
+  const deadliftPR = !loading && isData ? getExercisePR(1) : ''
 
   const totalWorkoutTimeFormatted = msToDayHour(totalWorkoutTime)
 
@@ -66,7 +124,7 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
       <BackButton />
       {loading ? (
         <PageLoading />
-      ) : !workoutsCompleted ? (
+      ) : !isData ? (
         <div className='no-data-container'>
           <div className='title'>No Data</div>
           <p>Complete a workout to see progress.</p>
@@ -78,7 +136,6 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
               title={'Volume'}
               value={`${totalWeightLifted.toLocaleString()} lbs`}
             />
-            {/* <StatItem title={'Big Three Max'} weight='45' /> */}
             <StatItem title={'Sets'} value={totalSets.toLocaleString()} />
             <StatItem title={'Reps'} value={totalReps.toLocaleString()} />
             <StatItem
@@ -106,14 +163,20 @@ const AccountStats = ({ accountStats, loading, workoutsCompleted }) => {
 }
 
 const mapStateToProps = state => {
-  const loading = !state.auth.userAccountData.accountStats
-  const exp = state.character.exp
-  const workoutsCompleted = !loading && exp !== 0
+  const status = state.stats.status
+  const loading = status === 'loading' || status === 'unloaded'
+  const isData = status !== 'no_data'
   return {
-    accountStats: state?.auth?.userAccountData?.accountStats,
     loading,
-    workoutsCompleted,
+    isData,
+    totalUserStats: state.stats.totalUserStats,
+    exerciseStats: state.stats.exerciseStats,
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    getStats: () => dispatch(getStats()),
   }
 }
 
-export default connect(mapStateToProps)(AccountStats)
+export default connect(mapStateToProps, mapDispatchToProps)(AccountStats)

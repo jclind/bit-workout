@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { useNavigate, Navigate } from 'react-router'
+import { useNavigate, Navigate } from 'react-router-dom'
 import Login from './Login'
 import './Login.scss'
 import { connect } from 'react-redux'

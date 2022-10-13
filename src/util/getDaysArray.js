@@ -61,7 +61,9 @@ export const getTimeSpanData = (timeSpan, data) => {
       weight: weightObj.weight,
       date: weightObj.date,
     }))
-    .filter(el => el.date >= startDate)
+    .filter(el => {
+      return el.date >= startDate
+    })
     .map(el => {
       const currDate = el.date
       const weight = el.weight

@@ -8,6 +8,7 @@ import Select from 'react-select'
 import { AiOutlineSearch, AiOutlineCloseCircle } from 'react-icons/ai'
 import { BsSortDown } from 'react-icons/bs'
 import './AllExercises.scss'
+import { getStats } from '../../../../redux/actions/stats/stats'
 
 const sortSelectStyles = {
   control: (provided, state) => ({
@@ -82,25 +83,54 @@ const sortOptions = [
 
 const AllExercises = ({
   exerciseStats,
+  isData,
   loading,
-  workoutsCompleted,
   getSingleExercise,
+  getStats,
 }) => {
-  const [exercises, setExercises] = useState(() => {
-    return exerciseStats.map(ex => {
-      return { ...ex, ...getSingleExercise(ex.exerciseID) }
-    })
-  })
+  const [exercises, setExercises] = useState(null)
+  const [order, setOrder] = useState(null)
+
   const [searchVal, setSearchVal] = useState('')
-
-  const [order, setOrder] = useState({
-    sort: 'name',
-    descending: true,
-  })
-
   const searchRef = useRef()
+
+  useEffect(() => {
+    if (!exerciseStats) {
+      getStats()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (exerciseStats) {
+      setExercises(
+        exerciseStats.map(ex => ({
+          ...ex,
+          ...getSingleExercise(ex.exerciseID),
+        }))
+      )
+      setOrder({
+        sort: 'name',
+        descending: true,
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [exerciseStats])
+
   useEffect(() => {
     const sortByProp = (arr, prop, reverse) => {
+      if (order.sort === 'pr1x1.weight') {
+        const sortedExercises = [...arr].sort((a, b) => {
+          const weight1 = a?.pr1x1?.weight ? Number(a.pr1x1.weight) : 0
+          const weight2 = b?.pr1x1?.weight ? Number(b.pr1x1.weight) : 0
+          return weight1 > weight2 ? 1 : weight2 > weight1 ? -1 : 0
+        })
+        if (order.descending) {
+          return sortedExercises.reverse()
+        }
+        return sortedExercises
+      }
+
       const sortedArr = [...arr].sort((a, b) =>
         a[prop] > b[prop] ? 1 : b[prop] > a[prop] ? -1 : 0
       )
@@ -111,19 +141,9 @@ const AllExercises = ({
       return sortedArr
     }
 
-    if (order.sort === 'pr1x1.weight') {
-      const sortedExercises = [...exercises].sort((a, b) => {
-        const weight1 = a?.pr1x1?.weight ? Number(a.pr1x1.weight) : 0
-        const weight2 = b?.pr1x1?.weight ? Number(b.pr1x1.weight) : 0
-        return weight1 > weight2 ? 1 : weight2 > weight1 ? -1 : 0
-      })
-      if (order.descending) {
-        return setExercises(sortedExercises.reverse())
-      }
-      return setExercises(sortedExercises)
-    }
+    if (!order || !exercises) return
 
-    return setExercises(sortByProp(exercises, order.sort, order.descending))
+    setExercises(sortByProp(exercises, order.sort, order.descending))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order])
 
@@ -160,7 +180,7 @@ const AllExercises = ({
       <BackButton />
       {loading ? (
         <PageLoading />
-      ) : !workoutsCompleted ? (
+      ) : !isData ? (
         <div className='no-data-container'>
           <div className='title'>No Data</div>
           <p>Complete a workout to see progress.</p>
@@ -203,26 +223,29 @@ const AllExercises = ({
             </div>
           </div>
           <section>
-            {exercises.map(ex => {
-              if (ex.name === 'Other') return null
-              if (
-                !searchVal ||
-                ex.name.toLowerCase().includes(searchVal.toLowerCase())
-              ) {
-                const pr1x1 = ex?.pr1x1?.weight
-                  ? ex.pr1x1.weight + 'lbs'
-                  : 'No Data'
-                return (
-                  <StatItem
-                    key={ex.exerciseID}
-                    title={ex.name}
-                    value={pr1x1}
-                    link={`/account/stats/exercises/${ex.exerciseID}`}
-                  />
-                )
-              }
-              return null
-            })}
+            {!loading && exercises
+              ? exercises.map(ex => {
+                  const { name } = getSingleExercise(ex.exerciseID)
+                  if (ex.name === 'Other') return null
+                  if (
+                    !searchVal ||
+                    name.toLowerCase().includes(searchVal.toLowerCase())
+                  ) {
+                    const pr1x1 = ex?.pr1x1?.weight
+                      ? ex.pr1x1.weight + 'lbs'
+                      : 'No Data'
+                    return (
+                      <StatItem
+                        key={ex.exerciseID}
+                        title={name}
+                        value={pr1x1}
+                        link={`/account/stats/exercises/${ex.exerciseID}`}
+                      />
+                    )
+                  }
+                  return null
+                })
+              : null}
           </section>
         </div>
       )}
@@ -231,19 +254,19 @@ const AllExercises = ({
 }
 
 const mapStateToProps = state => {
-  const loading = !state.auth.userAccountData.accountStats
-  const exp = state.character.exp
-  const workoutsCompleted = !loading && exp !== 0
-
+  const status = state.stats.status
+  const loading = status === 'loading' || status === 'unloaded'
+  const isData = state?.stats?.exerciseStats?.length > 0 ?? false
   return {
-    exerciseStats: state?.auth?.userAccountData?.accountStats?.exerciseStats,
+    exerciseStats: state.stats.exerciseStats,
     loading,
-    workoutsCompleted,
+    isData,
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     getSingleExercise: exerciseID => dispatch(getSingleExercise(exerciseID)),
+    getStats: () => dispatch(getStats()),
   }
 }
 
