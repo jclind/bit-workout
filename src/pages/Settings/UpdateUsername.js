@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import UpdateUserInputContainer from '../../components/SettingsComponents/UpdateUserInput/UpdateUserInputContainer'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { AiOutlineWarning } from 'react-icons/ai'
 import { connect } from 'react-redux'
 import {

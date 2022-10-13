@@ -21,6 +21,7 @@ const SingleExerciseStats = ({
     if (!exerciseStats) {
       getStats()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const params = useParams()

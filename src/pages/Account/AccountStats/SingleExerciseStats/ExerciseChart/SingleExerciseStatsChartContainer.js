@@ -28,6 +28,7 @@ const SingleExerciseChartContainer = ({ exerciseID, queryChartData }) => {
       setQueriedData(res.data)
       setLoading(false)
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const [selectedTimeSpan, setSelectedTimeSpan] = useState(timeSpanOptions[0])
@@ -42,7 +43,6 @@ const SingleExerciseChartContainer = ({ exerciseID, queryChartData }) => {
     )
 
   const timeSpanData = isData && getTimeSpanData(selectedTimeSpan, queriedData)
-  console.log(timeSpanData)
   const labels = isData && timeSpanData.labels
   const chartData = isData && timeSpanData.data
 

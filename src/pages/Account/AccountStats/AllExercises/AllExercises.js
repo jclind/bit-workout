@@ -98,6 +98,7 @@ const AllExercises = ({
     if (!exerciseStats) {
       getStats()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -113,6 +114,7 @@ const AllExercises = ({
         descending: true,
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [exerciseStats])
 
   useEffect(() => {
@@ -142,6 +144,7 @@ const AllExercises = ({
     if (!order || !exercises) return
 
     setExercises(sortByProp(exercises, order.sort, order.descending))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order])
 
   const handleSelectChange = e => {

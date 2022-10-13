@@ -273,7 +273,6 @@ export const removeChartData =
         newPR1x1Ref = res.ref
         isNewPR1x1 = true
         const { id, date, reps, weight } = res.data()
-        console.log(res.data())
         newPR1x1Data = { id, date, reps, weight }
       })
     }
@@ -291,11 +290,9 @@ export const removeChartData =
       let sets = []
       const newPR1x5Snapshot = await getDocs(setsPathQuery)
       newPR1x5Snapshot.forEach(res => {
-        console.log('huh?')
         sets.push({ ...res.data(), ref: res.ref })
         isNewPR1x5 = true
       })
-      console.log(sets)
       const { id, date, reps, weight, ref } = sets.sort(
         (a, b) => Number(b.weight) - Number(a.weight) || a.date - b.date
       )[0]
@@ -304,19 +301,11 @@ export const removeChartData =
     }
 
     if (isNewPR1x1 || isNewPR1x5) {
-      console.log({
-        ...(newPR1x1Ref && isNewPR1x1 && { isNewPR1x1 }),
-        ...(newPR1x5Ref && isNewPR1x5 && { isNewPR1x5 }),
-      })
       await updateDoc(newPR1x1Ref, {
         ...(newPR1x1Ref && isNewPR1x1 && { isNewPR1x1 }),
       })
       await updateDoc(newPR1x5Ref, {
         ...(newPR1x5Ref && isNewPR1x5 && { isNewPR1x5 }),
-      })
-      console.log({
-        ...(newPR1x1Data && { pr1x1: newPR1x1Data }),
-        ...(newPR1x5Data && { pr1x5: newPR1x5Data }),
       })
       await updateDoc(exerciseStatsRef, {
         ...(newPR1x1Data && { pr1x1: newPR1x1Data }),

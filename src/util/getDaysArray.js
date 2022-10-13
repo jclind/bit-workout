@@ -22,7 +22,6 @@ export const getTimeSpanData = (timeSpan, data) => {
 
   let hash = Object.create(null)
   for (let { date, weight } of data) {
-    console.log(date, weight)
     const currDay = new Date(Number(date)).toISOString().substring(0, 10)
     if (hash[currDay]) {
       if (hash[currDay].date < date) {

@@ -42,6 +42,7 @@ const AllChartData = ({ appContainerRef, queryChartData, removeChartData }) => {
       setChartData(res.data)
       setLoading(false)
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const getMoreData = () => {
     queryChartData(exerciseID, limit, latestDoc).then(res => {
@@ -79,6 +80,7 @@ const AllChartData = ({ appContainerRef, queryChartData, removeChartData }) => {
     if (isPaginationLoading) {
       getMoreData()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPaginationLoading])
 
   const handleScroll = () => {
