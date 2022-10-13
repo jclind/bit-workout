@@ -16,10 +16,6 @@ const AllChartData = ({ appContainerRef, queryChartData, removeChartData }) => {
   const params = useParams()
   const exerciseID = params.exerciseID
 
-  // const singleExerciseStats = exerciseStats.find(ex => {
-  //   return ex.exerciseID.toString() === exerciseID
-  // })
-
   const [singleExerciseStats, setSingleExerciseStats] = useState(null)
 
   const limit = 30

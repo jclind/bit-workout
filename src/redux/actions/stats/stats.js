@@ -182,7 +182,8 @@ export const getStats = () => async (dispatch, getState) => {
 }
 
 export const queryChartData =
-  (exerciseID, numResults, latestDoc) => async (dispatch, getState) => {
+  (exerciseID, numResults, latestDoc, endDate) =>
+  async (dispatch, getState) => {
     const uid = getState().auth.userAuth.uid
 
     const { exerciseStatsRef, exerciseStatsData } =
@@ -195,7 +196,13 @@ export const queryChartData =
     )
 
     let setsPathQuery
-    if (latestDoc) {
+    if (endDate) {
+      setsPathQuery = query(
+        completedSetsPathRef,
+        where('date', '>=', endDate),
+        limit(500)
+      )
+    } else if (latestDoc) {
       setsPathQuery = query(
         completedSetsPathRef,
         orderBy('date', 'desc'),

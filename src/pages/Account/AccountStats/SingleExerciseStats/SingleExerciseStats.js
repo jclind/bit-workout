@@ -50,7 +50,6 @@ const SingleExerciseStats = ({
     totalTime,
     totalCoins,
     totalExp,
-    completedSetsPath,
   } = singleExerciseData
 
   const formattedTotalTime = isData ? msToDayHour(totalTime) : null
@@ -68,7 +67,7 @@ const SingleExerciseStats = ({
         </div>
       ) : (
         <div className='stats-container'>
-          <SingleExerciseChartContainer pathData={completedSetsPath} />
+          <SingleExerciseChartContainer exerciseID={exerciseID} />
 
           <div className='section-title'>Personal Bests</div>
           <section>
