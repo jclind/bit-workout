@@ -12,7 +12,11 @@ import { timeToMS } from '../../util/timeToMS'
 const SKELETON_BASE_COLOR = '#546d80'
 const SKELETON_HIGHLIGHT_COLOR = '#548ca8'
 
-const ExerciseItem = ({ currActiveWorkoutExercise, getSingleExercise }) => {
+const ExerciseItem = ({
+  currActiveWorkoutExercise,
+  getSingleExercise,
+  isPastWorkoutsItemCollapsed,
+}) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
 
   const setPath = currActiveWorkoutExercise.setPath
@@ -28,8 +32,14 @@ const ExerciseItem = ({ currActiveWorkoutExercise, getSingleExercise }) => {
     <div className='workout-path-exercise'>
       <div
         className='head'
+        tabIndex={isPastWorkoutsItemCollapsed ? -1 : 0}
         onClick={() => {
           setIsCollapsed(prev => !prev)
+        }}
+        onKeyDown={e => {
+          if (e.key === 'Enter') {
+            setIsCollapsed(prev => !prev)
+          }
         }}
       >
         <div className='image'>
@@ -107,13 +117,19 @@ const PastWorkoutsItem = ({ workout, getSingleExercise, loading }) => {
   return (
     <div className={`past-workouts-item`}>
       <div
-        className='head'
+        className='head past-workouts-item-head'
         aria-label='Workout Collapse Toggle'
         onClick={() => {
           if (!loading) {
-            setIsCollapsed(!isCollapsed)
+            setIsCollapsed(prev => !prev)
           }
         }}
+        onKeyDown={e => {
+          if (e.key === 'Enter' && !loading) {
+            setIsCollapsed(prev => !prev)
+          }
+        }}
+        tabIndex={0}
       >
         <div className='image'>
           {loading ? (
@@ -177,7 +193,13 @@ const PastWorkoutsItem = ({ workout, getSingleExercise, loading }) => {
       </div>
 
       {!loading && (
-        <div className={isCollapsed ? 'collapse' : 'collapse show'}>
+        <div
+          className={
+            isCollapsed
+              ? 'collapse past-workout-item-collapse'
+              : 'collapse past-workout-item-collapse show'
+          }
+        >
           <div className='workout-data'>
             <div className='start-finish-time item'>
               <div className='label'>Timespan:</div>
@@ -207,6 +229,7 @@ const PastWorkoutsItem = ({ workout, getSingleExercise, loading }) => {
                     <ExerciseItem
                       currActiveWorkoutExercise={currActiveWorkoutExercise}
                       getSingleExercise={getSingleExercise}
+                      isPastWorkoutsItemCollapsed={isCollapsed}
                       key={currActiveWorkoutExercise.id}
                     />
                   )

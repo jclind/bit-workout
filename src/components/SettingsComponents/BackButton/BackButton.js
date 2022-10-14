@@ -12,7 +12,11 @@ const BackButton = ({ link }) => {
   }
 
   return (
-    <button className='back-button' onClick={handleNavigate}>
+    <button
+      className='back-button'
+      onClick={handleNavigate}
+      aria-label='Back Button'
+    >
       <BsChevronLeft className='icon' />
     </button>
   )
