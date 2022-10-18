@@ -1,4 +1,12 @@
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
+import {
+  arrayUnion,
+  doc,
+  getDoc,
+  increment,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore'
+import { itemList } from '../../../assets/data/itemList'
 import { db } from '../../../firebase'
 import {
   DEC_COINS,
@@ -6,6 +14,7 @@ import {
   FETCH_CHARACTER_DATA,
   INC_COINS,
   INC_EXP,
+  UPDATE_INVENTORY,
 } from '../../types'
 
 export const fetchCharacterData = uid => async dispatch => {
@@ -96,4 +105,41 @@ export const removeExp = exp => async (dispatch, state) => {
     type: DEC_EXP,
     payload: exp,
   })
+}
+
+export const purchaseShopItem = id => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
+
+  const purchasedItem = itemList.find(item => item.id === id)
+  const purchasedItemCategory = purchasedItem.category
+  const itemCost = purchasedItem.cost
+
+  const characterRef = doc(db, 'characterData', uid)
+  let characterData = await getDoc(characterRef)
+  if (!characterData.exists() || characterData.data().coins < itemCost) {
+    return { error: 'Insufficient Coins' }
+  }
+
+  const updatedInventoryState =
+    getState().character.inventory[purchasedItemCategory]?.length > 0
+      ? [...getState().character?.inventory[purchasedItemCategory], id]
+      : [id]
+
+  dispatch({
+    type: UPDATE_INVENTORY,
+    payload: updatedInventoryState,
+  })
+  dispatch({
+    type: DEC_COINS,
+    payload: itemCost,
+  })
+
+  await setDoc(
+    characterRef,
+    {
+      coins: increment(-itemCost),
+      inventory: arrayUnion(id),
+    },
+    { merge: true }
+  )
 }

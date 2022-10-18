@@ -51,6 +51,7 @@ import AccountStats from './pages/Account/AccountStats/AccountStats'
 import AllExercises from './pages/Account/AccountStats/AllExercises/AllExercises'
 import SingleExerciseStats from './pages/Account/AccountStats/SingleExerciseStats/SingleExerciseStats'
 import AllChartData from './pages/Account/AccountStats/SingleExerciseStats/AllChartData/AllChartData'
+import Inventory from './components/Inventory/Inventory'
 
 const ScrollToTop = () => {
   const { pathname } = useLocation()
@@ -82,6 +83,7 @@ function App() {
           <Routes>
             <Route exact path='/' element={<PrivateRoute />}>
               <Route exact path='/' element={<Dashboard />} />
+              <Route exact path='/inventory' element={<Inventory />} />
               <Route
                 exact
                 path='/workout'

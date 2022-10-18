@@ -4,19 +4,20 @@ import {
   INC_EXP,
   DEC_EXP,
   FETCH_CHARACTER_DATA,
+  UPDATE_INVENTORY,
 } from '../types'
 
 const INITIAL_STATE = {
   coins: 0,
   health: 0,
   exp: 0,
-  inv: [],
+  inventory: [],
 }
 
 const characterReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_CHARACTER_DATA:
-      return { ...action.payload }
+      return { ...state, ...action.payload }
     case INC_COINS:
       const incCoins = state.coins + action.payload
       return { ...state, coins: incCoins }
@@ -29,6 +30,11 @@ const characterReducer = (state = INITIAL_STATE, action) => {
     case DEC_EXP:
       const decExp = state.exp - action.payload
       return { ...state, exp: decExp }
+    case UPDATE_INVENTORY:
+      return {
+        ...state,
+        inventory: action.payload,
+      }
     default:
       return state
   }

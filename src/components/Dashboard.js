@@ -2,6 +2,7 @@ import NavbarContainer from './Navbar/Navbar'
 import { connect } from 'react-redux'
 import Character from './Character/Character'
 import PastWorkoutsLinkContainer from './PastWorkoutsLink/PastWorkoutsLinkContainer'
+import CharacterShop from './CharacterShop/CharacterShop'
 
 const Dashboard = ({ userAuth, userAccountData }) => {
   const loading = !userAuth || !userAccountData
@@ -10,6 +11,7 @@ const Dashboard = ({ userAuth, userAccountData }) => {
     <>
       <div className='page'>
         <Character loading={loading} />
+        <CharacterShop />
         <PastWorkoutsLinkContainer />
       </div>
 
