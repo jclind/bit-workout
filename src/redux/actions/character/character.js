@@ -1,11 +1,4 @@
-import {
-  arrayUnion,
-  doc,
-  getDoc,
-  increment,
-  setDoc,
-  updateDoc,
-} from 'firebase/firestore'
+import { doc, getDoc, increment, setDoc, updateDoc } from 'firebase/firestore'
 import { itemList } from '../../../assets/data/itemList'
 import { db } from '../../../firebase'
 import {
@@ -29,7 +22,7 @@ export const fetchCharacterData = uid => async dispatch => {
       health: 0,
     }
     characterData = characterInitialState
-    await setDoc(characterDataRef, characterInitialState)
+    await setDoc(characterDataRef, characterInitialState, { merge: true })
   }
   dispatch({ type: FETCH_CHARACTER_DATA, payload: characterData })
 }
@@ -57,11 +50,15 @@ export const logWorkout = reps => async (dispatch, getState) => {
   const incExp = calcExp(reps)
   const totalExp = currExp + incExp
 
-  await setDoc(characterData, {
-    coins: totalCoins,
-    exp: totalExp,
-    health: character.health,
-  })
+  await setDoc(
+    characterData,
+    {
+      coins: totalCoins,
+      exp: totalExp,
+      health: character.health,
+    },
+    { merge: true }
+  )
 
   dispatch(addCoins(incCoins))
   dispatch(addExp(incExp))

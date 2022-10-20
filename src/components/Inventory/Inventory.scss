@@ -1,17 +1,36 @@
 @import '../../helpers.scss';
 
 .inventory-page {
+  padding-bottom: calc(#{$navbar-height} + 2rem);
   .list {
     .section-title {
       text-transform: uppercase;
-      font-weight: 600;
-      font-size: 0.9rem;
+      font-weight: 700;
+      font-size: 1rem;
+      padding-bottom: 1rem;
     }
     .items {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
       justify-content: center;
       margin: 0.5rem 0;
+
+      .type-title {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        color: $secondary-text;
+        font-weight: 600;
+      }
+      .type-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        .type-equipment {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+      }
 
       .item {
         position: relative;

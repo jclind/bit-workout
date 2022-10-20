@@ -4,14 +4,19 @@ import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { itemList } from '../../assets/data/itemList'
 import { purchaseShopItem } from '../../redux/actions/character/character'
-import './CharacterShop.scss'
 import ItemModal from './ItemModal/ItemModal'
+import { toast } from 'react-toastify'
+import './CharacterShop.scss'
 
 const ShopItem = ({ item, handleItemClick }) => {
   return (
     <button className='item' onClick={() => handleItemClick(item.id)}>
       <div className='img-container'>
-        <img src={item.thumbnail} alt={item.title} />
+        <img
+          src={item.thumbnail}
+          alt={item.title}
+          className={item.type === 'hat' ? 'hat' : ''}
+        />
       </div>
       <div className='cost'>
         <RiCopperCoinLine className='icon coin-icon' />
@@ -41,6 +46,8 @@ const CharacterShop = ({ purchaseShopItem, inventory }) => {
     purchaseShopItem(id).then(() => {
       setPurchaseLoading(false)
       setIsItemModalOpen(false)
+      const { name } = itemList.find(item => item.id === id)
+      toast(`${name} successfully purchased`, { type: 'success' })
     })
   }
 
@@ -61,7 +68,7 @@ const CharacterShop = ({ purchaseShopItem, inventory }) => {
           })}
         </div>
       ) : (
-        <div className='no-items'>No Items Available</div>
+        <div className='no-items'>No Items Are Available At The Moment</div>
       )}
       <button className='view-inventory' onClick={() => navigate('/inventory')}>
         View Inventory

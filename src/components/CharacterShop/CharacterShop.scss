@@ -20,7 +20,7 @@
   }
   .list {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
 
     .item {
@@ -32,7 +32,11 @@
       padding: 0;
       border-radius: $border-radius;
       background: $tertiary-background;
+
       .img-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         height: 50px;
         width: 50px;
         padding: 0.5rem 0;
@@ -41,6 +45,10 @@
           height: 50px;
           width: 50px;
           object-fit: contain;
+        }
+        img.hat {
+          height: 40px;
+          width: 40px;
         }
       }
       .item-name {
@@ -71,10 +79,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: $tertiary-background;
+    // background: $-background;
     height: 98px;
     width: 100%;
     border-radius: $border-radius;
+    text-align: center;
   }
   button.view-inventory {
     width: fit-content;

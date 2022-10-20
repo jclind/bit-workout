@@ -63,18 +63,34 @@ const Inventory = ({ inventory, equippedArr, setEquippedItem }) => {
       <Character />
       <div className='list'>
         {inventoryCategories.map(el => {
+          const categoryTypes = _.chain(el.data)
+            .groupBy('type')
+            .map((value, key) => ({ type: key, data: value }))
+            .value()
+          console.log(categoryTypes)
           return (
             <section key={el.category}>
               <div className='section-title'>{el.category}</div>
               <div className='items'>
-                {el.data.map(item => {
+                {categoryTypes.map(categoryType => {
                   return (
-                    <InventoryItem
-                      item={item}
-                      key={item.id}
-                      handleItemClick={handleItemClick}
-                      equippedArr={equippedArr}
-                    />
+                    <div className='type-container' key={categoryType.type}>
+                      <div className='type-title'>
+                        {`${categoryType.type.split('-').join(' ')}s`}
+                      </div>
+                      <div className='type-equipment'>
+                        {categoryType.data.map(item => {
+                          return (
+                            <InventoryItem
+                              item={item}
+                              key={item.id}
+                              handleItemClick={handleItemClick}
+                              equippedArr={equippedArr}
+                            />
+                          )
+                        })}
+                      </div>
+                    </div>
                   )
                 })}
               </div>

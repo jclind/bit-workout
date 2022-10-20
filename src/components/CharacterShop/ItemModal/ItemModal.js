@@ -23,7 +23,7 @@ const ItemModal = ({
   })
 
   const itemData = itemList.find(item => item.id === itemID)
-  const { name, description, src, cost, stats } = itemData ?? {}
+  const { name, description, thumbnail, cost, stats } = itemData ?? {}
 
   const isSufficientFunds = !isPurchased ? coinBalance >= cost : null
 
@@ -33,7 +33,7 @@ const ItemModal = ({
         <div className='modal-content' ref={modalContent}>
           <div className='title'>{name}</div>
           <div className='img-container'>
-            <img src={src} alt={name} />
+            <img src={thumbnail} alt={name} />
           </div>
           <div className='stats'>
             {Object.keys(stats).map(stat => {
