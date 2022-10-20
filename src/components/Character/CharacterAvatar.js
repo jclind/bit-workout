@@ -3,18 +3,24 @@ import { connect } from 'react-redux'
 import characterImg from '../../assets/images/character.png'
 import './CharacterAvatar.scss'
 
-const CharacterAvatar = ({ inventory }) => {
+const CharacterAvatar = ({ equippedArr }) => {
+  const { src: hatSrc, name: hatName } =
+    equippedArr.find(item => item.type === 'hat') ?? {}
+  const { src: robesSrc, name: robesName } =
+    equippedArr.find(item => item.type === 'robes') ?? {}
+  console.log(robesSrc, robesName)
   return (
     <div className='avatar-container'>
-      <img src='/items/party-hat.png' alt='party hat' className='hat' />
+      {hatSrc && <img src={hatSrc} alt={hatName} className='hat' />}
       <img src={characterImg} alt='avatar' className='avatar' />
+      {robesSrc && <img src={robesSrc} alt={robesName} className='robes' />}
     </div>
   )
 }
 
 const mapStateToProps = state => {
   return {
-    // equipedItems: state?.character?.inventory ?? []
+    equippedArr: state?.character?.equipped ?? [],
   }
 }
 

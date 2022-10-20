@@ -6,6 +6,8 @@ import _ from 'lodash'
 import './Inventory.scss'
 import Character from '../Character/Character'
 import ItemModal from '../CharacterShop/ItemModal/ItemModal'
+import { setEquippedItem } from '../../redux/actions/character/character'
+import { BsCheck } from 'react-icons/bs'
 
 const InventoryItem = ({ item, handleItemClick, equippedArr }) => {
   const { id, name, thumbnail, type } = item
@@ -15,8 +17,14 @@ const InventoryItem = ({ item, handleItemClick, equippedArr }) => {
       className='item'
       onClick={() => handleItemClick(id, isItemEquipped)}
     >
+      {isItemEquipped && (
+        <div className='equipped-indicator'>
+          <BsCheck className='equipped-icon icon' />
+        </div>
+      )}
       <div className='img-container'>
         <img
+          draggable='false'
           src={thumbnail}
           alt={name}
           className={`${type === 'hat' ? 'hat' : ''}`}
@@ -26,7 +34,7 @@ const InventoryItem = ({ item, handleItemClick, equippedArr }) => {
   )
 }
 
-const Inventory = ({ inventory, equippedArr }) => {
+const Inventory = ({ inventory, equippedArr, setEquippedItem }) => {
   const [selectedItemId, setSelectedItemId] = useState(null)
   const [isSelectedItemEquipped, setIsSelectedItemEquipped] = useState(false)
   const [isItemModalOpen, setIsItemModalOpen] = useState(false)
@@ -39,7 +47,10 @@ const Inventory = ({ inventory, equippedArr }) => {
     setIsSelectedItemEquipped(isEquipped)
     setIsItemModalOpen(true)
   }
-  const handleToggleEquip = id => {}
+  const handleSetEquip = (id, isEquipped) => {
+    setEquippedItem(id, isEquipped)
+    setIsItemModalOpen(false)
+  }
 
   const inventoryCategories = _.chain(inventoryDataArr)
     .groupBy('category')
@@ -77,7 +88,7 @@ const Inventory = ({ inventory, equippedArr }) => {
           itemID={selectedItemId}
           isPurchased={true}
           isEquipped={isSelectedItemEquipped}
-          toggleEquip={handleToggleEquip}
+          setEquip={handleSetEquip}
         />
       )}
     </div>
@@ -90,5 +101,11 @@ const mapStateToProps = state => {
     equippedArr: state.character?.equipped ?? [],
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    setEquippedItem: (id, equipItem) =>
+      dispatch(setEquippedItem(id, equipItem)),
+  }
+}
 
-export default connect(mapStateToProps)(Inventory)
+export default connect(mapStateToProps, mapDispatchToProps)(Inventory)

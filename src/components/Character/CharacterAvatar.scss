@@ -2,9 +2,9 @@
   position: relative;
   height: 100px;
   width: 100px;
-  .hat {
+  img.hat {
     position: absolute;
-    z-index: 2;
+    z-index: 3;
     top: 9px;
     left: 2px;
     right: 0;
@@ -13,9 +13,9 @@
     height: 32px !important;
     width: 32px !important;
   }
+  img.robes,
   img.avatar {
     position: absolute;
-    z-index: 1;
     top: 25px;
     left: 0;
     right: 0;
@@ -23,5 +23,11 @@
     object-fit: contain;
     width: 60px;
     height: 60px;
+  }
+  img.robes {
+    z-index: 2;
+  }
+  img.avatar {
+    z-index: 1;
   }
 }

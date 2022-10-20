@@ -14,11 +14,22 @@
       margin: 0.5rem 0;
 
       .item {
+        position: relative;
         background: $tertiary-background;
         width: fit-content;
         height: fit-content;
         border-radius: $border-radius;
         padding: 1rem;
+        .equipped-indicator {
+          position: absolute;
+          top: 0.15rem;
+          left: 0.15rem;
+          .icon {
+            height: 22px;
+            width: 22px;
+            color: $success-green;
+          }
+        }
         .img-container {
           display: flex;
           justify-content: center;

@@ -16,6 +16,7 @@ const ItemModal = ({
   purchaseLoading,
   isPurchased,
   isEquipped,
+  setEquip,
 }) => {
   const modalContent = useClickOutside(() => {
     onClose()
@@ -24,7 +25,7 @@ const ItemModal = ({
   const itemData = itemList.find(item => item.id === itemID)
   const { name, description, src, cost, stats } = itemData ?? {}
 
-  const isSufficientFunds = isPurchased ? coinBalance >= cost : null
+  const isSufficientFunds = !isPurchased ? coinBalance >= cost : null
 
   return ReactDom.createPortal(
     <>
@@ -55,7 +56,10 @@ const ItemModal = ({
           <p className='description'>{description}</p>
           <div className='actions'>
             {isPurchased ? (
-              <button className='equip-btn'>
+              <button
+                className='equip-btn'
+                onClick={() => setEquip(itemID, !isEquipped)}
+              >
                 {isEquipped ? (
                   <>
                     <AiOutlineMinusCircle className='icon equip-icon' />{' '}

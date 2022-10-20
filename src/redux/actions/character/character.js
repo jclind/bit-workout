@@ -14,6 +14,7 @@ import {
   FETCH_CHARACTER_DATA,
   INC_COINS,
   INC_EXP,
+  UPDATE_EQUIPPED,
   UPDATE_INVENTORY,
 } from '../../types'
 
@@ -144,6 +145,36 @@ export const purchaseShopItem = id => async (dispatch, getState) => {
 }
 
 export const setEquippedItem =
-  (id, isEquipped) => async (dispatch, getState) => {
+  (id, equipItem) => async (dispatch, getState) => {
+    const currEquippedArr = getState().character.equipped
+
+    let updatedEquippedArr = [...currEquippedArr]
+
+    if (equipItem) {
+      const newEquippedItem = itemList.find(item => item.id === id)
+      const itemType = newEquippedItem.type
+
+      const currTypeExistsIdx = currEquippedArr.findIndex(
+        item => item.type === itemType
+      )
+      if (currTypeExistsIdx >= 0) {
+        updatedEquippedArr[currTypeExistsIdx] = newEquippedItem
+      } else {
+        updatedEquippedArr.push(newEquippedItem)
+      }
+    } else {
+      updatedEquippedArr = currEquippedArr.filter(item => item.id !== id)
+    }
+    dispatch({ type: UPDATE_EQUIPPED, payload: updatedEquippedArr })
+
     const uid = getState().auth.userAuth.uid
+    const characterRef = doc(db, 'characterData', uid)
+
+    await setDoc(
+      characterRef,
+      {
+        equipped: updatedEquippedArr,
+      },
+      { merge: true }
+    )
   }
