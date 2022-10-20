@@ -5,6 +5,7 @@ import {
   DEC_EXP,
   FETCH_CHARACTER_DATA,
   UPDATE_INVENTORY,
+  UPDATE_EQUIPPED,
 } from '../types'
 
 const INITIAL_STATE = {
@@ -12,6 +13,7 @@ const INITIAL_STATE = {
   health: 0,
   exp: 0,
   inventory: [],
+  equipped: [],
 }
 
 const characterReducer = (state = INITIAL_STATE, action) => {
@@ -34,6 +36,11 @@ const characterReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         inventory: action.payload,
+      }
+    case UPDATE_EQUIPPED:
+      return {
+        ...state,
+        equipped: action.payload,
       }
     default:
       return state

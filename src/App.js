@@ -83,7 +83,16 @@ function App() {
           <Routes>
             <Route exact path='/' element={<PrivateRoute />}>
               <Route exact path='/' element={<Dashboard />} />
-              <Route exact path='/inventory' element={<Inventory />} />
+              <Route
+                exact
+                path='/inventory'
+                element={
+                  <>
+                    <Inventory />
+                    <NavbarContainer />
+                  </>
+                }
+              />
               <Route
                 exact
                 path='/workout'

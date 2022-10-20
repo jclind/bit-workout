@@ -1,0 +1,41 @@
+@import '../../helpers.scss';
+
+.inventory-page {
+  .list {
+    .section-title {
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .items {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      justify-content: center;
+      margin: 0.5rem 0;
+
+      .item {
+        background: $tertiary-background;
+        width: fit-content;
+        height: fit-content;
+        border-radius: $border-radius;
+        padding: 1rem;
+        .img-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 50px;
+          width: 50px;
+          img {
+            object-fit: contain;
+            height: 50px;
+            width: 50px;
+          }
+          img.hat {
+            height: 40px;
+            width: 40px;
+          }
+        }
+      }
+    }
+  }
+}

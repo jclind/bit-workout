@@ -46,6 +46,21 @@
       font-weight: 400;
       margin: 2rem 0 1rem;
     }
+
+    .equip-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      background: none;
+      border: 1px solid $primary;
+
+      .icon {
+        height: 25px;
+        width: 25px;
+      }
+    }
+
     .cancel-btn {
       background: $primary-background !important;
     }
@@ -56,6 +71,7 @@
       gap: 0.35rem;
       background: $coin-background-color !important;
       font-weight: 600;
+      width: 115px !important;
       .cost {
         display: flex;
         align-items: center;

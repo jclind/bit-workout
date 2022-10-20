@@ -1,0 +1,27 @@
+.avatar-container {
+  position: relative;
+  height: 100px;
+  width: 100px;
+  .hat {
+    position: absolute;
+    z-index: 2;
+    top: 9px;
+    left: 2px;
+    right: 0;
+    margin: 0 auto;
+    object-fit: contain;
+    height: 32px !important;
+    width: 32px !important;
+  }
+  img.avatar {
+    position: absolute;
+    z-index: 1;
+    top: 25px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    object-fit: contain;
+    width: 60px;
+    height: 60px;
+  }
+}

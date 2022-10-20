@@ -11,7 +11,7 @@ const ShopItem = ({ item, handleItemClick }) => {
   return (
     <button className='item' onClick={() => handleItemClick(item.id)}>
       <div className='img-container'>
-        <img src={item.src} alt={item.title} />
+        <img src={item.thumbnail} alt={item.title} />
       </div>
       <div className='cost'>
         <RiCopperCoinLine className='icon coin-icon' />

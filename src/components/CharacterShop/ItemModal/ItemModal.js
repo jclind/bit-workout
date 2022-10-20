@@ -3,10 +3,20 @@ import ReactDom from 'react-dom'
 import { itemList } from '../../../assets/data/itemList'
 import useClickOutside from '../../../util/useClickOutside'
 import { RiCopperCoinLine } from 'react-icons/ri'
-import './ItemModal.scss'
 import { connect } from 'react-redux'
+import { TailSpin } from 'react-loader-spinner'
+import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
+import './ItemModal.scss'
 
-const ItemModal = ({ onClose, itemID, handlePurchase, coinBalance }) => {
+const ItemModal = ({
+  onClose,
+  itemID,
+  handlePurchase,
+  coinBalance,
+  purchaseLoading,
+  isPurchased,
+  isEquipped,
+}) => {
   const modalContent = useClickOutside(() => {
     onClose()
   })
@@ -14,7 +24,7 @@ const ItemModal = ({ onClose, itemID, handlePurchase, coinBalance }) => {
   const itemData = itemList.find(item => item.id === itemID)
   const { name, description, src, cost, stats } = itemData ?? {}
 
-  const isSufficientFunds = coinBalance >= cost
+  const isSufficientFunds = isPurchased ? coinBalance >= cost : null
 
   return ReactDom.createPortal(
     <>
@@ -44,21 +54,51 @@ const ItemModal = ({ onClose, itemID, handlePurchase, coinBalance }) => {
           </div>
           <p className='description'>{description}</p>
           <div className='actions'>
-            <button className='cancel-btn' onClick={onClose}>
-              Cancel
-            </button>
-            <button
-              className={`confirm-btn${
-                !isSufficientFunds ? ' insufficient-funds' : ''
-              }`}
-              onClick={() => handlePurchase(itemID)}
-              disabled={!isSufficientFunds}
-            >
-              Buy{' '}
-              <div className='cost'>
-                <RiCopperCoinLine className='coin-icon' /> {cost}
-              </div>
-            </button>
+            {isPurchased ? (
+              <button className='equip-btn'>
+                {isEquipped ? (
+                  <>
+                    <AiOutlineMinusCircle className='icon equip-icon' />{' '}
+                    <span className='text'>Unequip</span>
+                  </>
+                ) : (
+                  <>
+                    <AiOutlinePlusCircle className='icon equip-icon' />{' '}
+                    <span className='text'>Equip</span>
+                  </>
+                )}
+              </button>
+            ) : (
+              <>
+                <button className='cancel-btn' onClick={onClose}>
+                  Cancel
+                </button>
+                <button
+                  className={`confirm-btn${
+                    !isSufficientFunds ? ' insufficient-funds' : ''
+                  }`}
+                  onClick={() => handlePurchase(itemID)}
+                  disabled={!isSufficientFunds || purchaseLoading}
+                >
+                  {purchaseLoading ? (
+                    <TailSpin
+                      height='20'
+                      width='20'
+                      color='white'
+                      arialLabel='loading'
+                      className='spinner'
+                    />
+                  ) : (
+                    <>
+                      Buy{' '}
+                      <div className='cost'>
+                        <RiCopperCoinLine className='coin-icon' /> {cost}
+                      </div>
+                    </>
+                  )}
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

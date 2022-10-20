@@ -111,7 +111,6 @@ export const purchaseShopItem = id => async (dispatch, getState) => {
   const uid = getState().auth.userAuth.uid
 
   const purchasedItem = itemList.find(item => item.id === id)
-  const purchasedItemCategory = purchasedItem.category
   const itemCost = purchasedItem.cost
 
   const characterRef = doc(db, 'characterData', uid)
@@ -121,8 +120,8 @@ export const purchaseShopItem = id => async (dispatch, getState) => {
   }
 
   const updatedInventoryState =
-    getState().character.inventory[purchasedItemCategory]?.length > 0
-      ? [...getState().character?.inventory[purchasedItemCategory], id]
+    getState().character.inventory?.length > 0
+      ? [...getState().character?.inventory, id]
       : [id]
 
   dispatch({
@@ -138,8 +137,13 @@ export const purchaseShopItem = id => async (dispatch, getState) => {
     characterRef,
     {
       coins: increment(-itemCost),
-      inventory: arrayUnion(id),
+      inventory: updatedInventoryState,
     },
     { merge: true }
   )
 }
+
+export const setEquippedItem =
+  (id, isEquipped) => async (dispatch, getState) => {
+    const uid = getState().auth.userAuth.uid
+  }
