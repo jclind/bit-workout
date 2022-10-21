@@ -152,7 +152,13 @@ export const updateWorkoutStats =
       reps: Number(incReps),
     })
   }
+export const getExercisePRs = async (exerciseID, uid) => {
+  const { exerciseStatsRef, exerciseStatsData } =
+    await getSingleExerciseStatsRef(uid, exerciseID)
+  const { pr1x1, pr1x5 } = exerciseStatsData
 
+  return { pr1x1, pr1x5, exerciseID }
+}
 export const getStats = () => async (dispatch, getState) => {
   dispatch({ type: SET_STATS_STATUS, payload: 'loading' })
   const uid = getState().auth.userAuth.uid

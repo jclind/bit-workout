@@ -2,44 +2,15 @@ import './WorkoutComplete.scss'
 import ConfettiAnim from '../../ConfettiAnim'
 import { connect } from 'react-redux'
 import { setWorkoutFinished } from '../../../redux/actions/workout/workout'
-import { formatTimeToObject } from '../../../util/formatTime'
-
-const WorkoutTime = ({ workoutTime }) => {
-  if (!workoutTime) return null
-
-  const hours = workoutTime.h
-  const minutes = workoutTime.m
-  const seconds = workoutTime.s
-
-  return (
-    <div className='data time'>
-      <div className='time-type'>
-        {hours !== 0 && (
-          <>
-            {hours}
-            <span className='time-indicator'>H</span>
-          </>
-        )}
-      </div>
-      <div className='time-type'>
-        {minutes} <span className='time-indicator'>M</span>
-      </div>
-      {!hours && (
-        <div className='time-type'>
-          {seconds} <span className='time-indicator'>S</span>
-        </div>
-      )}
-    </div>
-  )
-}
 
 const WorkoutComplete = ({ setWorkoutFinished, workoutStats }) => {
   const returnFromWorkout = () => {
     setWorkoutFinished(false)
   }
+  console.log(workoutStats)
 
-  const { totalWorkoutTime, coinsEarned, expEarned } = workoutStats
-  const workoutTime = formatTimeToObject(totalWorkoutTime)
+  const { totalWorkoutTime, coinsEarned, expEarned, totalWeight, prs } =
+    workoutStats
 
   return (
     <div className='workout-complete page'>
@@ -48,7 +19,35 @@ const WorkoutComplete = ({ setWorkoutFinished, workoutStats }) => {
         <div className='title'>Workout Complete!</div>
         <div className='text'>Well done on completing your workout!</div>
 
-        <div className='stats'>
+        <div className='top-stats'>
+          <div className='time stat'>
+            <div className='label'>Time:</div>
+            <div className='value'>
+              {Math.floor(totalWorkoutTime / 6000)} min
+            </div>
+          </div>
+          <div className='divider'></div>
+          <div className='volume stat'>
+            <div className='label'>Volume:</div>
+            <div className='value'>{totalWeight} lbs</div>
+          </div>
+        </div>
+        <div className='prs'>
+          <div className='pr-title'>Records</div>
+          {prs.pr1x1s.length > 0
+            ? prs.pr1x1s.map(pr => {
+                // NEED TO GET EXERCISE DATA AND DISPLAY WORKOUT NAME AND MAYBE IMAGE?
+                return (
+                  <div className='pr' key={pr.id}>
+                    <div className='weight'>{pr.weight}</div>
+                    <div className='reps'>x {pr.reps}</div>
+                  </div>
+                )
+              })
+            : ''}
+        </div>
+
+        {/* <div className='stats'>
           <div className='stat'>
             <div className='label'>Workout Time:</div>
             <WorkoutTime workoutTime={workoutTime} />
@@ -61,7 +60,7 @@ const WorkoutComplete = ({ setWorkoutFinished, workoutStats }) => {
             <div className='label'>Exp Earned:</div>
             <div className='data'>+{expEarned}</div>
           </div>
-        </div>
+        </div> */}
         <button className='back-home-btn' onClick={returnFromWorkout}>
           Back Home
         </button>

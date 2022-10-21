@@ -25,7 +25,7 @@ import { exerciseList } from '../../../assets/data/exerciseList'
 import { calcCoins, calcExp, logWorkout } from '../character/character'
 import { v4 as uuidv4 } from 'uuid'
 import { createWarmupPath } from '../../../util/createWarmupPath'
-import { updateWorkoutStats } from '../stats/stats'
+import { getExercisePRs, updateWorkoutStats } from '../stats/stats'
 
 export const fetchWorkoutData = uid => async dispatch => {
   await getDoc(doc(db, 'workoutData', uid)).then(document => {
@@ -188,6 +188,11 @@ export const completeSet =
     const earnedExp = calcExp(completedReps)
     const totalExp = earnedExp + currExp
 
+    const currTotalWeight = runningWorkout.totalWeight
+      ? runningWorkout.totalWeight
+      : 0
+    const totalWeight = currTotalWeight + Number(weight)
+
     dispatch(
       updateWorkoutStats(
         1,
@@ -221,6 +226,7 @@ export const completeSet =
           'runningWorkout.coins': totalCoins,
           'runningWorkout.exp': totalExp,
           'runningWorkout.currWorkout.path': updatedPath,
+          'runningWorkout.totalWeight': totalWeight,
         }
 
         dispatch(updateWorkout(updatedData))
@@ -237,6 +243,7 @@ export const completeSet =
         'runningWorkout.timeLastUpdated': new Date().getTime(),
         'runningWorkout.coins': totalCoins,
         'runningWorkout.exp': totalExp,
+        'runningWorkout.totalWeight': totalWeight,
       }
       dispatch(updateWorkout(updatedData))
     }
@@ -379,15 +386,23 @@ export const addWorkoutToPastWorkouts = data => async (dispatch, getState) => {
   })
 }
 export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
   const workoutData = getState().workout.workoutData
   const runningWorkout = workoutData.runningWorkout
   const currWorkout = runningWorkout.currWorkout
   const weights = workoutData.weights
+  const newDate = new Date().getTime()
+  const workoutStartTime = runningWorkout.workoutStartTime
+  const totalWorkoutTime = newDate - workoutStartTime
+
+  console.log(workoutData)
+  const exerciseIDs = new Set()
 
   const path = currWorkout.path
   // Get path data with weights included for pastWorkoutData stats
   const pathData = path.map(ex => {
     const exerciseID = ex.exerciseID
+    exerciseIDs.add(exerciseID)
     const imageURL = exerciseList.find(ex => ex.id === exerciseID).imageURL
     let currWeight = null
     weights.forEach(w => {
@@ -397,6 +412,23 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
       }
     })
     return { ...ex, weight: currWeight, imageURL }
+  })
+
+  const prs = { pr1x1s: [], pr1x5s: [] }
+
+  const exercisePRPromises = []
+
+  exerciseIDs.forEach(id => {
+    exercisePRPromises.push(getExercisePRs(id, uid))
+  })
+
+  const prRes = await Promise.all(exercisePRPromises)
+  prRes.forEach(res => {
+    const { pr1x1, pr1x5, exerciseID } = res
+    if (pr1x1 && pr1x1.date > workoutStartTime && pr1x1.date < newDate)
+      prs.pr1x1s.push({ ...pr1x1, exerciseID })
+    if (pr1x5 && pr1x5.date > workoutStartTime && pr1x5.date < newDate)
+      prs.pr1x5s.push({ ...pr1x5, exerciseID })
   })
 
   const updatedWeights = await updateWeights(
@@ -409,8 +441,6 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
     weights: updatedWeights,
   }
 
-  const workoutStartTime = runningWorkout.workoutStartTime
-  const totalWorkoutTime = new Date() - workoutStartTime
   const finishedWorkoutData = {
     workoutName: currWorkout.name || 'Temp Workout',
     workoutRestTime: currWorkout.restTime,
@@ -419,6 +449,8 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
     coinsEarned: coins,
     expEarned: exp,
     path: pathData,
+    totalWeight: runningWorkout.totalWeight,
+    prs,
   }
   dispatch(updateWorkout(updatedData))
   dispatch({ type: SET_COMPLETED_WORKOUT_DATA, payload: finishedWorkoutData })
