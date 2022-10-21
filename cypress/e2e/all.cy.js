@@ -1,4 +1,5 @@
 import './app_flow.cy'
+import './inventory.cy'
 import './workout/all_types_3_exercises.cy'
 import './workout/create_delete_saved_workout.cy'
 import './workout/drop_set_1_exercise.cy'

@@ -1,5 +1,5 @@
 describe('Workout Tests', () => {
-  it('Create Workout Test', () => {
+  it('Create No Weight Workout Test', () => {
     cy.callFirestore('update', `workoutData/${Cypress.env('TEST_UID')}`, {
       isWorkoutRunning: false,
       runningWorkout: {},

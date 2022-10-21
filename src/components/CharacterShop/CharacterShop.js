@@ -85,7 +85,6 @@ const CharacterShop = ({ purchaseShopItem, inventory }) => {
   )
 }
 const mapStateToProps = state => {
-  console.log(state.character.inventory)
   return {
     inventory: state?.character?.inventory,
   }

@@ -50,6 +50,7 @@ Cypress.Commands.add('changeExerciseWeightThroughPlatesModal', newWeight => {
 Cypress.Commands.add('completeSet', skipRest => {
   cy.get('.active-workout button.submit-btn').click()
   if (skipRest) {
+    cy.wait(200)
     cy.get('.workout-timer button.skip-rest-btn').click()
   }
 })

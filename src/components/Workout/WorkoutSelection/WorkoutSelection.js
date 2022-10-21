@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
-import { Link, useNavigate, useOutlet } from 'react-router-dom'
+import { useNavigate, useOutlet } from 'react-router-dom'
 import './WorkoutSelection.scss'
 
 const WorkoutSelection = () => {

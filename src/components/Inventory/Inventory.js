@@ -67,14 +67,16 @@ const Inventory = ({ inventory, equippedArr, setEquippedItem }) => {
             .groupBy('type')
             .map((value, key) => ({ type: key, data: value }))
             .value()
-          console.log(categoryTypes)
           return (
             <section key={el.category}>
               <div className='section-title'>{el.category}</div>
               <div className='items'>
                 {categoryTypes.map(categoryType => {
                   return (
-                    <div className='type-container' key={categoryType.type}>
+                    <div
+                      className={`type-container ${categoryType.type}`}
+                      key={categoryType.type}
+                    >
                       <div className='type-title'>
                         {`${categoryType.type.split('-').join(' ')}s`}
                       </div>
