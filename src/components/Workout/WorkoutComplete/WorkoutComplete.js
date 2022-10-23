@@ -1,9 +1,16 @@
 import './WorkoutComplete.scss'
 import ConfettiAnim from '../../ConfettiAnim'
 import { connect } from 'react-redux'
-import { setWorkoutFinished } from '../../../redux/actions/workout/workout'
+import {
+  getSingleExercise,
+  setWorkoutFinished,
+} from '../../../redux/actions/workout/workout'
 
-const WorkoutComplete = ({ setWorkoutFinished, workoutStats }) => {
+const WorkoutComplete = ({
+  setWorkoutFinished,
+  workoutStats,
+  getSingleExercise,
+}) => {
   const returnFromWorkout = () => {
     setWorkoutFinished(false)
   }
@@ -37,10 +44,12 @@ const WorkoutComplete = ({ setWorkoutFinished, workoutStats }) => {
           {prs.pr1x1s.length > 0
             ? prs.pr1x1s.map(pr => {
                 // NEED TO GET EXERCISE DATA AND DISPLAY WORKOUT NAME AND MAYBE IMAGE?
+                const { name } = getSingleExercise(pr.exerciseID)
                 return (
                   <div className='pr' key={pr.id}>
                     <div className='weight'>{pr.weight}</div>
                     <div className='reps'>x {pr.reps}</div>
+                    <div className='name'>{name}</div>
                   </div>
                 )
               })
@@ -78,6 +87,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setWorkoutFinished: isFinished => dispatch(setWorkoutFinished(isFinished)),
+    getSingleExercise: exerciseID => dispatch(getSingleExercise(exerciseID)),
   }
 }
 
