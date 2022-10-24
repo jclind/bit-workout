@@ -20,7 +20,6 @@ import {
   SET_STATS_STATUS,
   SET_TOTAL_USER_STATS,
 } from '../../types'
-import { v4 as uuidv4 } from 'uuid'
 
 const getSingleExerciseStatsRef = async (uid, exerciseID) => {
   const userStatsRef = doc(db, 'userStats', uid)
@@ -165,8 +164,7 @@ export const updateWorkoutStats =
     )
   }
 export const getExercisePRs = async (exerciseID, uid) => {
-  const { exerciseStatsRef, exerciseStatsData } =
-    await getSingleExerciseStatsRef(uid, exerciseID)
+  const { exerciseStatsData } = await getSingleExerciseStatsRef(uid, exerciseID)
   const { pr1x1, pr1x5 } = exerciseStatsData
 
   return { pr1x1, pr1x5, exerciseID }

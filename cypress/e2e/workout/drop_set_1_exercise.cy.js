@@ -26,7 +26,7 @@ describe('Workout Tests', () => {
     cy.completeDropSet()
     cy.completeDropSet()
 
-    cy.get('.workout-complete.page').should('be.visible')
+    cy.get('.workout-complete').should('be.visible')
     cy.get('button.back-home-btn').click()
   })
 })

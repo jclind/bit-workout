@@ -16,7 +16,6 @@ const WorkoutComplete = ({
   const returnFromWorkout = () => {
     setWorkoutFinished(false)
   }
-  console.log(workoutStats)
 
   const { totalWorkoutTime, path, coinsEarned, expEarned, totalWeight, prs } =
     workoutStats
@@ -43,14 +42,11 @@ const WorkoutComplete = ({
             <div className='label'>Workout Path:</div>
             {path.length > 0
               ? path.map(exercise => {
-                  console.log(exercise)
                   const { name } = getSingleExercise(exercise.exerciseID)
                   const maxWeight = Math.max.apply(
                     Math,
                     exercise.setPath.map(o => Number(o.weight))
                   )
-                  console.log(prs, exercise.id)
-                  console.log(maxWeight)
 
                   let isPR = false
                   prs.pr1x1s.forEach(pr => {

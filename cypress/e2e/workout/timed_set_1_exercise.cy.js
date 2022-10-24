@@ -24,7 +24,7 @@ describe('Workout Tests', () => {
     cy.completeTimedSet(true)
     cy.completeTimedSet()
 
-    cy.get('.workout-complete.page').should('be.visible')
+    cy.get('.workout-complete').should('be.visible')
     cy.get('button.back-home-btn').click()
   })
 })
