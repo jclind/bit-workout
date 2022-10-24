@@ -401,7 +401,6 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
   const workoutStartTime = runningWorkout.workoutStartTime
   const totalWorkoutTime = newDate - workoutStartTime
 
-  console.log(workoutData)
   const exerciseIDs = new Set()
 
   const path = currWorkout.path
@@ -465,6 +464,7 @@ export const finishWorkout = (coins, exp) => async (dispatch, getState) => {
 }
 
 export const stopWorkout = () => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
   const workoutData = getState().workout.workoutData
   const runningWorkout = workoutData.runningWorkout
   const currWorkout = runningWorkout.currWorkout
@@ -479,10 +479,13 @@ export const stopWorkout = () => async (dispatch, getState) => {
   const remainingWorkout = runningWorkout.remainingWorkout
   const { currIdx, currSet } = remainingWorkout
 
+  const exerciseIDs = new Set()
+
   const path = [...currWorkout.path.slice(0, currIdx + 1)]
   // Get path data with weights included for pastWorkoutData stats
   const pathData = path.map(ex => {
     const exerciseID = ex.exerciseID
+    exerciseIDs.add(exerciseID)
     const imageURL = exerciseList.find(ex => ex.id === exerciseID).imageURL
     const setPath = ex.setPath || []
     let currWeight = null
@@ -494,6 +497,23 @@ export const stopWorkout = () => async (dispatch, getState) => {
     return { ...ex, weight: currWeight, imageURL, setPath }
   })
 
+  const prs = { pr1x1s: [], pr1x5s: [] }
+
+  const exercisePRPromises = []
+
+  exerciseIDs.forEach(id => {
+    exercisePRPromises.push(getExercisePRs(id, uid))
+  })
+
+  const prRes = await Promise.all(exercisePRPromises)
+  prRes.forEach(res => {
+    const { pr1x1, pr1x5, exerciseID } = res
+    if (pr1x1 && pr1x1.date > workoutStartTime && pr1x1.date < timeLastUpdated)
+      prs.pr1x1s.push({ ...pr1x1, exerciseID })
+    if (pr1x5 && pr1x5.date > workoutStartTime && pr1x5.date < timeLastUpdated)
+      prs.pr1x5s.push({ ...pr1x5, exerciseID })
+  })
+
   const finishedWorkoutData = {
     workoutName: currWorkout.name,
     workoutRestTime: currWorkout.restTime,
@@ -502,6 +522,8 @@ export const stopWorkout = () => async (dispatch, getState) => {
     coinsEarned: coins,
     expEarned: exp,
     path: pathData,
+    totalWeight: runningWorkout.totalWeight,
+    prs,
   }
 
   await dispatch(updateWorkout({ isWorkoutRunning: false }))
