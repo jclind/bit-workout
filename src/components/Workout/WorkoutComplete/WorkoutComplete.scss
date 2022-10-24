@@ -1,15 +1,24 @@
 @import '../../../helpers.scss';
 
 .workout-complete {
-  position: relative;
   display: flex;
   justify-content: center;
-  height: calc(100vh - #{$navbar-height});
-  max-height: -webkit-fill-available;
+  width: 100% !important;
+  // min-height: calc(100vh - #{$navbar-height} - 2rem);\
+  padding-bottom: 4rem;
+
+  min-height: 100% !important;
+  height: fit-content;
+  // max-height: -webkit-fill-available;
   overflow: hidden;
   .content {
+    position: relative;
     text-align: center;
     z-index: 10;
+    width: 90%;
+    min-height: 100%;
+    padding-bottom: 7rem;
+
     .title {
       font-size: 1.5rem;
       font-weight: 700;
@@ -18,26 +27,56 @@
     .text {
       font-size: 1.125rem;
     }
+    .label {
+      font-size: 0.85rem;
+      color: $secondary-text;
+      font-weight: 500;
+      text-align: start;
+      padding-bottom: 0.25rem;
+    }
     .top-stats {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      width: 90%;
-      margin: 4rem auto;
+      align-items: flex-start;
+      flex-direction: column;
+      margin: 1rem auto 0rem;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
       .stat {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         gap: 0.25rem;
-        .label {
-          font-size: 0.9rem;
-          color: $secondary-text;
-          font-weight: 600;
-          text-align: center;
-        }
+        border-bottom: 1px solid $secondary-background;
+        width: 100%;
+        padding: 0.5rem 0;
+
         .value {
           font-size: 1.5rem;
-          font-weight: 600;
+          font-weight: 500;
+          text-align: start;
+        }
+        .value.path-exercise {
+          display: flex;
+          align-items: flex-end;
+          padding-bottom: 0.25rem;
+          height: 28px;
+
+          .name {
+            font-size: 1rem;
+            text-transform: capitalize;
+            flex: 1;
+            text-align: start;
+          }
+          .pr-icon {
+            color: $exp-color;
+            padding-right: 0.25rem;
+          }
+          .weight {
+            font-size: 1rem;
+            font-weight: 600;
+            padding-right: 0.25rem;
+          }
         }
       }
       .divider {
@@ -47,43 +86,42 @@
         background: $tertiary-text;
       }
     }
-    .prs {
-      .pr-title {
-        font-size: 1rem;
-        font-weight: 600;
-      }
-      .pr {
-        display: flex;
-        align-items: flex-end;
-        .weight {
-          font-size: 1.3rem;
-          font-weight: 600;
-          padding-right: 0.25rem;
-        }
-      }
-    }
-    .stats {
-      display: flex;
-      gap: 1.5rem;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 0;
+    .coins-exp {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      flex: 1;
+
       .stat {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin: 0 auto;
-        width: 80%;
-        .label {
-          color: $secondary-text;
-          font-size: 0.9rem;
+        .data {
+          display: flex;
+          align-items: center;
+          gap: 0.15rem;
+          font-size: 1.3rem;
+          font-weight: 500;
+          .icon {
+            height: 22px;
+            width: 22px;
+          }
+          .coin-icon {
+            color: $coin-color;
+          }
+          .exp-icon {
+            color: $exp-color;
+          }
         }
       }
     }
+
     .back-home-btn {
-      background: $secondary;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0 auto;
+      width: 90%;
       font-size: 1.125rem;
       font-weight: 700;
+      margin-bottom: 2rem;
     }
   }
 }

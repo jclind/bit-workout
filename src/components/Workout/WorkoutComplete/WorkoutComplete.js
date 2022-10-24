@@ -5,6 +5,8 @@ import {
   getSingleExercise,
   setWorkoutFinished,
 } from '../../../redux/actions/workout/workout'
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
+import { RiCopperCoinLine } from 'react-icons/ri'
 
 const WorkoutComplete = ({
   setWorkoutFinished,
@@ -16,11 +18,11 @@ const WorkoutComplete = ({
   }
   console.log(workoutStats)
 
-  const { totalWorkoutTime, coinsEarned, expEarned, totalWeight, prs } =
+  const { totalWorkoutTime, path, coinsEarned, expEarned, totalWeight, prs } =
     workoutStats
 
   return (
-    <div className='workout-complete page'>
+    <div className='workout-complete'>
       <ConfettiAnim className='anim' />
       <div className='content'>
         <div className='title'>Workout Complete!</div>
@@ -33,43 +35,56 @@ const WorkoutComplete = ({
               {Math.floor(totalWorkoutTime / 6000)} min
             </div>
           </div>
-          <div className='divider'></div>
           <div className='volume stat'>
             <div className='label'>Volume:</div>
             <div className='value'>{totalWeight} lbs</div>
           </div>
-        </div>
-        <div className='prs'>
-          <div className='pr-title'>Records</div>
-          {prs.pr1x1s.length > 0
-            ? prs.pr1x1s.map(pr => {
-                // NEED TO GET EXERCISE DATA AND DISPLAY WORKOUT NAME AND MAYBE IMAGE?
-                const { name } = getSingleExercise(pr.exerciseID)
-                return (
-                  <div className='pr' key={pr.id}>
-                    <div className='weight'>{pr.weight}</div>
-                    <div className='reps'>x {pr.reps}</div>
-                    <div className='name'>{name}</div>
-                  </div>
-                )
-              })
-            : ''}
-        </div>
+          <div className='prs stat'>
+            <div className='label'>Workout Path:</div>
+            {path.length > 0
+              ? path.map(exercise => {
+                  console.log(exercise)
+                  const { name } = getSingleExercise(exercise.exerciseID)
+                  const maxWeight = Math.max.apply(
+                    Math,
+                    exercise.setPath.map(o => Number(o.weight))
+                  )
+                  console.log(prs, exercise.id)
+                  console.log(maxWeight)
 
-        {/* <div className='stats'>
+                  let isPR = false
+                  prs.pr1x1s.forEach(pr => {
+                    if (exercise.setPath.find(set => set.id === pr.id)) {
+                      isPR = true
+                    }
+                  })
+                  return (
+                    <div className='value path-exercise' key={exercise.id}>
+                      <div className='name'>{name}</div>
+                      {isPR && <AiFillStar className='pr-icon icon' />}
+                      <div className='weight'>{maxWeight} lbs</div>
+                    </div>
+                  )
+                })
+              : ''}
+          </div>
+        </div>
+        <div className='coins-exp'>
           <div className='stat'>
-            <div className='label'>Workout Time:</div>
-            <WorkoutTime workoutTime={workoutTime} />
+            <div className='label'>Coins:</div>
+            <div className='data'>
+              +<RiCopperCoinLine className='coin-icon icon' />
+              {coinsEarned}
+            </div>
           </div>
           <div className='stat'>
-            <div className='label'>Coins Earned:</div>
-            <div className='data'>+{coinsEarned}</div>
+            <div className='label'>Exp:</div>
+            <div className='data'>
+              +<AiOutlineStar className='exp-icon icon' />
+              {expEarned}
+            </div>
           </div>
-          <div className='stat'>
-            <div className='label'>Exp Earned:</div>
-            <div className='data'>+{expEarned}</div>
-          </div>
-        </div> */}
+        </div>
         <button className='back-home-btn' onClick={returnFromWorkout}>
           Back Home
         </button>

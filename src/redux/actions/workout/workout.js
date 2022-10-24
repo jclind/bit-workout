@@ -171,9 +171,11 @@ export const completeSet =
     }
     let updatedPath = [...runningWorkout.currWorkout.path]
     const currSetPath = updatedPath[currIdx].setPath || []
+    const currSetID = uuidv4()
     updatedPath[currIdx].setPath = [
       ...currSetPath,
       {
+        id: currSetID,
         setNum: currSet,
         completedReps,
         weight: currExerciseWeight,
@@ -201,7 +203,8 @@ export const completeSet =
         exerciseID,
         elapsedTime,
         earnedCoins,
-        earnedExp
+        earnedExp,
+        currSetID
       )
     )
     // If the current set is the last set
@@ -292,6 +295,8 @@ export const completeWarmupSet = weight => async (dispatch, getState) => {
   const earnedExp = calcExp(completedReps)
   const totalExp = earnedExp + currExp
 
+  const currSetID = uuidv4()
+
   dispatch(
     updateWorkoutStats(
       1,
@@ -300,7 +305,8 @@ export const completeWarmupSet = weight => async (dispatch, getState) => {
       exerciseID,
       elapsedTime,
       earnedCoins,
-      earnedExp
+      earnedExp,
+      currSetID
     )
   )
 

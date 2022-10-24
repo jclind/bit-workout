@@ -48,7 +48,8 @@ export const updateWorkoutStats =
     exerciseID,
     incTotalTime = 0,
     incCoins = 0,
-    incExp = 0
+    incExp = 0,
+    currSetID = null
   ) =>
   async (dispatch, getState) => {
     const uid = getState().auth.userAuth.uid
@@ -88,13 +89,16 @@ export const updateWorkoutStats =
       ? currExerciseStatsSnap.data()
       : {}
 
-    const id = uuidv4()
-
     const date = new Date().getTime()
 
     let newPR1x1
     if (Number(weight) && (!pr1x1 || pr1x1.weight < Number(weight))) {
-      newPR1x1 = { id, weight: Number(weight), date, reps: Number(incReps) }
+      newPR1x1 = {
+        id: currSetID,
+        weight: Number(weight),
+        date,
+        reps: Number(incReps),
+      }
     } else {
       newPR1x1 = false
     }
@@ -105,7 +109,12 @@ export const updateWorkoutStats =
       Number(incReps) >= 5 &&
       (!pr1x5 || pr1x5.weight < Number(weight))
     ) {
-      newPR1x5 = { id, weight: Number(weight), date, reps: Number(incReps) }
+      newPR1x5 = {
+        id: currSetID,
+        weight: Number(weight),
+        date,
+        reps: Number(incReps),
+      }
     } else {
       newPR1x5 = false
     }
@@ -143,14 +152,17 @@ export const updateWorkoutStats =
       })
     }
 
-    await setDoc(doc(currExerciseStatsRef.ref, 'completedSetsPath', id), {
-      id,
-      isNewPR1x1: !!newPR1x1,
-      isNewPR1x5: !!newPR1x5,
-      date,
-      weight: Number(weight),
-      reps: Number(incReps),
-    })
+    await setDoc(
+      doc(currExerciseStatsRef.ref, 'completedSetsPath', currSetID),
+      {
+        id: currSetID,
+        isNewPR1x1: !!newPR1x1,
+        isNewPR1x5: !!newPR1x5,
+        date,
+        weight: Number(weight),
+        reps: Number(incReps),
+      }
+    )
   }
 export const getExercisePRs = async (exerciseID, uid) => {
   const { exerciseStatsRef, exerciseStatsData } =
