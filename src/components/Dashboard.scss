@@ -1,0 +1,4 @@
+@import '../helpers.scss';
+.dashboard-page {
+  padding-bottom: calc(#{$navbar-height} + 2rem);
+}

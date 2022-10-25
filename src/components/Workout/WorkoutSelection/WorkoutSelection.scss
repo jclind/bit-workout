@@ -45,27 +45,24 @@
   .create-workout-link {
     position: absolute;
     margin: 0 auto;
-    padding: 0.5rem;
 
     top: -0.5rem;
     right: -0.5rem;
     text-decoration: none;
-    button {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      background: none;
-      width: fit-content;
-      height: fit-content;
-      color: $primary;
-      font-weight: 600;
-      font-size: 1rem;
-      padding: 0;
-      .icon {
-        height: 25px;
-        width: 25px;
-      }
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    background: none;
+    width: fit-content;
+    height: fit-content;
+    color: $primary;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.25rem;
+    .icon {
+      height: 25px;
+      width: 25px;
     }
   }
   .no-data {
@@ -95,24 +92,22 @@
 
     .create-first-workout {
       text-decoration: none;
-      button {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        text-decoration: none;
-        width: fit-content;
-        height: fit-content;
-        color: $primary;
-        background: $secondary;
-        font-weight: 600;
-        font-size: 1rem;
-        padding: 0.5rem 1rem;
-        margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      width: fit-content;
+      height: fit-content;
+      color: $primary;
+      background: $secondary;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
 
-        .icon {
-          height: 25px;
-          width: 25px;
-        }
+      .icon {
+        height: 25px;
+        width: 25px;
       }
     }
   }

@@ -1,0 +1,44 @@
+.avatar-container {
+  position: relative;
+  height: 100px;
+  width: 100px;
+  img.hat {
+    position: absolute;
+    z-index: 3;
+    top: 9px;
+    left: 2px;
+    right: 0;
+    margin: 0 auto;
+    object-fit: contain;
+    height: 32px !important;
+    width: 32px !important;
+  }
+  img.robes,
+  img.avatar {
+    position: absolute;
+    top: 25px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    object-fit: contain;
+    width: 60px;
+    height: 60px;
+  }
+  img.robes {
+    z-index: 2;
+  }
+  img.avatar {
+    z-index: 1;
+  }
+
+  img.primary-weapon {
+    position: absolute;
+    z-index: 4;
+    top: 19px;
+    right: 55px;
+
+    object-fit: contain;
+    width: 50px;
+    height: 50px;
+  }
+}

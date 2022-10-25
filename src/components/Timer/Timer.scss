@@ -19,33 +19,57 @@
     font-size: 2.25rem;
     font-weight: 700;
   }
-  .rest-img {
-    width: 60%;
-    margin: 0 auto;
-    margin-top: 5rem;
-  }
-  .view-workout-path {
-    display: flex;
-    align-items: center;
-    background: none;
-    font-size: 0.9rem;
-    height: fit-content;
-    width: fit-content;
-    margin: 0 auto;
-    margin-top: 1rem;
-    color: $secondary;
-  }
-  .skip-rest-btn {
+  .center-content {
     position: absolute;
-    bottom: calc(#{$navbar-height} + 4rem);
+    bottom: calc(50%);
+    transform: translateY(50%);
+
+    .rest-img {
+      width: 60%;
+      margin: 0 auto;
+      margin-top: 5rem;
+    }
+    .view-workout-path {
+      display: flex;
+      align-items: center;
+      background: none;
+      font-size: 0.9rem;
+      height: fit-content;
+      width: fit-content;
+      margin: 0 auto;
+      margin-top: 1rem;
+      color: $secondary;
+    }
+  }
+  .options {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background: $secondary-background;
-    width: fit-content;
-    font-size: 1.125rem;
-    font-weight: 700;
-    padding: 1.5rem;
-    height: 50px;
+    flex-direction: column;
+    .skip-rest-btn {
+      height: 55px;
+      width: fit-content;
+      padding: 0 3rem;
+      margin: 0 auto;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: $border-radius;
+      background: $secondary-background;
+      margin-bottom: 3rem;
+      // position: absolute;
+      // bottom: calc(#{$navbar-height} + 4rem);
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+      // width: fit-content;
+      // font-size: 1.125rem;
+      // font-weight: 700;
+      // padding: 1.5rem;
+      // height: 50px;
+    }
   }
 }

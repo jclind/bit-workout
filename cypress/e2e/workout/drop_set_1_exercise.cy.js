@@ -5,10 +5,12 @@ describe('Workout Tests', () => {
       runningWorkout: {},
     })
     cy.login()
+    cy.wait(1000)
     cy.visit('/workout')
     cy.get('button.selection-btn').contains('Created').click()
 
     // Start Workout
+    cy.get("[class='single-workout loading']").should('not.exist')
     cy.get('.single-workout').should('have.length.greaterThan', 0)
     cy.clickWorkoutSelectionStartButtonByText('Drop Set 1 Exercise')
 
@@ -24,7 +26,7 @@ describe('Workout Tests', () => {
     cy.completeDropSet()
     cy.completeDropSet()
 
-    cy.get('.workout-complete.page').should('be.visible')
+    cy.get('.workout-complete').should('be.visible')
     cy.get('button.back-home-btn').click()
   })
 })

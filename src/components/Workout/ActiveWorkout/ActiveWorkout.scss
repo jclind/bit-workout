@@ -24,25 +24,9 @@
   flex-direction: column;
   margin: 0;
   text-align: center;
-  // height: calc(100vh - #{$navbar-height});
-  height: 100%;
+  height: calc(100vh - #{$navbar-height});
   max-height: -webkit-fill-available;
   margin: 0;
-
-  .exercise-title {
-    font-size: 2rem;
-    font-weight: 500;
-    max-width: 80%;
-    margin: 0 auto;
-    text-transform: capitalize;
-    margin-bottom: 0.75rem;
-  }
-  .exercise-title.sm-text {
-    font-size: 1.6rem;
-  }
-  .exercise-title.xsm-text {
-    font-size: 1.5rem;
-  }
 
   .exercise-type {
     color: $secondary-text;

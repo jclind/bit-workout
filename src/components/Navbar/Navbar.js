@@ -16,9 +16,10 @@ const NavLinkTemplate = ({ link, linkText, OutlineIcon, FillIcon }) => {
   return (
     <NavLink
       to={link}
+      end={link === '/'}
       className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
     >
-      {currLocation === { link } ? (
+      {currLocation === link ? (
         <FillIcon className='icon' />
       ) : (
         <OutlineIcon className='icon' />

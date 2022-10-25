@@ -1,5 +1,6 @@
 describe('Workout Tests', () => {
   it('Follow All Types 3 Exercises Workout', () => {
+    cy.wait(1000)
     cy.callFirestore('update', `workoutData/${Cypress.env('TEST_UID')}`, {
       isWorkoutRunning: false,
       runningWorkout: {},
@@ -9,6 +10,7 @@ describe('Workout Tests', () => {
     cy.get('button.selection-btn').contains('Created').click()
 
     // Start Workout
+    cy.get("[class='single-workout loading']").should('not.exist')
     cy.clickWorkoutSelectionStartButtonByText('All Types 3 Exercises')
 
     // Validate workout path is correct
@@ -46,7 +48,7 @@ describe('Workout Tests', () => {
     cy.completeTimedSet(true)
     cy.completeTimedSet()
 
-    cy.get('.workout-complete.page').should('be.visible')
+    cy.get('.workout-complete').should('be.visible')
     cy.get('button.back-home-btn').click()
   })
 })

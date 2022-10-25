@@ -175,6 +175,7 @@ const SingleWorkout = ({
               className='like'
               disabled={isLiked === null}
               onClick={handleLike}
+              aria-label='Like Workout'
             >
               {isLiked ? (
                 <AiFillHeart className='icon liked' />

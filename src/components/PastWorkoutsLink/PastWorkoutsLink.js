@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './PastWorkoutsLink.scss'
 import Skeleton from 'react-loading-skeleton'
 import { AiOutlineCalendar } from 'react-icons/ai'
@@ -12,12 +12,16 @@ const SKELETON_BASE_COLOR = '#546d80'
 const SKELETON_HIGHLIGHT_COLOR = '#548ca8'
 
 const NoPastWorkout = () => {
+  const navigate = useNavigate()
   return (
     <div className='no-data'>
       <div className='text'>No Past Workout Data</div>
-      <Link to='/workout'>
-        <button className='start-workout-btn btn'>Start Workout</button>
-      </Link>
+      <button
+        className='start-workout-btn btn'
+        onClick={() => navigate('/workout')}
+      >
+        Start Workout
+      </button>
     </div>
   )
 }
@@ -39,6 +43,8 @@ const PastWorkoutsLink = ({ pastWorkoutData, isResponse }) => {
     : pastWorkoutData.workoutName.length > 53
     ? trimString(pastWorkoutData.workoutName, 50, true)
     : pastWorkoutData.workoutName
+
+  const navigate = useNavigate()
 
   return (
     <div className={`past-workouts-link ${loading ? 'loading' : ''}`}>
@@ -105,11 +111,15 @@ const PastWorkoutsLink = ({ pastWorkoutData, isResponse }) => {
               </div>
             </div>
           </div>
-          <Link to='/past-workouts' className='past-workouts-link'>
-            <button type='button' className='past-workouts-btn btn'>
-              Past Workouts
-            </button>
-          </Link>
+          {/* <Link to='/past-workouts' className='past-workouts-link'> */}
+          <button
+            type='button'
+            className='past-workouts-btn btn'
+            onClick={() => navigate('/past-workouts')}
+          >
+            Past Workouts
+          </button>
+          {/* </Link> */}
         </>
       )}
     </div>

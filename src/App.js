@@ -51,6 +51,7 @@ import AccountStats from './pages/Account/AccountStats/AccountStats'
 import AllExercises from './pages/Account/AccountStats/AllExercises/AllExercises'
 import SingleExerciseStats from './pages/Account/AccountStats/SingleExerciseStats/SingleExerciseStats'
 import AllChartData from './pages/Account/AccountStats/SingleExerciseStats/AllChartData/AllChartData'
+import Inventory from './components/Inventory/Inventory'
 
 const ScrollToTop = () => {
   const { pathname } = useLocation()
@@ -83,6 +84,17 @@ function App() {
             <Route exact path='/' element={<PrivateRoute />}>
               <Route exact path='/' element={<Dashboard />} />
               <Route
+                exact
+                path='/inventory'
+                element={
+                  <>
+                    <Inventory />
+                    <NavbarContainer />
+                  </>
+                }
+              />
+              <Route
+                exact
                 path='/workout'
                 element={
                   <>
@@ -92,21 +104,25 @@ function App() {
                 }
               >
                 <Route
+                  exact
                   path='trending-workouts'
                   element={
                     <TrendingWorkouts appContainerRef={appContainerRef} />
                   }
                 />
                 <Route
+                  exact
                   path='user-workouts'
                   element={<UserWorkouts appContainerRef={appContainerRef} />}
                 />
                 <Route
+                  exact
                   path='liked-workouts'
                   element={<LikedWorkouts appContainerRef={appContainerRef} />}
                 />
               </Route>
               <Route
+                exact
                 path='/create-workout'
                 element={
                   <>
@@ -115,12 +131,17 @@ function App() {
                   </>
                 }
               >
-                <Route path='add-exercises' element={<AddExercises />} />
-                <Route path='rest-time' element={<RestTimeData />} />
-                <Route path='workout-info' element={<WorkoutInfo />} />
-                <Route path='selection' element={<WorkoutTypeSelection />} />
+                <Route exact path='add-exercises' element={<AddExercises />} />
+                <Route exact path='rest-time' element={<RestTimeData />} />
+                <Route exact path='workout-info' element={<WorkoutInfo />} />
+                <Route
+                  exact
+                  path='selection'
+                  element={<WorkoutTypeSelection />}
+                />
               </Route>
               <Route
+                exact
                 path='/past-workouts'
                 element={
                   <>
@@ -130,7 +151,7 @@ function App() {
                 }
               />
             </Route>
-            <Route path='/account' element={<PrivateRoute />}>
+            <Route exact path='/account' element={<PrivateRoute />}>
               <Route exact path='/account' element={<Account />} />
               <Route
                 exact
@@ -199,6 +220,7 @@ function App() {
                 element={<SecurityContainer />}
               />
               <Route
+                exact
                 path='/account/settings/workout-settings'
                 element={<WorkoutSettings />}
               />
@@ -208,23 +230,29 @@ function App() {
                 element={<FeedbackContainer />}
               />
               <Route
+                exact
                 path='/account/settings/release-notes'
                 element={<ReleaseNotes />}
               />
             </Route>
-            <Route path='/signup' element={<Signup />}>
-              <Route path='gender' element={<Gender />} />
-              <Route path='birthday' element={<Birthday />} />
-              <Route path='height' element={<Height />} />
-              <Route path='weight' element={<Weight />} />
-              <Route path='barbell-weight' element={<BarbellWeight />} />
-              <Route path='username' element={<Username />} />
-              <Route path='signup-selection' element={<SignupSelection />} />
-              <Route path='email-signup' element={<EmailSignup />} />
+            <Route exact path='/signup' element={<Signup />}>
+              <Route exact path='gender' element={<Gender />} />
+              <Route exact path='birthday' element={<Birthday />} />
+              <Route exact path='height' element={<Height />} />
+              <Route exact path='weight' element={<Weight />} />
+              <Route exact path='barbell-weight' element={<BarbellWeight />} />
+              <Route exact path='username' element={<Username />} />
+              <Route
+                exact
+                path='signup-selection'
+                element={<SignupSelection />}
+              />
+              <Route exact path='email-signup' element={<EmailSignup />} />
             </Route>
-            <Route path='/auth' element={<AuthLandingPage />} />
-            <Route path='/login' element={<LoginContainer />} />
+            <Route exact path='/auth' element={<AuthLandingPage />} />
+            <Route exact path='/login' element={<LoginContainer />} />
             <Route
+              exact
               path='/forgot-password'
               element={<ForgotPasswordContainer />}
             />
