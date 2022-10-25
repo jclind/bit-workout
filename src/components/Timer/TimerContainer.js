@@ -3,7 +3,10 @@ import { formatTime } from '../../util/formatTime'
 import Timer from './Timer'
 import './Timer.scss'
 import { connect } from 'react-redux'
-import { updateWorkout } from '../../redux/actions/workout/workout'
+import {
+  getSingleExercise,
+  updateWorkout,
+} from '../../redux/actions/workout/workout'
 
 const TimerContainer = ({
   timerStart,
@@ -12,10 +15,19 @@ const TimerContainer = ({
   lastSetFailed,
   updateWorkout,
   setIsWorkoutPathModalOpen,
+  currWorkout,
+  currExerciseIdx,
+  getSingleExercise,
 }) => {
   const [timerVal, setTimerVal] = useState()
 
   const skipRestBtn = useRef()
+
+  const currActiveWorkoutExercise = currWorkout.path[currExerciseIdx]
+
+  const exerciseID = currActiveWorkoutExercise?.exerciseID
+  const currExercise = getSingleExercise(exerciseID)
+  const { name: exerciseName } = currExercise
 
   useEffect(() => {
     const clearTimer = timer => {
@@ -79,6 +91,7 @@ const TimerContainer = ({
       skipRestBtn={skipRestBtn}
       lastSetFailed={lastSetFailed}
       setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
+      exerciseName={exerciseName}
     />
   )
 }
@@ -89,12 +102,15 @@ const mapStateToProps = state => {
     restTime: runningWorkout.currWorkout.restTime,
     failSetRestTime: runningWorkout.currWorkout.failSetRestTime,
     lastSetFailed: runningWorkout.currWorkout.lastSetFailed,
+    currExerciseIdx: runningWorkout.remainingWorkout.currIdx,
+    currWorkout: runningWorkout.currWorkout,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     updateWorkout: data => dispatch(updateWorkout(data)),
+    getSingleExercise: exerciseID => dispatch(getSingleExercise(exerciseID)),
   }
 }
 

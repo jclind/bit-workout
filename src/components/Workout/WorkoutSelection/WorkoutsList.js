@@ -1,17 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import SingleWorkout from '../SingleWorkout/SingleWorkout'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import ConfirmDeleteWorkoutModal from './ConfirmDeleteWorkoutModal'
 import { connect } from 'react-redux'
 import { deleteWorkout } from '../../../redux/actions/workout/workout'
 
-const WorkoutsList = ({
-  getWorkouts,
-  appContainerRef,
-  deleteWorkout,
-  test,
-}) => {
+const WorkoutsList = ({ getWorkouts, appContainerRef, deleteWorkout }) => {
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
     useState(false)
   const [deletedWorkoutID, setDeletedWorkoutID] = useState(null)
@@ -19,6 +14,8 @@ const WorkoutsList = ({
     setDeletedWorkoutID(workoutID)
     setIsConfirmDeleteModalOpen(true)
   }
+
+  const navigate = useNavigate()
 
   const [workouts, setWorkouts] = useState([])
   // const [workoutSearchVal, setWorkoutSearchVal] = useState('')
@@ -96,18 +93,6 @@ const WorkoutsList = ({
       onScroll={handleScroll}
       ref={listInnerRef}
     >
-      {/* {isData && (
-        <div className='search-workouts-container'>
-          <AiOutlineSearch className='icon' />
-          <input
-            type='text'
-            className='search-workouts'
-            placeholder='Search Workouts'
-            value={workoutSearchVal}
-            onChange={e => setWorkoutSearchVal(e.target.value)}
-          />
-        </div>
-      )} */}
       {!isData ? (
         <div className='no-data'>
           <h3>No Workouts</h3>
@@ -115,12 +100,13 @@ const WorkoutsList = ({
             You haven't created any workouts yet. Go ahead and create your first
             personalized workout:
           </p>
-          <Link to='/create-workout' className='create-first-workout'>
-            <button>
-              <AiOutlinePlusCircle className='icon' />
-              Create Workout
-            </button>
-          </Link>
+          <button
+            className='create-first-workout'
+            onClick={() => navigate('/create-workout')}
+          >
+            <AiOutlinePlusCircle className='icon' />
+            Create Workout
+          </button>
         </div>
       ) : loading ? (
         <>

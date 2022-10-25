@@ -1,11 +1,11 @@
 import React from 'react'
 import './Character.scss'
-import characterImg from '../../assets/images/character.png'
 import { AiOutlineStar } from 'react-icons/ai'
 import { RiCopperCoinLine } from 'react-icons/ri'
 import { expToLevelAndDifference } from '../../util/calcLevel'
 import { connect } from 'react-redux'
 import Skeleton from 'react-loading-skeleton'
+import CharacterAvatar from './CharacterAvatar'
 
 const SKELETON_BASE_COLOR = '#546d80'
 const SKELETON_HIGHLIGHT_COLOR = '#548ca8'
@@ -28,7 +28,7 @@ const Character = ({ username, exp, coins, loading }) => {
               highlightColor={SKELETON_HIGHLIGHT_COLOR}
             />
           ) : (
-            <img src={characterImg} alt='avatar' className='avatar' />
+            <CharacterAvatar />
           )}
         </div>
         <div className='info'>

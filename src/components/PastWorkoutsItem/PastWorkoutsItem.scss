@@ -8,12 +8,23 @@
   background: $secondary-background;
   border-radius: $border-radius;
   height: fit-content;
-  padding: 1rem 0.785rem;
+  width: 100%;
 
   .head {
     display: flex;
     cursor: pointer;
     width: 100%;
+    padding: 0;
+    margin-bottom: 2px;
+    box-sizing: border-box;
+    border-radius: $border-radius;
+
+    &:focus {
+      outline: 2px solid $outline;
+    }
+  }
+  .head.past-workouts-item-head {
+    padding: 1rem 0.785rem;
   }
 
   .image {
@@ -96,12 +107,16 @@
 
   .collapse {
     width: 100%;
-    box-sizing: border-box;
     overflow: hidden;
     background: $secondary-background;
     padding: 1rem;
     padding: 0;
     height: 0;
+  }
+  .past-workout-item-collapse {
+    padding: 0rem 0.785rem;
+    border-radius: $border-radius;
+    box-sizing: border-box;
   }
   .collapse.show {
     display: flex;
@@ -116,11 +131,11 @@
       display: grid;
 
       margin: 0;
-      margin-top: 1rem;
       padding: 1rem 0;
       row-gap: 1.5rem;
       column-gap: 0.5rem;
       grid-template-columns: 1fr 1fr;
+      box-sizing: border-box;
       .item {
         display: flex;
         flex-direction: column;
@@ -212,15 +227,23 @@
   }
 
   .workout-path-exercise {
+    padding: 0 !important;
+    .head {
+      padding: 0.5rem;
+      box-sizing: border-box;
+    }
+    .collapse-indicator-container {
+      display: flex;
+    }
     .collapse {
       background: $secondary-background-card;
+      border-radius: $border-radius;
       .set-path-data {
         display: flex;
         flex-direction: column;
         gap: 1rem;
         width: 100%;
         margin: 0;
-        margin-top: 0.5rem;
         padding: 1rem 0;
 
         border-top: 1px solid $tertiary-text;

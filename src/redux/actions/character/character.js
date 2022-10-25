@@ -1,4 +1,5 @@
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
+import { doc, getDoc, increment, setDoc, updateDoc } from 'firebase/firestore'
+import { itemList } from '../../../assets/data/itemList'
 import { db } from '../../../firebase'
 import {
   DEC_COINS,
@@ -6,6 +7,8 @@ import {
   FETCH_CHARACTER_DATA,
   INC_COINS,
   INC_EXP,
+  UPDATE_EQUIPPED,
+  UPDATE_INVENTORY,
 } from '../../types'
 
 export const fetchCharacterData = uid => async dispatch => {
@@ -19,7 +22,7 @@ export const fetchCharacterData = uid => async dispatch => {
       health: 0,
     }
     characterData = characterInitialState
-    await setDoc(characterDataRef, characterInitialState)
+    await setDoc(characterDataRef, characterInitialState, { merge: true })
   }
   dispatch({ type: FETCH_CHARACTER_DATA, payload: characterData })
 }
@@ -47,11 +50,15 @@ export const logWorkout = reps => async (dispatch, getState) => {
   const incExp = calcExp(reps)
   const totalExp = currExp + incExp
 
-  await setDoc(characterData, {
-    coins: totalCoins,
-    exp: totalExp,
-    health: character.health,
-  })
+  await setDoc(
+    characterData,
+    {
+      coins: totalCoins,
+      exp: totalExp,
+      health: character.health,
+    },
+    { merge: true }
+  )
 
   dispatch(addCoins(incCoins))
   dispatch(addExp(incExp))
@@ -97,3 +104,74 @@ export const removeExp = exp => async (dispatch, state) => {
     payload: exp,
   })
 }
+
+export const purchaseShopItem = id => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
+
+  const purchasedItem = itemList.find(item => item.id === id)
+  const itemCost = purchasedItem.cost
+
+  const characterRef = doc(db, 'characterData', uid)
+  let characterData = await getDoc(characterRef)
+  if (!characterData.exists() || characterData.data().coins < itemCost) {
+    return { error: 'Insufficient Coins' }
+  }
+
+  const updatedInventoryState =
+    getState().character.inventory?.length > 0
+      ? [...getState().character?.inventory, id]
+      : [id]
+
+  dispatch({
+    type: UPDATE_INVENTORY,
+    payload: updatedInventoryState,
+  })
+  dispatch({
+    type: DEC_COINS,
+    payload: itemCost,
+  })
+
+  await setDoc(
+    characterRef,
+    {
+      coins: increment(-itemCost),
+      inventory: updatedInventoryState,
+    },
+    { merge: true }
+  )
+}
+
+export const setEquippedItem =
+  (id, equipItem) => async (dispatch, getState) => {
+    const currEquippedArr = getState().character.equipped
+
+    let updatedEquippedArr = [...currEquippedArr]
+
+    if (equipItem) {
+      const newEquippedItem = itemList.find(item => item.id === id)
+      const itemType = newEquippedItem.type
+
+      const currTypeExistsIdx = currEquippedArr.findIndex(
+        item => item.type === itemType
+      )
+      if (currTypeExistsIdx >= 0) {
+        updatedEquippedArr[currTypeExistsIdx] = newEquippedItem
+      } else {
+        updatedEquippedArr.push(newEquippedItem)
+      }
+    } else {
+      updatedEquippedArr = currEquippedArr.filter(item => item.id !== id)
+    }
+    dispatch({ type: UPDATE_EQUIPPED, payload: updatedEquippedArr })
+
+    const uid = getState().auth.userAuth.uid
+    const characterRef = doc(db, 'characterData', uid)
+
+    await setDoc(
+      characterRef,
+      {
+        equipped: updatedEquippedArr,
+      },
+      { merge: true }
+    )
+  }

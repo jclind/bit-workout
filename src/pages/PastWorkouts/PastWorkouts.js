@@ -195,6 +195,8 @@ const PastWorkouts = ({ queryPastWorkoutData, getSingleExercise }) => {
       onScroll={handleScroll}
       ref={listInnerRef}
     >
+      <BackButton />
+
       {!isNoData && <div className='settings-title'>Past Workouts</div>}
       {!isNoData && (
         <div className='sort-options'>
@@ -204,7 +206,7 @@ const PastWorkouts = ({ queryPastWorkoutData, getSingleExercise }) => {
             className='select'
             placeholder={
               <div className='select-placeholder'>
-                <BsSortDown /> Sort:
+                <BsSortDown aria-label='Sort Icon' /> Sort:
               </div>
             }
             onChange={handleSelectChange}
@@ -236,7 +238,6 @@ const PastWorkouts = ({ queryPastWorkoutData, getSingleExercise }) => {
           })
         )}
       </div>
-      <BackButton />
     </div>
   )
 }

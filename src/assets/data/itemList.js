@@ -1,0 +1,55 @@
+export const itemList = [
+  {
+    name: 'Party Hat',
+    src: '/items/party-hat.png',
+    thumbnail: '/items/party-hat.png',
+    id: 'ac5ab90c-d715-46b2-b296-cb56d3386731',
+    description:
+      'Worn by the great wizard Azarious to the festival of Pheroged in hopes to woo a fair maiden. Azarious and the hat were soon lost to history after no one complimented him.',
+    cost: 10,
+    category: 'Equipment',
+    type: 'hat',
+    rarity: 1,
+    stats: {
+      prot: 1,
+      str: 0,
+      int: 0,
+      hp: 1,
+    },
+  },
+  {
+    name: 'Party Robes',
+    src: '/items/party-robes.png',
+    thumbnail: '/items/party-robes-thumbnail.png',
+    id: '1f8b2329-64ee-4a81-828c-5bdb1bc90b74',
+    description:
+      'Worn by the great wizard Azarious along with the Party Hat to the festival of Pheroged.',
+    cost: 10,
+    category: 'Equipment',
+    type: 'robe',
+    rarity: 1,
+    stats: {
+      prot: 2,
+      str: 0,
+      int: 0,
+      hp: 2,
+    },
+  },
+  {
+    name: 'Party Balloon Sword',
+    src: '/items/party-balloon-sword.png',
+    thumbnail: '/items/party-balloon-sword-thumbnail.png',
+    id: '0a966a81-4f95-4f6c-ad53-0891eb98074d',
+    description: 'Will cause confusion in your enemies... and you.',
+    cost: 10,
+    category: 'Equipment',
+    type: 'primary-weapon',
+    rarity: 1,
+    stats: {
+      prot: 0,
+      str: 0,
+      int: 0,
+      hp: 0,
+    },
+  },
+]

@@ -278,6 +278,22 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
+// Active exercise styles
+.exercise-title {
+  font-size: 2rem;
+  font-weight: 500;
+  max-width: 80%;
+  margin: 0 auto;
+  text-transform: capitalize;
+  margin-bottom: 0.75rem;
+}
+.exercise-title.sm-text {
+  font-size: 1.6rem;
+}
+.exercise-title.xsm-text {
+  font-size: 1.5rem;
+}
+
 // Sign up
 .signup-page {
   position: relative;

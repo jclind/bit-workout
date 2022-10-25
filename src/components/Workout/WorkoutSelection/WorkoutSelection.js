@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
-import { Link, useNavigate, useOutlet } from 'react-router-dom'
+import { useNavigate, useOutlet } from 'react-router-dom'
 import './WorkoutSelection.scss'
 
 const WorkoutSelection = () => {
@@ -16,6 +16,13 @@ const WorkoutSelection = () => {
   return (
     <div className='workout-selection'>
       <div className='settings-title'>Workout Selection</div>
+      <button
+        className='create-workout-link'
+        onClick={() => navigate('/create-workout')}
+        aria-label='Create Workout'
+      >
+        <AiOutlinePlusCircle className='icon' />
+      </button>
 
       <div className='selector'>
         <button
@@ -48,11 +55,6 @@ const WorkoutSelection = () => {
         </button>
       </div>
       {outlet}
-      <Link to='/create-workout' className='create-workout-link'>
-        <button>
-          <AiOutlinePlusCircle className='icon' />
-        </button>
-      </Link>
     </div>
   )
 }

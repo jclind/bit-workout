@@ -10,9 +10,9 @@
   .time-type {
     display: flex;
     gap: 0.2rem;
-    color: $secondary-text;
+    color: $primary;
     .time-indicator {
-      color: $tertiary-text;
+      color: $secondary-text;
     }
   }
 }
