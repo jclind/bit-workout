@@ -8,22 +8,8 @@ import { msToDayHour } from '../../../../util/msToTime'
 import { StatItem } from '../AccountStats'
 import './SingleExerciseStats.scss'
 import SingleExerciseChartContainer from './ExerciseChart/SingleExerciseStatsChartContainer'
-import { getStats } from '../../../../redux/actions/stats/stats'
-import { useEffect } from 'react'
 
-const SingleExerciseStats = ({
-  exerciseStats,
-  loading,
-  getSingleExercise,
-  getStats,
-}) => {
-  useEffect(() => {
-    if (!exerciseStats) {
-      getStats()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
+const SingleExerciseStats = ({ exerciseStats, loading, getSingleExercise }) => {
   const params = useParams()
   const exerciseID = params.exerciseID
 
@@ -120,7 +106,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSingleExercise: exerciseID => dispatch(getSingleExercise(exerciseID)),
-    getStats: () => dispatch(getStats()),
   }
 }
 

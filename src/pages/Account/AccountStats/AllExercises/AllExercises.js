@@ -8,7 +8,6 @@ import Select from 'react-select'
 import { AiOutlineSearch, AiOutlineCloseCircle } from 'react-icons/ai'
 import { BsSortDown } from 'react-icons/bs'
 import './AllExercises.scss'
-import { getStats } from '../../../../redux/actions/stats/stats'
 
 const sortSelectStyles = {
   control: (provided, state) => ({
@@ -86,20 +85,12 @@ const AllExercises = ({
   isData,
   loading,
   getSingleExercise,
-  getStats,
 }) => {
   const [exercises, setExercises] = useState(null)
   const [order, setOrder] = useState(null)
 
   const [searchVal, setSearchVal] = useState('')
   const searchRef = useRef()
-
-  useEffect(() => {
-    if (!exerciseStats) {
-      getStats()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   useEffect(() => {
     if (exerciseStats) {
@@ -266,7 +257,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSingleExercise: exerciseID => dispatch(getSingleExercise(exerciseID)),
-    getStats: () => dispatch(getStats()),
   }
 }
 

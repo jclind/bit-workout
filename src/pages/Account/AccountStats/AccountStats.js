@@ -7,8 +7,6 @@ import './AccountStats.scss'
 import { msToDayHour } from '../../../util/msToTime'
 import PageLoading from '../../../components/PageLoading/PageLoading'
 import { AiFillStar } from 'react-icons/ai'
-import { getStats } from '../../../redux/actions/stats/stats'
-import { useEffect } from 'react'
 import FadeLoader from 'react-spinners/FadeLoader'
 
 export const StatItem = ({
@@ -81,19 +79,7 @@ export const StatItem = ({
   )
 }
 
-const AccountStats = ({
-  loading,
-  isData,
-  totalUserStats,
-  exerciseStats,
-  getStats,
-}) => {
-  useEffect(() => {
-    if (!totalUserStats) {
-      getStats()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+const AccountStats = ({ loading, isData, totalUserStats, exerciseStats }) => {
   const {
     totalWeightLifted,
     totalReps,
@@ -173,10 +159,5 @@ const mapStateToProps = state => {
     exerciseStats: state.stats.exerciseStats,
   }
 }
-const mapDispatchToProps = dispatch => {
-  return {
-    getStats: () => dispatch(getStats()),
-  }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(AccountStats)
+export default connect(mapStateToProps)(AccountStats)

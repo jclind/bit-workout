@@ -39,6 +39,13 @@ const getSingleExerciseStatsRef = async (uid, exerciseID) => {
   return { exerciseStatsRef: exerciseStatsRef?.ref || null, exerciseStatsData }
 }
 
+// export const fetchStats = () => async (dispatch, getState) => {
+//   const uid = getState().auth.userAuth.uid
+//   const userStatsRef = doc(db, 'userStats', uid)
+//   const statsDataRes = await getDoc(userStatsRef)
+//   dispatch({ type: SET_TOTAL_USER_STATS, payload: statsDataRes.data() })
+// }
+
 export const updateWorkoutStats =
   (
     incSets = 0,
@@ -48,6 +55,7 @@ export const updateWorkoutStats =
     incTotalTime = 0,
     incCoins = 0,
     incExp = 0,
+    workoutCompleted,
     currSetID = null
   ) =>
   async (dispatch, getState) => {
@@ -64,6 +72,7 @@ export const updateWorkoutStats =
         totalWorkoutTime: increment(Number(incTotalTime)),
         totalCoins: increment(Number(incCoins)),
         totalExp: increment(Number(incExp)),
+        ...(workoutCompleted && { totalWorkoutsCompleted: increment(1) }),
       },
       { merge: true }
     )
@@ -329,3 +338,5 @@ export const removeChartData =
       })
     }
   }
+
+export const addAchievementStats = () => async (dispatch, getState) => {}

@@ -1,0 +1,38 @@
+@import '../../../helpers.scss';
+
+.achievements-page {
+  .achievements-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .achievements-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 1rem 0;
+      .single-achievement {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        width: 100%;
+        img {
+          height: 55px;
+          width: 55px;
+          object-fit: contain;
+        }
+        .data {
+          .title {
+            font-weight: 600;
+            font-size: 1rem;
+          }
+          .description {
+            padding-top: 0.25rem;
+            font-size: 0.9rem;
+            color: $secondary-text;
+          }
+        }
+      }
+    }
+  }
+}

@@ -52,6 +52,7 @@ import AllExercises from './pages/Account/AccountStats/AllExercises/AllExercises
 import SingleExerciseStats from './pages/Account/AccountStats/SingleExerciseStats/SingleExerciseStats'
 import AllChartData from './pages/Account/AccountStats/SingleExerciseStats/AllChartData/AllChartData'
 import Inventory from './components/Inventory/Inventory'
+import Achievements from './pages/Account/Achievements/Achievements'
 
 const ScrollToTop = () => {
   const { pathname } = useLocation()
@@ -162,6 +163,16 @@ function App() {
                 exact
                 path='/account/weight/add-weight'
                 element={<AddWeightInputContainer />}
+              />
+              <Route
+                exact
+                path='/account/achievements'
+                element={
+                  <>
+                    <Achievements />
+                    <NavbarContainer />
+                  </>
+                }
               />
               <Route
                 exact
