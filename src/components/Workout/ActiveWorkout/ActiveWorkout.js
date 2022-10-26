@@ -31,7 +31,6 @@ const ActiveWorkout = ({
   const exerciseType = currActiveWorkoutExercise?.type
 
   const exerciseID = currActiveWorkoutExercise?.exerciseID
-  console.log(exerciseID)
   const currExercise = getSingleExercise(exerciseID)
   const exerciseName = isWarmupRunning
     ? `${currExercise.name} Warmup`
@@ -84,7 +83,7 @@ const ActiveWorkout = ({
 
   return (
     <div className='active-workout'>
-      {currExercise.error ? (
+      {currExercise.error || currSetIdx <= 0 ? (
         <ErrorPage error={currExercise.error} />
       ) : (
         <>

@@ -145,7 +145,7 @@ export const removeExerciseFromWorkout =
 
     const { currIdx, currSet } = runningWorkout.remainingWorkout
 
-    let updatedSetIdx = currSet - 1
+    let updatedSetIdx = currSet
     let updatedExerciseIdx = currIdx
     // If exercise is already completed decrement currExerciseIdx
     if (currIdx > exerciseIdx) {
@@ -163,7 +163,7 @@ export const removeExerciseFromWorkout =
       'runningWorkout.remainingWorkout.currIdx': updatedExerciseIdx,
     }
     await dispatch(updateWorkout(updatedWorkoutData))
-    if (exerciseIdx === pathLength - 1) {
+    if (currIdx === pathLength - 1) {
       return dispatch(stopWorkout())
     }
   }
