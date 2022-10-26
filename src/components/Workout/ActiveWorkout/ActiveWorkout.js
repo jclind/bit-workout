@@ -12,6 +12,7 @@ import DropSetExercise from './SetTypes/DropSetExercise'
 import StopWorkoutModal from '../StopWorkoutModal/StopWorkoutModal'
 import TimedSetExercise from './SetTypes/TimedSetExercise'
 import WarmupExercise from './SetTypes/WarmupExercise'
+import ErrorPage from './ErrorPage/ErrorPage'
 
 const ActiveWorkout = ({
   getSingleExercise,
@@ -82,21 +83,27 @@ const ActiveWorkout = ({
 
   return (
     <div className='active-workout'>
-      <div
-        className={`exercise-title${
-          exerciseName.length >= 34
-            ? ' xsm-text'
-            : exerciseName.length >= 28
-            ? ' sm-text'
-            : ''
-        }`}
-      >
-        {exerciseName}
-      </div>
-      {!isWarmupRunning && (
-        <div className='exercise-type'>({exerciseType} Sets)</div>
+      {currExercise.error || currSetIdx <= 0 ? (
+        <ErrorPage error={currExercise.error} />
+      ) : (
+        <>
+          <div
+            className={`exercise-title${
+              exerciseName.length >= 34
+                ? ' xsm-text'
+                : exerciseName.length >= 28
+                ? ' sm-text'
+                : ''
+            }`}
+          >
+            {exerciseName}
+          </div>
+          {!isWarmupRunning && (
+            <div className='exercise-type'>({exerciseType} Sets)</div>
+          )}
+          {exerciseTypeOptions(exerciseType)}
+        </>
       )}
-      {exerciseTypeOptions(exerciseType)}
       <button
         type='button'
         className='stop-workout-btn'

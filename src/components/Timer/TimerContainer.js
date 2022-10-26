@@ -92,6 +92,7 @@ const TimerContainer = ({
       lastSetFailed={lastSetFailed}
       setIsWorkoutPathModalOpen={setIsWorkoutPathModalOpen}
       exerciseName={exerciseName}
+      error={currExercise.error}
     />
   )
 }

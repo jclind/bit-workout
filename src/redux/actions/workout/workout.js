@@ -63,6 +63,9 @@ export const setWorkoutFinished = isFinished => {
 }
 
 export const getSingleExercise = exerciseID => (dispatch, getState) => {
+  if (!exerciseID && exerciseID !== 0)
+    return { error: 'exerciseID does not exist.' }
+
   const weights = getState().workout?.workoutData?.weights
 
   const exercise = exerciseList.find(
@@ -136,15 +139,33 @@ export const addExerciseToWorkout =
   }
 export const removeExerciseFromWorkout =
   exerciseIdx => async (dispatch, getState) => {
-    const currWorkout =
-      getState().workout.workoutData.runningWorkout.currWorkout
+    const runningWorkout = getState().workout.workoutData.runningWorkout
+    const currWorkout = runningWorkout.currWorkout
+    const pathLength = currWorkout.path.length
+
+    const { currIdx, currSet } = runningWorkout.remainingWorkout
+
+    let updatedSetIdx = currSet
+    let updatedExerciseIdx = currIdx
+    // If exercise is already completed decrement currExerciseIdx
+    if (currIdx > exerciseIdx) {
+      updatedExerciseIdx--
+    }
+    if (currIdx === exerciseIdx) {
+      updatedSetIdx = 1
+    }
+
     const updatedWorkoutPath = [...currWorkout.path]
     updatedWorkoutPath.splice(exerciseIdx, 1)
     const updatedWorkoutData = {
       'runningWorkout.currWorkout.path': updatedWorkoutPath,
+      'runningWorkout.remainingWorkout.currSet': updatedSetIdx,
+      'runningWorkout.remainingWorkout.currIdx': updatedExerciseIdx,
     }
     await dispatch(updateWorkout(updatedWorkoutData))
-    return updatedWorkoutPath
+    if (currIdx === pathLength - 1) {
+      return dispatch(stopWorkout())
+    }
   }
 
 export const completeSet =
