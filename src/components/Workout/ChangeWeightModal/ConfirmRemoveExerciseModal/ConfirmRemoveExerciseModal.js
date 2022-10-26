@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import ReactDom from 'react-dom'
-import { connect } from 'react-redux'
 import useClickOutside from '../../../../util/useClickOutside'
 import { TailSpin } from 'react-loader-spinner'
 import './ConfirmRemoveExerciseModal.scss'

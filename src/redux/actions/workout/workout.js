@@ -163,9 +163,7 @@ export const removeExerciseFromWorkout =
       'runningWorkout.remainingWorkout.currIdx': updatedExerciseIdx,
     }
     await dispatch(updateWorkout(updatedWorkoutData))
-    console.log(exerciseIdx, pathLength)
     if (exerciseIdx === pathLength - 1) {
-      console.log('here')
       return dispatch(stopWorkout())
     }
   }
