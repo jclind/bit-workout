@@ -1,11 +1,11 @@
 describe('Workout Tests', () => {
-  it('App Flow Test', () => {
+  it('Inventory Test', () => {
     cy.callFirestore('update', `workoutData/${Cypress.env('TEST_UID')}`, {
       isWorkoutRunning: false,
       runningWorkout: {},
     })
     cy.login()
-
+    cy.wait(1000)
     cy.visit('/')
     cy.get('button.view-inventory').click()
 
