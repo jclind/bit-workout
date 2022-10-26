@@ -4,7 +4,7 @@ import './Account.scss'
 import NavbarContainer from '../../components/Navbar/Navbar'
 import InfoTile from '../../components/AccountComponents/InfoTile/InfoTile'
 import { BsChevronRight } from 'react-icons/bs'
-import { IoIosStats, IoMdSettings } from 'react-icons/io'
+import { IoIosStats, IoMdSettings, IoIosTrophy } from 'react-icons/io'
 import { connect } from 'react-redux'
 
 const Account = ({ name, height, weight }) => {
@@ -34,6 +34,19 @@ const Account = ({ name, height, weight }) => {
             </div>
 
             <div className='account-stats-button'>Stats And Data</div>
+            <div className='right-icon-container'>
+              <BsChevronRight className='right-icon' />
+            </div>
+          </Link>
+          <Link
+            to='/account/achievements'
+            className='btn-container achievements-btn-container'
+          >
+            <div className='indication-icon-container'>
+              <IoIosTrophy className='icon' />
+            </div>
+
+            <div className='account-achievements-button'>Achievements</div>
             <div className='right-icon-container'>
               <BsChevronRight className='right-icon' />
             </div>

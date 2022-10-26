@@ -7,13 +7,26 @@ import './Achievements.scss'
 const SingleAchievement = ({ totalUserStats, data }) => {
   const goalAmount = data.amount
   const currValue = totalUserStats?.[data.property] ?? 0
-  console.log(currValue, goalAmount)
+
+  const isCompleted = currValue >= goalAmount
+
   return (
-    <div className='single-achievement'>
+    <div className={`single-achievement${isCompleted ? ' completed' : ''}`}>
       <img src={data.src} alt='' />
       <div className='data'>
         <div className='title'>{data.name}</div>
         <div className='description'>{data.description}</div>
+        {!isCompleted ? (
+          <div className='num-completed'>
+            {currValue} of {goalAmount}
+          </div>
+        ) : isCompleted && data.showTotal ? (
+          <div className='num-completed'>
+            {currValue} {data.showTotalText}
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   )

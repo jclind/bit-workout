@@ -85,6 +85,13 @@
       background: rgba($exp-color, 0.2);
     }
   }
+  .btn-container.achievements-btn-container {
+    .indication-icon-container {
+      $purple: #ff86ff;
+      color: $purple;
+      background: rgba($purple, 0.2);
+    }
+  }
   .btn-container.settings-btn-container {
     .indication-icon-container {
       color: $secondary;
