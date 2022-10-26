@@ -12,7 +12,10 @@ import './WorkoutPathModal.scss'
 import AddExerciseToWorkoutModal from '../AddExerciseToWorkoutModal/AddExerciseToWorkoutModal'
 import ConfirmRemoveExerciseModal from '../ChangeWeightModal/ConfirmRemoveExerciseModal/ConfirmRemoveExerciseModal'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { updateWorkout } from '../../../redux/actions/workout/workout'
+import {
+  removeExerciseFromWorkout,
+  updateWorkout,
+} from '../../../redux/actions/workout/workout'
 import _ from 'lodash'
 
 const WorkoutPathModal = ({
@@ -22,6 +25,7 @@ const WorkoutPathModal = ({
   workout,
   weights,
   updateWorkout,
+  removeExerciseFromWorkout,
 }) => {
   const [isExerciseToWorkoutModalOpen, setIsExerciseToWorkoutModalOpen] =
     useState(false)
@@ -43,23 +47,8 @@ const WorkoutPathModal = ({
   const removeExercise = async idx => {
     const updatedPath = Array.from(currWorkoutPath)
     updatedPath.splice(idx, 1)
-
-    let updatedSetIdx = currSetIdx
-    let updatedExerciseIdx = currExerciseIdx
-    // If exercise is already completed decrement currExerciseIdx
-    if (currExerciseIdx > idx) {
-      updatedExerciseIdx--
-    }
-    if (currExerciseIdx === idx) {
-      updatedSetIdx = 1
-    }
-
     setCurrWorkoutPath(updatedPath)
-    await updateWorkout({
-      'runningWorkout.currWorkout.path': updatedPath,
-      'runningWorkout.remainingWorkout.currSet': updatedSetIdx,
-      'runningWorkout.remainingWorkout.currIdx': updatedExerciseIdx,
-    })
+    removeExerciseFromWorkout(idx)
   }
 
   const modalContent = useClickOutside(() => {
@@ -288,6 +277,8 @@ const WorkoutPathModal = ({
 const mapDispatchToProps = dispatch => {
   return {
     updateWorkout: data => dispatch(updateWorkout(data)),
+    removeExerciseFromWorkout: exerciseIdx =>
+      dispatch(removeExerciseFromWorkout(exerciseIdx)),
   }
 }
 
