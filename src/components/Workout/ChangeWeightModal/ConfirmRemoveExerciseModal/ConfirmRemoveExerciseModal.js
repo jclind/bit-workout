@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import ReactDom from 'react-dom'
 import { connect } from 'react-redux'
-import { removeExerciseFromWorkout } from '../../../../redux/actions/workout/workout'
 import useClickOutside from '../../../../util/useClickOutside'
 import { TailSpin } from 'react-loader-spinner'
 import './ConfirmRemoveExerciseModal.scss'
@@ -67,11 +66,4 @@ const ConfirmRemoveExerciseModal = ({
   )
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    removeExerciseFromWorkout: exerciseIdx =>
-      dispatch(removeExerciseFromWorkout(exerciseIdx)),
-  }
-}
-
-export default connect(null, mapDispatchToProps)(ConfirmRemoveExerciseModal)
+export default ConfirmRemoveExerciseModal
