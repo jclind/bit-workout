@@ -208,7 +208,8 @@ export const getStats = () => async (dispatch, getState) => {
     return dispatch({ type: SET_STATS_STATUS, payload: 'no_data' })
   } else {
     const { achievements, ...userStatsData } = userStatsSnap.data()
-    dispatch({ type: SET_COMPLETED_ACHIEVEMENTS, payload: achievements })
+    console.log(achievements)
+    dispatch({ type: SET_COMPLETED_ACHIEVEMENTS, payload: achievements || [] })
     dispatch({
       type: SET_TOTAL_USER_STATS,
       payload: userStatsData,
@@ -361,20 +362,26 @@ export const removeChartData =
     }
   }
 
-export const addCompletedAchievement =
-  achievementID => async (dispatch, getState) => {
+export const addCompletedAchievements =
+  achievementIDs => async (dispatch, getState) => {
     const uid = getState().auth.userAuth.uid
     const completedAchievementList = getState()?.stats?.achievements ?? []
     const userStatsRef = doc(db, 'userStats', uid)
+    const addedIDs = achievementIDs.map(id => {
+      return { id, date: new Date().getTime() }
+    })
+    const updatedAchievementsArr = [...completedAchievementList, ...addedIDs]
+    console.log(updatedAchievementsArr)
+    dispatch({
+      type: SET_COMPLETED_ACHIEVEMENTS,
+      payload: updatedAchievementsArr,
+    })
     await setDoc(
       userStatsRef,
       {
-        achievements: arrayUnion(achievementID),
+        achievements: updatedAchievementsArr,
       },
       { merge: true }
     )
-    dispatch({
-      type: SET_COMPLETED_ACHIEVEMENTS,
-      payload: [...completedAchievementList, achievementID],
-    })
+    return updatedAchievementsArr
   }

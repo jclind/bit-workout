@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { achievements } from '../../assets/data/achievementData'
-import { addCompletedAchievement } from '../../redux/actions/stats/stats'
+import { addCompletedAchievements } from '../../redux/actions/stats/stats'
 import { toast } from 'react-toastify'
 import './AchievementAlertsContainer.scss'
 import { useEffect } from 'react'
@@ -27,11 +27,12 @@ const ToastAchievement = ({ achievement }) => {
 const AchievementAlertsContainer = ({
   completedAchievements,
   totalUserStats,
-  addCompletedAchievement,
+  addCompletedAchievements,
 }) => {
   useEffect(() => {
     if (!totalUserStats) return
 
+    const addedIDs = []
     const achievementsData = achievements
     const achievementList = []
     achievementsData.forEach(type => {
@@ -42,10 +43,11 @@ const AchievementAlertsContainer = ({
     achievementList.forEach(achievement => {
       const { id, amount: goal, property } = achievement
       // If achievement is already marked as completed return
-      if (completedAchievements.find(achiv => achiv === id)) return
+      if (completedAchievements.find(achiv => achiv.id === id)) return
 
       if (totalUserStats[property] >= goal) {
-        addCompletedAchievement(id)
+        console.log(id)
+        addedIDs.push(id)
         toast(<ToastAchievement achievement={achievement} />, {
           className: 'achievement-toast',
           autoClose: 15000,
@@ -54,6 +56,7 @@ const AchievementAlertsContainer = ({
         })
       }
     })
+    addCompletedAchievements(addedIDs)
   }, [totalUserStats])
 
   return null
@@ -67,8 +70,8 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    addCompletedAchievement: achievementID =>
-      dispatch(addCompletedAchievement(achievementID)),
+    addCompletedAchievements: achievementID =>
+      dispatch(addCompletedAchievements(achievementID)),
   }
 }
 
