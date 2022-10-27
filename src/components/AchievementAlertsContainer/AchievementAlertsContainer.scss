@@ -1,0 +1,32 @@
+@import '../../helpers.scss';
+
+.achievement-toast {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 50px;
+  height: fit-content;
+  width: fit-content;
+  background: none;
+
+  img {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+  }
+  .text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    height: 100%;
+    .title {
+      font-weight: 700;
+      text-align: start;
+      font-size: 1rem;
+    }
+    .achievement-name {
+      font-weight: 500;
+    }
+  }
+}

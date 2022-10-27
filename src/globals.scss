@@ -400,6 +400,9 @@ input[type='number'] {
 }
 
 // Alert Styles
+:root {
+  --toastify-color-info: #364f66;
+}
 .toast-alerts-container {
   --toastify-toast-min-height: 15px !important;
   --toastify-toast-width: 350px;

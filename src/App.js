@@ -53,6 +53,7 @@ import SingleExerciseStats from './pages/Account/AccountStats/SingleExerciseStat
 import AllChartData from './pages/Account/AccountStats/SingleExerciseStats/AllChartData/AllChartData'
 import Inventory from './components/Inventory/Inventory'
 import Achievements from './pages/Account/Achievements/Achievements'
+import AchievementAlertsContainer from './components/AchievementAlertsContainer/AchievementAlertsContainer'
 
 const ScrollToTop = () => {
   const { pathname } = useLocation()
@@ -64,7 +65,6 @@ const ScrollToTop = () => {
 
 function App() {
   const [loading, setLoading] = useState(true)
-
   const appContainerRef = useRef()
 
   return (
@@ -75,6 +75,7 @@ function App() {
           content='width=device-width, initial-scale=1.0, viewport-fit=cover'
         />
       </Helmet>
+      <AchievementAlertsContainer />
       <Auth setLoading={setLoading} />
       {loading ? (
         <AppLoadingScreen />
@@ -268,16 +269,15 @@ function App() {
               element={<ForgotPasswordContainer />}
             />
           </Routes>
+          <ToastContainer
+            position='bottom-center'
+            theme='colored'
+            autoClose={3000}
+            hideProgressBar
+            className='toast-alerts-container'
+          />
         </Router>
       )}
-
-      <ToastContainer
-        position='bottom-center'
-        theme='colored'
-        autoClose={3000}
-        hideProgressBar
-        className='toast-alerts-container'
-      />
     </div>
   )
 }

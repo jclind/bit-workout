@@ -1,5 +1,6 @@
 import {
   addDoc,
+  arrayUnion,
   collection,
   deleteDoc,
   doc,
@@ -14,8 +15,10 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore'
+import { BsFileX } from 'react-icons/bs'
 import { db } from '../../../firebase'
 import {
+  SET_COMPLETED_ACHIEVEMENTS,
   SET_EXERCISE_STATS,
   SET_STATS_STATUS,
   SET_TOTAL_USER_STATS,
@@ -76,6 +79,23 @@ export const updateWorkoutStats =
       },
       { merge: true }
     )
+    const totalUserStats = getState().stats.totalUserStats
+    dispatch({
+      type: SET_TOTAL_USER_STATS,
+      payload: {
+        ...totalUserStats,
+        totalSets: totalUserStats.totalSets + Number(incSets),
+        totalReps: totalUserStats.totalReps + Number(incReps),
+        totalWeightLifted: totalUserStats.totalWeightLifted + Number(weight),
+        totalWorkoutTime:
+          totalUserStats.totalWorkoutTime + Number(incTotalTime),
+        totalCoins: totalUserStats.totalCoins + Number(incCoins),
+        totalExp: totalUserStats.totalExp + Number(incExp),
+        ...(workoutCompleted && {
+          totalWorkoutsCompleted: totalUserStats.totalWorkoutsCompleted + 1,
+        }),
+      },
+    })
 
     const exerciseStatsQuery = query(
       collection(userStatsRef, 'exerciseStats'),
@@ -187,9 +207,11 @@ export const getStats = () => async (dispatch, getState) => {
   if (!userStatsSnap.exists()) {
     return dispatch({ type: SET_STATS_STATUS, payload: 'no_data' })
   } else {
+    const { achievements, ...userStatsData } = userStatsSnap.data()
+    dispatch({ type: SET_COMPLETED_ACHIEVEMENTS, payload: achievements })
     dispatch({
       type: SET_TOTAL_USER_STATS,
-      payload: userStatsSnap.data(),
+      payload: userStatsData,
     })
   }
 
@@ -339,4 +361,20 @@ export const removeChartData =
     }
   }
 
-export const addAchievementStats = () => async (dispatch, getState) => {}
+export const addCompletedAchievement =
+  achievementID => async (dispatch, getState) => {
+    const uid = getState().auth.userAuth.uid
+    const completedAchievementList = getState()?.stats?.achievements ?? []
+    const userStatsRef = doc(db, 'userStats', uid)
+    await setDoc(
+      userStatsRef,
+      {
+        achievements: arrayUnion(achievementID),
+      },
+      { merge: true }
+    )
+    dispatch({
+      type: SET_COMPLETED_ACHIEVEMENTS,
+      payload: [...completedAchievementList, achievementID],
+    })
+  }
