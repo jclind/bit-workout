@@ -56,6 +56,7 @@ const AchievementAlertsContainer = ({
       }
     })
     addCompletedAchievements(addedIDs)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalUserStats])
 
   return null

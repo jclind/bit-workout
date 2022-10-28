@@ -1,6 +1,5 @@
 import {
   addDoc,
-  arrayUnion,
   collection,
   deleteDoc,
   doc,
@@ -15,7 +14,6 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore'
-import { BsFileX } from 'react-icons/bs'
 import { db } from '../../../firebase'
 import {
   SET_COMPLETED_ACHIEVEMENTS,

@@ -54,6 +54,7 @@ import AllChartData from './pages/Account/AccountStats/SingleExerciseStats/AllCh
 import Inventory from './components/Inventory/Inventory'
 import Achievements from './pages/Account/Achievements/Achievements'
 import AchievementAlertsContainer from './components/AchievementAlertsContainer/AchievementAlertsContainer'
+import NewsSplashScreen from './components/NewsSplashScreen/NewsSplashScreen'
 
 const ScrollToTop = () => {
   const { pathname } = useLocation()
@@ -82,6 +83,7 @@ function App() {
       ) : (
         <Router>
           <ScrollToTop />
+          <NewsSplashScreen />
           <Routes>
             <Route exact path='/' element={<PrivateRoute />}>
               <Route exact path='/' element={<Dashboard />} />
@@ -269,6 +271,7 @@ function App() {
               element={<ForgotPasswordContainer />}
             />
           </Routes>
+
           <ToastContainer
             position='bottom-center'
             theme='colored'
