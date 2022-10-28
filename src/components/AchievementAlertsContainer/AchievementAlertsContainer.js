@@ -46,11 +46,10 @@ const AchievementAlertsContainer = ({
       if (completedAchievements.find(achiv => achiv.id === id)) return
 
       if (totalUserStats[property] >= goal) {
-        console.log(id)
         addedIDs.push(id)
         toast(<ToastAchievement achievement={achievement} />, {
           className: 'achievement-toast',
-          autoClose: 15000,
+          autoClose: 5000,
           type: 'info',
           icon: false,
         })

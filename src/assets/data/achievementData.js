@@ -1,3 +1,5 @@
+import { calcExp } from '../../util/calcLevel'
+
 export const achievements = [
   {
     id: '0f00ca84-49e8-4647-94ea-3601913833d4',
@@ -95,5 +97,101 @@ export const achievements = [
       },
     ],
   },
-  { id: '0d7738db-c8a1-4a7b-b1ec-5cdcb88e6c5e', type: 'Character', list: [] },
+  {
+    id: '0d7738db-c8a1-4a7b-b1ec-5cdcb88e6c5e',
+    type: 'Character',
+    list: [
+      {
+        id: 'f2856ea5-c29e-4830-bc81-fde4a358f9bc',
+        name: 'Purchase Your First Item',
+        description:
+          'Completed when one item has been purchased from the shop.',
+        amount: 1,
+        property: 'totalItemsPurchased',
+        src: '/achievements/one-workout-complete.png',
+      },
+      {
+        id: '893dddb1-f213-4867-9f40-f49aa72f588f',
+        name: 'Earn Your First Coin',
+        description: 'Completed when one coin has been earned',
+        amount: 1,
+        property: 'totalCoins',
+        src: '/achievements/one-workout-complete.png',
+      },
+      {
+        id: '5438e17a-3b2f-4412-9bb9-2639575a7fe6',
+        name: 'Earn 100 Coins',
+        description: 'Completed when one hundred coins have been earned',
+        amount: 100,
+        property: 'totalCoins',
+        src: '/achievements/one-hundred-workouts-complete.png',
+      },
+      {
+        id: 'e8c09759-f980-4f7f-a561-79129499678b',
+        name: 'Earn 1000 Coins',
+        description: 'Completed when one thousand coins have been earned',
+        amount: 1000,
+        property: 'totalCoins',
+        src: '/achievements/one-thousand-workouts-complete.png',
+      },
+      {
+        id: '8c23a1ad-51f0-46ec-b95a-454aeb1a1891',
+        name: 'Earn 10000 Coins',
+        description: 'Completed when then thousand coins have been earned',
+        amount: 10000,
+        property: 'totalCoins',
+        src: '/achievements/one-thousand-workouts-complete.png',
+        showTotal: true,
+        showTotalText: 'coins earned',
+      },
+      {
+        id: '7e504929-9fbc-4c4f-baaa-fbecacd32759',
+        name: 'Reach Level 2',
+        description: 'Completed when level two has been reached',
+        amount: calcExp(2),
+        property: 'totalExp',
+        src: '/achievements/one-workout-complete.png',
+      },
+      {
+        id: 'c245f7c6-8dc2-4a7b-b2fc-15b7ee594137',
+        name: 'Reach Level 5',
+        description: 'Completed when level five has been reached',
+        amount: calcExp(5),
+        property: 'totalExp',
+        src: '/achievements/one-workout-complete.png',
+      },
+      {
+        id: '68b7d3c2-411e-41cb-89cf-aaa88bf199a2',
+        name: 'Reach Level 10',
+        description: 'Completed when level ten has been reached',
+        amount: calcExp(10),
+        property: 'totalExp',
+        src: '/achievements/one-workout-complete.png',
+      },
+      {
+        id: '5358bcdc-271f-4270-98eb-256919e479d7',
+        name: 'Reach Level 20',
+        description: 'Completed when level twenty has been reached',
+        amount: calcExp(20),
+        property: 'totalExp',
+        src: '/achievements/one-workout-complete.png',
+      },
+      {
+        id: '6f9d6f8d-8554-4ed7-ad6f-b469d48ac886',
+        name: 'Reach Level 50',
+        description: 'Completed when level fifty has been reached',
+        amount: calcExp(50),
+        property: 'totalExp',
+        src: '/achievements/one-workout-complete.png',
+      },
+      {
+        id: '1789d8dc-1467-4c80-a695-25cc438b888f',
+        name: 'Reach Level 100',
+        description: 'Completed when level one hundred has been reached',
+        amount: calcExp(100),
+        property: 'totalExp',
+        src: '/achievements/one-workout-complete.png',
+      },
+    ],
+  },
 ]
