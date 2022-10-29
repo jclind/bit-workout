@@ -40,13 +40,6 @@ const getSingleExerciseStatsRef = async (uid, exerciseID) => {
   return { exerciseStatsRef: exerciseStatsRef?.ref || null, exerciseStatsData }
 }
 
-// export const fetchStats = () => async (dispatch, getState) => {
-//   const uid = getState().auth.userAuth.uid
-//   const userStatsRef = doc(db, 'userStats', uid)
-//   const statsDataRes = await getDoc(userStatsRef)
-//   dispatch({ type: SET_TOTAL_USER_STATS, payload: statsDataRes.data() })
-// }
-
 export const updateWorkoutStats =
   (
     incSets = 0,
@@ -102,24 +95,10 @@ export const updateWorkoutStats =
       'exerciseStats',
       `${exerciseID}-id`
     )
-    // const exerciseStatsQuery = query(
-    //   collection(userStatsRef, 'exerciseStats'),
-    //   where('exerciseID', '==', exerciseID)
-    // )
-    // const exerciseStatsDocs = await getDocs(exerciseStatsQuery)
+
     const currExerciseStatsSnap = await getDoc(currExerciseStatsRef)
-    console.log('1')
-    const exerciseStatsExist = !currExerciseStatsSnap.exists
-    console.log('2')
+    const exerciseStatsExist = currExerciseStatsSnap.exists
 
-    console.log('3')
-    // if (exerciseStatsExist) {
-    // exerciseStatsDocs.forEach(doc => (currExerciseStatsRef = doc))
-    // }
-
-    // if (exerciseStatsExist) {
-    // currExerciseStatsSnap = await getDoc(currExerciseStatsRef.ref)
-    // }
     const { pr1x1, pr1x5 } = exerciseStatsExist
       ? currExerciseStatsSnap.data()
       : {}
@@ -173,19 +152,46 @@ export const updateWorkoutStats =
         { merge: true }
       )
     } else {
-      await setDoc(currExerciseStatsRef, {
-        ...exerciseData,
-        exerciseID,
-        totalTime: Number(incTotalTime),
-        totalCoins: Number(incCoins),
-        totalExp: Number(incExp),
-        totalSets: Number(incSets),
-        totalReps: Number(incReps),
-        totalExerciseWeightLifted: Number(weight),
-      }).then(doc => {
+      await setDoc(
+        currExerciseStatsRef,
+        {
+          ...exerciseData,
+          exerciseID,
+          totalTime: Number(incTotalTime),
+          totalCoins: Number(incCoins),
+          totalExp: Number(incExp),
+          totalSets: Number(incSets),
+          totalReps: Number(incReps),
+          totalExerciseWeightLifted: Number(weight),
+        },
+        { merge: true }
+      ).then(doc => {
         // currExerciseStatsRef = doc
       })
     }
+    const exerciseStats = getState()?.stats?.exerciseStats ?? []
+    const singleExerciseStats = exerciseStats.find(
+      el => el.exerciseID === exerciseID
+    )
+    const updatedSingleExerciseStats = {
+      ...singleExerciseStats,
+      ...exerciseData,
+      exerciseID,
+      totalTime: (singleExerciseStats?.totalTime || 0) + Number(incTotalTime),
+      totalCoins: (singleExerciseStats?.totalCoins || 0) + Number(incCoins),
+      totalExp: (singleExerciseStats?.totalExp || 0) + Number(incExp),
+      totalSets: (singleExerciseStats?.totalSets || 0) + Number(incSets),
+      totalReps: (singleExerciseStats?.totalReps || 0) + Number(incReps),
+      totalExerciseWeightLifted:
+        (singleExerciseStats?.totalExerciseWeightLifted || 0) + Number(weight),
+    }
+    dispatch({
+      type: SET_EXERCISE_STATS,
+      payload: [
+        updatedSingleExerciseStats,
+        ...exerciseStats.filter(el => el.exerciseID !== exerciseID),
+      ],
+    })
 
     await setDoc(doc(currExerciseStatsRef, 'completedSetsPath', currSetID), {
       id: currSetID,

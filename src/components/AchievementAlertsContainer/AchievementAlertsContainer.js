@@ -53,7 +53,7 @@ const AchievementAlertsContainer = ({
         addedIDs.push(id)
         toast(<ToastAchievement achievement={achievement} />, {
           className: 'achievement-toast',
-          autoClose: 5000,
+          autoClose: 3000,
           type: 'info',
           icon: false,
         })
@@ -65,6 +65,12 @@ const AchievementAlertsContainer = ({
 
   return null
 }
+toast('test', {
+  className: 'achievement-toast',
+  autoClose: 3000,
+  type: 'info',
+  icon: false,
+})
 
 const mapStateToProps = state => {
   return {
