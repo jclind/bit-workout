@@ -82,15 +82,17 @@ export const updateWorkoutStats =
       type: SET_TOTAL_USER_STATS,
       payload: {
         ...totalUserStats,
-        totalSets: totalUserStats.totalSets + Number(incSets),
-        totalReps: totalUserStats.totalReps + Number(incReps),
-        totalWeightLifted: totalUserStats.totalWeightLifted + Number(weight),
+        totalSets: (totalUserStats?.totalSets || 0) + Number(incSets),
+        totalReps: (totalUserStats?.totalReps || 0) + Number(incReps),
+        totalWeightLifted:
+          (totalUserStats?.totalWeightLifted || 0) + Number(weight),
         totalWorkoutTime:
-          totalUserStats.totalWorkoutTime + Number(incTotalTime),
-        totalCoins: totalUserStats.totalCoins + Number(incCoins),
-        totalExp: totalUserStats.totalExp + Number(incExp),
+          (totalUserStats?.totalWorkoutTime || 0) + Number(incTotalTime),
+        totalCoins: (totalUserStats?.totalCoins || 0) + Number(incCoins),
+        totalExp: (totalUserStats?.totalExp || 0) + Number(incExp),
         ...(workoutCompleted && {
-          totalWorkoutsCompleted: totalUserStats.totalWorkoutsCompleted + 1,
+          totalWorkoutsCompleted:
+            (totalUserStats?.totalWorkoutsCompleted || 0) + 1,
         }),
       },
     })
@@ -240,7 +242,7 @@ export const setIndividualStat = stat => async (dispatch, getState) => {
 
 export const getExercisePRs = async (exerciseID, uid) => {
   const { exerciseStatsData } = await getSingleExerciseStatsRef(uid, exerciseID)
-  const { pr1x1, pr1x5 } = exerciseStatsData
+  const { pr1x1, pr1x5 } = exerciseStatsData ?? {}
 
   return { pr1x1, pr1x5, exerciseID }
 }

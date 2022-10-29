@@ -43,7 +43,11 @@ const AchievementAlertsContainer = ({
     achievementList.forEach(achievement => {
       const { id, amount: goal, property } = achievement
       // If achievement is already marked as completed return
-      if (completedAchievements.find(achiv => achiv.id === id)) return
+      if (
+        completedAchievements &&
+        completedAchievements.find(achiv => achiv.id === id)
+      )
+        return
 
       if (totalUserStats[property] >= goal) {
         addedIDs.push(id)
