@@ -31,7 +31,7 @@ const WorkoutComplete = ({
           <div className='time stat'>
             <div className='label'>Time:</div>
             <div className='value'>
-              {Math.floor(totalWorkoutTime / 6000)} min
+              {Math.floor(totalWorkoutTime / 60000)} min
             </div>
           </div>
           <div className='volume stat'>
