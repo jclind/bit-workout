@@ -97,23 +97,30 @@ export const updateWorkoutStats =
       },
     })
 
-    const exerciseStatsQuery = query(
-      collection(userStatsRef, 'exerciseStats'),
-      where('exerciseID', '==', exerciseID)
+    const currExerciseStatsRef = doc(
+      userStatsRef,
+      'exerciseStats',
+      `${exerciseID}-id`
     )
-    const exerciseStatsDocs = await getDocs(exerciseStatsQuery)
-    const exerciseStatsExist = !exerciseStatsDocs.empty
+    // const exerciseStatsQuery = query(
+    //   collection(userStatsRef, 'exerciseStats'),
+    //   where('exerciseID', '==', exerciseID)
+    // )
+    // const exerciseStatsDocs = await getDocs(exerciseStatsQuery)
+    const currExerciseStatsSnap = await getDoc(currExerciseStatsRef)
+    console.log('1')
+    const exerciseStatsExist = !currExerciseStatsSnap.exists
+    console.log('2')
 
-    let currExerciseStatsRef = null
-    if (exerciseStatsExist) {
-      exerciseStatsDocs.forEach(doc => (currExerciseStatsRef = doc))
-    }
+    console.log('3')
+    // if (exerciseStatsExist) {
+    // exerciseStatsDocs.forEach(doc => (currExerciseStatsRef = doc))
+    // }
 
-    let currExerciseStatsSnap = false
-    if (exerciseStatsExist) {
-      currExerciseStatsSnap = await getDoc(currExerciseStatsRef.ref)
-    }
-    const { pr1x1, pr1x5 } = currExerciseStatsSnap
+    // if (exerciseStatsExist) {
+    // currExerciseStatsSnap = await getDoc(currExerciseStatsRef.ref)
+    // }
+    const { pr1x1, pr1x5 } = exerciseStatsExist
       ? currExerciseStatsSnap.data()
       : {}
 
@@ -153,7 +160,7 @@ export const updateWorkoutStats =
     }
     if (exerciseStatsExist) {
       await setDoc(
-        currExerciseStatsRef.ref,
+        currExerciseStatsRef,
         {
           ...exerciseData,
           totalTime: increment(Number(incTotalTime)),
@@ -166,7 +173,7 @@ export const updateWorkoutStats =
         { merge: true }
       )
     } else {
-      await addDoc(collection(userStatsRef, 'exerciseStats'), {
+      await setDoc(currExerciseStatsRef, {
         ...exerciseData,
         exerciseID,
         totalTime: Number(incTotalTime),
@@ -176,21 +183,18 @@ export const updateWorkoutStats =
         totalReps: Number(incReps),
         totalExerciseWeightLifted: Number(weight),
       }).then(doc => {
-        currExerciseStatsRef = { ref: doc }
+        // currExerciseStatsRef = doc
       })
     }
 
-    await setDoc(
-      doc(currExerciseStatsRef.ref, 'completedSetsPath', currSetID),
-      {
-        id: currSetID,
-        isNewPR1x1: !!newPR1x1,
-        isNewPR1x5: !!newPR1x5,
-        date,
-        weight: Number(weight),
-        reps: Number(incReps),
-      }
-    )
+    await setDoc(doc(currExerciseStatsRef, 'completedSetsPath', currSetID), {
+      id: currSetID,
+      isNewPR1x1: !!newPR1x1,
+      isNewPR1x5: !!newPR1x5,
+      date,
+      weight: Number(weight),
+      reps: Number(incReps),
+    })
   }
 
 export const incrementIndividualStat = stat => async (dispatch, getState) => {
