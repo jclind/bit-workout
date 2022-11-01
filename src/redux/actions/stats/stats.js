@@ -97,7 +97,7 @@ export const updateWorkoutStats =
     )
 
     const currExerciseStatsSnap = await getDoc(currExerciseStatsRef)
-    const exerciseStatsExist = currExerciseStatsSnap.exists
+    const exerciseStatsExist = currExerciseStatsSnap.exists()
 
     const { pr1x1, pr1x5 } = exerciseStatsExist
       ? currExerciseStatsSnap.data()
@@ -185,6 +185,7 @@ export const updateWorkoutStats =
       totalExerciseWeightLifted:
         (singleExerciseStats?.totalExerciseWeightLifted || 0) + Number(weight),
     }
+    console.log(updatedSingleExerciseStats)
     dispatch({
       type: SET_EXERCISE_STATS,
       payload: [

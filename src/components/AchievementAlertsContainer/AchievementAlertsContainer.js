@@ -65,12 +65,6 @@ const AchievementAlertsContainer = ({
 
   return null
 }
-toast('test', {
-  className: 'achievement-toast',
-  autoClose: 3000,
-  type: 'info',
-  icon: false,
-})
 
 const mapStateToProps = state => {
   return {
