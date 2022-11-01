@@ -59,8 +59,10 @@
         .value.path-exercise {
           display: flex;
           align-items: flex-end;
-          padding-bottom: 0.25rem;
-          height: 28px;
+          align-items: center;
+          gap: 2rem;
+          padding-bottom: 0.5rem;
+          min-height: 28px;
 
           .name {
             font-size: 1rem;
