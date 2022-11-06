@@ -1,0 +1,29 @@
+@import '../../helpers.scss';
+
+.news-splash-screen-modal {
+  .modal-content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .date {
+      padding-top: 0.5rem;
+      font-weight: 500;
+      font-size: 1.1rem;
+      color: $secondary-text;
+    }
+    p.description {
+      font-weight: 400;
+      font-size: 1rem;
+      padding-top: 1rem;
+      text-align: start;
+    }
+    button.action-btn {
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+  }
+}

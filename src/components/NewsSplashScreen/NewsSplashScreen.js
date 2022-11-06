@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import ReactDom from 'react-dom'
 import { connect } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import useClickOutside from '../../util/useClickOutside'
+import './NewsSplashScreen.scss'
 
 const NewsSplashScreen = ({ isSignedIn }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
+
+  const navigate = useNavigate()
 
   const currSplashScreenKey = 'd3dce5cf-10ab-4d3a-ae96-e405dda86752'
   const modalContent = useClickOutside(() => {
@@ -12,13 +16,13 @@ const NewsSplashScreen = ({ isSignedIn }) => {
   })
 
   useEffect(() => {
-    const localStorageKey = localStorage.getItem('splashScreenKey')
-    if (localStorageKey === currSplashScreenKey || !isSignedIn) {
-      setIsOpen(false)
-    } else {
-      localStorage.setItem('splashScreenKey', currSplashScreenKey)
-      setIsOpen(true)
-    }
+    // const localStorageKey = localStorage.getItem('splashScreenKey')
+    // if (localStorageKey === currSplashScreenKey || !isSignedIn) {
+    //   setIsOpen(false)
+    // } else {
+    //   localStorage.setItem('splashScreenKey', currSplashScreenKey)
+    //   setIsOpen(true)
+    // }
   }, [])
 
   if (!isOpen) return null
@@ -27,7 +31,22 @@ const NewsSplashScreen = ({ isSignedIn }) => {
     <>
       <div className='news-splash-screen-modal overlay'>
         <div className='modal-content' ref={modalContent}>
-          <div className='title'></div>
+          <div className='title'>Now Introducing Achievements!</div>
+          <div className='date'>November 6th, 2022</div>
+          <p className='description'>
+            Exciting news for the BitWorkout Community: We are proud to announce
+            the addition of user achievements! You can now earn badges by
+            completing workouts, earning coins, purchasing items, and much more!
+          </p>
+          <button
+            className='action-btn'
+            onClick={() => {
+              setIsOpen(false)
+              navigate('/account/achievements')
+            }}
+          >
+            View Achievements
+          </button>
         </div>
       </div>
     </>,
