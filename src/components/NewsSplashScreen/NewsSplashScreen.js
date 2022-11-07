@@ -23,6 +23,7 @@ const NewsSplashScreen = ({ isSignedIn }) => {
       localStorage.setItem('bitworkout-splash-screen-key', currSplashScreenKey)
       setIsOpen(true)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!isOpen) return null
