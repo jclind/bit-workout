@@ -1,4 +1,4 @@
-describe('Workout Tests', () => {
+describe('App Flow', () => {
   it('App Flow Test', () => {
     cy.callFirestore('update', `workoutData/${Cypress.env('TEST_UID')}`, {
       isWorkoutRunning: false,

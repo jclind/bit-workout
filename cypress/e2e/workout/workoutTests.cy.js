@@ -432,6 +432,7 @@ describe('Workout Tests', () => {
     cy.completeSet()
 
     cy.get('.workout-complete').should('be.visible')
+    cy.get('.Toastify__toast').click({ multiple: true, force: true })
     cy.get('button.back-home-btn').click()
   })
 })
