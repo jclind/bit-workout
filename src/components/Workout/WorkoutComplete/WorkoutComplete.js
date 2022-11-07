@@ -31,7 +31,7 @@ const WorkoutComplete = ({
           <div className='time stat'>
             <div className='label'>Time:</div>
             <div className='value'>
-              {Math.floor(totalWorkoutTime / 6000)} min
+              {Math.floor(totalWorkoutTime / 60000)} min
             </div>
           </div>
           <div className='volume stat'>
@@ -42,6 +42,7 @@ const WorkoutComplete = ({
             <div className='label'>Workout Path:</div>
             {path.length > 0
               ? path.map(exercise => {
+                  if (exercise.setPath.length <= 0) return null
                   const { name } = getSingleExercise(exercise.exerciseID)
                   const maxWeight = Math.max.apply(
                     Math,
@@ -54,6 +55,7 @@ const WorkoutComplete = ({
                       isPR = true
                     }
                   })
+                  console.log(exercise)
                   return (
                     <div className='value path-exercise' key={exercise.id}>
                       <div className='name'>{name}</div>

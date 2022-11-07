@@ -16,6 +16,7 @@ import {
 } from 'firebase/firestore'
 import { db } from '../../../firebase'
 import {
+  SET_COMPLETED_ACHIEVEMENTS,
   SET_EXERCISE_STATS,
   SET_STATS_STATUS,
   SET_TOTAL_USER_STATS,
@@ -48,6 +49,7 @@ export const updateWorkoutStats =
     incTotalTime = 0,
     incCoins = 0,
     incExp = 0,
+    workoutCompleted,
     currSetID = null
   ) =>
   async (dispatch, getState) => {
@@ -64,27 +66,40 @@ export const updateWorkoutStats =
         totalWorkoutTime: increment(Number(incTotalTime)),
         totalCoins: increment(Number(incCoins)),
         totalExp: increment(Number(incExp)),
+        ...(workoutCompleted && { totalWorkoutsCompleted: increment(1) }),
       },
       { merge: true }
     )
+    const totalUserStats = getState().stats.totalUserStats
+    dispatch({
+      type: SET_TOTAL_USER_STATS,
+      payload: {
+        ...totalUserStats,
+        totalSets: (totalUserStats?.totalSets || 0) + Number(incSets),
+        totalReps: (totalUserStats?.totalReps || 0) + Number(incReps),
+        totalWeightLifted:
+          (totalUserStats?.totalWeightLifted || 0) + Number(weight),
+        totalWorkoutTime:
+          (totalUserStats?.totalWorkoutTime || 0) + Number(incTotalTime),
+        totalCoins: (totalUserStats?.totalCoins || 0) + Number(incCoins),
+        totalExp: (totalUserStats?.totalExp || 0) + Number(incExp),
+        ...(workoutCompleted && {
+          totalWorkoutsCompleted:
+            (totalUserStats?.totalWorkoutsCompleted || 0) + 1,
+        }),
+      },
+    })
 
-    const exerciseStatsQuery = query(
-      collection(userStatsRef, 'exerciseStats'),
-      where('exerciseID', '==', exerciseID)
+    const currExerciseStatsRef = doc(
+      userStatsRef,
+      'exerciseStats',
+      `${exerciseID}-id`
     )
-    const exerciseStatsDocs = await getDocs(exerciseStatsQuery)
-    const exerciseStatsExist = !exerciseStatsDocs.empty
 
-    let currExerciseStatsRef = null
-    if (exerciseStatsExist) {
-      exerciseStatsDocs.forEach(doc => (currExerciseStatsRef = doc))
-    }
+    const currExerciseStatsSnap = await getDoc(currExerciseStatsRef)
+    const exerciseStatsExist = currExerciseStatsSnap.exists()
 
-    let currExerciseStatsSnap = false
-    if (exerciseStatsExist) {
-      currExerciseStatsSnap = await getDoc(currExerciseStatsRef.ref)
-    }
-    const { pr1x1, pr1x5 } = currExerciseStatsSnap
+    const { pr1x1, pr1x5 } = exerciseStatsExist
       ? currExerciseStatsSnap.data()
       : {}
 
@@ -124,7 +139,7 @@ export const updateWorkoutStats =
     }
     if (exerciseStatsExist) {
       await setDoc(
-        currExerciseStatsRef.ref,
+        currExerciseStatsRef,
         {
           ...exerciseData,
           totalTime: increment(Number(incTotalTime)),
@@ -137,35 +152,106 @@ export const updateWorkoutStats =
         { merge: true }
       )
     } else {
-      await addDoc(collection(userStatsRef, 'exerciseStats'), {
-        ...exerciseData,
-        exerciseID,
-        totalTime: Number(incTotalTime),
-        totalCoins: Number(incCoins),
-        totalExp: Number(incExp),
-        totalSets: Number(incSets),
-        totalReps: Number(incReps),
-        totalExerciseWeightLifted: Number(weight),
-      }).then(doc => {
-        currExerciseStatsRef = { ref: doc }
+      await setDoc(
+        currExerciseStatsRef,
+        {
+          ...exerciseData,
+          exerciseID,
+          totalTime: Number(incTotalTime),
+          totalCoins: Number(incCoins),
+          totalExp: Number(incExp),
+          totalSets: Number(incSets),
+          totalReps: Number(incReps),
+          totalExerciseWeightLifted: Number(weight),
+        },
+        { merge: true }
+      ).then(doc => {
+        // currExerciseStatsRef = doc
       })
     }
-
-    await setDoc(
-      doc(currExerciseStatsRef.ref, 'completedSetsPath', currSetID),
-      {
-        id: currSetID,
-        isNewPR1x1: !!newPR1x1,
-        isNewPR1x5: !!newPR1x5,
-        date,
-        weight: Number(weight),
-        reps: Number(incReps),
-      }
+    const exerciseStats = getState()?.stats?.exerciseStats ?? []
+    const singleExerciseStats = exerciseStats.find(
+      el => el.exerciseID === exerciseID
     )
+    const updatedSingleExerciseStats = {
+      ...singleExerciseStats,
+      ...exerciseData,
+      exerciseID,
+      totalTime: (singleExerciseStats?.totalTime || 0) + Number(incTotalTime),
+      totalCoins: (singleExerciseStats?.totalCoins || 0) + Number(incCoins),
+      totalExp: (singleExerciseStats?.totalExp || 0) + Number(incExp),
+      totalSets: (singleExerciseStats?.totalSets || 0) + Number(incSets),
+      totalReps: (singleExerciseStats?.totalReps || 0) + Number(incReps),
+      totalExerciseWeightLifted:
+        (singleExerciseStats?.totalExerciseWeightLifted || 0) + Number(weight),
+    }
+    dispatch({
+      type: SET_EXERCISE_STATS,
+      payload: [
+        updatedSingleExerciseStats,
+        ...exerciseStats.filter(el => el.exerciseID !== exerciseID),
+      ],
+    })
+    await setDoc(doc(currExerciseStatsRef, 'completedSetsPath', currSetID), {
+      id: currSetID,
+      isNewPR1x1: !!newPR1x1,
+      isNewPR1x5: !!newPR1x5,
+      date,
+      weight: Number(weight),
+      reps: Number(incReps),
+    })
   }
+
+export const incrementIndividualStat = stat => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
+
+  const userStatsRef = doc(db, 'userStats', uid)
+
+  await setDoc(
+    userStatsRef,
+    {
+      [stat.prop]: increment(Number(stat.value)),
+    },
+    { merge: true }
+  )
+
+  const totalUserStats = getState().stats.totalUserStats
+  dispatch({
+    type: SET_TOTAL_USER_STATS,
+    payload: {
+      ...totalUserStats,
+      [stat.prop]: totalUserStats[stat.prop]
+        ? totalUserStats[stat.prop] + Number(stat.value)
+        : Number(stat.value),
+    },
+  })
+}
+export const setIndividualStat = stat => async (dispatch, getState) => {
+  const uid = getState().auth.userAuth.uid
+
+  const userStatsRef = doc(db, 'userStats', uid)
+
+  await setDoc(
+    userStatsRef,
+    {
+      [stat.prop]: Number(stat.value),
+    },
+    { merge: true }
+  )
+
+  const totalUserStats = getState().stats.totalUserStats
+  dispatch({
+    type: SET_TOTAL_USER_STATS,
+    payload: {
+      ...totalUserStats,
+      [stat.prop]: Number(stat.value),
+    },
+  })
+}
+
 export const getExercisePRs = async (exerciseID, uid) => {
   const { exerciseStatsData } = await getSingleExerciseStatsRef(uid, exerciseID)
-  const { pr1x1, pr1x5 } = exerciseStatsData
+  const { pr1x1, pr1x5 } = exerciseStatsData ?? {}
 
   return { pr1x1, pr1x5, exerciseID }
 }
@@ -178,9 +264,11 @@ export const getStats = () => async (dispatch, getState) => {
   if (!userStatsSnap.exists()) {
     return dispatch({ type: SET_STATS_STATUS, payload: 'no_data' })
   } else {
+    const { achievements, ...userStatsData } = userStatsSnap.data()
+    dispatch({ type: SET_COMPLETED_ACHIEVEMENTS, payload: achievements || [] })
     dispatch({
       type: SET_TOTAL_USER_STATS,
-      payload: userStatsSnap.data(),
+      payload: userStatsData,
     })
   }
 
@@ -328,4 +416,29 @@ export const removeChartData =
         ...(newPR1x5Data && { pr1x5: newPR1x5Data }),
       })
     }
+  }
+
+export const addCompletedAchievements =
+  achievementIDs => async (dispatch, getState) => {
+    if (achievementIDs.length <= 0) return
+    const uid = getState().auth.userAuth.uid
+    const completedAchievementList =
+      getState()?.stats?.completedAchievements ?? []
+    const userStatsRef = doc(db, 'userStats', uid)
+    const addedIDs = achievementIDs.map(id => {
+      return { id, date: new Date().getTime() }
+    })
+    const updatedAchievementsArr = [...completedAchievementList, ...addedIDs]
+    dispatch({
+      type: SET_COMPLETED_ACHIEVEMENTS,
+      payload: updatedAchievementsArr,
+    })
+    await setDoc(
+      userStatsRef,
+      {
+        achievements: updatedAchievementsArr,
+      },
+      { merge: true }
+    )
+    return updatedAchievementsArr
   }

@@ -19,7 +19,7 @@ const AllChartData = ({ appContainerRef, queryChartData, removeChartData }) => {
   const [singleExerciseStats, setSingleExerciseStats] = useState(null)
 
   const limit = 30
-  const [isMoreData, setIsMoreData] = useState(true)
+  const [isMoreData, setIsMoreData] = useState(false)
   const [isPaginationLoading, setIsPaginationLoading] = useState(false)
   const [chartData, setChartData] = useState([])
 
@@ -36,6 +36,8 @@ const AllChartData = ({ appContainerRef, queryChartData, removeChartData }) => {
         setLoading(false)
         setIsMoreData(false)
         if (res.data.length === 0) return setChartData([])
+      } else {
+        setIsMoreData(true)
       }
       setSingleExerciseStats(res.exerciseStatsData)
       setLatestDoc(res.latestDoc)
@@ -65,12 +67,14 @@ const AllChartData = ({ appContainerRef, queryChartData, removeChartData }) => {
   }, [chartData.length])
 
   useEffect(() => {
-    const appContainerCurrent = appContainerRef?.current
-    if (appContainerRef && appContainerCurrent) {
-      appContainerRef.current.addEventListener('scroll', handleScroll)
+    if (isMoreData) {
+      const appContainerCurrent = appContainerRef?.current
+      if (appContainerRef && appContainerCurrent) {
+        appContainerRef.current.addEventListener('scroll', handleScroll)
 
-      return () => {
-        appContainerCurrent.removeEventListener('scroll', handleScroll)
+        return () => {
+          appContainerCurrent.removeEventListener('scroll', handleScroll)
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -121,27 +125,28 @@ const AllChartData = ({ appContainerRef, queryChartData, removeChartData }) => {
         <div className='stats-container'>
           <div className='section-title'>LBS</div>
           <section>
-            {chartData.map(el => {
-              const dateStr = new Date(el.date).toDateString()
-              const date = dateStr.substring(4, dateStr.length - 5)
-              const time = formatAMPM(el.date)
-              let isPR = false
-              if (singleExerciseStats?.pr1x1?.id === el.id) {
-                isPR = true
-              }
-              return (
-                <StatItem
-                  title={`${el.weight}`}
-                  subTitle={`x ${el.reps}`}
-                  value={`${date} at ${time}`}
-                  isPR={isPR}
-                  key={el.id}
-                  isEditing={isEditing}
-                  deleteItem={() => deleteItem(el.id, el.reps)}
-                  deleteLoading={!!deleteIDsLoading.find(id => id === el.id)}
-                />
-              )
-            })}
+            {chartData.length >= 0 &&
+              chartData.map(el => {
+                const dateStr = new Date(el.date).toDateString()
+                const date = dateStr.substring(4, dateStr.length - 5)
+                const time = formatAMPM(el.date)
+                let isPR = false
+                if (singleExerciseStats?.pr1x1?.id === el.id) {
+                  isPR = true
+                }
+                return (
+                  <StatItem
+                    title={`${el.weight}`}
+                    subTitle={`x ${el.reps}`}
+                    value={`${date} at ${time}`}
+                    isPR={isPR}
+                    key={el.id}
+                    isEditing={isEditing}
+                    deleteItem={() => deleteItem(el.id, el.reps)}
+                    deleteLoading={!!deleteIDsLoading.find(id => id === el.id)}
+                  />
+                )
+              })}
           </section>
           {isPaginationLoading && (
             <div className='pagination-fade-loader-container'>

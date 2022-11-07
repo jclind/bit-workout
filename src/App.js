@@ -52,6 +52,9 @@ import AllExercises from './pages/Account/AccountStats/AllExercises/AllExercises
 import SingleExerciseStats from './pages/Account/AccountStats/SingleExerciseStats/SingleExerciseStats'
 import AllChartData from './pages/Account/AccountStats/SingleExerciseStats/AllChartData/AllChartData'
 import Inventory from './components/Inventory/Inventory'
+import Achievements from './pages/Account/Achievements/Achievements'
+import AchievementAlertsContainer from './components/AchievementAlertsContainer/AchievementAlertsContainer'
+import NewsSplashScreen from './components/NewsSplashScreen/NewsSplashScreen'
 
 const ScrollToTop = () => {
   const { pathname } = useLocation()
@@ -63,7 +66,6 @@ const ScrollToTop = () => {
 
 function App() {
   const [loading, setLoading] = useState(true)
-
   const appContainerRef = useRef()
 
   return (
@@ -74,12 +76,14 @@ function App() {
           content='width=device-width, initial-scale=1.0, viewport-fit=cover'
         />
       </Helmet>
+      <AchievementAlertsContainer />
       <Auth setLoading={setLoading} />
       {loading ? (
         <AppLoadingScreen />
       ) : (
         <Router>
           <ScrollToTop />
+          <NewsSplashScreen />
           <Routes>
             <Route exact path='/' element={<PrivateRoute />}>
               <Route exact path='/' element={<Dashboard />} />
@@ -162,6 +166,16 @@ function App() {
                 exact
                 path='/account/weight/add-weight'
                 element={<AddWeightInputContainer />}
+              />
+              <Route
+                exact
+                path='/account/achievements'
+                element={
+                  <>
+                    <Achievements />
+                    <NavbarContainer />
+                  </>
+                }
               />
               <Route
                 exact
@@ -257,16 +271,16 @@ function App() {
               element={<ForgotPasswordContainer />}
             />
           </Routes>
+
+          <ToastContainer
+            position='bottom-center'
+            theme='colored'
+            autoClose={3000}
+            hideProgressBar
+            className='toast-alerts-container'
+          />
         </Router>
       )}
-
-      <ToastContainer
-        position='bottom-center'
-        theme='colored'
-        autoClose={3000}
-        hideProgressBar
-        className='toast-alerts-container'
-      />
     </div>
   )
 }
