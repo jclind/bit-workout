@@ -185,7 +185,6 @@ export const updateWorkoutStats =
       totalExerciseWeightLifted:
         (singleExerciseStats?.totalExerciseWeightLifted || 0) + Number(weight),
     }
-    console.log(updatedSingleExerciseStats)
     dispatch({
       type: SET_EXERCISE_STATS,
       payload: [
@@ -193,7 +192,6 @@ export const updateWorkoutStats =
         ...exerciseStats.filter(el => el.exerciseID !== exerciseID),
       ],
     })
-
     await setDoc(doc(currExerciseStatsRef, 'completedSetsPath', currSetID), {
       id: currSetID,
       isNewPR1x1: !!newPR1x1,

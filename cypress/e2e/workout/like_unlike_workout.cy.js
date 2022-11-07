@@ -6,6 +6,7 @@ describe('Workout Tests', () => {
     })
     cy.login()
     cy.visit('/workout')
+    cy.closeSplashScreen()
     cy.get("[class='single-workout loading']").should('not.exist')
     cy.get('button.selection-btn')
     cy.getWorkoutSelectionByText('All set types').within(() => {

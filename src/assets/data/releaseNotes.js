@@ -1,4 +1,4 @@
-export const current_version_number = 'v0.7.1-alpha'
+export const current_version_number = 'v0.8.0-alpha'
 
 export const releaseNotes = [
   {

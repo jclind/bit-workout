@@ -6,6 +6,7 @@ describe('Workout Tests', () => {
     })
     cy.login()
     cy.visit('/workout')
+    cy.closeSplashScreen()
     cy.get('button.selection-btn').contains('Created').click()
 
     // Start Workout

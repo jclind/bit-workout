@@ -6,6 +6,7 @@ describe('Workout Tests', () => {
     })
     cy.login()
     cy.visit('/')
+    cy.closeSplashScreen()
 
     // Dashboard Page
     cy.get('div.character').within(() => {

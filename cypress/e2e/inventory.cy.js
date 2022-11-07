@@ -7,6 +7,7 @@ describe('Workout Tests', () => {
     cy.login()
     cy.wait(1000)
     cy.visit('/')
+    cy.closeSplashScreen()
     cy.get('button.view-inventory').click()
 
     cy.get('.type-container.hat button').eq(0).click()

@@ -23,6 +23,11 @@ Cypress.Commands.add('validateWorkoutPath', length => {
   cy.get('.workout-path-modal.overlay').click(15, 15) // Click out of workout path modal
 })
 
+Cypress.Commands.add('closeSplashScreen', () => {
+  cy.get('h1.splash-screen-title')
+  cy.get('.overlay').click(15, 15)
+})
+
 Cypress.Commands.add('openPlatesModal', shouldClose => {
   // Click plate weights modal
   cy.get('.active-workout .exercise-weight').click()

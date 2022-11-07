@@ -16,13 +16,13 @@ const NewsSplashScreen = ({ isSignedIn }) => {
   })
 
   useEffect(() => {
-    // const localStorageKey = localStorage.getItem('splashScreenKey')
-    // if (localStorageKey === currSplashScreenKey || !isSignedIn) {
-    //   setIsOpen(false)
-    // } else {
-    //   localStorage.setItem('splashScreenKey', currSplashScreenKey)
-    //   setIsOpen(true)
-    // }
+    const localStorageKey = localStorage.getItem('bitworkout-splash-screen-key')
+    if (localStorageKey === currSplashScreenKey || !isSignedIn) {
+      setIsOpen(false)
+    } else {
+      localStorage.setItem('bitworkout-splash-screen-key', currSplashScreenKey)
+      setIsOpen(true)
+    }
   }, [])
 
   if (!isOpen) return null
@@ -31,9 +31,9 @@ const NewsSplashScreen = ({ isSignedIn }) => {
     <>
       <div className='news-splash-screen-modal overlay'>
         <div className='modal-content' ref={modalContent}>
-          <div className='title'>Announcements 🎉</div>
+          <h1 className='splash-screen-title'>Announcements 🎉</h1>
           <div className='date-info'>
-            November 6th, 2022 - Now Introducing Achievements!
+            November 7th, 2022 - Now Introducing Achievements!
           </div>
           <img
             src='/achievements-art.png'

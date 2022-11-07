@@ -7,6 +7,7 @@ describe('Workout Tests', () => {
     localStorage.clear()
     cy.login()
     cy.visit('/workout')
+    cy.closeSplashScreen()
     cy.get('.create-workout-link', { timeout: 10000 }).click()
     cy.contains('Add Exercises')
 

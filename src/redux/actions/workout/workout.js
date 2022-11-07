@@ -332,6 +332,7 @@ export const completeWarmupSet = weight => async (dispatch, getState) => {
       elapsedTime,
       earnedCoins,
       earnedExp,
+      false,
       currSetID
     )
   )

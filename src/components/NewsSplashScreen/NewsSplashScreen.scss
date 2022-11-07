@@ -5,10 +5,12 @@
     padding-left: 1rem;
     padding-right: 1rem;
 
-    .title {
+    h1.splash-screen-title {
       font-size: 1.5rem;
       font-weight: 700;
       text-align: start;
+      padding: 0;
+      margin: 0;
     }
     .date-info {
       padding-top: 1rem;
