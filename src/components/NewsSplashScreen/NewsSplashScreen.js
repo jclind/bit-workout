@@ -31,8 +31,15 @@ const NewsSplashScreen = ({ isSignedIn }) => {
     <>
       <div className='news-splash-screen-modal overlay'>
         <div className='modal-content' ref={modalContent}>
-          <div className='title'>Now Introducing Achievements!</div>
-          <div className='date'>November 6th, 2022</div>
+          <div className='title'>Announcements 🎉</div>
+          <div className='date-info'>
+            November 6th, 2022 - Now Introducing Achievements!
+          </div>
+          <img
+            src='/achievements-art.png'
+            alt='achievement badge'
+            className='main-img'
+          />
           <p className='description'>
             Exciting news for the BitWorkout Community: We are proud to announce
             the addition of user achievements! You can now earn badges by

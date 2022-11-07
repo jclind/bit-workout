@@ -8,17 +8,24 @@
     .title {
       font-size: 1.5rem;
       font-weight: 700;
+      text-align: start;
     }
-    .date {
-      padding-top: 0.5rem;
+    .date-info {
+      padding-top: 1rem;
       font-weight: 500;
       font-size: 1.1rem;
       color: $secondary-text;
+      text-align: start;
+    }
+    img.main-img {
+      height: 100px;
+      width: 100px;
+      object-fit: contain;
+      margin: 2rem auto;
     }
     p.description {
       font-weight: 400;
       font-size: 1rem;
-      padding-top: 1rem;
       text-align: start;
     }
     button.action-btn {
