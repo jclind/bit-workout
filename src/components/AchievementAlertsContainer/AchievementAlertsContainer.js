@@ -28,9 +28,10 @@ const AchievementAlertsContainer = ({
   completedAchievements,
   totalUserStats,
   addCompletedAchievements,
+  isWorkoutRunning,
 }) => {
   useEffect(() => {
-    if (!totalUserStats) return
+    if (!totalUserStats || isWorkoutRunning) return
 
     const addedIDs = []
     const achievementsData = achievements
@@ -61,7 +62,7 @@ const AchievementAlertsContainer = ({
     })
     addCompletedAchievements(addedIDs)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalUserStats])
+  }, [totalUserStats, isWorkoutRunning])
 
   return null
 }
@@ -70,6 +71,7 @@ const mapStateToProps = state => {
   return {
     completedAchievements: state?.stats?.completedAchievements,
     totalUserStats: state?.stats?.totalUserStats,
+    isWorkoutRunning: state?.workout?.workoutData?.isWorkoutRunning ?? false,
   }
 }
 const mapDispatchToProps = dispatch => {

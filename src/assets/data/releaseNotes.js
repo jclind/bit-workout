@@ -131,4 +131,20 @@ export const releaseNotes = [
       'Workout rest page small style refactor.',
     ],
   },
+  // {
+  //   version: 'v0.8.0-alpha',
+  //   date: 'October 24, 2022',
+  //   title: '',
+  //   description: '',
+  //   features: [
+  //     'All new item shop and inventory system. Coins can now be spent to purchase items which can be equipped on your character in the new inventory page.',
+  //     'Redesigned completed workout page displaying more data including total workout volume lifted, workout path, and user records hit during the workout.',
+  //   ],
+  //   fixes: ['Fix: tests are being marked as unsuccessful incorrectly.'],
+  //   improvements: [
+  //     'Added improved accessability across the application.',
+  //     'Added testing for equipment page.',
+  //     'Workout rest page small style refactor.',
+  //   ],
+  // },
 ]
