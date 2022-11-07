@@ -1,0 +1,51 @@
+@import '../../../helpers.scss';
+
+.achievements-page {
+  min-height: calc(100% - #{$navbar-height} - 2rem);
+  padding-bottom: 6rem;
+  .achievements-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .achievements-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 1rem 0;
+      .single-achievement {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        width: 100%;
+        img {
+          height: 55px;
+          width: 55px;
+          object-fit: contain;
+          filter: grayscale(100%) brightness(25%);
+        }
+        .data {
+          .title {
+            font-weight: 600;
+            font-size: 1rem;
+          }
+          .description {
+            padding-top: 0.25rem;
+            font-size: 0.9rem;
+            color: $secondary-text;
+          }
+          .num-completed {
+            font-size: 0.8rem;
+            color: $tertiary-text;
+            padding-top: 0.5rem;
+          }
+        }
+      }
+      .single-achievement.completed {
+        img {
+          filter: grayscale(0%) brightness(100%);
+        }
+      }
+    }
+  }
+}

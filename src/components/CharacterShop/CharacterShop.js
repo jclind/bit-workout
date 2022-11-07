@@ -47,7 +47,10 @@ const CharacterShop = ({ purchaseShopItem, inventory }) => {
       setPurchaseLoading(false)
       setIsItemModalOpen(false)
       const { name } = itemList.find(item => item.id === id)
-      toast(`${name} successfully purchased`, { type: 'success' })
+      toast(`${name} successfully purchased`, {
+        type: 'success',
+        autoClose: 3000,
+      })
     })
   }
 

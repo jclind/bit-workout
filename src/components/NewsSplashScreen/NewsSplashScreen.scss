@@ -1,0 +1,38 @@
+@import '../../helpers.scss';
+
+.news-splash-screen-modal {
+  .modal-content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    h1.splash-screen-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: start;
+      padding: 0;
+      margin: 0;
+    }
+    .date-info {
+      padding-top: 1rem;
+      font-weight: 500;
+      font-size: 1.1rem;
+      color: $secondary-text;
+      text-align: start;
+    }
+    img.main-img {
+      height: 100px;
+      width: 100px;
+      object-fit: contain;
+      margin: 2rem auto;
+    }
+    p.description {
+      font-weight: 400;
+      font-size: 1rem;
+      text-align: start;
+    }
+    button.action-btn {
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+  }
+}

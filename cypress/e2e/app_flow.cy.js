@@ -1,4 +1,4 @@
-describe('Workout Tests', () => {
+describe('App Flow', () => {
   it('App Flow Test', () => {
     cy.callFirestore('update', `workoutData/${Cypress.env('TEST_UID')}`, {
       isWorkoutRunning: false,
@@ -6,6 +6,7 @@ describe('Workout Tests', () => {
     })
     cy.login()
     cy.visit('/')
+    cy.closeSplashScreen()
 
     // Dashboard Page
     cy.get('div.character').within(() => {

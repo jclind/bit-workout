@@ -5,6 +5,7 @@ import {
   signInAndFetchUserAccountData,
   setUserStatusSignedOut,
 } from './redux/actions/auth/authStatus'
+import { getStats } from './redux/actions/stats/stats'
 
 const Auth = ({
   signInAndFetchUserAccountData,
@@ -12,13 +13,18 @@ const Auth = ({
   setLoading,
   userAuth,
   userAccountData,
+  getStats,
 }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        signInAndFetchUserAccountData(user).then(() => {
-          setLoading(false)
-        })
+        signInAndFetchUserAccountData(user)
+          .then(() => {
+            getStats()
+          })
+          .then(() => {
+            setLoading(false)
+          })
       } else {
         signOut()
         setLoading(false)
@@ -42,6 +48,7 @@ const mapDispatchToProps = dispatch => {
     signInAndFetchUserAccountData: user =>
       dispatch(signInAndFetchUserAccountData(user)),
     signOut: () => dispatch(setUserStatusSignedOut()),
+    getStats: () => dispatch(getStats()),
   }
 }
 

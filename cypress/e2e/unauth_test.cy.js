@@ -1,5 +1,5 @@
-describe('Workout Tests', () => {
-  it('Create Workout Test', () => {
+describe('Unauth Test', () => {
+  it('Confirm app loads', () => {
     cy.visit('/')
     cy.get('button')
   })

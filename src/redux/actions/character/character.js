@@ -10,6 +10,7 @@ import {
   UPDATE_EQUIPPED,
   UPDATE_INVENTORY,
 } from '../../types'
+import { setIndividualStat } from '../stats/stats'
 
 export const fetchCharacterData = uid => async dispatch => {
   const characterDataRef = doc(db, 'characterData', uid)
@@ -138,6 +139,13 @@ export const purchaseShopItem = id => async (dispatch, getState) => {
       inventory: updatedInventoryState,
     },
     { merge: true }
+  )
+
+  dispatch(
+    setIndividualStat({
+      prop: 'totalItemsPurchased',
+      value: updatedInventoryState.length,
+    })
   )
 }
 

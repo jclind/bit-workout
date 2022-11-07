@@ -34,6 +34,7 @@ import {
   // getAdditionalUserInfo,
 } from 'firebase/auth'
 import { fetchCharacterData, updateCoins } from '../character/character'
+import { incrementIndividualStat } from '../stats/stats'
 
 export const signInAndFetchUserAccountData =
   user => async (dispatch, getState) => {
@@ -327,6 +328,10 @@ export const submitUserFeedback =
     })
 
     let coinsAdded = 0
+
+    dispatch(
+      incrementIndividualStat({ prop: 'totalFeedbackSubmitted', value: 1 })
+    )
 
     // Only give user coins for every 2 feedback forms they submit per day
     if (feedbackSubmittedToday.length === 0) {

@@ -216,24 +216,15 @@ export const completeSet =
       : 0
     const totalWeight = currTotalWeight + Number(weight)
 
-    dispatch(
-      updateWorkoutStats(
-        1,
-        completedReps,
-        weight,
-        exerciseID,
-        elapsedTime,
-        earnedCoins,
-        earnedExp,
-        currSetID
-      )
-    )
+    let isWorkoutCompleted = false
+
     // If the current set is the last set
     // Else start rest timer, increment set, and updateWorkout
     if (currSet >= currSetTotal) {
       // If the last set of the last exercise is finished then call finishWorkout
       // Else begin next rest timer, increment currSet and currIdx, and updateWorkout
       if (currIdx >= currWorkoutPathLength - 1) {
+        isWorkoutCompleted = true
         dispatch(finishWorkout(totalCoins, totalExp))
       } else {
         const startTime = new Date().getTime()
@@ -271,6 +262,20 @@ export const completeSet =
       }
       dispatch(updateWorkout(updatedData))
     }
+
+    dispatch(
+      updateWorkoutStats(
+        1,
+        completedReps,
+        weight,
+        exerciseID,
+        elapsedTime,
+        earnedCoins,
+        earnedExp,
+        isWorkoutCompleted,
+        currSetID
+      )
+    )
 
     // Calculate character stats based on completed reps
     dispatch(logWorkout(completedReps))
@@ -327,6 +332,7 @@ export const completeWarmupSet = weight => async (dispatch, getState) => {
       elapsedTime,
       earnedCoins,
       earnedExp,
+      false,
       currSetID
     )
   )
