@@ -55,7 +55,6 @@ const WorkoutComplete = ({
                       isPR = true
                     }
                   })
-                  console.log(exercise)
                   return (
                     <div className='value path-exercise' key={exercise.id}>
                       <div className='name'>{name}</div>
