@@ -38,6 +38,10 @@ before(() => {
   })
 })
 beforeEach(() => {
+  cy.callFirestore('update', `workoutData/${Cypress.env('TEST_UID')}`, {
+    isWorkoutRunning: false,
+    runningWorkout: {},
+  })
   localStorage.clear()
   cy.login()
   cy.visit('/workout')

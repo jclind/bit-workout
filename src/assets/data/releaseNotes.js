@@ -131,20 +131,25 @@ export const releaseNotes = [
       'Workout rest page small style refactor.',
     ],
   },
-  // {
-  //   version: 'v0.8.0-alpha',
-  //   date: 'October 24, 2022',
-  //   title: '',
-  //   description: '',
-  //   features: [
-  //     'All new item shop and inventory system. Coins can now be spent to purchase items which can be equipped on your character in the new inventory page.',
-  //     'Redesigned completed workout page displaying more data including total workout volume lifted, workout path, and user records hit during the workout.',
-  //   ],
-  //   fixes: ['Fix: tests are being marked as unsuccessful incorrectly.'],
-  //   improvements: [
-  //     'Added improved accessability across the application.',
-  //     'Added testing for equipment page.',
-  //     'Workout rest page small style refactor.',
-  //   ],
-  // },
+  {
+    version: 'v0.8.0-alpha',
+    date: 'October 24, 2022',
+    title: '',
+    description: '',
+    features: [
+      'Achievements are now available. Earn achievements and badges by completing workouts, earning coins, purchasing items, and much more. Achievements can be viewed in the all-new Achievements page via the account page.',
+      'Added a one-time showing splash screen for announcements. It adds an easy way to alert users of any necessary information.',
+    ],
+    fixes: [
+      'Fix: total workout time not calculated correctly on the workout complete page.',
+      'Fix: chart document data occasionally being rendered twice causing errors.',
+      'Fix: warmup sets are not being tracked in stats.',
+    ],
+    improvements: [
+      'Redesigned workout finished page, which now shows personal records earned in the completed workout, workout path, and total workout weight volume.',
+      'Long text strings fixed on the workout finished page and workout stats pages.',
+      'Exercise stats are now updated instantly in the stats page, page refresh is no longer needed.',
+      'Many testing improvements, data now reset before all tests run to help catch potential bugs.',
+    ],
+  },
 ]
